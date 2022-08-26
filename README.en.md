@@ -1,7 +1,15 @@
 # Computer System
 
 #### Description
+<<<<<<< HEAD
 代码库
+=======
+<<<<<<< HEAD
+计算机考研辅助平台
+=======
+该仓库用来保存并使用项目 计算机考研系统
+>>>>>>> 6aadbd5 (初始化项目)
+>>>>>>> af1db1c (初始化项目)
 
 #### Software Architecture
 Software architecture description
