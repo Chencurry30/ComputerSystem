@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store';
+import router from './router';
 
-import store from './store/index';
-import router from './router/index';
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)    //引用插件
 
-Vue.use(store)
-Vue.use(router)
 
 Vue.config.productionTip = false
 

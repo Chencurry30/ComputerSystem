@@ -17,11 +17,8 @@
 该仓库用来保存并使用项目 计算机考研系统
 >>>>>>> 6aadbd5 (初始化项目)
 >>>>>>> af1db1c (初始化项目)
-
 #### 软件架构
-软件架构说明
-
-
+    本项目前端部分是基于Vue2框架开发的
 #### 安装教程
 
 1.  xxxx
@@ -30,9 +27,10 @@
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  git clone https://gitee.com/ligqiang/computer-system.git
+2.  npm install     初始化项目
+3.  npm run serve  或者  yarn serve  运行项目
+
 
 #### 参与贡献
 
