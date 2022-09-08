@@ -1,8 +1,9 @@
 <template>
+  <!--登录和注册公用的组件-->
   <div class="contain w">
     <div class="mainbox" :class="{ SortingStyle: changestyle }">
       <div class="mianleft">
-        <div class="form login" :class={showblock:changestyle}>
+        <div class="form login" :class="{ showblock: changestyle }">
           <div class="title">欢迎回来</div>
           <div class="item">
             <div class="labletitle">手机号</div>
@@ -30,12 +31,11 @@
               <a href="">忘记密码</a>
             </div>
           </div>
-
           <div class="Loginbtn">
-            <button>登录</button>
+            <a href="javascript:;">登录</a>
           </div>
         </div>
-          <div class="form register" :class={showblock:!changestyle}>
+        <div class="form register" :class="{ showblock: !changestyle }">
           <div class="title">立即注册</div>
           <div class="item">
             <div class="labletitle">手机号</div>
@@ -43,43 +43,61 @@
           </div>
           <div class="item">
             <div class="labletitle">密码</div>
-            <input type="password"/>
+            <input type="password" />
           </div>
           <div class="item">
             <div class="labletitle">确认密码密码</div>
-            <input type="password"/>
+            <input type="password" />
           </div>
-          <div class="item">
+          <div class="item Vcode">
             <div class="labletitle">验证码</div>
-            <input type="text"  class="Vcode"/>
+            <input type="text" />
             <button class="Vbtn">获取验证码</button>
           </div>
-
           <div class="Loginbtn">
-            <button>登录</button>
+            <a href="javascript:;" @click="SendInfo">注册</a>
           </div>
         </div>
-
       </div>
-      <div
-        class="mainright"
-        :class="{ mainrightbg: !changebg, mainleftbg: changebg }"
-      >
+      <div class="mainright" :class="{ mainrightbg: !changebg, mainleftbg: changebg }">
+        <div class="EncourageInfo">
+          <div class="EncoInfo-l">愿君扶摇直上五千里</div>
+          <div class="EncoInfo-r">易云直挂无九州</div>
+        </div>
         <div class="registerbtn" @click="GotoBtn"
-         :class="{'registerbtn-l-Location':changebg,'registerbtn-r-Location':!changebg }">
-        <a href="javascript:;">注册</a></div>
+          :class="{
+            'registerbtn-l-Location': changebg,
+            'registerbtn-r-Location': !changebg,
+          }"
+        >
+          <a href="javascript:;">{{
+            changestyle === true ? "登录" : "注册"
+          }}</a>
+        </div>
       </div>
     </div>
+    <PopupWindow ref="PopupWindow"></PopupWindow>
   </div>
 </template>
 
+
+
 <script>
+import PopupWindow from "@/components/PopupWindow.vue";
 export default {
   name: "item",
-
+  data() {
+    return {
+      UserInfoLogin: {
+        phone: "",
+        password: "",
+        CommitPassword: "",
+        Vcode: "",
+      },
+    };
+  },
   methods: {
     GotoBtn() {
-      console.log(this.$route);
       let routes = this.$route.name;
       if (routes === "Register") {
         let location = { name: "Login" };
@@ -88,6 +106,10 @@ export default {
         let location = { name: "Register" };
         this.$router.push(location);
       }
+    },
+    SendInfo() {
+      console.log(123);
+      this.$refs.PopupWindow.show(); //用于提醒用户输入的条件
     },
   },
   computed: {
@@ -98,6 +120,7 @@ export default {
       return this.$route.name !== "Login";
     },
   },
+  components: { PopupWindow },
 };
 </script>
 
@@ -126,7 +149,6 @@ export default {
           font-size: 18px;
         }
         .item {
-          margin-top: 5px;
           height: 80px;
           .labletitle {
             margin: 5px 0 5px 0;
@@ -134,22 +156,28 @@ export default {
             text-align: center;
             color: #909399;
           }
-          .Vcode{
-            position:relative;
-          }
-          .Vbtn{
+          .Vbtn {
             position: absolute;
+            top: 10px;
+            right: -22px;
             font-size: 12px;
-            padding: 5px 2px;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #999;
+            border-radius: 20px;
             background-color: #fff;
           }
           input {
-            width: 100%;
+            width: 80%;
             padding: 0 20px;
             font-size: 16px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.4);
             text-align: center;
           }
+        }
+        .Vcode {
+          position: relative;
         }
         .Payattention {
           display: flex;
@@ -195,14 +223,36 @@ export default {
           border-radius: 20px;
         }
       }
+
+      .login {
+        .item {
+          margin-top: 30px;
+        }
+      }
+      .register {
+        .item {
+          margin-top: 5px;
+        }
+      }
     }
     .mainright {
+      position: relative;
       flex: 35%;
       height: 100%;
 
-      .registerbtn{
+      .EncourageInfo{
         position: absolute;
-        opacity: .7;
+        left: 27px;
+        top: 50px;
+        width: 20px;
+        display: flex;
+        font: italic 1.3em Georgia, serif;
+      }
+
+
+      .registerbtn {
+        position: absolute;
+        opacity: 0.7;
         bottom: 50px;
         height: 40px;
         line-height: 40px;
@@ -213,10 +263,10 @@ export default {
         border-radius: 20px;
         color: white;
       }
-      .registerbtn-l-Location{
+      .registerbtn-l-Location {
         left: 85px;
       }
-      .registerbtn-r-Location{
+      .registerbtn-r-Location {
         right: 85px;
       }
     }
@@ -233,7 +283,7 @@ export default {
   .SortingStyle {
     flex-direction: row-reverse;
   }
-  .showblock{
+  .showblock {
     display: none;
   }
 }
