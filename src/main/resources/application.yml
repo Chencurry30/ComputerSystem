@@ -17,6 +17,7 @@ mybatis:
   #mapper??????
   mapper-locations: classpath:mapper/*Mapper.xml
 
+
 logging:
   level:
     #??sql??
