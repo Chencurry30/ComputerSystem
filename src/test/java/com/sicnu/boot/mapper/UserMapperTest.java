@@ -26,4 +26,10 @@ public class UserMapperTest {
         System.out.println(admin);
     }
 
+    @Test
+    void testCheckUsername(){
+        Integer admin = userMapper.checkUsername("admin");
+        System.out.println(admin);
+    }
+
 }

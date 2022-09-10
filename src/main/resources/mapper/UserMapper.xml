@@ -7,4 +7,8 @@
     <select id="login" resultType="User">
         select * from user where username = #{username} and password = #{password}
     </select>
+
+    <select id="checkUsername" resultType="int">
+        select count(*) from user where username = #{username}
+    </select>
 </mapper>

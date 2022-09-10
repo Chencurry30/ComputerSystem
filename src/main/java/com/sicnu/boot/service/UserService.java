@@ -1,5 +1,6 @@
 package com.sicnu.boot.service;
 
+import com.sicnu.boot.common.ServerResponse;
 import com.sicnu.boot.pojo.User;
 
 /**
@@ -19,6 +20,6 @@ public interface UserService {
      * @description 通过用户名和密码登录
      * @date 2022/9/9 20:47
      */
-    User login(String username, String password);
+    ServerResponse login(String username, String password);
 
 }
