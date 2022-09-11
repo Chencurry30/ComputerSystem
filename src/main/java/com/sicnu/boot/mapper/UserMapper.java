@@ -2,7 +2,6 @@ package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * @projectName: computer-system
@@ -42,4 +41,13 @@ public interface UserMapper {
      * @date 2022/9/11 9:28
      */
     Integer register(String username,String password);
+
+    /**
+     * @param phone: 
+     * @return Integer
+     * @author hjh
+     * @description 检查手机号是否存在
+     * @date 2022/9/11 15:14
+     */
+    Integer checkPhone(String phone);
 }

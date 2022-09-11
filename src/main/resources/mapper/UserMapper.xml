@@ -12,7 +12,13 @@
         select count(*) from user where username = #{username}
     </select>
 
+    <select id="checkPhone" resultType="int">
+        select count(*) from user where phone = #{phone}
+    </select>
+
     <insert id="register">
         insert into user(username,password) values(#{username},#{password})
     </insert>
+
+
 </mapper>

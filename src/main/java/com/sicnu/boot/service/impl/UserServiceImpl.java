@@ -6,7 +6,6 @@ import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,7 +1,6 @@
 package com.sicnu.boot.service;
 
 import com.sicnu.boot.common.ServerResponse;
-import com.sicnu.boot.pojo.User;
 
 /**
  * @projectName: computer-system

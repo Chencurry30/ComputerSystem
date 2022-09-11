@@ -32,4 +32,10 @@ public class UserMapperTest {
         System.out.println(admin);
     }
 
+    @Test
+    void testCheckPhone(){
+        Integer integer = userMapper.checkPhone("13541169382");
+        System.out.println(integer);
+    }
+
 }
