@@ -17,13 +17,12 @@ import org.apache.ibatis.annotations.Select;
 public interface UserMapper {
     /**
      * @param username:
-     * @param password:
      * @return User
      * @author hjh
-     * @description 通过用户名和密码登录
+     * @description 取出对应username的用户名的用户
      * @date 2022/9/10 11:44
      */
-    User login(String username, String password);
+    User login(String username);
 
     /**
      * @param username:
@@ -33,4 +32,14 @@ public interface UserMapper {
      * @date 2022/9/10 11:44
      */
     Integer checkUsername(String username);
+
+    /**
+     * @param username:
+     * @param password:
+     * @return Integer
+     * @author hjh
+     * @description 通过账户和密码进行注册，返回一个插入行数
+     * @date 2022/9/11 9:28
+     */
+    Integer register(String username,String password);
 }

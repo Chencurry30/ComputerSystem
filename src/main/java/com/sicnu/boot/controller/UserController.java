@@ -37,9 +37,15 @@ public class UserController {
             //判断是否成功登录，如果成功，存放token
             Map<String,String> map = new HashMap<>();
             map.put("token",session.getId());
-            response = ServerResponse.createBySuccess(map);
+            response = ServerResponse.createBySuccess("登录成功",map);
         }
         log.info("username:{}, password:{}, data:{}", username, password, response.getData());
+        return response;
+    }
+
+    @PostMapping("/register")
+    public ServerResponse register(String username,String password){
+        ServerResponse response = userService.register(username, password);
         return response;
     }
 

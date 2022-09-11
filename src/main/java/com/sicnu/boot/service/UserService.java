@@ -22,4 +22,14 @@ public interface UserService {
      */
     ServerResponse login(String username, String password);
 
+    /**
+     * @param username:
+     * @param password:
+     * @return ServerResponse
+     * @author hjh
+     * @description 通过用户名和密码进行注册
+     * @date 2022/9/11 9:35
+     */
+    ServerResponse register(String username,String password);
+
 }

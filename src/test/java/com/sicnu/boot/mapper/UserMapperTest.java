@@ -22,7 +22,7 @@ public class UserMapperTest {
 
     @Test
     void testLogin(){
-        User admin = userMapper.login("admin", "123456");
+        User admin = userMapper.login("admin");
         System.out.println(admin);
     }
 
