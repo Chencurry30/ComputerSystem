@@ -31,6 +31,11 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.11</version>
         </dependency>
+        <!--  添加spring-security 模块，对密码进行加密      -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
