@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <Header></Header>
+    
+    <login></login>
 
     <router-view></router-view>
     
 
-    <Fotter></Fotter>
+
   </div>
 </template>
 
@@ -13,12 +14,14 @@
 
 import Header from './components/webHeader.vue';
 import Fotter from './components/webFotter.vue';
+import login from './views/login/index.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Fotter
+    Fotter,
+    login
 },
 
 }
