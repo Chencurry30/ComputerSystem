@@ -1,9 +1,10 @@
+<!--网站头部-->
 <template>
   <div class="indexNav">
     <div class="headbox w">
       <div class="head-title">
         <div class="loge">
-          <img src="@/assets/Img/webloge.png" alt="">
+          <img src="@/assets/Img/webloge.png" alt="" />
         </div>
         <div class="webtitle">旭升考研完</div>
       </div>
@@ -17,16 +18,12 @@
         <div class="select-item">帮助</div>
         <div class="select-item">更多</div>
       </div>
-      <div class="head-search">
-        <input type="text">
-        <div></div>
+      <div class="head-btn">
+        <div class="goto-login-btn" @click="gotologin">登录注册</div>
       </div>
-
-      <div class="head-btn" @click="gotologin">登录注册</div>
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: "webHeader",
@@ -51,31 +48,39 @@ export default {
     display: flex;
     margin-top: 10px;
     height: 60px;
-    .head-title{
+    line-height: 60px;
+    .head-title {
       display: flex;
-      .loge{
+      flex: 20%;
+      .loge {
+        margin-left: 60px;
         width: 60px;
-        img{
+        img {
           margin-top: 6px;
           width: 100%;
         }
       }
-      .webtitle{
-        
+    }
+    .head-select {
+      display: flex;
+      flex: 60%;
+      .select-item {
+        padding: 0 20px;
+        height: 100%;
       }
     }
-    .head-select{
-        display: flex;
-        .select-item{
-            padding: 0 15px;
-            height: 100%;
-        }
-    }
-    .head-search{
-      display: flex;
-    }
-    .head-btn{
-        flex: 20%;
+    .head-btn {
+      margin-top: 17px;
+      flex: 20%;
+      .goto-login-btn {
+        width: 92px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        border-radius:13px;
+        border: 1px solid #00965e;
+        background: #00965e;
+      }
     }
   }
 }
