@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
         //取出该用户名对应的用户
-        User user = userMapper.login(username);
+        User user = userMapper.getByUsername(username);
         //判断该密码是否与加密密码一致
         if(!passwordEncoder.matches(password,user.getPassword())){
             //查询结果为空，密码错误

@@ -21,7 +21,7 @@ public interface UserMapper {
      * @description 取出对应username的用户名的用户
      * @date 2022/9/10 11:44
      */
-    User login(String username);
+    User getByUsername(String username);
 
     /**
      * @param username:
