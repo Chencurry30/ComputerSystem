@@ -1,7 +1,7 @@
-import Login from '@/view/item'
-import Register from '@/view/item'
-import Home from "@/view/Home";
-import webAboutIndex from '@/view/webAbout/webAboutIndex'   //关于我们链接的组件
+import Login from '@/views/item'
+import Register from '@/views/item'
+import Home from "@/views/Home";
+import webAboutIndex from '@/views/webAbout/webAboutIndex'   //关于我们链接的组件
 
 const routes = [{
         path: '/',

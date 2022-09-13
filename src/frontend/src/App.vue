@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     
-    <login></login>
+    <Login></Login>
 
     <router-view></router-view>
     
@@ -14,14 +14,14 @@
 
 import Header from './components/webHeader.vue';
 import Fotter from './components/webFotter.vue';
-import login from './views/login/index.vue'
+import Login from './views/Login.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
     Fotter,
-    login
+    Login
 },
 
 }
