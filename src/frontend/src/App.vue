@@ -1,6 +1,12 @@
 <template>
   <div id="app">
+<<<<<<< HEAD
     <Header v-if="showHeader"></Header>
+=======
+    
+    <Login></Login>
+
+>>>>>>> 9653537358bac4cf83bb9dae6f4926530fe41234
     <router-view></router-view>
     <Fotter v-if="showFotter"></Fotter>
 
@@ -11,13 +17,18 @@
 
 import Header from './components/webHeader.vue';
 import Fotter from './components/webFotter.vue';
+<<<<<<< HEAD
 
+=======
+import Login from './views/Login.vue'
+>>>>>>> 9653537358bac4cf83bb9dae6f4926530fe41234
 
 export default {
   name: 'App',
   components: {
     Header,
     Fotter,
+<<<<<<< HEAD
   },
   computed:{
     showHeader(){
@@ -28,6 +39,11 @@ export default {
     }
 
   },
+=======
+    Login
+},
+
+>>>>>>> 9653537358bac4cf83bb9dae6f4926530fe41234
 }
 </script>
 

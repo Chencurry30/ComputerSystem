@@ -2,6 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store';
 import router from './router';
+//背景样式
+import VueParticles from 'vue-particles'  
+Vue.use(VueParticles)
+
 
 // 导入组件库
 import ElementUI from 'element-ui';
