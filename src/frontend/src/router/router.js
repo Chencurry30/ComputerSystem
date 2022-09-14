@@ -1,7 +1,6 @@
-import Login from '@/view/item'
-import Register from '@/view/item'
-import Home from "@/view/Home";
-import webAboutIndex from '@/view/webAbout/webAboutIndex'   //关于我们链接的组件
+import Home from "@/views/Home";
+import loginView from "@/views/loginView";
+import webAboutIndex from '@/views/webAbout/webAboutIndex' //关于我们链接的组件
 
 const routes = [{
         path: '/',
@@ -13,19 +12,14 @@ const routes = [{
         component: Home
     },
     {
-        path: '/Login',
-        name: 'Login',
-        component: Login
+        path: 'loginView',
+        name: 'loginView',
+        component: loginView
     },
     {
-        path: '/Register',
-        name: 'Register',
-        component: Register
-    },
-    {
-        path:'/webAboutIndex',
-        name:'webAboutIndex',
-        component:webAboutIndex
+        path: '/webAboutIndex',
+        name: 'webAboutIndex',
+        component: webAboutIndex
     }
 ]
 

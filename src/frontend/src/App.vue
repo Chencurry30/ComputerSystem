@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-    
-    <login></login>
-
+    <Header v-if="showHeader"></Header>
     <router-view></router-view>
-    
-
+    <Fotter v-if="showFotter"></Fotter>
 
   </div>
 </template>
@@ -14,16 +11,23 @@
 
 import Header from './components/webHeader.vue';
 import Fotter from './components/webFotter.vue';
-import login from './views/login/index.vue'
+
 
 export default {
   name: 'App',
   components: {
     Header,
     Fotter,
-    login
-},
+  },
+  computed:{
+    showHeader(){
+      return this.$route.name !== 'loginView'
+    },
+    showFotter(){
+      return this.$route.name !== 'loginView'
+    }
 
+  },
 }
 </script>
 
