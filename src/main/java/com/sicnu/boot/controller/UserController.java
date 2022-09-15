@@ -1,50 +1,59 @@
 package com.sicnu.boot.controller;
 
 import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.pojo.User;
+import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.controller
- * @className: UserController
- * @author: hjh
- * @description: TODO
- * @date: 2022-09-09 20:31
- * @version:
+ * description:
+ * @author :     胡建华
+ * Data: 2022-09-09 20:31
  */
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserService userService;
+
+    @Resource
+    private ISmsService smsService;
 
     @PostMapping("/login")
     public ServerResponse login(String username, String password, HttpSession session){
-        ServerResponse response = userService.login(username, password);
+        ServerResponse<String> response = userService.login(username, password);
         if(response.isSuccess()){
             //判断是否成功登录，如果成功，存放token
             Map<String,String> map = new HashMap<>();
             map.put("token",session.getId());
-            response = ServerResponse.createBySuccess("登录成功",map);
+            return ServerResponse.createBySuccess("登录成功",map);
         }
         log.info("username:{}, password:{}, data:{}", username, password, response.getData());
         return response;
     }
 
     @PostMapping("/register")
-    public ServerResponse register(String username,String password){
-        ServerResponse response = userService.register(username, password);
-        return response;
+    public ServerResponse<String> register(String username,String password){
+        return userService.register(username, password);
     }
 
+    @PostMapping("/sms")
+    public ServerResponse<String> sendSms(String phone){
+        return smsService.sendSmsCode(phone);
+    }
+
+    @PostMapping("/verify")
+    public ServerResponse<String> verifyCode(String phone,String code){
+        return smsService.verifyCode(phone,code);
+    }
 }

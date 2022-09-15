@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.service.impl
- * @className: UserServiceImpl
- * @author: hjh
- * @description: TODO
- * @date: 2022-09-09 20:26
- * @version:
+ * description:
+ * @author :     胡建华
+ * Data: 2022-09-09 20:26
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public ServerResponse login(String username, String password) {
+    public ServerResponse<String> login(String username, String password) {
         //首先判断用户名是否存在
         Integer resultCount = userMapper.checkUsername(username);
         if(resultCount == 0){
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ServerResponse register(String username, String password) {
+    public ServerResponse<String> register(String username, String password) {
         //首先判断用户名是否存在
         Integer resultCount = userMapper.checkUsername(username);
         if(resultCount == 1){
@@ -57,7 +55,7 @@ public class UserServiceImpl implements UserService {
         if (affectRow == 0){
             return ServerResponse.createByErrorMessage("注册失败，请重新注册");
         }
-        return ServerResponse.createBySuccess("注册成功");
+        return ServerResponse.createBySuccessMessage("注册成功");
     }
 
 }

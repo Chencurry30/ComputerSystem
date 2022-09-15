@@ -6,18 +6,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.common
- * @className: ServerResponse
- * @author: hjh
- * @description:
- * JsonSerialize.Inclusion.NON_NULL保证序列化json的时候,如果是null的对象,key也会消失
- * @date: 2022-09-10 10:36
- * @version:
+ * description:
+ *      返回前端的响应内容
+ *      JsonSerialize.Inclusion.NON_NULL   保证序列化json的时候,如果是null的对象,key也会消失
+ *
+ * @author : 胡建华
+ * Data: 2022-09-10 10:36
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServerResponse<T> implements Serializable {
-    private int code;
+    private final int code;
     private String message;
     private T data;
 
@@ -59,31 +57,31 @@ public class ServerResponse<T> implements Serializable {
     }
 
     public static <T> ServerResponse<T> createBySuccess() {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode());
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode());
     }
 
     public static <T> ServerResponse<T> createBySuccessMessage(String message) {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),message);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(),message);
     }
 
     public static <T> ServerResponse<T> createBySuccess(T data) {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),data);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(),data);
     }
 
     public static <T> ServerResponse<T> createBySuccess(String message, T data) {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),message,data);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(),message,data);
     }
 
     public static <T> ServerResponse<T> createByError() {
-        return new ServerResponse<T>(ResponseCode.ERROR.getCode(),ResponseCode.ERROR.getDesc());
+        return new ServerResponse<>(ResponseCode.ERROR.getCode(),ResponseCode.ERROR.getDesc());
     }
 
     public static <T> ServerResponse<T> createByErrorMessage(String errorMessage) {
-        return new ServerResponse<T>(ResponseCode.ERROR.getCode(),errorMessage);
+        return new ServerResponse<>(ResponseCode.ERROR.getCode(),errorMessage);
     }
 
     public static <T> ServerResponse<T> createByErrorCodeMessage(int code, String errorMessage) {
-        return new ServerResponse<T>(code,errorMessage);
+        return new ServerResponse<>(code,errorMessage);
     }
 
     @Override

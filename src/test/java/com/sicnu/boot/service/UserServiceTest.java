@@ -5,14 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Map;
+
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.service
- * @className: testUserService
- * @author: hjh
- * @description: TODO
- * @date: 2022-09-11 9:45
- * @version:
+ * description:
+ * @author :     胡建华
+ * Data: 2022-09-11 9:45
  */
 @SpringBootTest
 public class UserServiceTest {
@@ -26,7 +24,7 @@ public class UserServiceTest {
 
     @Test
     void testLogin(){
-        ServerResponse admin1 = userService.login("admin12", "1234568");
+        ServerResponse<String> admin1 = userService.login("admin12", "1234568");
         System.out.println(admin1);
     }
 }

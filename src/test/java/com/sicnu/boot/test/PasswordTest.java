@@ -6,13 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.test
- * @className: PasswordTest
- * @author: hjh
- * @description: TODO
- * @date: 2022-09-11 9:19
- * @version:
+ * description:
+ * @author :     胡建华
+ * Data: 2022-09-11 9:19
  */
 @SpringBootTest
 public class PasswordTest {

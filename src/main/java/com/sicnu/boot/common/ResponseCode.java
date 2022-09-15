@@ -1,13 +1,9 @@
 package com.sicnu.boot.common;
 
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.common
- * @className: ResponseCode
- * @author: hjh
- * @description: TODO
- * @date: 2022-09-10 10:36
- * @version:
+ * description:  响应码
+ * @author :     胡建华
+ * Data: 2022-09-10 10:36
  */
 public enum ResponseCode {
     SUCCESS(200,"SUCCESS"),

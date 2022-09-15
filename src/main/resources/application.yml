@@ -8,6 +8,29 @@ spring:
       url: jdbc:mysql://localhost:3306/computer-system?serverTimezone=UTC&useAffectedRows=true
       username: root
       password: 123456
+  #配置redis
+  redis:
+    #配置主机号
+    host: 127.0.0.1
+    #配置端口号
+    port: 6379
+    #配置密码
+    password: 123456
+    #配置数据库索引（默认为0）
+    database: 1
+    client-type: jedis
+    jedis:
+      pool:
+        #连接池对打阻塞等待时间（负表示没有限制）
+        max-wait: 10000
+        #连接池最大连接数(负表示没有限制)
+        max-active: 100
+        #连接池中的最大空闲链接
+        max-idle: 20
+        #连接池中的最小空闲链接
+        min-idle: 0
+    #链接超时时间
+    timeout: 3000
 
 mybatis:
   type-aliases-package: com.sicnu.boot.pojo
@@ -22,3 +45,21 @@ logging:
   level:
     #??sql??
     com.sicnu.boot.mapper: debug
+
+# 腾讯云短信服务配置
+sms-config:
+  # 腾讯云账户密钥对 secretId 和 secretKey
+  secretId: AKIDa2HGzThfMn093g3FBrJXXMxjIcgW8UbU
+  secretKey: oOjpgIdiX9XhcKo33oKbdQxEFzThfMny
+  # 短信应用appId和appKey
+  appId: 1400736359
+  appKey: ed61c0223c636591f657b06cf19cdd5e
+  # 签名
+  smsSign: 仰望星空探索宇宙公众号
+  # 过期时间
+  expireTime: 10  # 10min
+  # redis存储前缀
+  phonePrefix: pinganky_sms
+  # 模板id
+  templateIds:
+    code: 1540491

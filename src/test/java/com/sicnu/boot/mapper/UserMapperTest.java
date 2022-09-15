@@ -6,13 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.mapper
- * @className: UserMapperTest
- * @author: hjh
- * @description: TODO
- * @date: 2022-09-09 20:51
- * @version:
+ * description:
+ * @author :     胡建华
+ * Data: 2022-09-09 20:51
  */
 @SpringBootTest
 public class UserMapperTest {
@@ -22,7 +18,7 @@ public class UserMapperTest {
 
     @Test
     void testLogin(){
-        User admin = userMapper.login("admin");
+        User admin = userMapper.getByUsername("admin");
         System.out.println(admin);
     }
 

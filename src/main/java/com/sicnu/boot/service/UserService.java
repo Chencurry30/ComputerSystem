@@ -1,34 +1,38 @@
 package com.sicnu.boot.service;
 
 import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.pojo.User;
+
+import java.util.Map;
 
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.service
- * @className: UserService
- * @description: TODO
- * @date: 2022-09-09 20:26
- * @version:
+ * description:
+ * @author :     胡建华
+ * Data: 2022-09-09 20:26
  */
 
 public interface UserService {
-    /**
-     * @param username: 用户名
-     * @param password: 密码
-     * @return User
-     * @description 通过用户名和密码登录
-     * @date 2022/9/9 20:47
-     */
-    ServerResponse login(String username, String password);
 
     /**
-     * @param username:
-     * @param password:
+     * description: 通过用户名和密码登录
+     *
+     * @param username: 用户名
+     * @param password: 密码
      * @return ServerResponse
-     * @author hjh
-     * @description 通过用户名和密码进行注册
-     * @date 2022/9/11 9:35
+     * @author 胡建华
+     * Date:  2022/9/15 19:17
      */
-    ServerResponse register(String username,String password);
+    ServerResponse<String> login(String username, String password);
+
+    /**
+     * description: 通过用户名和密码进行注册
+     *
+     * @param username: 用户名
+     * @param password: 密码
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/9/15 19:18
+     */
+    ServerResponse<String> register(String username,String password);
 
 }
