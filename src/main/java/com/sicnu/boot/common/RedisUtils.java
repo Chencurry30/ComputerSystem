@@ -5,7 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,8 +49,7 @@ public final class RedisUtils {
      * @return 时间(秒) 返回0代表为永久有效
      */
     public long getExpire(String key) {
-        Long expire = redisTemplate.getExpire(key, TimeUnit.SECONDS);
-        return Objects.requireNonNullElse(expire, 0L);
+        return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
 
@@ -59,7 +61,7 @@ public final class RedisUtils {
      */
     public boolean hasKey(String key) {
         try {
-            return Objects.requireNonNullElse(redisTemplate.hasKey(key),false);
+            return redisTemplate.hasKey(key);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -149,7 +151,7 @@ public final class RedisUtils {
         if (delta < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
-        return Objects.requireNonNullElse(redisTemplate.opsForValue().increment(key, delta),1L);
+        return redisTemplate.opsForValue().increment(key, delta);
     }
 
 
@@ -163,7 +165,7 @@ public final class RedisUtils {
         if (delta < 0) {
             throw new RuntimeException("递减因子必须大于0");
         }
-        return Objects.requireNonNullElse(redisTemplate.opsForValue().increment(key, -delta),1L);
+        return redisTemplate.opsForValue().increment(key, -delta);
     }
 
 
@@ -342,7 +344,7 @@ public final class RedisUtils {
      */
     public boolean sHasKey(String key, Object value) {
         try {
-            return Objects.requireNonNullElse(redisTemplate.opsForSet().isMember(key, value),false);
+            return redisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -359,7 +361,7 @@ public final class RedisUtils {
      */
     public long sSet(String key, Object... values) {
         try {
-            return Objects.requireNonNullElse(redisTemplate.opsForSet().add(key, values),0L);
+            return redisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -381,7 +383,7 @@ public final class RedisUtils {
             if (time > 0) {
                 expire(key, time, timeUnit);
             }
-            return Objects.requireNonNullElse(count,0L);
+            return count;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -396,7 +398,7 @@ public final class RedisUtils {
      */
     public long sGetSetSize(String key) {
         try {
-            return Objects.requireNonNullElse(redisTemplate.opsForSet().size(key),0L);
+            return redisTemplate.opsForSet().size(key);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -414,7 +416,7 @@ public final class RedisUtils {
 
     public long setRemove(String key, Object... values) {
         try {
-            return Objects.requireNonNullElse(redisTemplate.opsForSet().remove(key, values),0L);
+            return redisTemplate.opsForSet().remove(key, values);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -447,7 +449,7 @@ public final class RedisUtils {
      */
     public long lGetListSize(String key) {
         try {
-            return Objects.requireNonNullElse(redisTemplate.opsForList().size(key),0L);
+            return redisTemplate.opsForList().size(key);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -582,7 +584,7 @@ public final class RedisUtils {
 
     public long lRemove(String key, long count, Object value) {
         try {
-            return Objects.requireNonNullElse(redisTemplate.opsForList().remove(key, count, value),0L);
+            return redisTemplate.opsForList().remove(key, count, value);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
