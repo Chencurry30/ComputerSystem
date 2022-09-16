@@ -11,7 +11,7 @@ const routes = [{
         component: Home
     },
     {
-        path: 'loginView',
+        path: '/loginView',
         name: 'loginView',
         component: loginView
     },
@@ -19,7 +19,7 @@ const routes = [{
         path: '/webAboutIndex',
         name: 'webAboutIndex',
         component: webAboutIndex
-    }
+    },
 ]
 
 
