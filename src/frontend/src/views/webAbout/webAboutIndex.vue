@@ -112,9 +112,42 @@
           <p>高品质的服务是我们永恒追求的目标</p>
         </div>
         <div class="process-list">
-          <div class="list-item">1</div>
-          <div class="list-item">2</div>
-          <div class="list-item">3</div>
+          <div class="list-item">
+            <div class="item-box">
+              <div class="wapper">
+                <img src="../../assets/Img/webAbout/number1.png" alt="" />
+              </div>
+              <div class="wapper-info">考研报名</div>
+              <div class="wapper-line">
+                <img src="../../assets/Img/webAbout/line.png" alt="" />
+              </div>
+              <div class="wapper-bottom">选择目标院校，了解相应的考研大纲，做足万全准备</div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="item-box">
+              <div class="wapper">
+                <img src="../../assets/Img/webAbout/number2.png" alt="" />
+              </div>
+              <div class="wapper-info">考研考试</div>
+              <div class="wapper-line">
+                <img src="../../assets/Img/webAbout/line.png" alt="" />
+              </div>
+              <div class="wapper-bottom">认真看题审题，运用所准备的相关知识，沉着应考，发挥自身应有水平</div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="item-box">
+              <div class="wapper">
+                <img src="../../assets/Img/webAbout/number3.png" alt="" />
+              </div>
+              <div class="wapper-info">考研复试</div>
+              <div class="wapper-line">
+                <img src="../../assets/Img/webAbout/line.png" alt="" />
+              </div>
+              <div class="wapper-bottom">积极准备相关复试，了解相关深入的知识，向导师展示自我</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -278,28 +311,40 @@ export default {
     }
   }
   .contant_process {
-    margin: 10px auto;
+    margin: 10px auto 40px;
     width: 1200px;
-    .process-title{
+    .process-title {
       text-align: center;
       font-size: 38px;
       font-weight: 700;
       color: #f4ca59;
-      span{
-        color:#242327;
+      span {
+        color: #242327;
       }
-      p{
+      p {
         margin-bottom: 0px;
         line-height: 26px;
         font-size: 18px;
         font-weight: 400;
-        color: #9193A0;
+        color: #9193a0;
       }
     }
-    .process-list{
+    .process-list {
       display: flex;
-      .list-item{
+      .list-item {
         flex: 33%;
+        .item-box{
+          margin: 0 auto;
+          width: 300px;
+          .wapper-info{
+            padding: 5px 10px;
+            font-size: 18px;
+            color: #333333;
+          }
+          .wapper-bottom{
+            color: #9193A0
+          }
+        }
       }
     }
   }
