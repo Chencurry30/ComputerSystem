@@ -1,7 +1,6 @@
 package com.sicnu.boot.sms;
 
 
-import com.antkorwin.commonutils.exceptions.BaseException;
 import com.sicnu.boot.config.SmsProperties;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;

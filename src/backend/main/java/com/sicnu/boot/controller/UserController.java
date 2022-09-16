@@ -1,11 +1,9 @@
 package com.sicnu.boot.controller;
 
 import com.sicnu.boot.common.ServerResponse;
-import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,8 +28,8 @@ public class UserController {
     private ISmsService smsService;
 
     @PostMapping("/login")
-    public ServerResponse login(String username, String password, HttpSession session){
-        ServerResponse<String> response = userService.login(username, password);
+    public ServerResponse<Map<String,String>> login(String username, String password, HttpSession session){
+        ServerResponse<Map<String,String>> response = userService.login(username, password);
         if(response.isSuccess()){
             //判断是否成功登录，如果成功，存放token
             Map<String,String> map = new HashMap<>();

@@ -6,12 +6,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * @projectName: computer-system
- * @package: com.sicnu.boot.config
- * @className: CloseSecurityConfig
- * @author: hjh
- * @description: 使访问接口时，spring-security失效，无需账号和密码
- * @date: 2022-09-11 10:12
+ * description:  使访问接口时，spring-security失效，无需账号和密码
+ *
+ * @author :  2022-09-11 10:12
  * @version:
  */
 

@@ -24,7 +24,7 @@ public class UserServiceTest {
 
     @Test
     void testLogin(){
-        ServerResponse<String> admin1 = userService.login("admin12", "1234568");
+        ServerResponse<Map<String,String>> admin1 = userService.login("admin12", "1234568");
         System.out.println(admin1);
     }
 }

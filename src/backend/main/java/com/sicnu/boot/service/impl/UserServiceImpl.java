@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public ServerResponse<String> login(String username, String password) {
+    public ServerResponse<Map<String,String>> login(String username, String password) {
         //首先判断用户名是否存在
         Integer resultCount = userMapper.checkUsername(username);
         if(resultCount == 0){

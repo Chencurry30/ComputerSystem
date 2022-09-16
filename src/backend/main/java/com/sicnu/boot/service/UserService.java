@@ -1,7 +1,6 @@
 package com.sicnu.boot.service;
 
 import com.sicnu.boot.common.ServerResponse;
-import com.sicnu.boot.pojo.User;
 
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public interface UserService {
      * @author 胡建华
      * Date:  2022/9/15 19:17
      */
-    ServerResponse<String> login(String username, String password);
+    ServerResponse<Map<String,String>> login(String username, String password);
 
     /**
      * description: 通过用户名和密码进行注册

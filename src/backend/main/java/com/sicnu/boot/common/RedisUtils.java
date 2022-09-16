@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * Data: 2022-09-15 15:00
  */
 @Component
+@SuppressWarnings({"uncheck"})
 public final class RedisUtils {
 
     @Resource
