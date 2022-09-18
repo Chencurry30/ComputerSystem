@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Resource
@@ -26,6 +26,11 @@ public class UserController {
 
     @Resource
     private ISmsService smsService;
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
 
     @PostMapping("/login")
     public ServerResponse<Map<String,String>> login(@RequestBody Map<String,String> map, HttpSession session){
