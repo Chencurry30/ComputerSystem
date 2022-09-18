@@ -1,5 +1,8 @@
 server:
   port: 8989
+  servlet:
+    #设置访问url前缀
+    context-path: /api
 
 spring:
   datasource:
@@ -35,15 +38,15 @@ spring:
 mybatis:
   type-aliases-package: com.sicnu.boot.pojo
   configuration:
-    # ????uName?????u_name
+    # 数据库自动驼峰转换 user-name 对应 userName
     map-underscore-to-camel-case: true
-  #mapper??????
+  #mapper文件地址
   mapper-locations: classpath:mapper/*Mapper.xml
 
 
 logging:
   level:
-    #??sql??
+    #开启sql打印
     com.sicnu.boot.mapper: debug
 
 # 腾讯云短信服务配置
