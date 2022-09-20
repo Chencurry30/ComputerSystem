@@ -23,13 +23,13 @@
         <div class="avatar_box">
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
-        <el-form label-width="0px" class="login_in" :model="userInfo">
+        <el-form label-width="0px" class="login_in">
           <el-form-item prop="account">
             <el-input
               type="text"
               prefix-icon="el-icon-user"
               placeholder="请输入账号"
-              v-model="userInfo.account"
+              v-model="userName"
             ></el-input>
           </el-form-item>
           <el-form-item prop="password">
@@ -37,7 +37,7 @@
               type="password"
               prefix-icon="el-icon-thumb"
               placeholder="请输入密码"
-              v-model="userInfo.password"
+              v-model="password"
             ></el-input>
           </el-form-item>
 
@@ -59,7 +59,7 @@
             </div>
           </div>
           <el-form-item class="btns">
-            <el-button type="primary">登录</el-button>
+            <el-button type="primary" @click="goToLogin">登录</el-button>
             <el-button>注册</el-button>
           </el-form-item>
           <div class="stytem">
@@ -76,24 +76,33 @@
   </div>
 </template>
 <script>
+import { userLogin } from "@/Servers/ServersApi";
 export default {
   name: "loginView",
   data() {
     return {
       automaticLogin: false, //自动登录
-      userInfo:{
-        account:'',
-        password:''
-      }
+      userName: "", //账号
+      password: "", //密码
     };
   },
   methods: {
+    //是否自动登录
     submitLogin() {
       this.automaticLogin = !this.automaticLogin;
     },
     backHome() {
       let location = { name: "Home" };
       this.$router.push(location);
+    },
+    //登录
+    goToLogin() {
+      //JSON格式一直我这里没解决相关问题
+      userLogin({ username: this.userName, password: this.password }).then(
+        (res) => {
+          console.log(res);
+        }
+      );
     },
   },
   computed: {},
@@ -152,7 +161,7 @@ export default {
 }
 
 .login_in {
-z-index: 999;
+  z-index: 999;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -162,7 +171,7 @@ z-index: 999;
     left: 7%;
     width: 360px;
   }
-  .el-button{
+  .el-button {
     padding: 12px 50px;
   }
   .tablenav {

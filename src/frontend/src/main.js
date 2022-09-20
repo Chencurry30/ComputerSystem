@@ -14,7 +14,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)    //引用插件
 
 //引入bootstrap库 
-import BootstrapVue from "bootstrap-vue";
+import BootstrapVue from 'bootstrap-vue';
 Vue.use(BootstrapVue)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -24,11 +24,12 @@ import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
 
 
+//全局注册qs序列化object对象(this.$qs运用) 
+import qs from 'qs';
+Vue.prototype.$qs = qs
 
 
 Vue.config.productionTip = false
-
-
 new Vue({
   render: h => h(App),
   store,
