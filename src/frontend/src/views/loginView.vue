@@ -23,13 +23,13 @@
         <div class="avatar_box">
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
-        <el-form label-width="0px" class="login_in">
-          <el-form-item prop="account">
+        <el-form label-width="0px" class="login_in" ref="dataForm">
+          <el-form-item prop="username">
             <el-input
               type="text"
               prefix-icon="el-icon-user"
               placeholder="请输入账号"
-              v-model="userName"
+              v-model="dataForm.username"
             ></el-input>
           </el-form-item>
           <el-form-item prop="password">
@@ -37,7 +37,7 @@
               type="password"
               prefix-icon="el-icon-thumb"
               placeholder="请输入密码"
-              v-model="password"
+              v-model="dataForm.password"
             ></el-input>
           </el-form-item>
 
@@ -75,6 +75,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { userLogin } from "@/Servers/ServersApi";
 export default {
@@ -82,8 +83,11 @@ export default {
   data() {
     return {
       automaticLogin: false, //自动登录
-      userName: "", //账号
-      password: "", //密码
+      dataForm:{
+        username: "", //账号
+        password: "", //密码
+      },
+
     };
   },
   methods: {
@@ -97,10 +101,10 @@ export default {
     },
     //登录
     goToLogin() {
-      //JSON格式一直我这里没解决相关问题
-      userLogin({ username: this.userName, password: this.password }).then(
-        (res) => {
-          console.log(res);
+      let data = this.dataForm
+      // console.log(data);
+      userLogin(data).then( res => {
+          console.log(res.data);
         }
       );
     },

@@ -1,13 +1,18 @@
 <template>
-  <div></div>
+  <div>
+    <Lb></Lb>
+  </div>
 </template>
 
 
 
 <script>
+  import Lb from '../components/Home/Lb.vue'
 export default {
   name: "Home",
-  
+  components:{
+    Lb
+  },
   data() {
     return {
       UserInfoLogin: {
