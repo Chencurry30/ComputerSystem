@@ -1,9 +1,9 @@
 <template>
   <div id="app">
 
-    <Header v-if="showHeader"></Header>
+    <Header v-if="hiddenComponent"></Header>
     <router-view></router-view>
-    <Fotter v-if="showFotter"></Fotter>
+    <Fotter v-if="hiddenComponent"></Fotter>
 
   </div>
 </template>
@@ -20,13 +20,10 @@ export default {
     Header,
     Fotter,
   },
-  computed:{
-    showHeader(){
-      return this.$route.name !== 'loginView'
+  computed: {
+    hiddenComponent() {
+      return this.$route.meta.showTopFotter;
     },
-    showFotter(){
-      return this.$route.name !== 'loginView'
-    }
   },
 }
 

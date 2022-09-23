@@ -59,7 +59,6 @@ export default {
   name: "webHeader",
   methods: {
     gotologin() {
-      console.log(1);
       let location = { name: "loginView" };
       this.$router.push(location);
     },
@@ -177,7 +176,6 @@ export default {
         padding: 0 12px 0 5px;
         width: 200px;
       }
-      input:active
     }
   }
 }
