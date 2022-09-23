@@ -20,10 +20,13 @@
     </vue-particles>
     <div class="register_container">
       <div class="register_box">
+
         <div class="avatar_box">
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
+
         <el-form label-width="0px" class="login_in">
+
           <div class="navSelect">
             <div class="select-left">
               <div class="left-btn" @click="selectRegisterWay">账号注册</div>
@@ -53,13 +56,13 @@
               ></el-input>
             </el-form-item>
           </div>
-          <div class="form-info" v-show="selectWay">
+          <div class="form-info" v-show="selectWay" ref="dataForm">
             <el-form-item prop="account">
               <el-input
                 type="text"
                 prefix-icon="el-icon-user"
                 placeholder="请输入手机号"
-                v-model="userName"
+                v-model="dataForm.phone"
               ></el-input>
             </el-form-item>
             <el-form-item prop="verificationCode" class="verification">
@@ -67,7 +70,7 @@
                 type="password"
                 prefix-icon="el-icon-thumb"
                 placeholder="请输入验证码"
-                v-model="verificationCode"
+                v-model="dataForm.verificateCode"
               ></el-input>
               <div class="getVerificationCode" @click="getVerCode">
                 {{ verificationCodeInfo }}
@@ -90,7 +93,8 @@
           </div>
 
           <el-form-item class="btns">
-            <el-button type="primary" @click="goToLogin">登录</el-button>
+            <el-button type="primary">登录</el-button>
+            <!-- <el-button type="primary">注册</el-button> -->
           </el-form-item>
 
           <div class="stytem">
@@ -103,11 +107,13 @@
               </div>
             </div>
           </div>
+
         </el-form>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import { userLogin } from "@/Servers/ServersApi";
 export default {
@@ -119,10 +125,11 @@ export default {
       bVerification:false,   //节流阀，控制点击获取验证码
       verificationCodeInfo:"发送验证码",
       selectWay: false, //注册的方式  false 表示账号密码注册  TRUE 表示手机注册
-      
-      dataForm:{
-        username: "", //账号
-        password: "", //密码
+      dataForm:{  
+        username: '', //账号
+        password: '', //密码
+        phone:'',         //手机号
+        verificateCode:'',  //验证码  
       },
 
     };
