@@ -35,13 +35,13 @@
             </div>
           </div>
 
-          <div class="form-info" v-show="!selectWay">
-            <el-form-item prop="account">
+          <div class="form-info" v-show="!selectWay" ref="dataForm">
+            <el-form-item prop="username">
               <el-input
                 type="text"
                 prefix-icon="el-icon-user"
                 placeholder="请输入账号"
-                v-model="userName"
+                v-model="dataForm.username"
               ></el-input>
             </el-form-item>
             <el-form-item prop="password">
@@ -49,17 +49,17 @@
                 type="password"
                 prefix-icon="el-icon-thumb"
                 placeholder="请输入密码"
-                v-model="password"
+                v-model="dataForm.password"
               ></el-input>
             </el-form-item>
           </div>
-          <div class="form-info" v-show="selectWay">
-            <el-form-item prop="account">
+          <div class="form-info" v-show="selectWay" ref="dataForm">
+            <el-form-item prop="phone">
               <el-input
                 type="text"
                 prefix-icon="el-icon-user"
                 placeholder="请输入手机号"
-                v-model="userName"
+                v-model="dataForm.phone"
               ></el-input>
             </el-form-item>
             <el-form-item prop="verificationCode" class="verification">
@@ -67,7 +67,7 @@
                 type="password"
                 prefix-icon="el-icon-thumb"
                 placeholder="请输入验证码"
-                v-model="verificationCode"
+                v-model="dataForm.verificationCode"
               ></el-input>
               <div class="getVerificationCode" @click="getVerCode">
                 {{ verificationCodeInfo }}
@@ -91,7 +91,7 @@
 
           <el-form-item class="btns">
             <!-- <el-button type="primary">登录</el-button> -->
-            <el-button type="primary">注册</el-button>
+            <el-button type="primary" @click="goToRegister">注册</el-button>
           </el-form-item>
 
           <div class="stytem">
@@ -110,6 +110,7 @@
   </div>
 </template>
 <script>
+import { userRegister } from "@/Servers/ServersApi";
 export default {
   name: "registerView",
   data() {
@@ -119,9 +120,12 @@ export default {
       bVerification:false,   //节流阀，控制点击获取验证码
       verificationCodeInfo:"发送验证码",
       selectWay: false, //注册的方式  false 表示账号密码注册  TRUE 表示手机注册
-      userName: "", //账号
-      password: "", //密码
-      verificationCode: "", //确认密码
+      dataForm:{  
+        username: '', //账号
+        password: '', //密码
+        phone:'',         //手机号
+        verificateCode:'',  //验证码  
+      },
     };
   },
   methods: {
@@ -155,14 +159,31 @@ export default {
         }
       },1000)
     },
+    //注册
+    goToRegister() {
+      let data = this.dataForm
+      // console.log(data);
+      userRegister(data).then( res => {
+          console.log(res.data);
+          if(res.data.code===200){
+            this.$message({
+              message: "恭喜你，注册成功！请登录",
+              type: "success",
+            });
+            this.$router.push({name:'loginView'})
+          }
+          else if (res.data.code === 201) {
+            this.$message.error("用户名重复，请重新输入！");
+            this.dataForm = {
+              username: "",
+              password: ""
+            };
+          }
+        }
+      )
   },
-  computed: {
-
-  },
-  mounted() {
-    console.log(this.$route);
-  },
-};
+}
+}
 </script>
 
 <style scoped lang="less">
