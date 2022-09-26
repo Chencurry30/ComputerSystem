@@ -1,5 +1,6 @@
 package com.sicnu.boot.controller;
 
+import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.service.UserService;
@@ -33,39 +34,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ServerResponse<Map<String,String>> login(@RequestBody Map<String,String> map, HttpSession session){
-        //通过map集合获取json数据
-        if(!map.containsKey("username")){
-            return ServerResponse.createByErrorMessage("用户名为空");
-        }else if (!map.containsKey("password")){
-            return ServerResponse.createByErrorMessage("密码为空");
-        }
-        //取出username和password
-        String username = map.get("username");
-        String password = map.get("password");
-        ServerResponse<Map<String,String>> response = userService.login(username, password);
-        if(response.isSuccess()){
-            //判断是否成功登录，如果成功，存放token
-            Map<String,String> res = new HashMap<>();
-            res.put("token",session.getId());
-            return ServerResponse.createBySuccess("登录成功",res);
-        }
-        log.info("username:{}, password:{}, data:{}", username, password, response.getData());
-        return response;
+    public ServerResponse<Map<String,String>> login(@RequestBody User user){
+        return userService.login(user);
     }
 
     @PostMapping("/register")
-    public ServerResponse<String> register(@RequestBody Map<String,String> map){
-        //通过map集合获取json数据
-        if(!map.containsKey("username")){
-            return ServerResponse.createByErrorMessage("用户名为空");
-        }else if (!map.containsKey("password")){
-            return ServerResponse.createByErrorMessage("密码为空");
-        }
-        //取出username和password
-        String username = map.get("username");
-        String password = map.get("password");
-        return userService.register(username, password);
+    public ServerResponse<String> register(@RequestBody User user){
+        return userService.register(user);
     }
 
     @PostMapping("/sms")

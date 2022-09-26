@@ -31,9 +31,9 @@ class RedisDemoApplicationTests {
 
     @Test
     void testRedisUtils(){
-        redisUtils.set("key","value");
+//        redisUtils.set("key","value");
 
-        System.out.println(redisUtils.get("key"));
+//        System.out.println(redisUtils.get("key"));
     }
 
 }

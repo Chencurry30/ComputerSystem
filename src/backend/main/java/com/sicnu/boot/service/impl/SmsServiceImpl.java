@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * description:
  * @author :     胡建华
@@ -58,7 +60,7 @@ public class SmsServiceImpl implements ISmsService {
         }
         if (resCode.equals(SmsResponseCodeEnum.OK.getCode())) {
             // 返回ok，缓存
-            redisUtils.set(smsKey, smsRandomCode, Long.parseLong(smsProperties.getExpireTime()) * 60);
+            redisUtils.setCacheObject(smsKey, smsRandomCode, Integer.parseInt(smsProperties.getExpireTime()), TimeUnit.HOURS);
             return ServerResponse.createBySuccessMessage("发送成功");
         } else {
             if (sendStatuses != null){
@@ -85,11 +87,11 @@ public class SmsServiceImpl implements ISmsService {
                 "wxUser_sign");
         // 如果key存在（存在并且未过期）
         if (redisUtils.hasKey(smsKey)) {
-            String cacheCode = redisUtils.get(smsKey).toString();
+            String cacheCode = redisUtils.getCacheObject(smsKey).toString();
             if (cacheCode.equals(code)) {
                 //验证码正确
                 //删除验证码缓存
-                redisUtils.del(smsKey);
+                redisUtils.deleteObject(smsKey);
                 log.info("【短信业务-微信公众号手机认证成功】phone：" + phone);
                 return ServerResponse.createBySuccessMessage("手机验证成功");
             } else {

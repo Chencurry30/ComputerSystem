@@ -19,12 +19,12 @@ public class UserServiceTest {
 
     @Test
     void testRegister(){
-        userService.register("admin1","123456");
+//        userService.register("admin1","123456");
     }
 
     @Test
     void testLogin(){
-        ServerResponse<Map<String,String>> admin1 = userService.login("admin12", "1234568");
-        System.out.println(admin1);
+//        ServerResponse<Map<String,String>> admin1 = userService.login("admin12", "1234568");
+//        System.out.println(admin1);
     }
 }

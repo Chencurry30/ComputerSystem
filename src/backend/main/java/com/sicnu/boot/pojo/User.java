@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-  private long userId;
+  private Long userId;
   private String username;
   private String password;
   private String phone;
   private String email;
-  private long age;
-  private long sex;
-  private long role;
+  private Long age;
+  private Long sex;
+  private Long role;
   private String image;
-  private long powerId;
+  private Long powerId;
 }

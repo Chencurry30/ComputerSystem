@@ -18,7 +18,7 @@ public class PasswordTest {
 
     @Test
     void testPasswordEncoder(){
-        String encode = passwordEncoder.encode("123");
+        String encode = passwordEncoder.encode("123456");
         System.out.println(encode);
 
         System.out.println(passwordEncoder.matches("123", encode));
