@@ -2,12 +2,10 @@ package com.sicnu.boot.service;
 
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Map;
 
 /**
  * description:
+ *
  * @author :     胡建华
  * Data: 2022-09-09 20:26
  */
@@ -34,4 +32,13 @@ public interface UserService {
      */
     ServerResponse<String> register(User user);
 
+    /**
+     * description: 退出登录，删除redis存储信息
+     *
+     * @param :
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/9/26 22:51
+     */
+    ServerResponse logout();
 }

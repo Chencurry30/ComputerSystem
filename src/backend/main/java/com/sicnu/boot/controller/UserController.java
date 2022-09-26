@@ -56,4 +56,10 @@ public class UserController {
     public ServerResponse<String> verifyCode(String phone,String code){
         return smsService.verifyCode(phone,code);
     }
+
+    @PostMapping("/logout")
+    public ServerResponse logout(){
+        return userService.logout();
+
+    }
 }

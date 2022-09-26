@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,25 +35,12 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private AuthenticationManager authenticationManager;
+
     @Resource
     private RedisUtils redisUtils;
 
     @Override
     public ServerResponse login(User user) {
-//        //首先判断用户名是否存在
-//        Integer resultCount = userMapper.checkUsername(username);
-//        if(resultCount == 0){
-//            return ServerResponse.createByErrorMessage("用户名不存在");
-//        }
-//        //取出该用户名对应的用户
-//        User user = userMapper.getByUsername(username);
-//        //判断该密码是否与加密密码一致
-//        if(!passwordEncoder.matches(password,user.getPassword())){
-//            //查询结果为空，密码错误
-//            return ServerResponse.createByErrorMessage("密码错误");
-//        }
-//        return ServerResponse.createBySuccessMessage("登录成功");
-        //Authentication authenticate进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         //认证失败，抛出异常
@@ -86,6 +74,17 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.createByErrorMessage("注册失败，请重新注册");
         }
         return ServerResponse.createBySuccessMessage("注册成功");
+    }
+
+    @Override
+    public ServerResponse logout() {
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userid = loginUser.getUser().getUserId();
+        //删除redis的值
+        redisUtils.deleteObject("login:"+userid);
+        return ServerResponse.createBySuccessMessage("退出成功");
     }
 
 }
