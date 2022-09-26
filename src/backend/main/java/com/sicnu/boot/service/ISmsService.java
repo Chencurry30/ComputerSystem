@@ -1,6 +1,6 @@
 package com.sicnu.boot.service;
 
-import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.utils.ServerResponse;
 
 /**
  * description:

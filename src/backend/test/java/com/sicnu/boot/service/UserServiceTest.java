@@ -1,6 +1,6 @@
 package com.sicnu.boot.service;
 
-import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.utils.ServerResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

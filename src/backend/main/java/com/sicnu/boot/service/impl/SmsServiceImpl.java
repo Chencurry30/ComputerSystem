@@ -1,8 +1,8 @@
 package com.sicnu.boot.service.impl;
 
 
-import com.sicnu.boot.common.RedisUtils;
-import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.utils.RedisUtils;
+import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.config.SmsProperties;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.sms.SmsCodeUtil;

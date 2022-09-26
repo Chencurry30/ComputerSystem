@@ -1,7 +1,7 @@
 package com.sicnu.boot.config;
 
 
-import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.utils.ServerResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

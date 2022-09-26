@@ -1,4 +1,4 @@
-package com.sicnu.boot.common;
+package com.sicnu.boot.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

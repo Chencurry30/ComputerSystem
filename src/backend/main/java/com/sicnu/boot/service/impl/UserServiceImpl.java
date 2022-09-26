@@ -1,6 +1,6 @@
 package com.sicnu.boot.service.impl;
 
-import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserService;

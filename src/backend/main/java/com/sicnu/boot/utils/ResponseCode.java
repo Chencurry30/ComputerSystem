@@ -1,4 +1,4 @@
-package com.sicnu.boot.common;
+package com.sicnu.boot.utils;
 
 /**
  * description:  响应码

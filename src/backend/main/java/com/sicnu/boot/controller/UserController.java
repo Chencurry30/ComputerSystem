@@ -1,6 +1,6 @@
 package com.sicnu.boot.controller;
 
-import com.sicnu.boot.common.ServerResponse;
+import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.service.UserService;
 import lombok.extern.slf4j.Slf4j;

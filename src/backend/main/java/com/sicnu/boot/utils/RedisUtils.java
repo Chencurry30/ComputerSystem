@@ -1,4 +1,4 @@
-package com.sicnu.boot.common;
+package com.sicnu.boot.utils;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
