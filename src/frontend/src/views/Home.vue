@@ -1,6 +1,7 @@
 <template>
   <div>
     <Lb></Lb>
+    <teacher-module></teacher-module>
   </div>
 </template>
 
@@ -8,12 +9,15 @@
 
 <script>
   import Lb from '../components/Home/Lb.vue'
+import TeacherModule from '../components/teacherModule.vue';
 export default {
   name: "Home",
   components:{
-    Lb
+    Lb,
+    TeacherModule
   },
   data() {
+    return{}
   },
 };
 </script>
