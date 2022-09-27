@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * description:
+ * description:   用户控制类
  * @author :     胡建华
  * Data: 2022-09-09 20:31
  */
@@ -38,6 +38,12 @@ public class UserController {
         return userService.login(user);
     }
 
+    @PostMapping("/logout")
+    public ServerResponse logout(){
+        return userService.logout();
+
+    }
+
     @PostMapping("/register")
     public ServerResponse<String> register(@RequestBody User user){
         return userService.register(user);
@@ -55,11 +61,5 @@ public class UserController {
     @PostMapping("/verify")
     public ServerResponse<String> verifyCode(String phone,String code){
         return smsService.verifyCode(phone,code);
-    }
-
-    @PostMapping("/logout")
-    public ServerResponse logout(){
-        return userService.logout();
-
     }
 }

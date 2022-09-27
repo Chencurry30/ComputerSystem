@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 import java.nio.charset.Charset;
 
 /**
- * description:  TODO
+ * description:  用于redis序列化的
  *
  * @author :  胡建华
  * Data:    2022/09/26 18:53

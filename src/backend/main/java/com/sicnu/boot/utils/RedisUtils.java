@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * description:  redis通用类
+ * description:  redis工具类
  * @author :     胡建华
  * Data: 2022-09-15 15:00
  */

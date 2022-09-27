@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * description:  TODO
+ * description:  权限不足的异常处理器
  *
  * @author :  胡建华
  * Data:    2022/09/26 18:58

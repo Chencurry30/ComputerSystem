@@ -83,6 +83,7 @@ public class SecurityConfig {
                 .accessDeniedHandler(accessDeniedHandler)
                 .and()
 
+                //TODO 认证处理器为成功
                 .formLogin()
                 // 配置认证成功处理器
                 .successHandler(successHandler)

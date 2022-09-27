@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * description:  TODO
+ * description:  Redis配置类
  *
  * @author :  胡建华
  * Data:    2022/09/25 9:39

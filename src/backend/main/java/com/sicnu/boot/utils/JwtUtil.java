@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * description:  TODO
+ * description:  jwt工具类
  *
  * @author :  胡建华
  * Data:    2022/09/26 19:20

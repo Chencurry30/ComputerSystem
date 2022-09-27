@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * description:  TODO
+ * description:  用来封装用户权限信息的类
  *
  * @author :  胡建华
  * Data:    2022/09/26 19:24

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * description:  TODO
+ * description:  用于校验用户的拦截器
  *
  * @author :  胡建华
  * Data:    2022/09/26 19:17
