@@ -7,9 +7,9 @@ package com.sicnu.boot.utils;
  */
 public enum ResponseCode {
     SUCCESS(200,"SUCCESS"),
-    ERROR(201,"ERROR"),
-    NEED_LOGIN(202,"NEED_LOGIN"),
-    ILLEGAL_ARGUMENT(203,"ILLEGAL_ARGUMENT");
+    ERROR(401,"ERROR"),
+    NEED_LOGIN(402,"NEED_LOGIN"),
+    ILLEGAL_ARGUMENT(406,"ILLEGAL_ARGUMENT");
 
     private final int code;
     private final String desc;
