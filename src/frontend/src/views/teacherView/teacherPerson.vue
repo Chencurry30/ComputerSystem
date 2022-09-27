@@ -1,0 +1,301 @@
+<template>
+  <div class="MainBox w">
+    <div class="Main">
+      <div class="banner">
+        <div class="banner-left">
+          <img src="../../assets/Img/teacherImg/bannerInfo.png.png" alt="" />
+        </div>
+        <div class="banner-middle">
+          <div class="middleBox">
+            <div class="middle-header">
+              <div class="middle-left">王小五</div>
+              <div class="middle-right">与他留言</div>
+            </div>
+            <div class="middle-main">
+              <p>学位：博士</p>
+              <p>教师科目：高数，现代</p>
+              <p>关注人数：10202021</p>
+            </div>
+          </div>
+        </div>
+        <div class="banner-right">
+          <div class="ImgBox">
+            <img src="../../assets/Img/teacherImg/1.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="main-connect">
+        <div class="connect-left">
+          <div class="left-MainBox">
+            <div class="left-Item">
+              <div class="Item-title">辅导资历</div>
+              <div class="Item-Info">
+                从事高等数学教育多年，在多篇核心期刊发表过相关论文，从事辅导长达5年。
+              </div>
+            </div>
+            <div class="left-Item">
+              <div class="Item-title">辅导记录</div>
+              <div class="Item-Info">
+                帮助无数考研的人在数学方面解决他们的疑难为题，至今辅导人数超50W人。
+              </div>
+            </div>
+          </div>
+
+          <div class="left-Resources">
+            <div class="ResourcesTitle">
+              <div>推荐视屏</div>
+            </div>
+            <div class="ResourcesBox">
+              <ul class="BoxItem">
+                <li class="Item">
+                  <div class="ImgBox"></div>
+                  <div class="ItemInfo">
+                    <div class="ItemInfo-left">快速理解积分</div>
+                    <div class="ItemInfo-right">2022/9/14</div>
+                  </div>
+                </li>
+                <li class="Item">
+                  <div class="ImgBox"></div>
+                  <div class="ItemInfo">
+                    <div class="ItemInfo-left">快速理解积分</div>
+                    <div class="ItemInfo-right">2022/9/14</div>
+                  </div>
+                </li>
+                <li class="Item">
+                  <div class="ImgBox"></div>
+                  <div class="ItemInfo">
+                    <div class="ItemInfo-left">快速理解积分</div>
+                    <div class="ItemInfo-right">2022/9/14</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="connect-right">
+          <div class="comTeacher">
+            <div class="title">
+              老师评论
+              <div class="styleT"></div>
+            </div>
+            <div class="label_Name">
+              <input type="text" placeholder="请输入你的用户名" />
+            </div>
+            <div class="label_email">
+              <input type="text" placeholder="请输入你的邮箱" />
+            </div>
+            <div class="label_comMessage">
+              <input type="text" placeholder="请输入你的评论" />
+            </div>
+            <div class="sub">发送评论</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "teacherPerson",
+  mounted() {
+    console.log(this.$route);
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.Main {
+  margin-top: 10px;
+  .banner {
+    display: flex;
+    height: 260px;
+    background: url("../../assets/Img/teacherImg/banner.png.png");
+    .banner-left {
+      flex: 1;
+      margin-top: 45px;
+      margin-left: 50px;
+    }
+    .banner-middle {
+      flex: 2;
+      .middleBox {
+        margin-top: 35px;
+        margin-left: 130px;
+        padding: 15px 20px 0 25px;
+        width: 352px;
+        height: 180px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        .middle-header {
+          margin-bottom: 6px;
+          display: flex;
+          justify-content: space-between;
+          .middle-left {
+            font-size: 30px;
+            color: #ff9d00;
+            font-weight: bold;
+          }
+          .middle-right {
+            margin-top: 5px;
+            width: 113px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background-color: #ff9d00;
+            border-radius: 18px;
+            font-size: 18px;
+            color: #ffffff;
+          }
+        }
+      }
+    }
+    .banner-right {
+      flex: 1;
+      .ImgBox {
+        margin-top: 10px;
+        width: 190px;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .main-connect {
+    margin-top: 15px;
+    display: flex;
+  }
+  .connect-left {
+    flex: 3;
+    //  background: #ffffff;
+    .left-MainBox {
+      padding: 30px 58px 30px 30px;
+      .left-Item {
+        display: flex;
+        margin-bottom: 25px;
+        .Item-title {
+          line-height: 30px;
+          font-size: 18px;
+          color: #333333;
+          margin-right: 36px;
+        }
+        .Item-Info {
+          line-height: 30px;
+          width: 694px;
+          font-size: 16px;
+          color: #999999;
+        }
+      }
+    }
+    .left-Resources {
+      margin-top: 10px;
+      display: flex;
+      .ResourcesTitle {
+        flex: 1;
+        div {
+          width: 100%;
+          height: 30px;
+          line-height: 30px;
+          font-size: 16px;
+          font-weight: 700;
+          text-align: center;
+        }
+      }
+      .ResourcesBox {
+        flex: 5;
+        .BoxItem {
+          overflow: hidden;
+          .Item {
+            float: left;
+            margin: 0 5px;
+            width: 240px;
+            // height: 180px;
+            overflow: hidden;
+            .ImgBox {
+              margin: 5px auto;
+              width: 100%;
+              height: 124px;
+              background: blue;
+            }
+            .ItemInfo {
+              display: flex;
+              width: 100%;
+              height: 20px;
+              line-height: 20px;
+              justify-content: space-between;
+              .ItemInfo-left {
+                margin-left: 10px;
+                font-size: 12px;
+                color: #333333;
+              }
+              .ItemInfo-right {
+                margin-right: 10px;
+                font-size: 12px;
+                color: #333333;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .connect-right {
+    flex: 1;
+    .comTeacher {
+      padding: 10px 0px 26px 5px;
+      background: #f5f7f9;
+      .title {
+        position: relative;
+        margin-left: -20px;
+        margin-top: 14px;
+        width: 276px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        text-align: center;
+        color: #ffffff;
+        background: #ff9d00;
+        .styleT {
+          position: absolute;
+          top: -25px;
+          left: 0;
+          border-width: 0;
+          width: 0px;
+          height: 0px;
+          border-top: 0px solid transparent;
+          border-bottom: 25px solid #ff9d00;
+          border-left: 15px solid transparent;
+          border-right: 0px solid #ff9d00;
+        }
+      }
+      .label_Name,
+      .label_email,
+      .label_comMessage {
+        width: 207px;
+        height: 40px;
+        border-radius: 5px;
+        margin: 16px auto 0;
+        text-indent: 0.5em;
+        background: #ffffff;
+        input {
+          margin-top: 9px;
+          background: #ffffff;
+        }
+      }
+      .sub {
+        width: 207px;
+        height: 40px;
+        border-radius: 5px;
+        background: linear-gradient(108deg, #ff6000 40%, #ff9e00);
+        margin: 16px auto 0;
+        font-size: 18px;
+        color: #fff;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>

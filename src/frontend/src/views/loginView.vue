@@ -29,11 +29,11 @@
 
           <div class="navSelect">
             <div class="select-left">
-              <div class="left-btn" @click="selectRegisterWay">账号登录</div>
+              <div class="left-btn" @click="selectRegisterWay">账号注册</div>
               <div class="btn-selected" v-show="!selectWay"></div>
             </div>
             <div class="select-right">
-              <div class="right-btn" @click="selectRegisterWay">手机登录</div>
+              <div class="right-btn" @click="selectRegisterWay">手机注册</div>
               <div class="btn-selected" v-show="selectWay"></div>
             </div>
           </div>
@@ -93,7 +93,7 @@
           </div>
 
           <el-form-item class="btns">
-            <el-button type="primary" @click="goToLogin">登录</el-button>
+            <el-button type="primary">登录</el-button>
             <!-- <el-button type="primary">注册</el-button> -->
           </el-form-item>
 
@@ -131,6 +131,7 @@ export default {
         phone:'',         //手机号
         verificateCode:'',  //验证码  
       },
+
     };
   },
   methods: {
