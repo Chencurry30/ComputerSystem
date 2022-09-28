@@ -36,14 +36,10 @@ public class LoginUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (authorities != null)
+        if (authorities != null){
             return authorities;
+        }
         //把permissions中字符串类型的权限信息转换成GrantedAuthority对象存入authorities中
-//        authorities = new ArrayList<>();
-//        for (String permission : permissions) {
-//            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permission);
-//            authorities.add(authority);
-//        }
         authorities = permissions.stream()
                 .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         return authorities;

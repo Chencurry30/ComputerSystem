@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class User {
   private Long userId;
   private String username;
+  private String nickname;
   private String password;
   private String phone;
   private String email;
@@ -23,4 +24,9 @@ public class User {
   private Long role;
   private String image;
   private Long powerId;
+
+  /**
+   * description: 手机验证码
+   */
+  private String smsCode;
 }
