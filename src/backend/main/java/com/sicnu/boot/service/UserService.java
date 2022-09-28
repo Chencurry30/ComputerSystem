@@ -3,6 +3,8 @@ package com.sicnu.boot.service;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
 
+import java.util.Map;
+
 /**
  * description:
  *
@@ -20,7 +22,7 @@ public interface UserService {
      * @author 胡建华
      * Date:  2022/9/15 19:17
      */
-    ServerResponse login(User user);
+    ServerResponse<Map<String,Object>> login(User user);
 
     /**
      * description: 通过用户名和密码进行注册
@@ -35,10 +37,9 @@ public interface UserService {
     /**
      * description: 退出登录，删除redis存储信息
      *
-     * @param :
      * @return ServerResponse
      * @author 胡建华
      * Date:  2022/9/26 22:51
      */
-    ServerResponse logout();
+    ServerResponse<String> logout();
 }

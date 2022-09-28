@@ -31,15 +31,14 @@ public interface UserMapper {
     Integer checkUsername(String username);
 
     /**
-     * description: 通过账户和密码进行注册，返回一个插入行数
+     * description: 注册用户，需要用户名，密码和手机号
      *
-     * @param username: 用户名
-     * @param password: 密码
+     * @param user:用户
      * @return Integer
      * @author 胡建华
      * Date:  2022/9/15 19:12
      */
-    Integer register(String username,String password);
+    Integer register(User user);
 
     /**
      * description: 检查手机号是否存在
