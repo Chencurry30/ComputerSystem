@@ -7,7 +7,7 @@ package com.sicnu.boot.utils;
  */
 public enum ResponseCode {
     //TODO 添加响应码
-    
+
     /**
      * description: 成功响应码
      */
