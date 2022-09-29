@@ -17,7 +17,7 @@
     </select>
 
     <insert id="register">
-        insert into user(username,password) values(#{username},#{password})
+        insert into user(username,password,phone) values(#{username},#{password},#{phone})
     </insert>
 
 

@@ -1,24 +1,22 @@
 package com.sicnu.boot.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * description:  redis通用类
+ * description:  redis工具类
  * @author :     胡建华
  * Data: 2022-09-15 15:00
  */
 @Component
-@SuppressWarnings({"uncheck"})
+@SuppressWarnings("all")
 public final class RedisUtils {
 
     @Resource
@@ -103,7 +101,7 @@ public final class RedisUtils {
     /**
      * 删除单个对象
      *
-     * @param key
+     * @param key :
      */
     public boolean deleteObject(final String key)
     {
@@ -114,7 +112,7 @@ public final class RedisUtils {
      * 删除集合对象
      *
      * @param collection 多个对象
-     * @return
+     * @return :
      */
     public long deleteObject(final Collection collection)
     {
@@ -166,8 +164,8 @@ public final class RedisUtils {
     /**
      * 获得缓存的set
      *
-     * @param key
-     * @return
+     * @param key ：
+     * @return ：
      */
     public <T> Set<T> getCacheSet(final String key)
     {
@@ -177,8 +175,8 @@ public final class RedisUtils {
     /**
      * 缓存Map
      *
-     * @param key
-     * @param dataMap
+     * @param key ：
+     * @param dataMap :
      */
     public <T> void setCacheMap(final String key, final Map<String, T> dataMap)
     {
@@ -190,8 +188,8 @@ public final class RedisUtils {
     /**
      * 获得缓存的Map
      *
-     * @param key
-     * @return
+     * @param key :
+     * @return :
      */
     public <T> Map<String, T> getCacheMap(final String key)
     {
@@ -226,8 +224,8 @@ public final class RedisUtils {
     /**
      * 删除Hash中的数据
      *
-     * @param key
-     * @param hkey
+     * @param key :
+     * @param hkey :
      */
     public void delCacheMapValue(final String key, final String hkey)
     {

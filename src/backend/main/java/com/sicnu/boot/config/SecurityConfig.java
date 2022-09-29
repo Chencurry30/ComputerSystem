@@ -1,7 +1,6 @@
 package com.sicnu.boot.config;
 
 import com.sicnu.boot.filter.JwtAuthenticationTokenFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -83,6 +82,7 @@ public class SecurityConfig {
                 .accessDeniedHandler(accessDeniedHandler)
                 .and()
 
+                //TODO 认证处理器为成功
                 .formLogin()
                 // 配置认证成功处理器
                 .successHandler(successHandler)
@@ -102,7 +102,6 @@ public class SecurityConfig {
     /**
      * description: 配置密码加密的bean
      *
-     * @param :
      * @return PasswordEncoder
      * @author 胡建华
      * Date:  2022/9/26 22:46
@@ -115,9 +114,9 @@ public class SecurityConfig {
     /**
      * 获取AuthenticationManager（认证管理器），登录时认证使用
      *
-     * @param authenticationConfiguration
-     * @return
-     * @throws Exception
+     * @param authenticationConfiguration ：
+     * @return AuthenticationManager
+     * @throws Exception ：
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

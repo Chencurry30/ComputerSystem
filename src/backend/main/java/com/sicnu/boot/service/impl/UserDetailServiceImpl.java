@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * description:  TODO
+ * description:  用于判断用户是否登录成功
  *
  * @author :  胡建华
  * Data:    2022/09/26 19:27

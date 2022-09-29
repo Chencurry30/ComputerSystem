@@ -13,6 +13,7 @@ public interface ISmsService {
      * description: 发送短信验证码
      *
      * @param phone 手机号
+     * @return : 返回响应码
      * @author 胡建华
      * Date: 2020/9/16 10:11
      */
@@ -23,6 +24,7 @@ public interface ISmsService {
      *
      * @param phone 手机号
      * @param code  验证码
+     * @return : 返回响应码
      * @author 胡建华
      * Date: 2020/9/16 10:11
      */

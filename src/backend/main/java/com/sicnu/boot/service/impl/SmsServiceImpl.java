@@ -2,6 +2,7 @@ package com.sicnu.boot.service.impl;
 
 
 import com.sicnu.boot.utils.RedisUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.config.SmsProperties;
 import com.sicnu.boot.service.ISmsService;
@@ -97,13 +98,11 @@ public class SmsServiceImpl implements ISmsService {
             } else {
                 //验证码不正确
                 log.error("【短信业务-微信公众号手机认证失败】验证码错误。phone：" + phone);
-//                throw new BaseException(ResponseEnum.SMS_CODE_VERITY_FAIL);
-                return ServerResponse.createByErrorMessage("验证码错误");
+                return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(), "验证码错误");
             }
         } else {
             log.error("【短信业务-微信公众号手机认证失败】验证码失效。phone：" + phone);
-//            throw new BaseException(ResponseEnum.SMS_CODE_EXPIRE);
-            return ServerResponse.createByErrorMessage("验证码失效");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_INVALID.getCode(), "验证码失效");
         }
     }
 
