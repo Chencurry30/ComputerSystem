@@ -1,23 +1,25 @@
 <template>
   <div>
-    <!-- <Lb></Lb> -->
-    <teacher-module></teacher-module>
+    <bannerFigure></bannerFigure>
+    <teacherModuleVue></teacherModuleVue>
   </div>
 </template>
 
 
 
 <script>
-  // import Lb from '../components/Home/Lb.vue'
-import TeacherModule from '../components/teacherModule.vue';
+  import bannerFigure from '../components/Home/bannerFigure.vue'
+  import teacherModuleVue from '../components/teacherModule.vue';
 export default {
-  name: "homeView",
+  name: "Home",
   components:{
-    // Lb,
-    TeacherModule
+    bannerFigure,
+    teacherModuleVue
   },
   data() {
-    return{}
+    return{
+      
+    }
   },
 };
 </script>

@@ -25,15 +25,15 @@
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
 
-        <el-form label-width="0px" class="login_in">
+        <el-form label-width="0px" class="login_in" @keyup.enter.native="goToLogin">
 
           <div class="navSelect">
             <div class="select-left">
-              <div class="left-btn" @click="selectRegisterWay">账号注册</div>
+              <div class="left-btn" @click="selectRegisterWay">账号登录</div>
               <div class="btn-selected" v-show="!selectWay"></div>
             </div>
             <div class="select-right">
-              <div class="right-btn" @click="selectRegisterWay">手机注册</div>
+              <div class="right-btn" @click="selectRegisterWay">手机登录</div>
               <div class="btn-selected" v-show="selectWay"></div>
             </div>
           </div>
@@ -93,7 +93,7 @@
           </div>
 
           <el-form-item class="btns">
-            <el-button type="primary">登录</el-button>
+            <el-button type="primary" @click="goToLogin" :disabled="!canSubmit">登&nbsp;&nbsp;&nbsp;&nbsp;录</el-button>
             <!-- <el-button type="primary">注册</el-button> -->
           </el-form-item>
 
@@ -131,8 +131,14 @@ export default {
         phone:'',         //手机号
         verificateCode:'',  //验证码  
       },
-
     };
+  },
+  computed:{
+    //判断提交
+    canSubmit(){
+      const { username,password } = this.dataForm
+      return Boolean(username&&password)
+    }
   },
   methods: {
     //是否自动登录
@@ -171,10 +177,31 @@ export default {
       // console.log(data);
       userLogin(data).then( res => {
           console.log(res.data);
+          const name = data.username
+          const token = res.data.data.token
+          localStorage.setItem('token',token)  //保存token到本地浏览器
           if(res.data.code===200){
+            this.$message({
+              message: "恭喜你，登录成功！欢迎用户: " + name,
+              type: "success",
+            })
             this.$router.push({name:'Home'})
           }
+          if(res.data.message==='用户名不存在'){
+            this.$message({
+              message: "该用户名不存在，请注册你的账号！",
+              type: "warning",
+            })
+          }
+          if(res.data.message==='密码错误'){
+            this.$message({
+              message: "密码错误，请重新输入密码",
+              type: "error",
+            })
+          }
         })
+          
+
     },
   },
 };
@@ -186,6 +213,8 @@ export default {
     height: calc(100%);
     position: absolute;
     background-image: url("../assets/Img/LoginImg/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .register_container {
     z-index: 55;
@@ -239,7 +268,7 @@ export default {
       display: flex;
       justify-content: space-between;
       color: #ffffff;
-      font-size: 14px;
+      font-size: 18px;
       font-family: "楷体";
       .select-left {
         position: relative;
@@ -247,7 +276,7 @@ export default {
         cursor: pointer;
         .btn-selected {
           position: absolute;
-          width: 40px;
+          width: 60px;
           height: 2px;
           bottom: -1px;
           left: 9px;
@@ -260,7 +289,7 @@ export default {
         cursor: pointer;
         .btn-selected {
           position: absolute;
-          width: 40px;
+          width: 60px;
           height: 2px;
           bottom: -1px;
           right: 9px;
@@ -347,7 +376,7 @@ export default {
       .prompt {
         margin-top: 1px;
         color: #ffffff;
-        font-size: 14px;
+        font-size: 18px;
         font-family: 楷体;
       }
     }
@@ -371,16 +400,16 @@ export default {
         }
       }
       .righttitle:hover {
-        color: blue;
+        color: rgb(236, 60, 11);
         cursor: pointer;
       }
       .lefttitle:hover {
-        color: blue;
+        color: rgb(236, 60, 11);
         cursor: pointer;
       }
     }
     .prompt:hover {
-      color: blue;
+      color: rgb(236, 60, 11);
       cursor: pointer;
     }
     //修改了button的形式 
