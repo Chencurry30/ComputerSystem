@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Lb></Lb>
+    <!-- <Lb></Lb> -->
     <teacher-module></teacher-module>
   </div>
 </template>
@@ -8,12 +8,12 @@
 
 
 <script>
-  import Lb from '../components/Home/Lb.vue'
+  // import Lb from '../components/Home/Lb.vue'
 import TeacherModule from '../components/teacherModule.vue';
 export default {
-  name: "Home",
+  name: "homeView",
   components:{
-    Lb,
+    // Lb,
     TeacherModule
   },
   data() {
