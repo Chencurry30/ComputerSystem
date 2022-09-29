@@ -9,13 +9,13 @@ import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +27,7 @@ import java.util.Objects;
  * Data: 2022-09-09 20:26
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Resource
@@ -50,7 +51,8 @@ public class UserServiceImpl implements UserService {
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         //认证失败，抛出异常
         if(Objects.isNull(authenticate)){
-            throw new RuntimeException("用户名或密码错误");
+            log.error("用户名或密码错误");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode(), "用户名或密码错误");
         }
         //使用userid生成token
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
@@ -74,17 +76,20 @@ public class UserServiceImpl implements UserService {
         //检查手机号是否存在
         Integer checkPhone = userMapper.checkPhone(user.getPhone());
         if (checkPhone == 1){
-            return ServerResponse.createByErrorMessage("手机号已存在，请重新注册");
+            log.error("手机号已存在，请重新注册");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.PHONE_REPEAT.getCode(), "手机号已存在，请重新注册");
         }
         //验证手机验证码是否正确
         ServerResponse<String> verifyCodeResponse = smsService.verifyCode(user.getPhone(), user.getSmsCode());
         if (verifyCodeResponse.getCode() != ResponseCode.SUCCESS.getCode()){
-            return ServerResponse.createByErrorMessage("验证码错误，请重新输入验证码");
+            log.error("验证码错误，请重新输入验证码");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(), "验证码错误，请重新输入验证码");
         }
         //首先判断用户名是否存在
         Integer checkUsername = userMapper.checkUsername(user.getUsername());
         if(checkUsername == 1){
-            return ServerResponse.createByErrorMessage("用户名已经存在，请重新注册");
+            log.error("用户名已经存在，请重新注册");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_REPEAT.getCode(), "用户名已经存在，请重新注册");
         }
         //对密码进行加密
         user.setPassword(passwordEncoder.encode(user.getPassword()));

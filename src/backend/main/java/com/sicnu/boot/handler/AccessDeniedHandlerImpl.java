@@ -1,6 +1,7 @@
 package com.sicnu.boot.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.WebUtils;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import java.io.IOException;
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ServerResponse<String> serverResponse = ServerResponse.createByErrorCodeMessage(HttpStatus.FORBIDDEN.value(), "权限不足");
+        ServerResponse<String> serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.FORBIDDEN.getCode(), "权限不足");
 
         String json = JSON.toJSONString(serverResponse);
         WebUtils.renderString(response,json);

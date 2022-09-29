@@ -1,6 +1,7 @@
 package com.sicnu.boot.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.WebUtils;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException){
-        ServerResponse<String> serverResponse = ServerResponse.createByErrorCodeMessage(HttpStatus.UNAUTHORIZED.value(), "认证失败请重新登录");
+        ServerResponse<String> serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.FORBIDDEN.getCode(), "认证失败请重新登录");
         String json = JSON.toJSONString(serverResponse);
         WebUtils.renderString(response,json);
     }
