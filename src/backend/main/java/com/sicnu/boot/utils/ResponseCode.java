@@ -45,7 +45,11 @@ public enum ResponseCode {
     /**
      * description: 手机号重复
      */
-    PHONE_REPEAT(413,"PHONE_REPEAT");
+    PHONE_REPEAT(413,"PHONE_REPEAT"),
+    /**
+     * description: 服务器异常
+     */
+    INTERNAL_SERVER_ERROR(500,"INTERNAL_SERVER_ERROR");
 
     private final int code;
     private final String desc;

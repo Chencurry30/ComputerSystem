@@ -16,10 +16,10 @@ public class MyControllerAdvice {
     //拦截所有异常
     //可以定制
 //    @ExceptionHandler(RuntimeException.class)
+
     @ExceptionHandler(Exception.class)
     public ServerResponse<String> handleException(Exception e){
         e.printStackTrace();
-
         return ServerResponse.createByErrorMessage(e.getMessage());
     }
 }
