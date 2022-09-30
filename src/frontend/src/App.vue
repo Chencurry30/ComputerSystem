@@ -1,24 +1,24 @@
 <template>
   <div id="app">
 
-    <Header v-if="hiddenComponent"></Header>
+    <webHeader v-if="hiddenComponent"></webHeader>
     <router-view></router-view>
-    <Fotter v-if="hiddenComponent"></Fotter>
+    <webFotter v-if="hiddenComponent"></webFotter>
 
   </div>
 </template>
 
 <script>
 
-import Header from './components/webHeader.vue';
-import Fotter from './components/webFotter.vue';
+import webHeader from './components/webHeader.vue';
+import webFotter from './components/webFotter.vue';
 
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Fotter,
+    webHeader,
+    webFotter,
   },
   computed: {
     hiddenComponent() {
