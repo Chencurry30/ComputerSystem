@@ -2,6 +2,7 @@ package com.sicnu.boot.service;
 
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.UserDetail;
 
 import java.util.Map;
 
@@ -42,4 +43,23 @@ public interface UserService {
      * Date:  2022/9/26 22:51
      */
     ServerResponse<String> logout();
+
+    /**
+     * description: 返回用户个人信息
+     *
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/9/30 9:39
+     */
+    ServerResponse<UserDetail> getUserDetail();
+
+    /**
+     * description: 修改用户信息
+     *
+     * @param userDetail:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/9/30 16:19
+     */
+    ServerResponse<UserDetail> updateUserDetail(UserDetail userDetail);
 }

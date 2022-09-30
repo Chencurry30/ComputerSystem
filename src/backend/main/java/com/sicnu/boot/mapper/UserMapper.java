@@ -21,6 +21,16 @@ public interface UserMapper {
     User getByUsername(String username);
 
     /**
+     * description: 通过id查询用户
+     *
+     * @param userId: 用户id
+     * @return User
+     * @author 胡建华
+     * Date:  2022/9/30 17:21
+     */
+    User getUserById(Integer userId);
+
+    /**
      * description: 检查用户名是否存在
      *
      * @param username: 用户名
@@ -49,4 +59,14 @@ public interface UserMapper {
      * Date:  2022/9/15 19:12
      */
     Integer checkPhone(String phone);
+
+    /**
+     * description: 更新用户信息
+     *
+     * @param user: 用户
+     * @return Integer ：返回修改行数
+     * @author 胡建华
+     * Date:  2022/9/30 16:40
+     */
+    Integer updateUser(User user);
 }

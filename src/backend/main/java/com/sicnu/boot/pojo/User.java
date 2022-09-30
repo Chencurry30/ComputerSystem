@@ -1,5 +1,6 @@
 package com.sicnu.boot.pojo;
 
+import com.sicnu.boot.vo.UserDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,20 +14,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-  private Long userId;
+  private Integer userId;
   private String username;
   private String nickname;
   private String password;
   private String phone;
   private String email;
-  private Long age;
-  private Long sex;
-  private Long role;
+  private Integer age;
+  private Integer sex;
+  private Integer role;
   private String image;
-  private Long powerId;
+  private Integer powerId;
 
   /**
    * description: 手机验证码
    */
   private String smsCode;
+
+  public User(Integer userId, UserDetail userDetail){
+    this.userId = userId;
+    this.nickname = userDetail.getNickname();
+    this.age = userDetail.getAge();
+    this.email = userDetail.getEmail();
+    this.image = userDetail.getImage();
+    this.sex = userDetail.getSex();
+  }
 }

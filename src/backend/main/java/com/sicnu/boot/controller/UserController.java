@@ -4,6 +4,7 @@ import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.service.UserService;
+import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +62,6 @@ public class UserController {
     @PostMapping("/logout")
     public ServerResponse<String> logout(){
         return userService.logout();
-
     }
 
     /**
@@ -89,6 +89,7 @@ public class UserController {
     public ServerResponse<String> sendSms(@RequestBody Map<String,String> map){
         String phoneName = "phone";
         if (!map.containsKey(phoneName)){
+            log.info("手机号为空");
             return ServerResponse.createByErrorMessage("手机号为空");
         }
         String phone = map.get("phone");
@@ -98,15 +99,51 @@ public class UserController {
     /**
      * description: 验证手机验证码
      *
-     * @param phone:
-     * @param code:
+     * @param map:
      * @return ServerResponse<String>
      * @author 胡建华
      * Date:  2022/9/28 22:11
      */
     @PostMapping("/verify")
-    public ServerResponse<String> verifyCode(String phone,String code){
-        return smsService.verifyCode(phone,code);
+    public ServerResponse<String> verifyCode(@RequestBody Map<String,String> map){
+        String phoneName = "phone";
+        String smsCodeName = "smsCodeName";
+        if (!map.containsKey(phoneName)){
+            log.info("手机号为空");
+            return ServerResponse.createByErrorMessage("手机号为空");
+        }
+        if(!map.containsKey(smsCodeName)){
+            log.info("验证码为空");
+            return ServerResponse.createByErrorMessage("验证码为空");
+        }
+        String phone = map.get("phone");
+        String smsCode = map.get("smsCode");
+        return smsService.verifyCode(phone,smsCode);
+    }
+
+    /**
+     * description: 通过token，返回用户个人信息
+     *
+     * @return ServerResponse<UserDetail>
+     * @author 胡建华
+     * Date:  2022/9/30 9:37
+     */
+    @GetMapping
+    public ServerResponse<UserDetail> getUserDetail(){
+        return userService.getUserDetail();
+    }
+
+    /**
+     * description: 修改个人信息，包括昵称，年龄，性别，头像和邮箱
+     *
+     * @param userDetail : 用户信息
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/9/30 16:13
+     */
+    @PutMapping
+    public ServerResponse<UserDetail> updateUserDetail(@RequestBody UserDetail userDetail){
+        return userService.updateUserDetail(userDetail);
     }
 
 

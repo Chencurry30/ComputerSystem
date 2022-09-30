@@ -47,6 +47,10 @@ public enum ResponseCode {
      */
     PHONE_REPEAT(413,"PHONE_REPEAT"),
     /**
+     * description: 验证码发送失败
+     */
+    SMS_NOT_SEND(414,"SMS_NOT_SEND"),
+    /**
      * description: 服务器异常
      */
     INTERNAL_SERVER_ERROR(500,"INTERNAL_SERVER_ERROR");

@@ -9,6 +9,7 @@ import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserService;
+import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -64,10 +65,8 @@ public class UserServiceImpl implements UserService {
         HashMap<String,Object> map = new HashMap<>(5);
         map.put("token",jwt);
         //返回用户部分信息
-        Map<String,String> map1 = new HashMap<>(5);
-        map1.put("nickname",loginUser.getUser().getNickname());
-        map1.put("image",loginUser.getUser().getImage());
-        map.put("user",map1);
+        UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname(),loginUser.getUser().getImage());
+        map.put("user",userDetail);
         return ServerResponse.createBySuccess("登录成功",map);
     }
 
@@ -106,10 +105,37 @@ public class UserServiceImpl implements UserService {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Long userid = loginUser.getUser().getUserId();
+        Integer userid = loginUser.getUser().getUserId();
         //删除redis的值
         redisUtils.deleteObject("login:"+userid);
         return ServerResponse.createBySuccessMessage("退出成功");
+    }
+
+    @Override
+    public ServerResponse<UserDetail> getUserDetail() {
+        //获取SecurityContextHolder中的用户信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User user = loginUser.getUser();
+        UserDetail userDetail = new UserDetail(user);
+        return ServerResponse.createBySuccess("返回成功",userDetail);
+    }
+
+    @Override
+    public ServerResponse<UserDetail> updateUserDetail(UserDetail userDetail) {
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userid = loginUser.getUser().getUserId();
+        User user = new User(userid, userDetail);
+        userMapper.updateUser(user);
+        //重新查询用户信息
+        User userById = userMapper.getUserById(userid);
+        loginUser.setUser(userById);
+        //更新redis信息
+        redisUtils.setCacheObject("login:"+userid , loginUser);
+        UserDetail userDetails = new UserDetail(userById);
+        return ServerResponse.createBySuccess("更新成功",userDetails);
     }
 
 }

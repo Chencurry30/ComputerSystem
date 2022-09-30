@@ -68,7 +68,7 @@ public class SmsServiceImpl implements ISmsService {
                 log.error("【短信业务-发送失败】phone:" + phone + "errMsg:" + sendStatuses[0].getMessage());
             }
             //throw new BaseException(ResponseEnum.SMS_NOT_SEND);
-            return ServerResponse.createByErrorMessage("发送失败");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_NOT_SEND.getCode(), "发送失败");
         }
 
     }

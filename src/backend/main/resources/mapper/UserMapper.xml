@@ -8,6 +8,10 @@
         select * from user where username = #{username}
     </select>
 
+    <select id="getUserById" resultType="User">
+        select * from user where user_id = #{userId}
+    </select>
+
     <select id="checkUsername" resultType="int">
         select count(*) from user where username = #{username}
     </select>
@@ -19,6 +23,30 @@
     <insert id="register">
         insert into user(username,password,phone) values(#{username},#{password},#{phone})
     </insert>
+
+    <update id="updateUser" parameterType="User">
+        update user 
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="image != null">
+                image = #{image}
+            </if>
+        </set>
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
 
 
 </mapper>
