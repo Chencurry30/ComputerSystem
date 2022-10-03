@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="main-right" v-else>
-          <div class="gotologin" @click="gotologin">退出登录</div>
+          <div class="gotologin" @click="gotologin">登录注册</div>
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@ export default {
       .title {
         padding: 0 5px;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 16px;
       }
     }
     .main-right {

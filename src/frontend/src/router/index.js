@@ -6,15 +6,18 @@ import systemOperation from './systemOperation'
 //老师的路由管理
 import teacherRoute from "./teacherRoute";
 import webAbout from './webAbout';
+//个人中心的相关路由
+import personRoute from "./personRoute"; 
+
 
 
 const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (location) {
+VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
 const originalReplace = VueRouter.prototype.replace
-VueRouter.prototype.replace = function replace (location) {
+VueRouter.prototype.replace = function replace(location) {
   return originalReplace.call(this, location).catch(err => err)
 }
 
@@ -22,19 +25,20 @@ VueRouter.prototype.replace = function replace (location) {
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: [
-      ...systemOperation,
-      ...teacherRoute,
-      ...webAbout,
-    ],
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    ...systemOperation,
+    ...teacherRoute,
+    ...webAbout,
+    ...personRoute,
+  ],
+  linkActiveClass:'link-active'
   
-  })
-
-router.beforeEach((to,from,next) => {  //路由守卫
-  const token = localStorage.getItem('token')
-  if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
-  else next()
+  // scrollBehavior(to, from, savedPosition) {
+  //   return {
+  //     y: 0
+  //   };
+  // },
 })
 export default router

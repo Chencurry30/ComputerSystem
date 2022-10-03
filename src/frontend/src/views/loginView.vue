@@ -25,8 +25,8 @@
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
 
-        <el-form label-width="0px" class="login_in" @keyup.enter.native="goToLogin">
-
+        <!-- <el-form label-width="0px" class="login_in" @keyup.enter.native="goToLogin"> -->
+        <el-form label-width="0px" class="login_in" @keyup.enter="goToLogin">
           <div class="navSelect">
             <div class="select-left">
               <div class="left-btn" @click="selectRegisterWay">账号登录</div>
