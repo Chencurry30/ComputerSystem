@@ -13,6 +13,7 @@
 import webHeader from './components/webHeader.vue';
 import webFotter from './components/webFotter.vue';
 
+
 export default {
   name: 'App',
   components: {

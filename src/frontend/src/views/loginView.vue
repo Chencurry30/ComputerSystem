@@ -25,8 +25,8 @@
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
 
-        <!-- <el-form label-width="0px" class="login_in" @keyup.enter.native="goToLogin"> -->
-        <el-form label-width="0px" class="login_in" @keyup.enter="goToLogin">
+        <el-form label-width="0px" class="login_in" @keyup.enter.native="goToLogin">
+
           <div class="navSelect">
             <div class="select-left">
               <div class="left-btn" @click="selectRegisterWay">账号登录</div>
@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie';
 import { userLogin } from "@/Servers/ServersApi";
 export default {
   name: "loginView",
@@ -174,9 +175,10 @@ export default {
     //登录 
     goToLogin() {
       let data = this.dataForm
-      // console.log(data);
       userLogin(data).then( res => {
-          console.log(res.data);
+          // console.log(res.data);
+          Cookies.set('name',this.dataForm.username)
+
           const name = data.username
           const token = res.data.data.token
           localStorage.setItem('token',token)  //保存token到本地浏览器

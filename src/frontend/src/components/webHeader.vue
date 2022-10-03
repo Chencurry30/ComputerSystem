@@ -8,6 +8,7 @@
             <img src="../assets/Img/webloge.png" alt="" />
           </div>
           <div class="title">旭升网</div>
+          <span class="welcome">欢迎用户：{{showUsername}}</span>
         </div>
         <div class="main-right" v-if="false">
           <div class="message-icon">
@@ -18,8 +19,12 @@
           </div>
         </div>
         <div class="main-right" v-else>
-          <div class="gotologin" @click="gotologin">登录注册</div>
+          <div class="gotoperson">
+            <router-link :to="{name:'personPage'}">个人中心</router-link>
+          </div>
+          <button class="gotologin" @click="gotologin">退出登录</button>
         </div>
+        
       </div>
     </div>
     <div class="container-xl">
@@ -55,6 +60,7 @@
   </div>
 </template>
 <script>
+import Cookie from 'js-cookie';
 export default {
   name: "webHeader",
   methods: {
@@ -63,6 +69,11 @@ export default {
       this.$router.push(location);
     },
   },
+  computed:{
+    showUsername(){
+      return Cookie.get('name') 
+      }
+  }
 };
 </script>
 
@@ -85,7 +96,13 @@ export default {
       .title {
         padding: 0 5px;
         font-weight: 700;
-        font-size: 16px;
+        font-size: 20px;
+      }
+      .welcome{
+        color: #666;
+        font-family: '楷体';
+        font-size: 17px;
+        margin-left: 15px;
       }
     }
     .main-right {
@@ -125,6 +142,14 @@ export default {
         border-radius: 10px;
         color: #fff;
         background-color: #4e71f2;
+        opacity: 0.7;
+      }
+      .gotoperson{
+        margin-top: 8px;
+        margin-right: 15px;
+        padding: 2px 10px;
+        border-radius: 10px;
+        color: #fff;
         opacity: 0.7;
       }
       .gotologin:active {

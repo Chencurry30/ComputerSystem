@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name:'bannerFigure',
+    name:'Lb',
     data(){
         return{
             imglist:[

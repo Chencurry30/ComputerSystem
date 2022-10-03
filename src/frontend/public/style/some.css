@@ -9,7 +9,8 @@ ul,ol,li{
     list-style: none;
 }
 a{
-    color: #666 !important;
+    color: #666;
+    text-decoration: none;
 }
 input{
     outline: none;
@@ -18,7 +19,7 @@ input{
 
  /*统一的宽度*/
  .w{
-    width: 1140px;
+    width: 1200px;
     margin: 0 auto;
  }
 
