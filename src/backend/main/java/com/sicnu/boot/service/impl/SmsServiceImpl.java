@@ -91,7 +91,7 @@ public class SmsServiceImpl implements ISmsService {
             String cacheCode = redisUtils.getCacheObject(smsKey).toString();
             if (cacheCode.equals(code)) {
                 //验证码正确
-                //删除验证码缓存
+                //TODO 删除验证码缓存，为了测试方便，之后在修改
                 /*redisUtils.deleteObject(smsKey);*/
                 log.info("【短信业务-微信公众号手机认证成功】phone：" + phone);
                 return ServerResponse.createBySuccessMessage("手机验证成功");
