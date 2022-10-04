@@ -30,25 +30,25 @@
           <ul class="cloumn_box">
             <li class="cloumn_item">
               <div class="item_icon">
-                <img src="@/assets/Img/Icon/1.png" alt="" />
+                <img src="../../assets/Img/Icon/systemSafe.png" alt="" />
               </div>
               <div class="item_info">
                 <div class="item_title">更新数据</div>
-                <div class="item_info">实时跟新相关数据</div>
+                <div class="item_info">数据更新安全保障</div>
               </div>
             </li>
             <li class="cloumn_item">
               <div class="item_icon">
-                <img src="@/assets/Img/Icon/2.png" alt="" />
+                <img src="../../assets/Img/Icon/organization.png" alt="" />
               </div>
               <div class="item_info">
-                <div class="item_title">服务透明</div>
-                <div class="item_info">进度网上随时可查</div>
+                <div class="item_title">内容众多</div>
+                <div class="item_info">分类详细精确选择</div>
               </div>
             </li>
             <li class="cloumn_item">
               <div class="item_icon">
-                <img src="@/assets/Img/Icon/3.png" alt="" />
+                <img src="../../assets/Img/Icon/teacherInfo.png" alt="" />
               </div>
               <div class="item_info">
                 <div class="item_title">名师解答</div>
@@ -57,7 +57,7 @@
             </li>
             <li class="cloumn_item">
               <div class="item_icon">
-                <img src="@/assets/Img/Icon/4.png" alt="" />
+                <img src="../../assets/Img/Icon/systemData.png" alt="" />
               </div>
               <div class="item_item">
                 <div class="item_title">服务水平</div>
@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="Box-right">
-        <img src="@/assets/Img/Icon/bg.png" alt="" />
+        <img src="../../assets/Img/Icon/bg.png" alt="" />
       </div>
     </div>
     <div class="container">

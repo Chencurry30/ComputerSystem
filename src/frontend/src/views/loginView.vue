@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie';
 import { userLogin } from "@/Servers/ServersApi";
 export default {
   name: "loginView",
@@ -174,9 +175,10 @@ export default {
     //登录 
     goToLogin() {
       let data = this.dataForm
-      // console.log(data);
       userLogin(data).then( res => {
-          console.log(res.data);
+          // console.log(res.data);
+          Cookies.set('name',this.dataForm.username)
+
           const name = data.username
           const token = res.data.data.token
           localStorage.setItem('token',token)  //保存token到本地浏览器

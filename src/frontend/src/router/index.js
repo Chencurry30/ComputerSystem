@@ -6,7 +6,8 @@ import systemOperation from './systemOperation'
 //老师的路由管理
 import teacherRoute from "./teacherRoute";
 import webAbout from './webAbout';
-
+//个人中心的相关路由
+import personRoute from "./personRoute"; 
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
@@ -28,6 +29,7 @@ const router = new VueRouter({
       ...systemOperation,
       ...teacherRoute,
       ...webAbout,
+      ...personRoute,
     ],
   
   })
