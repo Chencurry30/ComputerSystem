@@ -69,4 +69,56 @@ public interface UserMapper {
      * Date:  2022/9/30 16:40
      */
     Integer updateUser(User user);
+
+    /**
+     * description: 通过用户名修改密码
+     *
+     * @param username:
+     * @param password:
+     * @author 胡建华
+     * Date:  2022/10/3 19:26
+     */
+    void updatePasswordByUsername(String username,String password);
+
+    /**
+     * description: 通过手机号获取用户名
+     *
+     * @param phone:
+     * @return String
+     * @author 胡建华
+     * Date:  2022/10/3 19:27
+     */
+    String getUsernameByPhone(String phone);
+
+    /**
+     * description: 通过用户id修改手机号
+     *
+     * @param phone:
+     * @param userId:
+     * @author 胡建华
+     * Date:  2022/10/4 9:25
+     */
+    void updatePhoneByUserId(String phone,Integer userId);
+
+    /**
+     * description: 通过用户id获取用户密码
+     *
+     * @param userId:
+     * @return Integer
+     * @author 胡建华
+     * Date:  2022/10/4 9:25
+     */
+    String getPassword(Integer userId);
+
+    /**
+     * description: 通过用户id修改密码
+     *
+     * @param password:
+     * @param userId:
+     * @author 胡建华
+     * Date:  2022/10/4 9:25
+     */
+    void updatePasswordByUserId(String password,Integer userId);
+
+
 }

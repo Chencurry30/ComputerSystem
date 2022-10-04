@@ -2,6 +2,7 @@ package com.sicnu.boot.service;
 
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 
 import java.util.Map;
@@ -62,4 +63,44 @@ public interface UserService {
      * Date:  2022/9/30 16:19
      */
     ServerResponse<UserDetail> updateUserDetail(UserDetail userDetail);
+
+    /**
+     * description: 忘记密码
+     *
+     * @param user:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 16:17
+     */
+    ServerResponse<String> forgetPassword(User user);
+
+    /**
+     * description: 忘记用户名
+     *
+     * @param userDetail:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 16:17
+     */
+    ServerResponse<Map<String,String>> forgetUsername(UserDetail userDetail);
+
+    /**
+     * description: 修改手机号
+     *
+     * @param updateUser:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 21:11
+     */
+    ServerResponse<String> updatePhone(UpdateUser updateUser);
+
+    /**
+     * description: 修改密码
+     *
+     * @param updateUser:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 21:11
+     */
+    ServerResponse<String> updatePassword(UpdateUser updateUser);
 }

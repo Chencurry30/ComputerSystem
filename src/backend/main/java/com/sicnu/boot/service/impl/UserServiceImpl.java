@@ -9,6 +9,7 @@ import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserService;
+import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -79,10 +80,9 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.PHONE_REPEAT.getCode(), "手机号已存在，请重新注册");
         }
         //验证手机验证码是否正确
-        ServerResponse<String> verifyCodeResponse = smsService.verifyCode(user.getPhone(), user.getSmsCode());
-        if (verifyCodeResponse.getCode() != ResponseCode.SUCCESS.getCode()){
-            log.error("验证码错误，请重新输入验证码");
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(), "验证码错误，请重新输入验证码");
+        ServerResponse<String> verifySmsCode = verifySmsCode(user.getPhone(), user.getSmsCode());
+        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return verifySmsCode;
         }
         //首先判断用户名是否存在
         Integer checkUsername = userMapper.checkUsername(user.getUsername());
@@ -137,5 +137,111 @@ public class UserServiceImpl implements UserService {
         UserDetail userDetails = new UserDetail(userById);
         return ServerResponse.createBySuccess("更新成功",userDetails);
     }
+
+    @Override
+    public ServerResponse<String> forgetPassword(User user) {
+        //验证是否存在此用户
+        User byUsername = userMapper.getByUsername(user.getUsername());
+        if (Objects.isNull(byUsername)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USER_NOT_FOUND.getCode(), "不存在此用户");
+        }
+        //验证手机验证码是否正确
+        ServerResponse<String> verifySmsCode = verifySmsCode(user.getPhone(), user.getSmsCode());
+        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return verifySmsCode;
+        }
+        //对密码进行加密
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //修改用户密码
+        userMapper.updatePasswordByUsername(user.getUsername(),user.getPassword());
+        return ServerResponse.createBySuccessMessage("修改成功");
+    }
+
+    @Override
+    public ServerResponse<Map<String,String>> forgetUsername(UserDetail userDetail) {
+        //验证手机验证码是否正确
+        ServerResponse<String> verifySmsCode = verifySmsCode(userDetail.getPhone(), userDetail.getSmsCode());
+        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(), "手机验证码错误");
+        }
+        String username = userMapper.getUsernameByPhone(userDetail.getPhone());
+        Map<String,String> map = new HashMap<>(5);
+        map.put("username",username);
+        return ServerResponse.createBySuccess("获取成功",map);
+    }
+
+    @Override
+    public ServerResponse<String> updatePhone(UpdateUser updateUser) {
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userid = loginUser.getUser().getUserId();
+        //检查手机号是否已经存在
+        Integer integer = userMapper.checkPhone(updateUser.getPhone());
+        if (integer != 0){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.PHONE_REPEAT.getCode(), "手机号已经存在");
+        }
+        //验证旧手机号验证码
+        ServerResponse<String> verifyCode = verifySmsCode(updateUser.getOldPhone(),updateUser.getOldSmsCode());
+        if (verifyCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(),
+                    "旧手机号的验证码错误");
+        }
+        //验证新手机号验证码
+        ServerResponse<String> verifySmsCode = verifySmsCode(updateUser.getPhone(), updateUser.getSmsCode());
+        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode()
+                    , "新手机号的验证码错误");
+        }
+        //修改手机号
+        userMapper.updatePhoneByUserId(updateUser.getPhone(), userid);
+        //更新redis信息
+        loginUser.getUser().setPhone(updateUser.getPhone());
+        redisUtils.setCacheObject("login:"+userid , loginUser);
+        return ServerResponse.createBySuccessMessage("手机号更改成功");
+    }
+
+    @Override
+    public ServerResponse<String> updatePassword(UpdateUser updateUser) {
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userid = loginUser.getUser().getUserId();
+        //验证旧密码是否正确
+        boolean matches = passwordEncoder.matches(updateUser.getOldPassword(), userMapper.getPassword(userid));
+        if (!matches){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode()
+                    , "旧密码错误");
+        }
+        //验证手机验证码是否正确
+        ServerResponse<String> verifySmsCode = verifySmsCode(updateUser.getPhone(), updateUser.getSmsCode());
+        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode()
+                    , "手机号的验证码错误");
+        }
+        //修改密码
+        updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        userMapper.updatePasswordByUserId(updateUser.getPassword(), userid);
+        return ServerResponse.createBySuccessMessage("更改成功");
+    }
+
+    /**
+     * description: 验证手机验证码是否正确
+     *
+     * @param phone:
+     * @param smsCode:
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/10/3 17:22
+     */
+    private ServerResponse<String> verifySmsCode(String phone,String smsCode){
+        ServerResponse<String> verifyCodeResponse = smsService.verifyCode(phone, smsCode);
+        if (verifyCodeResponse.getCode() != ResponseCode.SUCCESS.getCode()){
+            log.error("验证码错误，请重新输入验证码");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(), "验证码错误，请重新输入验证码");
+        }
+        return ServerResponse.createBySuccess();
+    }
+
 
 }

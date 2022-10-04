@@ -60,7 +60,7 @@ sms-config:
   # 签名
   smsSign: 仰望星空探索宇宙公众号
   # 过期时间
-  expireTime: 10  # 10min
+  expireTime: 5  # 5min
   # redis存储前缀
   phonePrefix: pinganky_sms
   # 模板id

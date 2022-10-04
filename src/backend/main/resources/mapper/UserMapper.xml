@@ -12,12 +12,20 @@
         select * from user where user_id = #{userId}
     </select>
 
+    <select id="getUsernameByPhone" resultType="String">
+        select username from user where phone = #{phone}
+    </select>
+
     <select id="checkUsername" resultType="int">
         select count(*) from user where username = #{username}
     </select>
 
     <select id="checkPhone" resultType="int">
         select count(*) from user where phone = #{phone}
+    </select>
+
+    <select id="getPassword" resultType="String">
+        select password from user where user_id = #{userId}
     </select>
 
     <insert id="register">
@@ -46,6 +54,18 @@
         <where>
             user_id = #{userId}
         </where>
+    </update>
+
+    <update id="updatePasswordByUsername">
+        update user set password = #{password} where username = #{username}
+    </update>
+
+    <update id="updatePhoneByUserId">
+        update user set phone = #{phone} where user_id = #{userId}
+    </update>
+
+    <update id="updatePasswordByUserId">
+        update user set password = #{password} where user_id = #{userId}
     </update>
 
 

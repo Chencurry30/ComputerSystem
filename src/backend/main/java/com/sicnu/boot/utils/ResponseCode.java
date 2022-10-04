@@ -51,6 +51,10 @@ public enum ResponseCode {
      */
     SMS_NOT_SEND(414,"SMS_NOT_SEND"),
     /**
+     * description: 不存在此用户
+     */
+    USER_NOT_FOUND(415,"NOT_HAVE_USER"),
+    /**
      * description: 服务器异常
      */
     INTERNAL_SERVER_ERROR(500,"INTERNAL_SERVER_ERROR");

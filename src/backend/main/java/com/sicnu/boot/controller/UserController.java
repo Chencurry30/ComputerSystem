@@ -4,6 +4,7 @@ import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.service.UserService;
+import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -144,6 +145,58 @@ public class UserController {
     @PutMapping
     public ServerResponse<UserDetail> updateUserDetail(@RequestBody UserDetail userDetail){
         return userService.updateUserDetail(userDetail);
+    }
+
+    /**
+     * description: 忘记密码，需要提供用户名，手机号，验证码，密码
+     *
+     * @param user:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 16:12
+     */
+    @PutMapping("/forget/password")
+    public ServerResponse<String> forgetPassword(@RequestBody User user){
+        return userService.forgetPassword(user);
+    }
+
+    /**
+     * description: 忘记用户名，需要手机号和验证码
+     *
+     * @param userDetail:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 16:13
+     */
+    @PostMapping("/forget/username")
+    public ServerResponse<Map<String,String>> forgetUsername(@RequestBody UserDetail userDetail){
+        return userService.forgetUsername(userDetail);
+    }
+
+    /**
+     * description: 修改手机号，需要旧手机号，新手机号，旧验证码，新验证码
+     *
+     * @param updateUser:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 20:59
+     */
+    @PutMapping("/phone")
+    public ServerResponse<String> updatePhone(@RequestBody UpdateUser updateUser){
+        return userService.updatePhone(updateUser);
+    }
+
+    /**
+     * description: 修改密码，需要旧密码，新密码，手机号，验证码
+     *
+     * @param updateUser:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/3 21:00
+     */
+    @PutMapping("/password")
+    public ServerResponse<String> updatePassword(@RequestBody UpdateUser updateUser){
+        return userService.updatePassword(updateUser);
     }
 
 

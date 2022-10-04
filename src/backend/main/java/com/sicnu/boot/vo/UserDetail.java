@@ -22,6 +22,7 @@ public class UserDetail {
     private String email;
     private String image;
     private Integer sex;
+    private String smsCode;
     public UserDetail(String nickname,String image){
         this.nickname = nickname;
         this.image = image;
