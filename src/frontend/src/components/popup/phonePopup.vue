@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .tab-content {
     position: fixed;
     top: 0;

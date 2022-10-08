@@ -1,7 +1,8 @@
-//我的评论
+//老师回复(针对老师)
 <template>
   <div class="allBox">
     <div class="UserBox second">
+      这里是针对老师对提问的回复
       <div class="messageHeraer">
         <!--这里是评论信息中的一个组件，这里利用父组件向子组件传入参数即可-->
         <replyItem v-for="(item) in DataList" :key="item.id" :replyInfo="item"></replyItem>
@@ -21,22 +22,22 @@ export default {
           image:'1231231231232.123',
           nickname:'高山',
           time:'2022-6-30',
-          content:'课程66666666666，希望有相关系列课程供我们学习',
-          resourcename:'计算机组成原理'
+          content:'你的评论对我很有帮助，感谢你的发言',
+          resourcename:'回复我的'
         },
         {
           id:1236,
           image:'1231231231232.123',
           nickname:'高山星空',
           time:'2022-6-9',
-          content:'这个课程对我们的帮助都很大，感谢鬼剑相关课程给我',
-          resourcename:'计算机组成原理'
+          content:'你的评论对我很有帮助，感谢',
+          resourcename:'回复我的'
         }
       ]  
     }
   },
   components: { replyItem },
-  name: "messageReply",
+  name: "commentsReply",
 };
 </script>
 

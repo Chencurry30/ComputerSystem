@@ -16,7 +16,7 @@
       </div>
       <div class="title-right">
         <div class="more">
-          <router-link :to="{name:'teacherSelect' } ">点击更多</router-link>
+          <router-link :to="{ name: 'teacherSelect' }">点击更多</router-link>
         </div>
       </div>
     </div>
@@ -273,11 +273,12 @@ export default {
                     }
                   }
                   .Introduce-right {
+                    margin-top: 4px;
+                    margin-right: 8px;
+                    font-size: 12px;
                     img {
                       margin-top: -4px;
                     }
-                    margin-top: 4px;
-                    font-size: 12px;
                   }
                 }
               }

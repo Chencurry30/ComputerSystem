@@ -1,6 +1,7 @@
+//用户信息 
 <template>
   <div class="allBox">
-    <div class="UserBox">
+    <!-- <div class="UserBox">
       <div class="containHeader">
         <span class="headerP1">我的资料</span>
         <span class="headerP2">MY PROFILE</span>
@@ -26,7 +27,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="UserBox secondBox">
       <div class="containHeader">
         <span class="headerP1">详细信息</span>
@@ -96,8 +97,8 @@
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">性别：</span>
-              <span v-show="!editor">男</span>
-              <select id="group" v-model="userInfo.sex" v-show="editor">
+              <span v-show="!editor">{{userInfo.sex}}</span>
+              <select class="group" v-model="userInfo.sex" v-show="editor">
                 <option value="男">男</option>
                 <option value="女">女</option>
                 <option value="保密">保密</option>
@@ -124,9 +125,8 @@
             </div>
           </li>
           <div class="btn" @click="changeEditor">
-            {{editor ? '保存信息' : '修改信息'}}
-            
-            </div>
+            {{ editor ? "保存信息" : "修改信息" }}
+          </div>
         </ul>
       </div>
     </div>
@@ -255,7 +255,7 @@ export default {
       .Info-item {
         height: 30px;
         line-height: 30px;
-        margin: 5px 0px;
+        margin-bottom: 9px;
         .laber {
           display: inline-block;
           width: 80px;
@@ -263,6 +263,14 @@ export default {
         }
         .inputInfo {
           padding: 0px 10px;
+          width: 260px;
+          border-radius: 10px;
+          font-size: 16px;
+          font-family: 楷体;
+          border: 1px solid #eee;
+        }
+        .group {
+          padding: 5px 10px;
           width: 260px;
           border-radius: 10px;
           font-size: 16px;
