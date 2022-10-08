@@ -8,6 +8,8 @@ import teacherRoute from "./teacherRoute";
 import webAbout from './webAbout';
 //个人中心的相关路由
 import personRoute from "./personRoute"; 
+//视屏页面的相关路由 
+import videoRouter from './videoRouter';
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
@@ -30,13 +32,14 @@ const router = new VueRouter({
       ...teacherRoute,
       ...webAbout,
       ...personRoute,
+      ...videoRouter
     ],
   
   })
 
-router.beforeEach((to,from,next) => {  //路由守卫
-  const token = localStorage.getItem('token')
-  if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
-  else next()
-})
+// router.beforeEach((to,from,next) => {  //路由守卫
+//   const token = localStorage.getItem('token')
+//   if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
+//   else next()
+// })
 export default router

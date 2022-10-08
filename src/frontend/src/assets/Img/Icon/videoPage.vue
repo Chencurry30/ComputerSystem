@@ -76,7 +76,7 @@
           </ul>
         </div>
       </div>
-      
+
       <!--评论阶段-->
       <div class="videocommit">
         <div class="reply-header">
@@ -98,17 +98,12 @@
         <!--消息回复的组件-->
         <div class="reply-List" v-for="(item) in DataList" :key="item.id">
           <replyItem :replyInfo="item.father"></replyItem>
-          <div class="children-List hidden " :class="{unhidden:item.id === showMoreID}" >
+          <div class="children-List">
             <replyItem  v-for="(child) in item.children" :key="child.id" :replyInfo="child"></replyItem>
           </div>
-          <div class="totalNumber">
-            <div class="total" >共1223条回复</div>
-            <div class="getMore" @click="showMoreInfo(item)">点击查看</div>
-          </div>
-          <div class="children-Commit" @click="getInfo" v-show="showCommit">
-            <ReleaseItem></ReleaseItem>
-          </div>
         </div>
+
+
       </div>
     </div>
     <div class="MainBox-right">2</div>
@@ -118,15 +113,12 @@
 <script>
 import ReleaseItem from "../../components/releaseItem.vue";
 import ReplyItem from "../../components/replyItem.vue";
-import {mapState} from 'vuex'
 export default {
   name: "videoPage",
   data() {
     return {
-      showMoreID:0,
       DataList: [
         {
-          id:123123123,   //循环的key值的ID值
           father:{          
           id: 1232,
           image: "1231231231232.123",
@@ -137,8 +129,7 @@ export default {
           },
           children:[
             {
-              id: 1232123,  //循环的keyID值,
-              userId:1232,
+              id: 1232123,
               image: "1231231231232.123",
               nickname: "高山",
               time: "2022-6-30",
@@ -152,35 +143,10 @@ export default {
               time: "2022-6-30",
               content: "你的评论对我很有帮助，感谢你的发言",
               resourcename: "回复我的",
-            },
-            {
-              id: 123122,
-              image: "1231231231232.123",
-              nickname: "高山",
-              time: "2022-6-30",
-              content: "你的评论对我很有帮助，感谢你的发言",
-              resourcename: "回复我的",
-            },
-            {
-              id: 12312298,
-              image: "1231231231232.123",
-              nickname: "高山",
-              time: "2022-6-30",
-              content: "你的评论对我很有帮助，感谢你的发言",
-              resourcename: "回复我的",
-            },
-            {
-              id: 12323122,
-              image: "1231231231232.123",
-              nickname: "高山",
-              time: "2022-6-30",
-              content: "你的评论对我很有帮助，感谢你的发言",
-              resourcename: "回复我的",
             }
           ]
         },
         {
-          id:1231231,   //循环的key值的ID值
           father:{          
           id: 1232,
           image: "1231231231232.123",
@@ -189,25 +155,7 @@ export default {
           content: "你的评论对我很有帮助，感谢你的发言",
           resourcename: "回复我的",
           },
-          children:[
-            {
-              id: 1232123213123,
-              image: "1231231231232.123",
-              nickname: "高山",
-              time: "2022-6-30",
-              content: "你的评论对我很有帮助，感谢你的发言",
-              resourcename: "回复我的",
-            },
-            {
-              id: 12312123,
-              image: "1231231231232.123",
-              nickname: "高山",
-              time: "2022-6-30",
-              content: "你的评论对我很有帮助，感谢你的发言",
-              resourcename: "回复我的",
-            }
-          ]
-        }      
+        }       
       ],
     };
   },
@@ -215,19 +163,6 @@ export default {
     ReleaseItem,
     ReplyItem,
   },
-  computed:{
-    ...mapState('remark',{
-      backOtherInfo:"backOtherInfo",
-    }),
-    showCommit(){
-      return this.backOtherInfo.userId !== undefined
-    }
-  },
-  methods:{
-    showMoreInfo(item){
-      this.showMoreID = item.id;
-    },
-  }
 };
 </script>
 
@@ -359,32 +294,10 @@ export default {
 
       .reply-List{
         .children-List{
-          margin-left: 6%;
-          width: 100%;
+          float: right;
+          width: 90%;
         }
-        .children-Commit{
-            margin: 15px 0;
-          }
-        .totalNumber{
-          display: flex;
-          margin-left: 10%;
-          color: #9499a0;
-          font-size: 12px;
-          .total{
-            margin-right: 10px;
-          }
-          .getMore:hover{
-            color: #00aeec;
-          }
 
-        }
-        .hidden{
-          height: 160px;
-          overflow: hidden;
-        }
-        .unhidden{
-          height: 100%;
-        }
       }
     }
   }

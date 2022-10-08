@@ -26,3 +26,7 @@ input{
  button{
     border: 0;
  }
+ .clearfix{
+   clear: both;
+   
+ }

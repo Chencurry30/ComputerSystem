@@ -64,6 +64,7 @@ export default {
     overflow: auto;
     margin: 0;
     background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
     .contentBox {
       position: relative;
       top: 50%;

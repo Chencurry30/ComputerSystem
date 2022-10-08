@@ -6,7 +6,7 @@
           <div class="phoneImg">
             <img src="../../assets/Img/Icon/phone.png" alt="" />
           </div>
-          <div class="p4">更改手机号</div>
+          <div class="p4">修改密码</div>
         </div>
         <div class="closeImg" @click="closePopup">
           <img src="../../assets/Img/Icon/close.png" alt="" />
@@ -67,6 +67,7 @@ export default {
     overflow: auto;
     margin: 0;
     background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
     .contentBox {
       position: relative;
       top: 50%;
@@ -96,6 +97,9 @@ export default {
           margin: 0 auto;
           padding-top: 25px;
           width: 76px;
+          .p4{
+            text-align: center;
+          }
           .phoneImg {
             margin: 0 auto;
             width: 48px;
