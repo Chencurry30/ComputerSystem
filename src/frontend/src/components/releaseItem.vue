@@ -8,17 +8,32 @@
         </div>
       </div>
       <div class="userInput">
-        <textarea class="InputBox" placeholder="发一条友善的评论"></textarea>
+        <textarea class="InputBox" :placeholder="showplacehodler"></textarea>
       </div>
       <div class="userBtn">
-        <div class="Btn-text">发送</div>
+        <div class="Btn-text">发送</div>  
+        
       </div>
     </div>
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "releaseItem",
+  props:['typeSelect'],
+  computed:{
+    ...mapState('remark',{
+      backOtherInfo:'backOtherInfo',
+    }),
+    showplacehodler(){
+      if(this.typeSelect == '回复'){
+        return '@'+this.backOtherInfo.nickname
+      }else{
+        return '发送一条相关的评论'
+      }
+    }
+  },
 
 };
 </script>
@@ -30,6 +45,8 @@ export default {
     height: 50px;
     .userImg {
       display: flex;
+      justify-content: center;
+      align-content: center;
       width: 80px;
       height: 50px;
       .active-img {

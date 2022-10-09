@@ -33,7 +33,7 @@ import detailsPopup from './popup/detailsPopup.vue';
 export default {
   components: { detailsPopup },
   name: "replyItem",
-  props:['replyInfo'],
+  props:['replyInfo','showId'],
   methods:{
     lockMore(){
       this.$refs.detailsPopup.showPopup(this.replyInfo);
@@ -42,7 +42,8 @@ export default {
       let otherInfo = {}
       otherInfo.userId = this.replyInfo.userId;
       otherInfo.nickname = this.replyInfo.nickname;
-      console.log("这里将需要回复的相关信息的回复的ID放入了vuex供其他组件访问");
+      otherInfo.showId = this.showId;        //这里面的showId是用来控制着回复的弹出框展示的是哪一个的弹出框
+      console.log("这里将需要回复的相关信息的回复的ID放入了vuex供其他组件访问,showId控制回复框展示的那一个的回复框");
       this.$store.dispatch('remark/getotherinfo',otherInfo)
     }
   }
