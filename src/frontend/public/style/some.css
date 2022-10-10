@@ -32,3 +32,17 @@ input{
  .showBox{
    display: block;
  }
+ /*隐藏多余的文字*/
+ .hiddenText{  
+   overflow: hidden;
+   text-overflow: ellipsis;
+ }
+ img{
+   vertical-align: top !important;
+ }
+
+ .centerLocation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }

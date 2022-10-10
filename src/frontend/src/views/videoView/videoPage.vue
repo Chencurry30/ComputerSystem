@@ -112,7 +112,125 @@
         </div>
       </div>
     </div>
-    <div class="MainBox-right">2</div>
+    <div class="MainBox-right">
+      <div class="videoList">
+        <div class="video-list-item">
+          <div class="item-box">
+            <div class="item-img-box"></div>
+            <div class="item-info">
+              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
+              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
+              <div class="item-info-total">
+                <div class="total-left">
+                  <div class="left-img">
+                    <img src="../../assets/Img/Icon/video.png" alt="">
+                  </div>
+                  <div class="left-info">213213</div>
+                </div>
+                <div class="total-right">
+                  <div class="right-img">
+                    <img src="../../assets/Img/Icon/time.png" alt="">
+                  </div>
+                  <div class="right-info">2022-9-10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-list-item">
+          <div class="item-box">
+            <div class="item-img-box"></div>
+            <div class="item-info">
+              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
+              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
+              <div class="item-info-total">
+                <div class="total-left">
+                  <div class="left-img">
+                    <img src="../../assets/Img/Icon/video.png" alt="">
+                  </div>
+                  <div class="left-info">213213</div>
+                </div>
+                <div class="total-right">
+                  <div class="right-img">
+                    <img src="../../assets/Img/Icon/time.png" alt="">
+                  </div>
+                  <div class="right-info">2022-9-10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-list-item">
+          <div class="item-box">
+            <div class="item-img-box"></div>
+            <div class="item-info">
+              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
+              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
+              <div class="item-info-total">
+                <div class="total-left">
+                  <div class="left-img">
+                    <img src="../../assets/Img/Icon/video.png" alt="">
+                  </div>
+                  <div class="left-info">213213</div>
+                </div>
+                <div class="total-right">
+                  <div class="right-img">
+                    <img src="../../assets/Img/Icon/time.png" alt="">
+                  </div>
+                  <div class="right-info">2022-9-10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-list-item">
+          <div class="item-box">
+            <div class="item-img-box"></div>
+            <div class="item-info">
+              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
+              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
+              <div class="item-info-total">
+                <div class="total-left">
+                  <div class="left-img">
+                    <img src="../../assets/Img/Icon/video.png" alt="">
+                  </div>
+                  <div class="left-info">213213</div>
+                </div>
+                <div class="total-right">
+                  <div class="right-img">
+                    <img src="../../assets/Img/Icon/time.png" alt="">
+                  </div>
+                  <div class="right-info">2022-9-10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-list-item">
+          <div class="item-box">
+            <div class="item-img-box"></div>
+            <div class="item-info">
+              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
+              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
+              <div class="item-info-total">
+                <div class="total-left">
+                  <div class="left-img">
+                    <img src="../../assets/Img/Icon/video.png" alt="">
+                  </div>
+                  <div class="left-info">213213</div>
+                </div>
+                <div class="total-right">
+                  <div class="right-img">
+                    <img src="../../assets/Img/Icon/time.png" alt="">
+                  </div>
+                  <div class="right-info">2022-9-10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -160,7 +278,7 @@ export default {
   margin-top: 15px;
   .MainBox-left {
     width: 800px;
-    padding: 10px 48px;
+    padding: 10px 20px 10px 70px;
     .videotitle {
       padding-top: 12px;
       height: 85px;
@@ -279,7 +397,6 @@ export default {
           }
         }
       }
-
       .reply-List{
         .children-List{
           margin-left: 6%;
@@ -301,7 +418,6 @@ export default {
           .getMore:hover{
             color: #00aeec;
           }
-
         }
         .hidden{
           height: 160px;
@@ -313,10 +429,64 @@ export default {
       }
     }
   }
-
   .MainBox-right {
+    padding: 0 25px;
     width: 400px;
-    background: blue;
+    .videoList{
+      .item-box{
+        display: flex;
+        margin-bottom: 10px;
+        .item-img-box{
+          display: flex;
+          flex: 1;
+          justify-content: center;
+          align-content: center;
+          width: 160px;
+          height: 80px;
+          background: red;
+        }
+        .item-info{
+          flex: 1;
+          max-width: 180px;
+          margin-left: 10px;
+          .item-info-title{
+            font-size: 14px;
+            height: 26px;
+            line-height: 26px;
+            font-weight: 700;
+          }
+          .item-info-contest{
+            height: 24px;
+            line-height: 24px;
+            font-weight: 400;
+            font-size: 12px;
+          }
+          .item-info-total{
+            display: flex;
+            justify-content: space-between;
+            align-content: center;
+            margin-top: 5px;
+            .total-left,.total-right{
+              display: flex;
+              margin: 0 5px;
+              // margin-left: 0px;
+              height: 16px;
+              .left-img,.right-img{ 
+                margin-right: 4px;
+                width: 17px;
+                height: 17px;
+                img{
+                  width: 100%;
+                }
+              }
+              .left-info,.right-info{
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style> 

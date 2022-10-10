@@ -27,7 +27,7 @@ export default {
       backOtherInfo:'backOtherInfo',
     }),
     showplacehodler(){
-      if(this.typeSelect == '回复'){
+      if(this.typeSelect === '回复'){
         return '@'+this.backOtherInfo.nickname
       }else{
         return '发送一条相关的评论'
