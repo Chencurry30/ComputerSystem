@@ -66,8 +66,7 @@
         </div>
         </div>
         <div class="course-page">
-            <PagerView :total="150" :pageSize="6" 
-            :pageNo="2" :continues="5"></PagerView>
+            <PagerView></PagerView>
         </div>   
     </div>
 
