@@ -209,7 +209,7 @@ export default {
             margin-bottom: 22px;
             padding-top: 16px;
             padding-left: 16px;
-            width: 446px;
+            width: 436px;
             height: 267px;
             cursor: pointer;
             background-color: #ffffff;

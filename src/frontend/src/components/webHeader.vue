@@ -34,7 +34,9 @@
             <div class="item-info">首页</div>
           </li>
           <li class="list-item">
-            <div class="item-info">资源学习</div>
+            <div class="item-info">
+              <router-link :to="{name:'videoSelect'}">资源学习</router-link>
+            </div>
           </li>
           <li class="list-item">
             <div class="item-info">院校选择</div>

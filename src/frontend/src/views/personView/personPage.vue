@@ -17,7 +17,11 @@
                   <img src="../../assets/Img/Icon/person.png" alt="" />
                 </div>
                 <div class="list-info">
-                  <router-link :to="{name:'personInfo'}" style="text-decoration:none">个人资料</router-link>
+                  <router-link
+                    :to="{ name: 'personInfo' }"
+                    style="text-decoration: none"
+                    >个人资料</router-link
+                  >
                 </div>
               </li>
               <li class="list-item">
@@ -25,7 +29,11 @@
                   <img src="../../assets/Img/Icon/security.png" alt="" />
                 </div>
                 <div class="list-info">
-                   <router-link :to="{name:'personSecurity'}" style="text-decoration:none">账户安全</router-link>
+                  <router-link
+                    :to="{ name: 'personSecurity' }"
+                    style="text-decoration: none"
+                    >账户安全</router-link
+                  >
                 </div>
               </li>
             </ul>
@@ -46,7 +54,11 @@
                   <img src="../../assets/Img/Icon/remind.png" alt="" />
                 </div>
                 <div class="list-info">
-                  <router-link :to="{name:'messageReply'}" style="text-decoration:none">消息回复</router-link>
+                  <router-link
+                    :to="{ name: 'messageReply' }"
+                    style="text-decoration: none"
+                    >我的评论</router-link
+                  >
                 </div>
               </li>
               <li class="list-item">
@@ -54,7 +66,11 @@
                   <img src="../../assets/Img/Icon/remark.png" alt="" />
                 </div>
                 <div class="list-info">
-                   <router-link :to="{name:'personSecurity'}" style="text-decoration:none">消息评论</router-link>
+                  <router-link
+                    :to="{ name: 'commentsReply' }"
+                    style="text-decoration: none"
+                    >评论回复</router-link
+                  >
                 </div>
               </li>
               <li class="list-item">
@@ -62,7 +78,60 @@
                   <img src="../../assets/Img/Icon/reply.png" alt="" />
                 </div>
                 <div class="list-info">
-                   <router-link :to="{name:'personSecurity'}" style="text-decoration:none">他人回复</router-link>
+                  <router-link
+                    :to="{ name: 'myComment' }"
+                    style="text-decoration: none"
+                    >我的提问</router-link
+                  >
+                </div>
+              </li>
+              <li class="list-item">
+                <div class="list-icon">
+                  <img src="../../assets/Img/Icon/notice.png" alt="" />
+                </div>
+                <div class="list-info">
+                  <router-link
+                    :to="{ name: 'teacherReply' }"
+                    style="text-decoration: none"
+                    >老师回复</router-link
+                  >
+                </div>
+              </li>
+              <li class="list-item">
+                <div class="list-icon">
+                  <img src="../../assets/Img/Icon/share.png" alt="" />
+                </div>
+                <div class="list-info">
+                  <router-link
+                    :to="{ name: 'otherReply' }"
+                    style="text-decoration: none"
+                    >其他留言</router-link
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="Item third">
+          <div class="ItemHeader">
+            <div class="HeaderTitle">消息中心</div>
+            <div class="HeaderInfo">
+              <div class="Info1">MESSAGE CENTER</div>
+              <div class="Info2">MY DERE SEE DETALS</div>
+            </div>
+          </div>
+          <div class="ItemBox">
+            <ul class="ItemBox-list">
+              <li class="list-item">
+                <div class="list-icon">
+                  <img src="../../assets/Img/Icon/record.png" alt="" />
+                </div>
+                <div class="list-info">
+                  <router-link
+                    :to="{ name: 'thumbVideo' }"
+                    style="text-decoration: none"
+                    >点赞视屏</router-link
+                  >
                 </div>
               </li>
             </ul>
@@ -71,6 +140,33 @@
       </div>
       <div class="contain-right">
         <div class="showBox">
+          <div class="UserBox">
+            <div class="containHeader">
+              <span class="headerP1">我的资料</span>
+              <span class="headerP2">MY PROFILE</span>
+              <span class="headerP3">SETTINGS</span>
+            </div>
+            <div class="containMain">
+              <div class="userImg"></div>
+              <div class="userInfo">
+                <div class="infoTop">
+                  <div class="left">高山流水</div>
+                </div>
+                <div class="infoMiddle">
+                  <span>四川</span>
+                  <span>/</span>
+                  <span>达州市</span>
+                  <span>/</span>
+                  <span>曲线</span>
+                </div>
+                <div class="infoBottom">
+                  <span>数学</span>
+                  <span>英语</span>
+                  <span>手绘</span>
+                </div>
+              </div>
+            </div>
+          </div>
           <router-view></router-view>
         </div>
       </div>
@@ -80,8 +176,7 @@
 
 <script>
 export default {
-  name:'personPage',
-
+  name: "personPage",
 };
 </script>
 
@@ -92,7 +187,7 @@ export default {
   .contain-left {
     flex: 1;
     .Item {
-      margin:0px 10px;
+      margin: 0px 10px;
       width: 280px;
       border-radius: 10px;
       border: 3px solid #eee;
@@ -145,12 +240,132 @@ export default {
         }
       }
     }
-    .second{
+    .second,.third {
       margin-top: 12px;
     }
   }
   .contain-right {
     flex: 3;
+    .UserBox {
+      border-radius: 10px;
+      color: #666;
+      border: 2px solid #eee;
+      .containHeader {
+        padding: 15px 0;
+        border-bottom: 2px solid #eee;
+        .headerP1 {
+          margin-left: 40px;
+          font-weight: 700;
+          // font-size: 16px;
+        }
+        .headerP2 {
+          margin-left: 20px;
+          font-weight: 700;
+          color: #ff8c00;
+        }
+        .headerP3 {
+          margin-left: 10px;
+        }
+      }
+      .containMain {
+        margin: 10px 0px;
+        padding: 0px 20px;
+        display: flex;
+        .userImg {
+          margin-left: 40px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50px;
+          border: 1px solid #eee;
+        }
+        .userInfo {
+          margin-left: 40px;
+          width: 200px;
+          .infoTop {
+            margin: 5px 0px;
+            display: flex;
+            justify-content: space-between;
+            .left {
+              font-weight: 700;
+            }
+            .right {
+              font-weight: 700;
+            }
+          }
+          .infoMiddle {
+            margin-left: 5px;
+            margin-bottom: 5px;
+            span {
+              padding: 0px 5px;
+            }
+          }
+          .infoBottom {
+            margin-left: -3px;
+            margin-top: 10px;
+            span {
+              margin: 0 3px;
+              padding: 0px 8px;
+              border: 2px solid #eee;
+              border-radius: 10px;
+            }
+          }
+        }
+        .InfoBox {
+          margin-bottom: 0;
+          padding: 20px 10px 10px 10px;
+          width: 100%;
+          .Info-item {
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 9px;
+            .laber {
+              display: inline-block;
+              width: 80px;
+              font-weight: 700;
+            }
+            .inputInfo {
+              padding: 0px 10px;
+              width: 260px;
+              border-radius: 10px;
+              font-size: 16px;
+              font-family: 楷体;
+              border: 1px solid #eee;
+            }
+            .group {
+              padding: 5px 10px;
+              width: 260px;
+              border-radius: 10px;
+              font-size: 16px;
+              font-family: 楷体;
+              border: 1px solid #eee;
+            }
+          }
+          .video-item {
+            float: left;
+            margin: 0 2px;
+            width: 180px;
+            .videoImg {
+              margin-top: 10px;
+              width: 100%;
+              height: 120px;
+              background: blue;
+            }
+            .videoName {
+              font-size: 14px;
+              padding: 5px 0px;
+              text-align: center;
+            }
+          }
+        }
+        .btn {
+          float: right;
+          padding: 5px 15px;
+          border-radius: 10px;
+          color: #ffffff;
+          background: #ff8c00;
+        }
+      }
+    }
     .showBox {
       padding: 0 10px;
       width: 820px;

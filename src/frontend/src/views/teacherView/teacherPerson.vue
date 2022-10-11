@@ -12,9 +12,9 @@
               <div class="middle-right">与他留言</div>
             </div>
             <div class="middle-main">
-              <p>学位：博士</p>
-              <p>教师科目：高数，现代</p>
-              <p>关注人数：10202021</p>
+              <p>学位:博士</p>
+              <p>教师科目:高数，现代</p>
+              <p>关注人数:10202021</p>
             </div>
           </div>
         </div>
@@ -30,13 +30,13 @@
             <div class="left-Item">
               <div class="Item-title">辅导资历</div>
               <div class="Item-Info">
-                从事高等数学教育多年，在多篇核心期刊发表过相关论文，从事辅导长达5年。
+                从事高等数学教育多年，在多篇核心期刊发表过相关论文,从事辅导长达5年。
               </div>
             </div>
             <div class="left-Item">
               <div class="Item-title">辅导记录</div>
               <div class="Item-Info">
-                帮助无数考研的人在数学方面解决他们的疑难为题，至今辅导人数超50W人。
+                帮助无数考研的人在数学方面解决他们的疑难为题,至今辅导人数超50W人。
               </div>
             </div>
           </div>
@@ -91,13 +91,47 @@
           </div>
         </div>
       </div>
+      <div class="main-fotter">
+        <div class="fotter-header">用户评论</div>
+        <div class="fotter-connect">
+          <replyItem
+            v-for="item in DataList"
+            :key="item.id"
+            :replyInfo="item"
+          ></replyItem>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import replyItem from "../../components/replyItem.vue";
 export default {
+  components: { replyItem },
   name: "teacherPerson",
+  data() {
+    return {
+      DataList: [
+        {
+          id: 1232,
+          image: "1231231231232.123",
+          nickname: "高山",
+          time: "2022-6-30",
+          content: "你的评论对我很有帮助，感谢你的发言",
+          resourcename: "回复我的",
+        },
+        {
+          id: 1236,
+          image: "1231231231232.123",
+          nickname: "高山星空",
+          time: "2022-6-9",
+          content: "你的评论对我很有帮助，感谢",
+          resourcename: "回复我的",
+        },
+      ],
+    };
+  },
   mounted() {
     console.log(this.$route);
   },
@@ -163,138 +197,148 @@ export default {
   .main-connect {
     margin-top: 15px;
     display: flex;
-  }
-  .connect-left {
-    flex: 3;
-    //  background: #ffffff;
-    .left-MainBox {
-      padding: 30px 58px 30px 30px;
-      .left-Item {
+    .connect-left {
+      flex: 3;
+      .left-MainBox {
+        padding: 30px 58px 30px 30px;
+        .left-Item {
+          display: flex;
+          margin-bottom: 25px;
+          .Item-title {
+            line-height: 30px;
+            font-size: 18px;
+            color: #333333;
+            margin-right: 30px;
+            width: 75px;
+          }
+          .Item-Info {
+            line-height: 30px;
+            width: 694px;
+            font-size: 16px;
+            color: #999999;
+          }
+        }
+      }
+      .left-Resources {
+        margin-top: 10px;
         display: flex;
-        margin-bottom: 25px;
-        .Item-title {
-          line-height: 30px;
-          font-size: 18px;
-          color: #333333;
-          margin-right: 36px;
+        .ResourcesTitle {
+          flex: 1;
+          div {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+          }
         }
-        .Item-Info {
-          line-height: 30px;
-          width: 694px;
-          font-size: 16px;
-          color: #999999;
-        }
-      }
-    }
-    .left-Resources {
-      margin-top: 10px;
-      display: flex;
-      .ResourcesTitle {
-        flex: 1;
-        div {
-          width: 100%;
-          height: 30px;
-          line-height: 30px;
-          font-size: 16px;
-          font-weight: 700;
-          text-align: center;
-        }
-      }
-      .ResourcesBox {
-        flex: 5;
-        .BoxItem {
-          overflow: hidden;
-          .Item {
-            float: left;
-            margin: 0 5px;
-            width: 240px;
-            // height: 180px;
+        .ResourcesBox {
+          flex: 5;
+          .BoxItem {
             overflow: hidden;
-            .ImgBox {
-              margin: 5px auto;
-              width: 100%;
-              height: 124px;
-              background: blue;
-            }
-            .ItemInfo {
-              display: flex;
-              width: 100%;
-              height: 20px;
-              line-height: 20px;
-              justify-content: space-between;
-              .ItemInfo-left {
-                margin-left: 10px;
-                font-size: 12px;
-                color: #333333;
+            .Item {
+              float: left;
+              margin: 0 5px;
+              width: 226px;
+              // height: 180px;
+              overflow: hidden;
+              .ImgBox {
+                margin: 5px auto;
+                width: 100%;
+                height: 124px;
+                background: blue;
               }
-              .ItemInfo-right {
-                margin-right: 10px;
-                font-size: 12px;
-                color: #333333;
+              .ItemInfo {
+                display: flex;
+                width: 100%;
+                height: 20px;
+                line-height: 20px;
+                justify-content: space-between;
+                .ItemInfo-left {
+                  margin-left: 10px;
+                  font-size: 12px;
+                  color: #333333;
+                }
+                .ItemInfo-right {
+                  margin-right: 10px;
+                  font-size: 12px;
+                  color: #333333;
+                }
               }
             }
           }
         }
       }
     }
-  }
-  .connect-right {
-    flex: 1;
-    .comTeacher {
-      padding: 10px 0px 26px 5px;
-      background: #f5f7f9;
-      .title {
-        position: relative;
-        margin-left: -20px;
-        margin-top: 14px;
-        width: 276px;
-        height: 50px;
-        line-height: 50px;
-        font-size: 20px;
-        border-top-right-radius: 25px;
-        border-bottom-right-radius: 25px;
-        text-align: center;
-        color: #ffffff;
-        background: #ff9d00;
-        .styleT {
-          position: absolute;
-          top: -25px;
-          left: 0;
-          border-width: 0;
-          width: 0px;
-          height: 0px;
-          border-top: 0px solid transparent;
-          border-bottom: 25px solid #ff9d00;
-          border-left: 15px solid transparent;
-          border-right: 0px solid #ff9d00;
+    .connect-right {
+      flex: 1;
+      .comTeacher {
+        padding: 10px 0px 26px 5px;
+        .title {
+          position: relative;
+          margin-left: -20px;
+          margin-top: 14px;
+          width: 276px;
+          height: 50px;
+          line-height: 50px;
+          font-size: 20px;
+          border-top-right-radius: 25px;
+          border-bottom-right-radius: 25px;
+          text-align: center;
+          color: #ffffff;
+          background: #ff9d00;
+          .styleT {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            border-width: 0;
+            width: 0px;
+            height: 0px;
+            border-top: 0px solid transparent;
+            border-bottom: 25px solid #ff9d00;
+            border-left: 15px solid transparent;
+            border-right: 0px solid #ff9d00;
+          }
         }
-      }
-      .label_Name,
-      .label_email,
-      .label_comMessage {
-        width: 207px;
-        height: 40px;
-        border-radius: 5px;
-        margin: 16px auto 0;
-        text-indent: 0.5em;
-        background: #ffffff;
-        input {
-          margin-top: 9px;
+        .label_Name,
+        .label_email,
+        .label_comMessage {
+          width: 207px;
+          height: 40px;
+          border-radius: 5px;
+          margin: 16px auto 0;
+          text-indent: 0.5em;
           background: #ffffff;
+          input {
+            margin-top: 9px;
+            background: #ffffff;
+          }
+        }
+        .sub {
+          width: 207px;
+          height: 40px;
+          border-radius: 5px;
+          background: linear-gradient(108deg, #ff6000 40%, #ff9e00);
+          margin: 16px auto 0;
+          font-size: 18px;
+          color: #fff;
+          text-align: center;
+          line-height: 40px;
+          cursor: pointer;
         }
       }
-      .sub {
-        width: 207px;
-        height: 40px;
-        border-radius: 5px;
-        background: linear-gradient(108deg, #ff6000 40%, #ff9e00);
-        margin: 16px auto 0;
-        font-size: 18px;
-        color: #fff;
-        text-align: center;
-        line-height: 40px;
-        cursor: pointer;
-      }
+    }
+  }
+  .main-fotter {
+    width: 860px;
+    margin-top: 10px;
+    .fotter-header {
+      padding: 10px 0 10px 5px;
+      font-weight: 700;
+    }
+    .fotter-connect {
+      width: 100%;
     }
   }
 }

@@ -1,4 +1,4 @@
-//我的评论
+//评论回复 
 <template>
   <div class="allBox">
     <div class="UserBox second">
@@ -21,22 +21,22 @@ export default {
           image:'1231231231232.123',
           nickname:'高山',
           time:'2022-6-30',
-          content:'课程66666666666，希望有相关系列课程供我们学习',
-          resourcename:'计算机组成原理'
+          content:'你的评论对我很有帮助，感谢你的发言',
+          resourcename:'回复我的'
         },
         {
           id:1236,
           image:'1231231231232.123',
           nickname:'高山星空',
           time:'2022-6-9',
-          content:'这个课程对我们的帮助都很大，感谢鬼剑相关课程给我',
-          resourcename:'计算机组成原理'
+          content:'你的评论对我很有帮助，感谢',
+          resourcename:'回复我的'
         }
       ]  
     }
   },
   components: { replyItem },
-  name: "messageReply",
+  name: "commentsReply",
 };
 </script>
 

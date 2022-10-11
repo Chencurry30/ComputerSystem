@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <div>
-    <router-link :to="{name:'personPage'}">点击跳转个人首页</router-link>
-  </div> -->
+    <div>
+    <router-link :to="{name:'videoPage'}">点击跳转到视屏首页</router-link>
+  </div>
     <bannerFigure></bannerFigure>
     <teacherModuleVue></teacherModuleVue>
   </div>
