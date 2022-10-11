@@ -199,5 +199,18 @@ public class UserController {
         return userService.updatePassword(updateUser);
     }
 
+    /**
+     * description: 通过用户id获取用户信息，返回该用户昵称，性别，留言和年龄,头像
+     *
+     * @param id:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/11 15:23
+     */
+    @GetMapping("/{id}")
+    public ServerResponse<Map<String,String>> getUserByUserId(@PathVariable("id") Integer id){
+        return userService.getUserByUserId(id);
+    }
+
 
 }

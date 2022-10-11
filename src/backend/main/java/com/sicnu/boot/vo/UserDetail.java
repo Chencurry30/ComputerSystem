@@ -1,9 +1,8 @@
 package com.sicnu.boot.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sicnu.boot.pojo.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * description:  返回用户信息的封装类
@@ -21,20 +20,43 @@ public class UserDetail {
     private String phone;
     private String email;
     private String image;
-    private Integer sex;
+    private String sex;
+    /**
+     * description: 返回给前端时，忽略此属性
+     */
+    @JsonIgnore
     private String smsCode;
+    private Integer isHide;
+    private String massage;
     public UserDetail(String nickname,String image){
         this.nickname = nickname;
         this.image = image;
     }
 
     public UserDetail(User user){
-        this.nickname = user.getNickname();
-        this.image = user.getImage();
-        this.age = user.getAge();
-        this.email = user.getEmail();
-        this.phone = user.getPhone();
         this.username = user.getUsername();
+        this.nickname = user.getNickname();
+        this.age = user.getAge();
+        this.phone = user.getPhone();
+        this.email = user.getEmail();
+        this.image = user.getImage();
         this.sex = user.getSex();
+        this.isHide = user.getIsHide();
+        this.massage = user.getMessage();
+    }
+
+    @Override
+    public String toString() {
+        return "UserDetail{" +
+                "username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", age=" + age +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", image='" + image + '\'' +
+                ", sex='" + sex + '\'' +
+                ", isHide=" + isHide +
+                ", massage='" + massage + '\'' +
+                '}';
     }
 }

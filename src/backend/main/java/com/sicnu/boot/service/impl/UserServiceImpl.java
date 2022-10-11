@@ -225,6 +225,27 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createBySuccessMessage("更改成功");
     }
 
+    @Override
+    public ServerResponse<Map<String,String>> getUserByUserId(Integer userId) {
+        User user = userMapper.getUserById(userId);
+        if (Objects.isNull(user)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USER_NOT_FOUND.getCode()
+                    , "不存在此用户");
+        }
+        Map<String,String> map = new HashMap<>(10);
+        map.put("nickname",user.getNickname());
+        map.put("image",user.getImage());
+        //判断该用户信息是否可见
+        if (user.getIsHide() != 0){
+            map.put("isHide","用户信息隐藏，不可见");
+            return ServerResponse.createBySuccess("获取成功",map);
+        }
+        map.put("message",user.getMessage());
+        map.put("sex",user.getSex());
+        map.put("age",user.getAge().toString());
+        return ServerResponse.createBySuccess("获取成功",map);
+    }
+
     /**
      * description: 验证手机验证码是否正确
      *

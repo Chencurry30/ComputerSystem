@@ -103,4 +103,15 @@ public interface UserService {
      * Date:  2022/10/3 21:11
      */
     ServerResponse<String> updatePassword(UpdateUser updateUser);
+
+    /**
+     * description: 通过用户id获取用户信息
+     *
+     * @param userId:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/11 15:25
+     */
+    ServerResponse<Map<String,String>> getUserByUserId(Integer userId);
+
 }

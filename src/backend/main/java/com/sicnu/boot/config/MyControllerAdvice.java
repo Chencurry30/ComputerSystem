@@ -20,6 +20,7 @@ public class MyControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ServerResponse<String> handleException(Exception e){
         e.printStackTrace();
+        //TODO 项目完成之后可以将返回信息修改了，这里不修改便于改错
         return ServerResponse.createByErrorMessage(e.getMessage());
     }
 }
