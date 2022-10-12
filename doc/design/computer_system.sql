@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 80029
  Source Host           : localhost:3306
- Source Schema         : computer-system
+ Source Schema         : computer_system
 
  Target Server Type    : MySQL
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 11/10/2022 16:26:32
+ Date: 12/10/2022 21:11:43
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `answer_question`  (
   `study_id` int(0) NULL DEFAULT NULL COMMENT '需要答疑的学习者id',
   `teacher_id` int(0) NULL DEFAULT NULL COMMENT '给学习者解答的指导者id',
   PRIMARY KEY (`answer_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '答疑表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for college
@@ -44,18 +44,17 @@ CREATE TABLE `college`  (
   `rank` smallint(0) NULL DEFAULT NULL COMMENT '院校排名',
   `dis_develop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '学科建设',
   PRIMARY KEY (`college_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '学校表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for college_major
 -- ----------------------------
 DROP TABLE IF EXISTS `college_major`;
 CREATE TABLE `college_major`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '院校专业id',
-  `college_id` int(0) NULL DEFAULT NULL COMMENT '院校id',
-  `major_id` int(0) NULL DEFAULT NULL COMMENT '专业id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  `college_id` int(0) NOT NULL COMMENT '院校id',
+  `major_id` int(0) NOT NULL COMMENT '专业id',
+  PRIMARY KEY (`college_id`, `major_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '学校专业表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for comment
@@ -69,7 +68,7 @@ CREATE TABLE `comment`  (
   `resource_id` int(0) NULL DEFAULT NULL COMMENT '评论对应资源id',
   `like_number` int(0) NULL DEFAULT 0 COMMENT '点赞数',
   PRIMARY KEY (`comment_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for journal
@@ -82,7 +81,7 @@ CREATE TABLE `journal`  (
   `user_id` int(0) NULL DEFAULT NULL COMMENT '发表日志用户',
   `time` datetime(0) NULL DEFAULT NULL COMMENT '上传或更新时间',
   PRIMARY KEY (`journal_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for major
@@ -99,7 +98,7 @@ CREATE TABLE `major`  (
   `level` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '专业层次',
   `instruction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '专业介绍',
   PRIMARY KEY (`major_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专业表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for policy
@@ -111,7 +110,7 @@ CREATE TABLE `policy`  (
   `classify` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '政策分类',
   `partition` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '政策分区',
   PRIMARY KEY (`policy_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '政策表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for power
@@ -119,12 +118,16 @@ CREATE TABLE `policy`  (
 DROP TABLE IF EXISTS `power`;
 CREATE TABLE `power`  (
   `power_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '权限id',
-  `is_insert` tinyint(0) UNSIGNED NULL DEFAULT 0 COMMENT '增权限',
-  `is_delete` tinyint(0) UNSIGNED NULL DEFAULT 0 COMMENT '删权限',
-  `is_select` tinyint(0) UNSIGNED NULL DEFAULT 0 COMMENT '查权限',
-  `is_update` tinyint(0) UNSIGNED NULL DEFAULT 0 COMMENT '改权限',
+  `perms` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限标识',
   PRIMARY KEY (`power_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of power
+-- ----------------------------
+INSERT INTO `power` VALUES (1, 'all');
+INSERT INTO `power` VALUES (2, 'no');
+INSERT INTO `power` VALUES (3, 'yes');
 
 -- ----------------------------
 -- Table structure for quiz
@@ -137,7 +140,7 @@ CREATE TABLE `quiz`  (
   `study_id` int(0) NULL DEFAULT NULL COMMENT '提问者的id',
   `teacher_id` int(0) NULL DEFAULT NULL COMMENT '老师的id',
   PRIMARY KEY (`quiz_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '提问表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for reply
@@ -151,7 +154,7 @@ CREATE TABLE `reply`  (
   `comment_id` int(0) NULL DEFAULT NULL COMMENT '回复对应评论id',
   `like_number` int(0) NULL DEFAULT 0 COMMENT '点赞数',
   PRIMARY KEY (`reply_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '回复' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '回复表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for resource
@@ -163,7 +166,44 @@ CREATE TABLE `resource`  (
   `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源类型',
   `introduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源简介',
   PRIMARY KEY (`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role`  (
+  `role_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '角色id',
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '角色名',
+  `role_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '角色权限字符串',
+  PRIMARY KEY (`role_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES (1, '管理员', 'Administrator');
+INSERT INTO `role` VALUES (2, '教师', 'teacher');
+INSERT INTO `role` VALUES (3, '学生', 'student');
+INSERT INTO `role` VALUES (4, '会员', 'vip');
+
+-- ----------------------------
+-- Table structure for role_power
+-- ----------------------------
+DROP TABLE IF EXISTS `role_power`;
+CREATE TABLE `role_power`  (
+  `role_id` int(0) NOT NULL COMMENT '角色ID',
+  `power_id` int(0) NOT NULL DEFAULT 0 COMMENT '权限id',
+  PRIMARY KEY (`role_id`, `power_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role_power
+-- ----------------------------
+INSERT INTO `role_power` VALUES (1, 1);
+INSERT INTO `role_power` VALUES (2, 3);
+INSERT INTO `role_power` VALUES (3, 2);
+INSERT INTO `role_power` VALUES (4, 3);
 
 -- ----------------------------
 -- Table structure for teacher
@@ -181,7 +221,7 @@ CREATE TABLE `teacher`  (
   `qualification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '辅导资料和辅导记录',
   `user_id` int(0) NULL DEFAULT NULL COMMENT '对应的用户id',
   PRIMARY KEY (`teacher_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '老师表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user
@@ -196,21 +236,37 @@ CREATE TABLE `user`  (
   `email` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `age` tinyint(0) UNSIGNED NULL DEFAULT 0 COMMENT '年龄',
   `sex` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '保密' COMMENT '性别，默认为保密',
-  `role` tinyint(0) UNSIGNED NULL DEFAULT 1 COMMENT '角色，0为管理员，1为学习者，2为指导者',
+  `role` tinyint(0) UNSIGNED NULL DEFAULT 1 COMMENT '身份，0为管理员，1为学习者，2为指导者',
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像',
-  `power_id` int(0) NULL DEFAULT NULL COMMENT '所拥有的权限id',
   `is_hide` tinyint(0) NULL DEFAULT 0 COMMENT '隐私设置，是否可见，默认为0，可见',
   `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '个人留言',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '仰望星空11', '$2a$10$LN4q82GS4YP7YGXOFf7AD.WNTrq2cB62lc9UB57VFbTK0ijYVZxdm', '15388366005', '2136442@qq.com', 19, '男', 1, '头像11', NULL, 0, '这是留言1');
-INSERT INTO `user` VALUES (2, 'hjh', NULL, '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', NULL, NULL, 24, '男', 1, NULL, NULL, 0, '这是留言2');
-INSERT INTO `user` VALUES (3, 'lgq', '大海', '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', '17311023002', '224456434@qq.com', 18, '男', 1, '头像', NULL, 1, '这是留言3');
-INSERT INTO `user` VALUES (6, 'czy', NULL, '1234', NULL, NULL, 3, '男', 1, NULL, NULL, 0, '这是留言4');
+INSERT INTO `user` VALUES (1, 'admin', '仰望星空11', '$2a$10$LN4q82GS4YP7YGXOFf7AD.WNTrq2cB62lc9UB57VFbTK0ijYVZxdm', '15388366005', '2136442@qq.com', 19, '男', 1, '头像11', 0, '这是留言1');
+INSERT INTO `user` VALUES (2, 'hjh', NULL, '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', NULL, NULL, 24, '男', 1, NULL, 0, '这是留言2');
+INSERT INTO `user` VALUES (3, 'lgq', '大海', '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', '17311023002', '224456434@qq.com', 18, '男', 1, '头像', 1, '这是留言3');
+INSERT INTO `user` VALUES (6, 'czy', NULL, '1234', NULL, NULL, 3, '男', 1, NULL, 0, '这是留言4');
+
+-- ----------------------------
+-- Table structure for user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role`  (
+  `user_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `role_id` int(0) NOT NULL DEFAULT 0 COMMENT '角色id',
+  PRIMARY KEY (`user_id`, `role_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` VALUES (1, 1);
+INSERT INTO `user_role` VALUES (2, 4);
+INSERT INTO `user_role` VALUES (3, 2);
 
 -- ----------------------------
 -- Table structure for video
@@ -224,7 +280,8 @@ CREATE TABLE `video`  (
   `introduction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的介绍',
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的类别',
   `resource_id` int(0) NULL DEFAULT NULL COMMENT '对应的资源id',
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频图片',
   PRIMARY KEY (`video_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '视频表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
