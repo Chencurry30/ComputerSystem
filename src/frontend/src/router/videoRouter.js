@@ -5,17 +5,19 @@ export default [
     path: '/videoPage',
     name: 'videoPage',
     component: videoPage,
-    meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-      showTopFotter: true
-    }
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
   },
   {
     path: '/videoSelect',
     name: 'videoSelect',
     component: videoSelect,
-    meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-      showTopFotter: true
-    }
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
   },
 
 

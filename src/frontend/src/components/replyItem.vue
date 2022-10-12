@@ -2,7 +2,7 @@
 <template>
   <div class="replyItem">
     <div class="replyItem-Box">
-      <div class="replyItem-Img"></div>
+      <div class="replyItem-Img" @click="gotoUserView"></div>
     </div>
     <div class="replyItem-other">
       <div class="replyItem-info">
@@ -45,6 +45,13 @@ export default {
       otherInfo.showId = this.showId;        //这里面的showId是用来控制着回复的弹出框展示的是哪一个的弹出框
       console.log("这里将需要回复的相关信息的回复的ID放入了vuex供其他组件访问,showId控制回复框展示的那一个的回复框");
       this.$store.dispatch('remark/getotherinfo',otherInfo)
+    },
+    gotoUserView(){
+      //我跳转的到对应选择的用户介绍页面了，注意用户的ID与后端返回的ID 
+      console.log('我是在replyItem组件里面进行跳转的，其中的参数是用户的id，这里就使用的UserId来作为对象跳转');
+      let location ={name:'otherPerson'}
+      location.query = {userId:this.replyInfo.userId}
+      this.$router.push(location);
     }
   }
 };
@@ -62,10 +69,11 @@ export default {
   .replyItem-Box {
     display: flex;
     justify-content: center;
-    flex: 1;
+    flex: 1.1;
     .replyItem-Img {
-      width: 65%;
-      height: 63%;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
       border-radius: 50%;
       background: red;
 }

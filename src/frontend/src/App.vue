@@ -1,9 +1,9 @@
 <template>
   <div id="app">
 
-    <webHeader v-if="hiddenComponent"></webHeader>
+    <webHeader v-if="hiddenTopComponent"></webHeader>
     <router-view></router-view>
-    <webFotter v-if="hiddenComponent"></webFotter>
+    <webFotter v-if="hiddenFotterComponent"></webFotter>
 
   </div>
 </template>
@@ -21,8 +21,11 @@ export default {
     webFotter,
   },
   computed: {
-    hiddenComponent() {
-      return this.$route.meta.showTopFotter;
+    hiddenTopComponent() {
+      return this.$route.meta.showTop;
+    },
+    hiddenFotterComponent() {
+      return this.$route.meta.showFotter;
     },
   },
 }
