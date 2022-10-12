@@ -7,6 +7,7 @@ import com.sicnu.boot.service.UserService;
 import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,6 +36,7 @@ public class UserController {
      * @author 胡建华
      * Date:  2022/9/28 22:08
      */
+    @PreAuthorize("hasAuthority('yes')")
     @GetMapping("/hello")
     public String hello(){
         return "hello";

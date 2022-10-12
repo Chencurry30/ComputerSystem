@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.sicnu.boot.mapper.PowerMapper;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.pojo.User;
@@ -25,6 +26,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private PowerMapper powerMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //查询用户信息
@@ -33,10 +37,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (Objects.isNull(user)){
             throw new RuntimeException("用户名或密码错误");
         }
-        //TODO 查询对应的权限
-        List<String> list = new ArrayList<>();
+        //查询对应的权限
+        List<String> list = powerMapper.selectPermsByUserId(user.getUserId());
         //把数据封装成UserDetail对象
-
         return new LoginUser(user,list);
     }
 }

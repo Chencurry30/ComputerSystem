@@ -8,7 +8,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/computer-system?serverTimezone=UTC&useAffectedRows=true
+      url: jdbc:mysql://localhost:3306/computer_system?serverTimezone=UTC&useAffectedRows=true
       username: root
       password: 123456
   #配置redis
@@ -17,8 +17,8 @@ spring:
     host: 127.0.0.1
     #配置端口号
     port: 6379
-    #配置密码
-    password: 123456
+    #配置密码 默认不设置密码
+#    password: 123456
     #配置数据库索引（默认为0）
     database: 1
     client-type: jedis

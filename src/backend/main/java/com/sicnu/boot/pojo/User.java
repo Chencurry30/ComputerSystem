@@ -24,7 +24,6 @@ public class User {
   private String sex;
   private Integer role;
   private String image;
-  private Integer powerId;
   private Integer isHide;
   /**
    * description: 个人留言
