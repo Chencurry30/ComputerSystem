@@ -21,10 +21,15 @@ public class User {
   private String phone;
   private String email;
   private Integer age;
-  private Integer sex;
+  private String sex;
   private Integer role;
   private String image;
   private Integer powerId;
+  private Integer isHide;
+  /**
+   * description: 个人留言
+   */
+  private String message;
 
   /**
    * description: 手机验证码
@@ -38,5 +43,7 @@ public class User {
     this.email = userDetail.getEmail();
     this.image = userDetail.getImage();
     this.sex = userDetail.getSex();
+    this.isHide = userDetail.getIsHide();
+    this.message = userDetail.getMassage();
   }
 }

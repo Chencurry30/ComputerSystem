@@ -50,6 +50,12 @@
             <if test="image != null">
                 image = #{image}
             </if>
+            <if test="isHide != null">
+                is_hide = #{isHide}
+            </if>
+            <if test="message != null">
+                message = #{message}
+            </if>
         </set>
         <where>
             user_id = #{userId}
