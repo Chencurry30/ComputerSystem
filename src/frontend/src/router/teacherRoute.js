@@ -7,16 +7,18 @@ export default [
     path: '/teacherSelect',
     name: 'teacherSelect',
     component: teacherSelect,
-    meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-      showTopFotter: true
-    }
+    meta: {                          //配置相关的参数，保证页面是否展示头部和底部                       
+      showTop: true,
+      showFotter:true
+      },
   },
   {
     path: '/teacherPerson/:teacherId?',
     name: 'teacherPerson',
     component: teacherPerson,
-    meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-      showTopFotter: true
-    }
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
   }
 ]

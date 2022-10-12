@@ -7,24 +7,27 @@ export default  [
     path: '/webAboutIndex',
     name: 'webAboutIndex',
     component: webAboutIndex,
-    meta: {
-      showTopFotter: true
-    }
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
   },
   {
     path: '/webAboutService',
     name: 'webAboutService',
     component: webAboutService,
-    meta: {
-      showTopFotter: true
-    }
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
   },
   {
     path: '/webAboutContact',
     name: 'webAboutContact',
     component: webAboutContact,
-    meta: {
-      showTopFotter: true
-    }
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
   }
 ]
