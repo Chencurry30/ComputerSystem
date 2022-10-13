@@ -1,4 +1,4 @@
-<!-- eslint-disable vue/no-deprecated-slot-attribute -->
+<!-- 修改手机号的相关弹窗-->
 <template>
   <div class="tab-content" v-show="dialogVisible">
     <div class="contentBox">

@@ -1,3 +1,4 @@
+<!--用户回复的相关信息-->
 <template>
   <div class="tab-content" v-show="showDialog">
     <div class="contentBox">
