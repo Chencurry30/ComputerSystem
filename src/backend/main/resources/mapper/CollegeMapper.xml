@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.CollegeMapper">
+<!--    添加院校-->
+    <insert id="addCollege" parameterType="College">
+        insert into college values(null ,#{name},#{address},#{type},#{region},#{phone},#{rank},#{disDevelop})
+    </insert>
+<!--    查询院校-->
+    <select id="getCollegeById" resultType="College">
+        select *from college where college_id=#{collegeId}
+    </select>
+</mapper>
