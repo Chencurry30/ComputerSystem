@@ -21,10 +21,6 @@ public class UserDetail {
     private String email;
     private String image;
     private String sex;
-    /**
-     * description: 返回给前端时，忽略此属性
-     */
-    @JsonIgnore
     private String smsCode;
     private Integer isHide;
     private String massage;

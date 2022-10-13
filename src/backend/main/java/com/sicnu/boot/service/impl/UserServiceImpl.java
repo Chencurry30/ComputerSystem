@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * description:
@@ -60,8 +61,8 @@ public class UserServiceImpl implements UserService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getUserId().toString();
         String jwt = JwtUtil.createJWT(userId);
-        //authenticate存入redis
-        redisUtils.setCacheObject("login:"+userId,loginUser);
+        //authenticate存入redis,失效时间为30分钟
+        redisUtils.setCacheObject("login:"+userId,loginUser,30, TimeUnit.MINUTES);
         //把token响应给前端
         HashMap<String,Object> map = new HashMap<>(5);
         map.put("token",jwt);
@@ -79,16 +80,16 @@ public class UserServiceImpl implements UserService {
             log.error("手机号已存在，请重新注册");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.PHONE_REPEAT.getCode(), "手机号已存在，请重新注册");
         }
-        //验证手机验证码是否正确
-        ServerResponse<String> verifySmsCode = verifySmsCode(user.getPhone(), user.getSmsCode());
-        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
-            return verifySmsCode;
-        }
         //首先判断用户名是否存在
         Integer checkUsername = userMapper.checkUsername(user.getUsername());
         if(checkUsername == 1){
             log.error("用户名已经存在，请重新注册");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_REPEAT.getCode(), "用户名已经存在，请重新注册");
+        }
+        //验证手机验证码是否正确
+        ServerResponse<String> verifySmsCode = verifySmsCode(user.getPhone(), user.getSmsCode());
+        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return verifySmsCode;
         }
         //对密码进行加密
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -133,7 +134,7 @@ public class UserServiceImpl implements UserService {
         User userById = userMapper.getUserById(userid);
         loginUser.setUser(userById);
         //更新redis信息
-        redisUtils.setCacheObject("login:"+userid , loginUser);
+        redisUtils.setCacheObject("login:"+userid , loginUser,30,TimeUnit.MINUTES);
         UserDetail userDetails = new UserDetail(userById);
         return ServerResponse.createBySuccess("更新成功",userDetails);
     }
@@ -197,7 +198,7 @@ public class UserServiceImpl implements UserService {
         userMapper.updatePhoneByUserId(updateUser.getPhone(), userid);
         //更新redis信息
         loginUser.getUser().setPhone(updateUser.getPhone());
-        redisUtils.setCacheObject("login:"+userid , loginUser);
+        redisUtils.setCacheObject("login:"+userid , loginUser,30,TimeUnit.MINUTES);
         return ServerResponse.createBySuccessMessage("手机号更改成功");
     }
 

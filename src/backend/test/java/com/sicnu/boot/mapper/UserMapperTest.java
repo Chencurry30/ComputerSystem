@@ -51,7 +51,7 @@ public class UserMapperTest {
 
     @Test
     void testGetUsernameByPhone(){
-        String username = userMapper.getUsernameByPhone("17311023002");
+        String username = userMapper.getUsernameByPhone("13541169382");
         System.out.println(username);
     }
 

@@ -110,7 +110,7 @@ public class UserController {
     @PostMapping("/verify")
     public ServerResponse<String> verifyCode(@RequestBody Map<String,String> map){
         String phoneName = "phone";
-        String smsCodeName = "smsCodeName";
+        String smsCodeName = "smsCode";
         if (!map.containsKey(phoneName)){
             log.info("手机号为空");
             return ServerResponse.createByErrorMessage("手机号为空");
