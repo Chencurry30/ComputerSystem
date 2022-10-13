@@ -9,7 +9,8 @@
           <div class="middleBox">
             <div class="middle-header">
               <div class="middle-left">王小五</div>
-              <div class="middle-right">与他留言</div>
+              <div class="middle-right" >与他留言</div>
+              <questionPopup ref="questionPopup"></questionPopup>
             </div>
             <div class="middle-main">
               <p>学位:博士</p>
@@ -106,9 +107,10 @@
 </template>
 
 <script>
+import QuestionPopup from '../../components/popup/questionPopup.vue';
 import replyItem from "../../components/replyItem.vue";
 export default {
-  components: { replyItem },
+  components: { replyItem, QuestionPopup },
   name: "teacherPerson",
   data() {
     return {
