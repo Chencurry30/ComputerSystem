@@ -57,12 +57,12 @@
                 v-model="dataForm.phone"
               ></el-input>
             </el-form-item>
-            <el-form-item prop="verificationCode" class="verification">
+            <el-form-item prop="smsCode" class="verification">
               <el-input
                 type="password"
                 prefix-icon="el-icon-thumb"
                 placeholder="请输入验证码"
-                v-model="dataForm.verificationCode"
+                v-model="dataForm.smsCode"
               ></el-input>
               <div class="getVerificationCode" @click="getVerCode">
                 {{ verificationCodeInfo }}
@@ -91,6 +91,7 @@
 </template>
 <script>
 import { userRegister } from "@/Servers/ServersApi";
+import {retrievePassword} from "@/Servers/ServersApi"
 export default {
   name: "registerView",
   data() {
@@ -104,7 +105,7 @@ export default {
         username: '', //账号
         password: '', //密码
         phone:'',         //手机号
-        verificateCode:'',  //验证码  
+        smsCode:'',  //验证码  
       },
       checkForm:{
         phone:[
@@ -115,6 +116,7 @@ export default {
     };
   },
   computed:{
+    //判断登录条件
     canRegister(){
       const { username,password } = this.dataForm
       return Boolean(username&&password)
@@ -146,6 +148,24 @@ export default {
            this.bVerification = false  //打开节流阀
         }
       },1000)
+      let phone={
+        phone: this.dataForm.phone
+      }
+      retrievePassword(phone).then(res=>{
+        console.log(res.data.code);
+        if(res.data.code===414){
+          this.$message.error("手机号为空，请输入手机号")
+        }else if(res.data.code===413){
+          this.$message.error("手机号已注册，请输入新的手机号")
+        }else if(res.data.code===200){
+          this.$message({
+              message: "验证码已发送，请注意查收",
+              type: "success",
+            })
+        }
+        
+
+      })
     },
     //注册
     goToRegister() {
@@ -157,7 +177,7 @@ export default {
             this.$message({
               message: "恭喜你，注册成功！请登录",
               type: "success",
-            });
+            })
             this.$router.push({name:'loginView'})
           }
           else if (res.data.code === 201) {

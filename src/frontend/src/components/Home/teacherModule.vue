@@ -28,7 +28,7 @@
               <li class="BoxItem">
                 <div class="item-Info">
                   <div class="itemImg">
-                    <img src="../assets/Img/teacherImg/1.png" alt="" />
+                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
                   </div>
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
@@ -36,7 +36,7 @@
                       <span class="professional">数学</span>
                     </div>
                     <div class="Introduce-right">
-                      <img src="../assets/Img/Icon/gestures.png" alt="" />
+                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
                       查看更多
                     </div>
                   </div>
@@ -50,7 +50,7 @@
               <li class="BoxItem">
                 <div class="item-Info">
                   <div class="itemImg">
-                    <img src="../assets/Img/teacherImg/1.png" alt="" />
+                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
                   </div>
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
@@ -58,7 +58,7 @@
                       <span class="professional">数学</span>
                     </div>
                     <div class="Introduce-right">
-                      <img src="../assets/Img/Icon/gestures.png" alt="" />
+                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
                       查看更多
                     </div>
                   </div>
@@ -72,7 +72,7 @@
               <li class="BoxItem">
                 <div class="item-Info">
                   <div class="itemImg">
-                    <img src="../assets/Img/teacherImg/1.png" alt="" />
+                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
                   </div>
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
@@ -80,7 +80,7 @@
                       <span class="professional">数学</span>
                     </div>
                     <div class="Introduce-right">
-                      <img src="../assets/Img/Icon/gestures.png" alt="" />
+                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
                       查看更多
                     </div>
                   </div>
@@ -94,7 +94,7 @@
               <li class="BoxItem">
                 <div class="item-Info">
                   <div class="itemImg">
-                    <img src="../assets/Img/teacherImg/1.png" alt="" />
+                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
                   </div>
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
@@ -102,7 +102,7 @@
                       <span class="professional">数学</span>
                     </div>
                     <div class="Introduce-right">
-                      <img src="../assets/Img/Icon/gestures.png" alt="" />
+                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
                       查看更多
                     </div>
                   </div>
@@ -116,7 +116,7 @@
               <li class="BoxItem">
                 <div class="item-Info">
                   <div class="itemImg">
-                    <img src="../assets/Img/teacherImg/1.png" alt="" />
+                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
                   </div>
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
@@ -124,7 +124,7 @@
                       <span class="professional">数学</span>
                     </div>
                     <div class="Introduce-right">
-                      <img src="../assets/Img/Icon/gestures.png" alt="" />
+                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
                       查看更多
                     </div>
                   </div>
@@ -138,7 +138,7 @@
               <li class="BoxItem">
                 <div class="item-Info">
                   <div class="itemImg">
-                    <img src="../assets/Img/teacherImg/1.png" alt="" />
+                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
                   </div>
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
@@ -146,7 +146,7 @@
                       <span class="professional">数学</span>
                     </div>
                     <div class="Introduce-right">
-                      <img src="../assets/Img/Icon/gestures.png" alt="" />
+                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
                       查看更多
                     </div>
                   </div>

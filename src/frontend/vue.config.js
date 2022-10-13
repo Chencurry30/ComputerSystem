@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
 
-  lintOnSave:false,
+  lintOnSave:false ,
   devServer: {
     // host: 'localhost',
     // port: 8080,//项目运行的端口号
