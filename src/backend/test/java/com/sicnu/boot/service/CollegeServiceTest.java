@@ -1,5 +1,6 @@
 package com.sicnu.boot.service;
 
+import com.sicnu.boot.pojo.College;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,13 @@ public class CollegeServiceTest {
     private CollegeService collegeService;
 
     @Test
-    public void getCollege(){
+    public void testGetCollegeById(){
         System.out.println(collegeService.getCollegeById(2));
+    }
+
+    @Test
+    public void testAddCollege(){
+        College college = new College(null,"测试1","测试1","测试1","测试1","测试1",999,"测试1");
+        System.out.println(collegeService.addCollege(college));
     }
 }

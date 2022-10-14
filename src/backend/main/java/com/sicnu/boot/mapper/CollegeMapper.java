@@ -3,6 +3,8 @@ package com.sicnu.boot.mapper;
 import com.sicnu.boot.pojo.College;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author 蔡名展
  * @version 1.0
@@ -12,27 +14,33 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CollegeMapper {
     /**
-     * 添加院校
+     * 添加学校
      * @param college：学校
      */
     void addCollege(College college);
 
     /**
-     * 查询院校
+     * 查询学校
      * @param collegeId：学校id
      * @return College
      */
     College getCollegeById(Integer collegeId);
 
     /**
-     * 查询院校
+     * 查询学校
      * @param name：学校名
      * @return College
      */
     College getCollegeByName(String name);
 
     /**
-     * 删除院校
+     * 查询所有学校
+     * @return College
+     */
+    List<College> getAllCollege();
+
+    /**
+     * 删除学校
      * @param collegeId：学校id
      * @return Integer
      */

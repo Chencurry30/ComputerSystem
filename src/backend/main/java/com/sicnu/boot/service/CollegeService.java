@@ -3,6 +3,8 @@ package com.sicnu.boot.service;
 import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.utils.ServerResponse;
 
+import java.util.List;
+
 /**
  * description:
  *
@@ -19,4 +21,23 @@ public interface CollegeService{
      */
     ServerResponse<College> getCollegeById(Integer id);
 
+    /**
+     * 添加学校
+     * @param college：学校信息
+     * @return College
+     */
+    ServerResponse<College> addCollege(College college);
+
+    /**
+     * 删除学校
+     * @param id：学校id
+     * @return College
+     */
+    ServerResponse<Integer> deleteCollege(Integer id);
+
+    /**
+     * 查询所有学校
+     * @return List
+     */
+    ServerResponse<List<College>> getAllCollege();
 }

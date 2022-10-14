@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author 蔡名展
@@ -53,5 +54,11 @@ public class CollegeMapperTest {
         College college = new College(2,"测试","测试123","测试123","测试123","测试",123,"测试");
         collegeMapper.updateCollegeById(college);
         System.out.println(college);
+    }
+
+    @Test
+    public void testGetAllCollege(){
+        List<College> allCollege = collegeMapper.getAllCollege();
+        System.out.println(allCollege);
     }
 }

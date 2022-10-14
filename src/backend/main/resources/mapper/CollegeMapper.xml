@@ -21,4 +21,7 @@
     <update id="updateCollegeById">
         update college set name=#{name},address=#{address},type=#{type},region=#{region},phone=#{phone},`rank`=#{rank},dis_develop=#{disDevelop} where college_id=#{collegeId}
     </update>
+    <select id="getAllCollege" resultType="College">
+        select *from college
+    </select>
 </mapper>

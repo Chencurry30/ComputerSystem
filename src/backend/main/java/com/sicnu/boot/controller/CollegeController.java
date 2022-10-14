@@ -4,12 +4,10 @@ import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.service.CollegeService;
 import com.sicnu.boot.utils.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -35,5 +33,34 @@ public class CollegeController {
     @GetMapping("/{id}")
     public ServerResponse<College> getCollegeById(@PathVariable("id") Integer id){
         return collegeService.getCollegeById(id);
+    }
+
+    /**
+     * 添加学校
+     * @param college：学校信息
+     * @return College
+     */
+    @PostMapping
+    public ServerResponse<College> addCollege(@RequestBody College college){
+        return collegeService.addCollege(college);
+    }
+
+    /**
+     * 删除学校
+     * @param id：学校id
+     * @return Integer
+     */
+    @DeleteMapping("/{id}")
+    public ServerResponse<Integer> deleteCollege(@PathVariable("id") Integer id){
+        return collegeService.deleteCollege(id);
+    }
+
+    /**
+     * 查询所有学校
+     * @return List
+     */
+    @GetMapping
+    public ServerResponse<List<College>> getAllCollege(){
+        return collegeService.getAllCollege();
     }
 }

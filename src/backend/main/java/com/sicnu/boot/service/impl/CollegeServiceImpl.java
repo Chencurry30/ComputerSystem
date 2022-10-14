@@ -8,6 +8,8 @@ import com.sicnu.boot.utils.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * description:
@@ -27,8 +29,24 @@ public class CollegeServiceImpl implements CollegeService {
     @Override
     public ServerResponse<College> getCollegeById(Integer id) {
         College college=collegeMapper.getCollegeById(id);
-        return ServerResponse.createBySuccess("返回成功",college);
+        return ServerResponse.createBySuccess("查询成功",college);
     }
 
+    @Override
+    public ServerResponse<College> addCollege(College college) {
+        collegeMapper.addCollege(college);
+        return ServerResponse.createBySuccess("添加成功",college);
+    }
 
+    @Override
+    public ServerResponse<Integer> deleteCollege(Integer id) {
+        collegeMapper.deleteCollege(id);
+        return ServerResponse.createBySuccess("删除成功",id);
+    }
+
+    @Override
+    public ServerResponse<List<College>> getAllCollege() {
+        List<College> allCollege = collegeMapper.getAllCollege();
+        return ServerResponse.createBySuccess("查询成功",allCollege);
+    }
 }
