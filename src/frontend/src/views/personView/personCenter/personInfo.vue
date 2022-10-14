@@ -1,33 +1,6 @@
 //用户信息 
 <template>
   <div class="allBox">
-    <!-- <div class="UserBox">
-      <div class="containHeader">
-        <span class="headerP1">我的资料</span>
-        <span class="headerP2">MY PROFILE</span>
-        <span class="headerP3">SETTINGS</span>
-      </div>
-      <div class="containMain">
-        <div class="userImg"></div>
-        <div class="userInfo">
-          <div class="infoTop">
-            <div class="left">高山流水</div>
-          </div>
-          <div class="infoMiddle">
-            <span>四川</span>
-            <span>/</span>
-            <span>达州市</span>
-            <span>/</span>
-            <span>曲线</span>
-          </div>
-          <div class="infoBottom">
-            <span>数学</span>
-            <span>英语</span>
-            <span>手绘</span>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="UserBox secondBox">
       <div class="containHeader">
         <span class="headerP1">详细信息</span>
@@ -39,27 +12,13 @@
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">用户名：</span>
-              <span v-show="!editor">1231232132</span>
-              <input
-                class="inputInfo"
-                type="text"
-                v-show="editor"
-                placeholder="请输入用户名"
-                v-model="userInfo.username"
-              />
+              <span>1231232132</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">昵称：</span>
-              <span v-show="!editor">高山流水</span>
-              <input
-                class="inputInfo"
-                type="text"
-                v-show="editor"
-                placeholder="请输入昵称"
-                v-model="userInfo.nickname"
-              />
+              <span >高山流水</span>
             </div>
           </li>
           <li class="Info-item">
@@ -71,38 +30,20 @@
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">邮箱：</span>
-              <span v-show="!editor">123123123@qq.com</span>
-              <input
-                class="inputInfo"
-                type="text"
-                v-show="editor"
-                placeholder="请输入邮箱"
-                v-model="userInfo.email"
-              />
+              <span >123123123@qq.com</span>
+
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">年龄：</span>
-              <span v-show="!editor">18</span>
-              <input
-                class="inputInfo"
-                type="text"
-                v-show="editor"
-                placeholder="请输入年龄"
-                v-model="userInfo.age"
-              />
+              <span >18</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">性别：</span>
-              <span v-show="!editor">{{userInfo.sex}}</span>
-              <select class="group" v-model="userInfo.sex" v-show="editor">
-                <option value="男">男</option>
-                <option value="女">女</option>
-                <option value="保密">保密</option>
-              </select>
+              <span>{{userInfo.sex}}</span>
             </div>
           </li>
           <li class="Info-item">
@@ -114,19 +55,13 @@
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">个人留言：</span>
-              <span v-show="!editor">坚持不懈用于拼搏，终能走向胜利的彼岸</span>
-              <input
-                class="inputInfo"
-                type="text"
-                v-show="editor"
-                placeholder="请输入个人留言"
-                v-model="userInfo.age"
-              />
+              <span >坚持不懈用于拼搏，终能走向胜利的彼岸</span>
             </div>
           </li>
           <div class="btn" @click="changeEditor">
-            {{ editor ? "保存信息" : "修改信息" }}
+            修改信息
           </div>
+          <InfoPopup ref="InfoPopup"></InfoPopup>
         </ul>
       </div>
     </div>
@@ -161,25 +96,27 @@
 </template>
 
 <script>
+import InfoPopup from '../../../components/popup/InfoPopup.vue';
 export default {
-  name: "personInfo",
-  data() {
-    return {
-      editor: false,
-      userInfo: {
-        username: "",
-        nickname: "",
-        age: "",
-        email: "",
-        sex: "保密",
-      },
-    };
-  },
-  methods: {
-    changeEditor() {
-      this.editor = !this.editor;
+    name: "personInfo",
+    data() {
+        return {
+            editor: false,
+            userInfo: {
+                username: "",
+                nickname: "",
+                age: "",
+                email: "",
+                sex: "保密",
+            },
+        };
     },
-  },
+    methods: {
+        changeEditor() {
+          this.$refs.InfoPopup.showPopup();
+        },
+    },
+    components: { InfoPopup }
 };
 </script>
 
