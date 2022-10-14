@@ -12,4 +12,13 @@
     <select id="getCollegeById" resultType="College">
         select *from college where college_id=#{collegeId}
     </select>
+    <select id="getCollegeByName" resultType="College">
+        select *from college where name like '%${name}%'
+    </select>
+    <delete id="deleteCollege">
+        delete from college where college_id=#{collegeId}
+    </delete>
+    <update id="updateCollegeById">
+        update college set name=#{name},address=#{address},type=#{type},region=#{region},phone=#{phone},`rank`=#{rank},dis_develop=#{disDevelop} where college_id=#{collegeId}
+    </update>
 </mapper>
