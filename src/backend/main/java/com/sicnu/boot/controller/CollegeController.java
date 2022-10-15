@@ -63,4 +63,24 @@ public class CollegeController {
     public ServerResponse<List<College>> getAllCollege(){
         return collegeService.getAllCollege();
     }
+
+    /**
+     * 更新学校
+     * @param college：学校信息
+     * @return College
+     */
+    @PutMapping
+    public ServerResponse<College> updateCollege(@RequestBody College college){
+        return collegeService.updateCollege(college);
+    }
+
+    /**
+     * 查询学校信息
+     * @param name：学校名
+     * @return College
+     */
+    @GetMapping("/name")
+    public ServerResponse<List<College>> getCollegeByName(@RequestBody String name){
+        return collegeService.getCollegeByName(name);
+    }
 }

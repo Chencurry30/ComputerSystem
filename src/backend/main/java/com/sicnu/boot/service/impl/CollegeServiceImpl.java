@@ -49,4 +49,16 @@ public class CollegeServiceImpl implements CollegeService {
         List<College> allCollege = collegeMapper.getAllCollege();
         return ServerResponse.createBySuccess("查询成功",allCollege);
     }
+
+    @Override
+    public ServerResponse<College> updateCollege(College college) {
+        collegeMapper.updateCollegeById(college);
+        return ServerResponse.createBySuccess("修改成功",college);
+    }
+
+    @Override
+    public ServerResponse<List<College>> getCollegeByName(String name) {
+        List<College> college = collegeMapper.getCollegeByName(name);
+        return ServerResponse.createBySuccess("查询成功",college);
+    }
 }

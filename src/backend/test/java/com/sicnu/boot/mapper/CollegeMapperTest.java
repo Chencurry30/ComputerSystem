@@ -39,7 +39,7 @@ public class CollegeMapperTest {
 
     @Test
     public void testGetByName(){
-        College college = collegeMapper.getCollegeByName("测");
+        List<College> college = collegeMapper.getCollegeByName("院");
         System.out.println(college);
     }
 

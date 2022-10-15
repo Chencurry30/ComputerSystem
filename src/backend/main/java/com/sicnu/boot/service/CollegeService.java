@@ -40,4 +40,18 @@ public interface CollegeService{
      * @return List
      */
     ServerResponse<List<College>> getAllCollege();
+
+    /**
+     * 修改学校信息
+     * @param college：学校信息
+     * @return College
+     */
+    ServerResponse<College> updateCollege(College college);
+
+    /**
+     * 查询学校
+     * @param name：学校名
+     * @return College
+     */
+    ServerResponse<List<College>> getCollegeByName(String name);
 }
