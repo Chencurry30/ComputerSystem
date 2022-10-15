@@ -31,7 +31,7 @@ public interface CollegeMapper {
      * @param name：学校名
      * @return College
      */
-    College getCollegeByName(String name);
+    List<College> getCollegeByName(String name);
 
     /**
      * 查询所有学校
@@ -47,8 +47,10 @@ public interface CollegeMapper {
     Integer deleteCollege(Integer collegeId);
 
     /**
-     * 更改院校信息
-     * @param college：学校
+     * 更改学校信息
+     * @param college：学校信息
      */
     void updateCollegeById(College college);
+
+
 }

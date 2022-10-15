@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * description:
@@ -31,5 +32,10 @@ public class CollegeServiceTest {
     public void testAddCollege(){
         College college = new College(null,"测试1","测试1","测试1","测试1","测试1",999,"测试1");
         System.out.println(collegeService.addCollege(college));
+    }
+
+    @Test
+    public void testGetCollegeByName(){
+        System.out.println(collegeService.getCollegeByName("院"));
     }
 }
