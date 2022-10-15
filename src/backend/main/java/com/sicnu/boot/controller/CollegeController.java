@@ -83,4 +83,9 @@ public class CollegeController {
     public ServerResponse<List<College>> getCollegeByName(@RequestBody String name){
         return collegeService.getCollegeByName(name);
     }
+
+    @GetMapping("/pages/{pageNum}")
+    public ServerResponse<List<College>> getCollegePage(@PathVariable Integer pageNum){
+        return collegeService.getCollegePage(pageNum);
+    }
 }

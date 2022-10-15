@@ -24,4 +24,7 @@
     <select id="getAllCollege" resultType="College">
         select *from college
     </select>
+    <select id="getCollegePage" resultType="College">
+        select *from college
+    </select>
 </mapper>
