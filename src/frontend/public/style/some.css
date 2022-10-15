@@ -12,10 +12,6 @@ a{
     color: #666;
     text-decoration: none;
 }
-input{
-    outline: none;
-    border: none;
- }
 
  /*统一的宽度*/
  .w{
@@ -40,9 +36,16 @@ input{
  img{
    vertical-align: top !important;
  }
-
+/*flex布局的垂直和水平居中*/
  .centerLocation{
     display: flex;
     justify-content: center;
     align-items: center;
+ }
+
+ /*首页每个模块的位置*/
+ .video-item,.teacher-item {
+      margin-top: 5px;
+      padding: 10px 3px;
+      background-color: #fff;
  }

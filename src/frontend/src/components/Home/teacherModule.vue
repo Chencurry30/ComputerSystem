@@ -164,20 +164,16 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
+  name:'teacherModule',
   data() {
     return {};
   },
 };
 </script>
-
 <style lang="less" scoped>
 .teacher-item {
-  margin-top: 20px;
-  padding: 25px 3px;
-  background-color: #fff;
   .title {
     display: flex;
     height: 30px;
