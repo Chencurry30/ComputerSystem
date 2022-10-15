@@ -53,9 +53,4 @@ public interface CollegeMapper {
      */
     void updateCollegeById(College college);
 
-    /**
-     * 分页查询学校
-     * @return Page
-     */
-    List<College> getCollegePage();
 }
