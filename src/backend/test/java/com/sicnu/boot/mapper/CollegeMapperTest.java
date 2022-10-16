@@ -64,10 +64,4 @@ public class CollegeMapperTest {
         System.out.println(allCollege);
     }
 
-    @Test
-    public void getCollegePage(){
-        PageHelper.startPage(1,4);
-        List<College> page= collegeMapper.getCollegePage();
-        System.out.println(page);
-    }
 }
