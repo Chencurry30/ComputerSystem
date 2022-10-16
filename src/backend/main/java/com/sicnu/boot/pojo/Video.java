@@ -32,5 +32,6 @@ public class Video {
   private String typeThree;
   private Integer duration;
   private String link;
+  private Integer commentNum;
 
 }

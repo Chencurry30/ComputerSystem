@@ -4,7 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sicnu.boot.mapper.VideoMapper">
-    <select id="getVideoListBySelective" resultType="Video">
+    <select id="getVideoListBySelective" resultType="Video" parameterType="com.sicnu.boot.vo.VideoSelective">
         select * from video
+        <where>
+            <if test="videoName != null and videoName != ''">
+                and name like "%" #{videoName} "%"
+            </if>
+            <if test="videoType != null and videoType != ''">
+                and (type_one = #{videoType}  or type_two = #{videoType} or type_three = #{videoType})
+            </if>
+            <if test="videoDuration != null and videoDuration != ''">
+                and duration <![CDATA[<=]]> #{videoDuration}
+            </if>
+        </where>
+        <if test="videoSortName != null and videoSortName != ''">
+            order by ${videoSortName} desc
+        </if>
     </select>
 </mapper>

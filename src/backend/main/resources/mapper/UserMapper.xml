@@ -35,25 +35,25 @@
     <update id="updateUser" parameterType="User">
         update user 
         <set>
-            <if test="nickname != null">
+            <if test="nickname != null and nickname != ''">
                 nickname = #{nickname},
             </if>
-            <if test="email != null">
+            <if test="email != null and email != ''">
                 email = #{email},
             </if>
-            <if test="sex != null">
+            <if test="sex != null and sex != ''">
                 sex = #{sex},
             </if>
-            <if test="age != null">
+            <if test="age != null and age != ''">
                 age = #{age},
             </if>
-            <if test="image != null">
+            <if test="image != null and image != ''">
                 image = #{image}
             </if>
-            <if test="isHide != null">
+            <if test="isHide != null and isHide != ''">
                 is_hide = #{isHide}
             </if>
-            <if test="message != null">
+            <if test="message != null and message != ''">
                 message = #{message}
             </if>
         </set>

@@ -1,6 +1,7 @@
 package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.Video;
+import com.sicnu.boot.vo.VideoSelective;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface VideoMapper {
      * @return List<Video>
      * @author 胡建华
      * Date:  2022/10/15 20:04
+     * @param videoSelective :
      */
-    List<Video> getVideoListBySelective();
+    List<Video> getVideoListBySelective(VideoSelective videoSelective);
 }

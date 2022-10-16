@@ -1,6 +1,7 @@
 package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.Video;
+import com.sicnu.boot.vo.VideoSelective;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,7 +21,8 @@ public class VideoMapperTest {
 
     @Test
     void testGetVideoListBySelective(){
-        List<Video> list = videoMapper.getVideoListBySelective();
+        VideoSelective selective = new VideoSelective(0,0,"考研","英语",null,1,"time");
+        List<Video> list = videoMapper.getVideoListBySelective(selective);
         list.forEach(System.out :: println);
     }
 }
