@@ -148,21 +148,13 @@
             </div>
             <div class="containMain">
               <div class="userImg"></div>
+
               <div class="userInfo">
-                <div class="infoTop">
-                  <div class="left">高山流水</div>
+                <div class="nickname">
+                  高三流水
                 </div>
-                <div class="infoMiddle">
-                  <span>四川</span>
-                  <span>/</span>
-                  <span>达州市</span>
-                  <span>/</span>
-                  <span>曲线</span>
-                </div>
-                <div class="infoBottom">
-                  <span>数学</span>
-                  <span>英语</span>
-                  <span>手绘</span>
+                <div class="personintroduce">
+                  个人介绍
                 </div>
               </div>
             </div>
@@ -281,33 +273,15 @@ export default {
         .userInfo {
           margin-left: 40px;
           width: 200px;
-          .infoTop {
-            margin: 5px 0px;
+          display: flex;
+          flex-direction: column;        
+            .nickname {
             display: flex;
             justify-content: space-between;
-            .left {
-              font-weight: 700;
-            }
-            .right {
-              font-weight: 700;
-            }
+            align-items: center;
           }
-          .infoMiddle {
-            margin-left: 5px;
-            margin-bottom: 5px;
-            span {
-              padding: 0px 5px;
-            }
-          }
-          .infoBottom {
-            margin-left: -3px;
-            margin-top: 10px;
-            span {
-              margin: 0 3px;
-              padding: 0px 8px;
-              border: 2px solid #eee;
-              border-radius: 10px;
-            }
+          .personintroduce {
+
           }
         }
         .InfoBox {

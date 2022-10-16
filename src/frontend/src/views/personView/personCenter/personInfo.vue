@@ -111,12 +111,15 @@ export default {
             },
         };
     },
+    components: { InfoPopup },
+    mounted(){
+      this.$store.dispatch('userInfo/getUserInfo',localStorage.getItem('token'))
+    },
     methods: {
         changeEditor() {
           this.$refs.InfoPopup.showPopup();
         },
     },
-    components: { InfoPopup }
 };
 </script>
 

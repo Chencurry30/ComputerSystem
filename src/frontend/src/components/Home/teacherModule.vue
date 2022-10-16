@@ -197,7 +197,7 @@ export default {
           float: left;
           display: block;
           padding: 0 15px;
-          border-bottom: 4px solid #fff;
+          border-bottom: 4px solid #f7f7f7;
           line-height: 27px;
           font-size: 16px;
           cursor: pointer;

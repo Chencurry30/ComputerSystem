@@ -119,7 +119,7 @@ export default {
     goToLogin() {
       let data = this.dataForm
       userLogin(data).then(res => {
-        // console.log(res.data);
+        console.log(res.data);
         Cookies.set('name', this.dataForm.username)
         const name = data.username
         const token = res.data.data.token
