@@ -47,6 +47,11 @@ mybatis:
   #mapper文件地址
   mapper-locations: classpath:mapper/*Mapper.xml
 
+# 配置pagehelper的属性
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
 
 logging:
   level:

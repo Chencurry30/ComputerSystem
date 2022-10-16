@@ -54,4 +54,11 @@ public interface CollegeService{
      * @return College
      */
     ServerResponse<List<College>> getCollegeByName(String name);
+
+    /**
+     *
+     * @param pageNum；页码数
+     * @return Page
+     */
+    ServerResponse<List<College>> getCollegePage(Integer pageNum);
 }

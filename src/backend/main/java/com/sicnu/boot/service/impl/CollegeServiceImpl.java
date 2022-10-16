@@ -1,6 +1,7 @@
 package com.sicnu.boot.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
 import com.sicnu.boot.mapper.CollegeMapper;
 import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.service.CollegeService;
@@ -59,6 +60,13 @@ public class CollegeServiceImpl implements CollegeService {
     @Override
     public ServerResponse<List<College>> getCollegeByName(String name) {
         List<College> college = collegeMapper.getCollegeByName(name);
+        return ServerResponse.createBySuccess("查询成功",college);
+    }
+
+    @Override
+    public ServerResponse<List<College>> getCollegePage(Integer pageNum) {
+        PageHelper.startPage(pageNum,4);
+        List<College> college = collegeMapper.getAllCollege();
         return ServerResponse.createBySuccess("查询成功",college);
     }
 }

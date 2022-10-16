@@ -1,5 +1,6 @@
 package com.sicnu.boot.mapper;
 
+import cn.hutool.db.Page;
 import com.sicnu.boot.pojo.College;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -51,6 +52,5 @@ public interface CollegeMapper {
      * @param college：学校信息
      */
     void updateCollegeById(College college);
-
 
 }

@@ -1,5 +1,7 @@
 package com.sicnu.boot.mapper;
 
+import cn.hutool.db.Page;
+import com.github.pagehelper.PageHelper;
 import com.sicnu.boot.pojo.College;
 import org.apache.ibatis.annotations.Mapper;
 import org.junit.Test;
@@ -60,5 +62,12 @@ public class CollegeMapperTest {
     public void testGetAllCollege(){
         List<College> allCollege = collegeMapper.getAllCollege();
         System.out.println(allCollege);
+    }
+
+    @Test
+    public void getCollegePage(){
+        PageHelper.startPage(1,4);
+        List<College> page= collegeMapper.getCollegePage();
+        System.out.println(page);
     }
 }

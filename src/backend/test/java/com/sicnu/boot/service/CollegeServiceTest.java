@@ -38,4 +38,9 @@ public class CollegeServiceTest {
     public void testGetCollegeByName(){
         System.out.println(collegeService.getCollegeByName("院"));
     }
+
+    @Test
+    public void testGetCollegePage(){
+        System.out.println(collegeService.getCollegePage(2));
+    }
 }
