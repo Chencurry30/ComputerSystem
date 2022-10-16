@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.service.VideoService;
@@ -49,7 +50,7 @@ public class VideoServiceImpl implements VideoService {
                 return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数异常");
             }
         }
-
+        PageHelper.startPage(videoSelective.getPageNum(),videoSelective.getPageSize());
         List<Video> list = videoMapper.getVideoListBySelective(videoSelective);
         return ServerResponse.createBySuccess("成功",list);
     }

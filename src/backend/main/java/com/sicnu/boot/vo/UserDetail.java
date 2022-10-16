@@ -1,6 +1,7 @@
 package com.sicnu.boot.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sicnu.boot.pojo.User;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDetail {
     private String username;
     private String nickname;
