@@ -65,7 +65,7 @@ public class CollegeServiceImpl implements CollegeService {
 
     @Override
     public ServerResponse<List<College>> getCollegePage(Integer pageNum) {
-        PageHelper.startPage(pageNum,4);
+        PageHelper.startPage(pageNum,6);
         List<College> college = collegeMapper.getAllCollege();
         return ServerResponse.createBySuccess("查询成功",college);
     }
