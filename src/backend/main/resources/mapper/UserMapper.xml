@@ -12,6 +12,10 @@
         select * from user where user_id = #{userId}
     </select>
 
+    <select id="getNicknameByUserId" resultType="String">
+        select nickname from user where user_id = #{userId}
+    </select>
+
     <select id="getUsernameByPhone" resultType="String">
         select username from user where phone = #{phone}
     </select>
@@ -48,10 +52,10 @@
                 age = #{age},
             </if>
             <if test="image != null and image != ''">
-                image = #{image}
+                image = #{image},
             </if>
             <if test="isHide != null and isHide != ''">
-                is_hide = #{isHide}
+                is_hide = #{isHide},
             </if>
             <if test="message != null and message != ''">
                 message = #{message}

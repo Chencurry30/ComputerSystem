@@ -25,7 +25,7 @@ public class UserDetail {
     private String sex;
     private String smsCode;
     private Integer isHide;
-    private String massage;
+    private String message;
     public UserDetail(String nickname,String image){
         this.nickname = nickname;
         this.image = image;
@@ -40,7 +40,7 @@ public class UserDetail {
         this.image = user.getImage();
         this.sex = user.getSex();
         this.isHide = user.getIsHide();
-        this.massage = user.getMessage();
+        this.message = user.getMessage();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class UserDetail {
                 ", image='" + image + '\'' +
                 ", sex='" + sex + '\'' +
                 ", isHide=" + isHide +
-                ", massage='" + massage + '\'' +
+                ", message='" + message + '\'' +
                 '}';
     }
 }

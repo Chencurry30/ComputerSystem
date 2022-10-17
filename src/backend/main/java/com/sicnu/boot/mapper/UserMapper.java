@@ -41,6 +41,16 @@ public interface UserMapper {
     Integer checkUsername(String username);
 
     /**
+     * description: 通过用户id获取用户昵称
+     *
+     * @param userId:
+     * @return String
+     * @author 胡建华
+     * Date:  2022/10/16 15:58
+     */
+    String getNicknameByUserId(Integer userId);
+
+    /**
      * description: 注册用户，需要用户名，密码和手机号
      *
      * @param user:用户

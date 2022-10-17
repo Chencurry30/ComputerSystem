@@ -43,6 +43,6 @@ public class User {
     this.image = userDetail.getImage();
     this.sex = userDetail.getSex();
     this.isHide = userDetail.getIsHide();
-    this.message = userDetail.getMassage();
+    this.message = userDetail.getMessage();
   }
 }
