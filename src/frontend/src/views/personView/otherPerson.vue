@@ -54,15 +54,7 @@
                         <div class="right">2022-10-9</div>
                     </div>
                 </div>
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
-                    </div>
-                </div>
-                <div class="Main-item">
+                                <div class="Main-item">
                     <div class="item-img"></div>
                     <div class="item-title">123213213</div>
                     <div class="item-others">
@@ -179,29 +171,29 @@ export default {
                     margin: 0 0 3px;
                     padding: 10px 10px 10px 0;
                     float: left;
-                    width: 170px;
+                    width: 226px;
                     .item-img{
-                        width: 160px;
-                        height: 100px;
-                        border-radius: 4px;
-                        background: red;
+                      width: 216px;
+                      height: 110px;
+                      border-radius: 4px;
+                      background: red;
                     }
                     .item-title{
-                            line-height: 20px;
-                            height: 38px;
-                            margin-top: 6px;
-                            overflow: hidden;
+                      line-height: 20px;
+                      height: 38px;
+                      margin-top: 6px;
+                      overflow: hidden;
 
                     }
                     .item-others{
-                            margin-top: 6px;
-                            display: flex;
-                            justify-content: space-between;
-                            white-space: nowrap;
-                            height: 14px;
-                            line-height: 14px;
-                            color:#999;
-                            font-size: 12px;
+                      margin-top: 6px;
+                      display: flex;
+                      justify-content: space-between;
+                      white-space: nowrap;
+                      height: 14px;
+                      line-height: 14px;
+                      color:#999;
+                      font-size: 12px;
                     }
                 }
             }
@@ -217,25 +209,22 @@ export default {
                 border: 1px solid #eee;
                 border-radius: 4px;
                 .person-info-title{
-
-
-
                     padding-bottom: 18px;
                     border-bottom: 1px solid #e5e9ef;
                     margin-bottom: 10px;
 
                 }
                 .person-info-connect{
-                        width: 100%;
-                        .info-person{
-                            margin: 5px auto;
-                            width: 80%;
-                            display: flex;
-                            .laber{
-                                margin-right: 10px;
-                            }
-                        }
+                  width: 100%;
+                  .info-person{
+                    margin: 5px auto;
+                    width: 80%;
+                    display: flex;
+                    .laber{
+                      margin-right: 10px;
+                  }
                 }
+              }
             }
         }
     }

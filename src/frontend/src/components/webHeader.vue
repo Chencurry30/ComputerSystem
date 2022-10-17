@@ -68,6 +68,7 @@ export default {
   methods: {
     gotologin() {
       let location = { name: "loginView" };
+      localStorage.clear('token')
       this.$router.push(location);
     },
   },

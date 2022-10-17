@@ -149,21 +149,8 @@
             <div class="containMain">
               <div class="userImg"></div>
               <div class="userInfo">
-                <div class="infoTop">
-                  <div class="left">高山流水</div>
-                </div>
-                <div class="infoMiddle">
-                  <span>四川</span>
-                  <span>/</span>
-                  <span>达州市</span>
-                  <span>/</span>
-                  <span>曲线</span>
-                </div>
-                <div class="infoBottom">
-                  <span>数学</span>
-                  <span>英语</span>
-                  <span>手绘</span>
-                </div>
+                <div class="nickname">昵称:{{getUserImg.nickname}}</div>
+                <div class="personintroduce">个人留言:{{getUserImg.message}}</div>
               </div>
             </div>
           </div>
@@ -175,8 +162,15 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: "personPage",
+  computed:{
+    ...mapGetters('userInfo',
+    {
+      getUserImg:'getUserImg'
+    })
+  }
 };
 </script>
 
@@ -279,35 +273,15 @@ export default {
           border: 1px solid #eee;
         }
         .userInfo {
-          margin-left: 40px;
-          width: 200px;
-          .infoTop {
-            margin: 5px 0px;
-            display: flex;
-            justify-content: space-between;
-            .left {
+          margin-top: 22px;   
+          margin-left: 26px;
+            .nickname,.personintroduce {
               font-weight: 700;
+              font-size: 16px;
+              color: #4e5358;
             }
-            .right {
-              font-weight: 700;
-            }
-          }
-          .infoMiddle {
-            margin-left: 5px;
-            margin-bottom: 5px;
-            span {
-              padding: 0px 5px;
-            }
-          }
-          .infoBottom {
-            margin-left: -3px;
-            margin-top: 10px;
-            span {
-              margin: 0 3px;
-              padding: 0px 8px;
-              border: 2px solid #eee;
-              border-radius: 10px;
-            }
+          .personintroduce {
+            margin-top: 4px;
           }
         }
         .InfoBox {

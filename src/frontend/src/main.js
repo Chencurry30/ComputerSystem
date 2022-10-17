@@ -28,6 +28,8 @@ Vue.use(VueParticles)
 import qs from 'qs';
 Vue.prototype.$qs = qs
 
+ // 导入swiper样式
+ import "swiper/css/swiper.css"
 
 Vue.config.productionTip = false
 new Vue({

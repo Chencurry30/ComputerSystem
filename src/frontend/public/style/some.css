@@ -12,12 +12,21 @@ a{
     color: #666;
     text-decoration: none;
 }
-
+input{
+  border: 0;
+  outline: 0;
+}
+p{
+  margin-bottom: 0 !important;
+}
+dd,dl{
+  margin-bottom: 0 !important;
+}
  /*统一的宽度*/
- .w{
+.w{
     width: 1200px;
     margin: 0 auto;
- }
+}
 
  button{
     border: 0;
@@ -47,5 +56,7 @@ a{
  .video-item,.teacher-item {
       margin-top: 5px;
       padding: 10px 3px;
-      background-color: #fff;
+ }
+ .first{
+  margin-left: 0px !important;
  }

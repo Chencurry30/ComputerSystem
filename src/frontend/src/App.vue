@@ -37,5 +37,6 @@ export default {
   height: 100%;
   margin: 0;
   padding: 0;
+  // background: #f7f7f7;
 }
 </style>

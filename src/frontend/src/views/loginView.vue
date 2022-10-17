@@ -119,7 +119,7 @@ export default {
     goToLogin() {
       let data = this.dataForm
       userLogin(data).then(res => {
-        // console.log(res.data);
+        console.log(res.data);
         Cookies.set('name', this.dataForm.username)
         const name = data.username
         const token = res.data.data.token
@@ -131,16 +131,10 @@ export default {
           })
           this.$router.push({ name: 'Home' })
         }
-        if (res.data.message === '用户名不存在') {
+        else if (res.data.message === '用户名或密码错误') {
           this.$message({
-            message: "该用户名不存在，请注册你的账号！",
-            type: "warning",
-          })
-        }
-        if (res.data.message === '密码错误') {
-          this.$message({
-            message: "密码错误，请重新输入密码",
-            type: "error",
+            message: "用户名或密码错误，请注册你的账号！",
+            type: "success",
           })
         }
       })

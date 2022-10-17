@@ -7,11 +7,15 @@ const Servers = axios.create({
     baseURL: baseurl,
     timeout: 3000,
     headers: {  //请求头
-        'Content-Type': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
     }
 })
 //请求拦截器
 Servers.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+    if(token !== null){
+      config.headers['token'] = token;  
+    }
     nProgress.start();
     return config
 }, error => {
