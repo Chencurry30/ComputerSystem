@@ -23,4 +23,14 @@ public interface VideoMapper {
      * @param videoSelective :
      */
     List<Video> getVideoListBySelective(VideoSelective videoSelective);
+
+    /**
+     * description: 通过id获取视频详细信息
+     *
+     * @param videoId:
+     * @return Video
+     * @author 胡建华
+     * Date:  2022/10/16 16:27
+     */
+    Video getVideoByVideoId(Integer videoId);
 }

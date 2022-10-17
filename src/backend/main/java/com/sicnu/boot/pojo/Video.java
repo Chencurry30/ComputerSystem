@@ -1,6 +1,7 @@
 package com.sicnu.boot.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Video {
   private Integer videoId;
   private String name;
@@ -24,6 +26,7 @@ public class Video {
   private Integer likeNumber;
   private String introduction;
   private Integer resourceId;
+  private Integer authorId;
   private String image;
   private Integer collectionNum;
   private Integer viewNum;
@@ -33,5 +36,5 @@ public class Video {
   private Integer duration;
   private String link;
   private Integer commentNum;
-
+  private String nickname;
 }

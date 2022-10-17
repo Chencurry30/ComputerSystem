@@ -1,5 +1,6 @@
 package com.sicnu.boot.service;
 
+import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.VideoSelective;
@@ -22,5 +23,15 @@ public interface VideoService {
      * @author 胡建华
      * Date:  2022/10/15 20:26
      */
-    ServerResponse<List<Video>> getVideoListBySelective(VideoSelective videoSelective);
+    ServerResponse<PageInfo<Video>> getVideoListBySelective(VideoSelective videoSelective);
+
+    /**
+     * description: 通过id获取视频详细信息
+     *
+     * @param videoId:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/16 16:32
+     */
+    ServerResponse<Video> getVideoByVideoId(Integer videoId);
 }

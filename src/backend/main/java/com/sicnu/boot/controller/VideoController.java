@@ -1,5 +1,6 @@
 package com.sicnu.boot.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.service.VideoService;
 import com.sicnu.boot.utils.ServerResponse;
@@ -23,8 +24,13 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/pages")
-    ServerResponse<List<Video>> getVideoListBySelective(@RequestBody VideoSelective videoSelective){
+    ServerResponse<PageInfo<Video>> getVideoListBySelective(@RequestBody VideoSelective videoSelective){
         return videoService.getVideoListBySelective(videoSelective);
+    }
+
+    @GetMapping("/{videoId}")
+    ServerResponse<Video> getVideoByVideoId(@PathVariable("videoId")Integer videoId){
+        return videoService.getVideoByVideoId(videoId);
     }
 
 }

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.sicnu.boot.mapper.VideoMapper">
     <select id="getVideoListBySelective" resultType="Video" parameterType="com.sicnu.boot.vo.VideoSelective">
-        select * from video
+        select video_id,name,time,image,view_num,duration,comment_num,author_id from video
         <where>
             <if test="videoName != null and videoName != ''">
                 and name like "%" #{videoName} "%"
@@ -20,5 +20,9 @@
         <if test="videoSortName != null and videoSortName != ''">
             order by ${videoSortName} desc
         </if>
+    </select>
+
+    <select id="getVideoByVideoId" resultType="Video">
+        select * from video where video_id = #{videoId}
     </select>
 </mapper>
