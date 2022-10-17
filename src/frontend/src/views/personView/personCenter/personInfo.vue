@@ -12,50 +12,50 @@
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">用户名：</span>
-              <span>1231232132</span>
+              <span>{{getUserInfo.username}}</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">昵称：</span>
-              <span >高山流水</span>
+              <span >{{getUserInfo.nickname}}</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">手机号：</span>
-              <span>17411902912</span>
+              <span>{{getUserInfo.phone}}</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">邮箱：</span>
-              <span >123123123@qq.com</span>
+              <span >{{getUserInfo.email}}</span>
 
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">年龄：</span>
-              <span >18</span>
+              <span >{{getUserInfo.age}}</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">性别：</span>
-              <span>{{userInfo.sex}}</span>
+              <span>{{getUserInfo.sex}}</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">隐私设置：</span>
-              <span>所有信息用户均可见</span>
+              <span>{{showprivacy}}</span>
             </div>
           </li>
           <li class="Info-item">
             <div class="item-title">
               <span class="laber">个人留言：</span>
-              <span >坚持不懈用于拼搏，终能走向胜利的彼岸</span>
+              <span >{{getUserInfo.message}}</span>
             </div>
           </li>
           <div class="btn" @click="changeEditor">
@@ -97,29 +97,30 @@
 
 <script>
 import InfoPopup from '../../../components/popup/InfoPopup.vue';
+import {mapGetters} from 'vuex'
 export default {
     name: "personInfo",
     data() {
         return {
-            editor: false,
-            userInfo: {
-                username: "",
-                nickname: "",
-                age: "",
-                email: "",
-                sex: "保密",
-            },
         };
     },
     components: { InfoPopup },
     mounted(){
-      this.$store.dispatch('userInfo/getUserInfo',localStorage.getItem('token'))
+      this.$store.dispatch('userInfo/getUserInfo')
     },
     methods: {
         changeEditor() {
-          this.$refs.InfoPopup.showPopup();
+          this.$refs.InfoPopup.showPopup(this.getUserInfo);
         },
     },
+    computed:{
+      ...mapGetters('userInfo',{
+        getUserInfo:'getUserInfo'
+      }),
+      showprivacy(){
+        return this.getUserInfo.isHide === 0 ? '所有信息用户均可见' : '所有信息用户不可见'
+      }
+    }
 };
 </script>
 

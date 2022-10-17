@@ -3,7 +3,6 @@ import axios from 'axios'
 import nProgress from 'nprogress';
 import "nprogress/nprogress.css"
 const baseurl = '/api'
-const token = localStorage.getItem('token');
 const Servers = axios.create({
     baseURL: baseurl,
     timeout: 3000,
@@ -13,12 +12,10 @@ const Servers = axios.create({
 })
 //请求拦截器
 Servers.interceptors.request.use((config) => {
-    if(token){
+  const token = localStorage.getItem('token')
+    if(token !== null){
       config.headers['token'] = token;  
     }
-
-  console.log(12312);
-
     nProgress.start();
     return config
 }, error => {

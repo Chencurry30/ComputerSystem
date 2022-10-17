@@ -148,14 +148,9 @@
             </div>
             <div class="containMain">
               <div class="userImg"></div>
-
               <div class="userInfo">
-                <div class="nickname">
-                  高三流水
-                </div>
-                <div class="personintroduce">
-                  个人介绍
-                </div>
+                <div class="nickname">昵称:{{getUserImg.nickname}}</div>
+                <div class="personintroduce">个人留言:{{getUserImg.message}}</div>
               </div>
             </div>
           </div>
@@ -167,8 +162,15 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: "personPage",
+  computed:{
+    ...mapGetters('userInfo',
+    {
+      getUserImg:'getUserImg'
+    })
+  }
 };
 </script>
 
@@ -271,17 +273,15 @@ export default {
           border: 1px solid #eee;
         }
         .userInfo {
-          margin-left: 40px;
-          width: 200px;
-          display: flex;
-          flex-direction: column;        
-            .nickname {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
+          margin-top: 22px;   
+          margin-left: 26px;
+            .nickname,.personintroduce {
+              font-weight: 700;
+              font-size: 16px;
+              color: #4e5358;
+            }
           .personintroduce {
-
+            margin-top: 4px;
           }
         }
         .InfoBox {

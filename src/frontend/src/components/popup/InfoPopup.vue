@@ -11,30 +11,45 @@
         <div class="content-body">
           <div class="content-main">
             <div class="body-item">
+              <div class="laber">用户名</div>
+              <span class="nick-info">{{showPopupInfo.username}}</span>
+            </div>
+            <div class="body-item">
               <div class="laber">昵称:</div>
-              <input class="nick-info"/>
+              <input class="nick-info" v-model="showPopupInfo.nickname"/>
+            </div>
+            <div class="body-item">
+              <div class="laber">手机号:</div>
+              <span class="nick-info">{{showPopupInfo.phone}}</span>
             </div>
             <div class="body-item">
               <div class="laber">邮箱:</div>
-              <input class="nick-info"/>
+              <input class="nick-info" v-model="showPopupInfo.email"/>
             </div>
             <div class="body-item">
               <div class="laber">年龄:</div>
-              <input class="nick-info"/>
+              <input class="nick-info" v-model="showPopupInfo.age"/>
             </div>
             <div class="body-item">
               <div class="laber">性别:</div>
-              <input class="nick-info"/>
+              <select class="nick-info" v-model="showPopupInfo.sex">
+                <option value="男">男</option>
+                <option value="女">女</option>
+                <option value="保密">保密</option>
+              </select>
             </div>
             <div class="body-item">
               <div class="laber">隐私设置:</div>
-              <input class="nick-info"/>
+              <select class="nick-info" v-model="showPopupInfo.isHide">
+                <option value="0">所有信息用户均可见</option>
+                <option value="1">所有信息用户均不见</option>
+              </select>
             </div>
             <div class="body-item">
               <div class="laber">个人留言:</div>
-              <input class="nick-info"/>
+              <input class="nick-info" v-model="showPopupInfo.message"/>
             </div>
-            <div class="sendInfo btn" @click="closePopup">关闭</div>
+            <div class="sendInfo" @click="sendInfo">提交</div>
           </div>
         </div>
       </div>
@@ -42,23 +57,35 @@
   </template>
   
   <script>
+  import {mapGetters} from 'vuex'
   export default {
     name: "InfoPopup",
     data() {
       return {
         showDialog: false,
-        replyshow: {},
+        showPopupInfo:{},
       };
     },
     methods: {
-      showPopup(replyInfo) {
-        this.replyshow = replyInfo;
+      showPopup(value) {
+        this.showPopupInfo = JSON.parse(JSON.stringify(value));
         this.showDialog = true;
       },
       closePopup() {
         this.showDialog = false;
       },
+      sendInfo(){
+        this.$store.dispatch('userInfo/changeUserInfo',this.showPopupInfo)
+        this.closePopup()
+      }
     },
+    computed:{
+      ...mapGetters('userInfo',
+      {
+        getUserInfo:'getUserInfo',
+      }),
+
+    }
   };
   </script>
   
@@ -77,7 +104,7 @@
       top: 50%;
       left: 50%;
       width: 400px;
-      height: 390px;
+      height: 420px;
       border-radius: 16px;
       transform: translateX(-50%) translateY(-50%);
       background: #ffffff;
@@ -129,16 +156,15 @@
             }
           }
           .sendInfo {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            padding: 0.4em 5em;
-            background: #59c3fb;
-            color: #fff;
+              padding: 10px 5px;
+              text-align: center;
+              border-radius: 8px;
+              background: #59c3fb;
+              color: #fff;
+            }
           }
         }
       }
-    }
   }
   </style>
   
