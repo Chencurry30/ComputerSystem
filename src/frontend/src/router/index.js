@@ -37,9 +37,9 @@ const router = new VueRouter({
   
   })
 
-// router.beforeEach((to,from,next) => {  //路由守卫
-//   const token = localStorage.getItem('token')
-//   if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
-//   else next()
-// })
+router.beforeEach((to,from,next) => {  //路由守卫
+  const token = localStorage.getItem('token')
+  if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
+  else next()
+})
 export default router

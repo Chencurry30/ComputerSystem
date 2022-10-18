@@ -6,12 +6,13 @@
       </div>
       <div class="title-middle">
         <ul class="middleBox">
-          <li class="BoxItem On">数学</li>
-          <li class="BoxItem">英语</li>
-          <li class="BoxItem">政治</li>
-          <li class="BoxItem">计算机网络</li>
-          <li class="BoxItem">操作系统</li>
-          <li class="BoxItem">组成原理</li>
+          <li 
+          v-for="(item,index) in liList" 
+          v-on:click="addClass(index)" 
+          v-bind:class="{On:index==current}"
+          class="BoxItem">
+          {{item.name}}
+          </li>
         </ul>
       </div>
       <div class="title-right">
@@ -58,8 +59,23 @@
 export default {
   name: 'videoModule',
   data() {
-    return {};
+    return {
+      liList:[
+        {name:'数学'},
+        {name:'英语'},
+        {name:'政治'},
+        {name:'操作系统'},
+        {name:'计算机网络'},
+        {name:'计算机组成原理'},
+      ],
+      current:0,
+    };
   },
+  methods:{
+    addClass(index){
+      this.current=index
+    }
+  }
 };
 </script>
 <style lang='less' scoped>
