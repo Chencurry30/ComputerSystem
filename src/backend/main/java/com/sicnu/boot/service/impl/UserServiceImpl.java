@@ -1,11 +1,8 @@
 package com.sicnu.boot.service.impl;
 
 import com.sicnu.boot.service.ISmsService;
-import com.sicnu.boot.utils.ResponseCode;
+import com.sicnu.boot.utils.*;
 import com.sicnu.boot.vo.LoginUser;
-import com.sicnu.boot.utils.JwtUtil;
-import com.sicnu.boot.utils.RedisUtils;
-import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserService;
@@ -245,6 +242,25 @@ public class UserServiceImpl implements UserService {
         map.put("sex",user.getSex());
         map.put("age",user.getAge().toString());
         return ServerResponse.createBySuccess("获取成功",map);
+    }
+
+    @Override
+    public ServerResponse<String> getPublicKey() {
+        try {
+            Map<String, Object> map;
+            //生成密钥对
+            map = RSAUtils.genKeyPair();
+            //获取公钥和私钥
+            String publicKey = RSAUtils.getPublicKey(map);
+            String privateKey = RSAUtils.getPrivateKey(map);
+            //将私钥存储到Redis,时限为5分钟
+            redisUtils.setCacheObject("privateKey",privateKey,5,TimeUnit.MINUTES);
+            //返回公钥
+            return ServerResponse.createBySuccess("返回成功",publicKey);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.INTERNAL_SERVER_ERROR.getCode(), "服务器异常");
     }
 
     /**

@@ -114,4 +114,12 @@ public interface UserService {
      */
     ServerResponse<Map<String,String>> getUserByUserId(Integer userId);
 
+    /**
+     * description: 获取RSA加密的公钥
+     *
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/10/18 21:45
+     */
+    ServerResponse<String> getPublicKey();
 }

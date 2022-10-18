@@ -214,5 +214,18 @@ public class UserController {
         return userService.getUserByUserId(id);
     }
 
+    /**
+     * description: 获取RSA加密的公钥
+     *
+     * @param :
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/10/18 21:44
+     */
+    @GetMapping("/public")
+    public ServerResponse<String> getPublicKey(){
+        return userService.getPublicKey();
+    }
+
 
 }
