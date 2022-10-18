@@ -29,8 +29,8 @@ export default [{
   name: 'registerView',
   component: registerView,
   meta: {                          
-    showTop: true,
-    showFotter:true
+    showTop: false,
+    showFotter:false
   },
 },
 ]

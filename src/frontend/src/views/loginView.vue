@@ -119,23 +119,19 @@ export default {
     goToLogin() {
       let data = this.dataForm
       userLogin(data).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         Cookies.set('name', this.dataForm.username)
         const name = data.username
+        if (res.data.code === 200) {
         const token = res.data.data.token
         localStorage.setItem('token', token)  //保存token到本地浏览器
-        if (res.data.code === 200) {
           this.$message({
             message: "恭喜你，登录成功！欢迎用户: " + name,
             type: "success",
           })
           this.$router.push({ name: 'Home' })
-        }
-        else if (res.data.message === '用户名或密码错误') {
-          this.$message({
-            message: "用户名或密码错误，请注册你的账号！",
-            type: "success",
-          })
+        }else if (res.data.code === 400) {
+          this.$message.error("用户名或密码错误，请重新输入！")
         }
       })
 

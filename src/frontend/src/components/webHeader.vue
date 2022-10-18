@@ -30,8 +30,10 @@
     <div class="container-xl">
       <div class="select-box">
         <ul class="select-list">
-          <li class="list-item">
-            <div class="item-info">首页</div>
+          <!-- <li class="list-item">
+            <div class="item-info action">
+              <router-link :to="{name:'Home'}">首页</router-link>
+            </div>
           </li>
           <li class="list-item">
             <div class="item-info">
@@ -49,6 +51,14 @@
           </li>
           <li class="list-item">
             <div class="item-info">更多信息</div>
+          </li> -->
+          <li class="list-item" 
+          v-for="(item,index) in liList"
+            v-on:click="addClass(index)"
+            v-bind:class="{action:index==current}">
+            <div class="item-info">
+            <router-link :to="item.link">{{item.name}}</router-link>
+            </div>
           </li>
         </ul>
         <div class="search">
@@ -65,12 +75,28 @@
 import Cookie from 'js-cookie';
 export default {
   name: "webHeader",
+  data(){
+    return{
+      liList:[
+        {name:'首页',link:'Home'},
+        {name:'资源学习',link:'videoSelect'},
+        {name:'院校选择',link:''},
+        {name:'备考大纲',link:''},
+        {name:'考研政策',link:''},
+        {name:'更多信息',link:''},
+      ],
+      current:0,
+    }
+  },
   methods: {
     gotologin() {
       let location = { name: "loginView" };
       localStorage.clear('token')
       this.$router.push(location);
     },
+    addClass(index){
+      this.current=index
+    }
   },
   computed:{
     showUsername(){
@@ -181,6 +207,13 @@ export default {
         margin-left: 5px;
         font-size: 16px;
         color: #232e3c;
+        a{
+          text-decoration: none;
+          color: #666;
+        }
+      }
+      .action{
+        border-bottom: blue 3px solid;
       }
     }
     .search{
@@ -206,5 +239,8 @@ export default {
       }
     }
   }
+}
+.router-link-active{
+  text-decoration: none;
 }
 </style>
