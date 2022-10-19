@@ -1,13 +1,14 @@
-import personPage from '@/views/personView/personPage';
-import personInfo from '@/views/personView/personCenter/personInfo'
-import personSecurity from '@/views/personView/personCenter/personSecurity'  //用户安全
-import messageReply from '@/views/personView/personCenter/messageReply'     //我的评论
-import commentsReply from '@/views/personView/personCenter/commentsReply'     //我的评论回复
-import myComment from '@/views/personView/personCenter/myComment'     //我的提问
-import teacherReply from '@/views/personView/personCenter/teacherReply'     //老师回复
-import otherReply from '@/views/personView/personCenter/otherReply'     //其他回复
-import thumbVideo from '@/views/personView/personCenter/thumbVideo'  //点赞视屏
-import otherPerson from '@/views/personView/otherPerson';
+const personPage = () => import('@/views/personView/personPage') //用户路由
+const personInfo = () => import('@/views/personView/personCenter/personInfo')  //用户首页
+const personSecurity = () => import('@/views/personView/personCenter/personSecurity') //用户安全
+const messageReply = () => import('@/views/personView/personCenter/messageReply')  //我的评论
+const commentsReply = () => import('@/views/personView/personCenter/commentsReply') // 我的评论回复
+const myComment = () => import('@/views/personView/personCenter/myComment') //我的提问
+const teacherReply = () => import('@/views/personView/personCenter/teacherReply') //老师回复
+const otherReply = () => import('@/views/personView/personCenter/otherReply')   //其他回复
+const thumbVideo = () => import('@/views/personView/personCenter/thumbVideo')  //点赞视屏
+const otherPerson = () => import('@/views/personView/otherPerson')  //其他用户的个人信息
+
 export default [
   {
     path: '/personPage',

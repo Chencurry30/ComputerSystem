@@ -1,6 +1,5 @@
-import teacherSelect from '@/views/teacherView/teacherSelect';
-
-import teacherPerson from '@/views/teacherView/teacherPerson';
+const teacherSelect = () => import('@/views/teacherView/teacherSelect');  //老师的选择页面
+const teacherPerson = () => import('@/views/teacherView/teacherPerson')   //老师的个人详情页面
 
 export default [
   {
