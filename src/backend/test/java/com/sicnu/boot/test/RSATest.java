@@ -28,7 +28,7 @@ public class RSATest {
 
     @Test
     void test1(){
-        String publicKey = "";
+        String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC877CvJ0mIsjn/MdoxABhY47UxEGBG862Vt7l0t5DNQmXKvMzApFGhHcFy1W/4D+JWz1UPrFVsTsJHdLpX2UiN9sXpKD7RxvekBsb99/StmDB2kjpdX7hUehUv8kQzfmUa8NeVku27ESPv72skwsRTie/vkmWCf9aI0wqzWshCIwIDAQAB";
         String data = "123456";
         String encryptedDataOnJava = RSAUtils.encryptedDataOnJava(data, publicKey);
         System.out.println("encryptedDataOnJava = " + encryptedDataOnJava);

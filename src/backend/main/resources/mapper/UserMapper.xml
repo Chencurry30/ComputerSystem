@@ -20,6 +20,10 @@
         select username from user where phone = #{phone}
     </select>
 
+    <select id="getCommentUserById" resultType="com.sicnu.boot.vo.CommentUserVo">
+        select user_id,nickname,image from user where user_id = #{userId}
+    </select>
+
     <select id="checkUsername" resultType="int">
         select count(*) from user where username = #{username}
     </select>

@@ -1,6 +1,7 @@
 package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.User;
+import com.sicnu.boot.vo.CommentUserVo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -29,6 +30,16 @@ public interface UserMapper {
      * Date:  2022/9/30 17:21
      */
     User getUserById(Integer userId);
+
+    /**
+     * description: 通过用户id获取用户昵称，用户头像
+     *
+     * @param userId:
+     * @return CommentUserVo
+     * @author 胡建华
+     * Date:  2022/10/19 22:57
+     */
+    CommentUserVo getCommentUserById(Integer userId);
 
     /**
      * description: 检查用户名是否存在
