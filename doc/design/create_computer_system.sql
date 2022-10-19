@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 13/10/2022 16:26:29
+ Date: 19/10/2022 11:04:24
 */
 
 SET NAMES utf8mb4;
@@ -31,6 +31,33 @@ CREATE TABLE `answer_question`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '答疑表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for article
+-- ----------------------------
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article`  (
+                            `article_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '文章id',
+                            `author_id` int(0) NULL DEFAULT NULL COMMENT '作者id',
+                            `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章题目',
+                            `time` datetime(0) NULL DEFAULT NULL COMMENT '创作时间',
+                            `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章内容',
+                            `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章图片',
+                            `like_number` int(0) NULL DEFAULT 0 COMMENT '文章点赞数',
+                            `collection_num` int(0) NULL DEFAULT 0 COMMENT '收藏数',
+                            `view_num` int(0) NULL DEFAULT 0 COMMENT '浏览数',
+                            PRIMARY KEY (`article_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for collection
+-- ----------------------------
+DROP TABLE IF EXISTS `collection`;
+CREATE TABLE `collection`  (
+                               `user_id` int(0) NOT NULL COMMENT '收藏资源的用户id',
+                               `resource_id` int(0) NOT NULL COMMENT '收藏资源的资源id',
+                               PRIMARY KEY (`user_id`, `resource_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '收藏资源表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for college
 -- ----------------------------
 DROP TABLE IF EXISTS `college`;
@@ -44,7 +71,12 @@ CREATE TABLE `college`  (
                             `rank` smallint(0) NULL DEFAULT NULL COMMENT '院校排名',
                             `dis_develop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '学科建设',
                             PRIMARY KEY (`college_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '学校表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '学校表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of college
+-- ----------------------------
+INSERT INTO `college` VALUES (1, '测试', '测试', '测试', '测试', '测试', 123, '测试');
 
 -- ----------------------------
 -- Table structure for college_major
@@ -54,7 +86,7 @@ CREATE TABLE `college_major`  (
                                   `college_id` int(0) NOT NULL COMMENT '院校id',
                                   `major_id` int(0) NOT NULL COMMENT '专业id',
                                   PRIMARY KEY (`college_id`, `major_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '学校专业表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '学校专业表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for comment
@@ -118,9 +150,9 @@ CREATE TABLE `policy`  (
 DROP TABLE IF EXISTS `power`;
 CREATE TABLE `power`  (
                           `power_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '权限id',
-                          `perms` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限标识',
+                          `perms` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限标识',
                           PRIMARY KEY (`power_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of power
@@ -140,7 +172,7 @@ CREATE TABLE `quiz`  (
                          `study_id` int(0) NULL DEFAULT NULL COMMENT '提问者的id',
                          `teacher_id` int(0) NULL DEFAULT NULL COMMENT '老师的id',
                          PRIMARY KEY (`quiz_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '提问表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '提问表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for reply
@@ -163,10 +195,68 @@ DROP TABLE IF EXISTS `resource`;
 CREATE TABLE `resource`  (
                              `resource_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '资源id',
                              `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源名',
-                             `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源类型',
+                             `type` int(0) NULL DEFAULT NULL COMMENT '资源类型,0为视频，1为文章',
                              `introduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '资源简介',
                              PRIMARY KEY (`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of resource
+-- ----------------------------
+INSERT INTO `resource` VALUES (1, '考研英语', 0, '视频');
+INSERT INTO `resource` VALUES (2, '考研数学', 0, '视频');
+INSERT INTO `resource` VALUES (3, '考研政治', 0, '视频');
+INSERT INTO `resource` VALUES (4, '考研计算机网络', 0, '视频');
+INSERT INTO `resource` VALUES (5, '考研数据结构', 0, '视频');
+INSERT INTO `resource` VALUES (6, '考研计算机组成原理', 0, '视频');
+INSERT INTO `resource` VALUES (7, '考研英语1', 0, '视频');
+INSERT INTO `resource` VALUES (8, '考研数学1', 0, '视频');
+INSERT INTO `resource` VALUES (9, '考研政治1', 0, '视频');
+INSERT INTO `resource` VALUES (10, '考研计算机网络1', 0, '视频');
+INSERT INTO `resource` VALUES (11, '考研数据结构1', 0, '视频');
+INSERT INTO `resource` VALUES (12, '考研计算机组成原理1', 0, '视频');
+INSERT INTO `resource` VALUES (13, '考研英语2', 0, '视频');
+INSERT INTO `resource` VALUES (14, '考研数学2', 0, '视频');
+INSERT INTO `resource` VALUES (15, '考研政治2', 0, '视频');
+INSERT INTO `resource` VALUES (16, '考研计算机网络2', 0, '视频');
+INSERT INTO `resource` VALUES (17, '考研数据结构2', 0, '视频');
+INSERT INTO `resource` VALUES (18, '考研计算机组成原理2', 0, '视频');
+INSERT INTO `resource` VALUES (19, '考研英语3', 0, '视频');
+INSERT INTO `resource` VALUES (20, '考研数学3', 0, '视频');
+INSERT INTO `resource` VALUES (21, '考研政治3', 0, '视频');
+INSERT INTO `resource` VALUES (22, '考研计算机网络3', 0, '视频');
+INSERT INTO `resource` VALUES (23, '考研数据结构3', 0, '视频');
+INSERT INTO `resource` VALUES (24, '考研计算机组成原理3', 0, '视频');
+INSERT INTO `resource` VALUES (25, '考研英语4', 0, '视频');
+INSERT INTO `resource` VALUES (26, '考研数学4', 0, '视频');
+INSERT INTO `resource` VALUES (27, '考研政治4', 0, '视频');
+INSERT INTO `resource` VALUES (28, '考研计算机网络4', 0, '视频');
+INSERT INTO `resource` VALUES (29, '考研数据结构4', 0, '视频');
+INSERT INTO `resource` VALUES (30, '考研计算机组成原理4', 0, '视频');
+INSERT INTO `resource` VALUES (31, '考研英语5', 0, '视频');
+INSERT INTO `resource` VALUES (32, '考研数学5', 0, '视频');
+INSERT INTO `resource` VALUES (33, '考研政治5', 0, '视频');
+INSERT INTO `resource` VALUES (34, '考研计算机网络5', 0, '视频');
+INSERT INTO `resource` VALUES (35, '考研数据结构5', 0, '视频');
+INSERT INTO `resource` VALUES (36, '考研计算机组成原理5', 0, '视频');
+INSERT INTO `resource` VALUES (37, '考研英语6', 0, '视频');
+INSERT INTO `resource` VALUES (38, '考研数学6', 0, '视频');
+INSERT INTO `resource` VALUES (39, '考研政治6', 0, '视频');
+INSERT INTO `resource` VALUES (40, '考研计算机网络6', 0, '视频');
+INSERT INTO `resource` VALUES (41, '考研数据结构6', 0, '视频');
+INSERT INTO `resource` VALUES (42, '考研计算机组成原理6', 0, '视频');
+INSERT INTO `resource` VALUES (43, '考研英语7', 0, '视频');
+INSERT INTO `resource` VALUES (44, '考研数学7', 0, '视频');
+INSERT INTO `resource` VALUES (45, '考研政治7', 0, '视频');
+INSERT INTO `resource` VALUES (46, '考研计算机网络7', 0, '视频');
+INSERT INTO `resource` VALUES (47, '考研数据结构7', 0, '视频');
+INSERT INTO `resource` VALUES (48, '考研计算机组成原理7', 0, '视频');
+INSERT INTO `resource` VALUES (49, '考研英语8', 0, '视频');
+INSERT INTO `resource` VALUES (50, '考研数学8', 0, '视频');
+INSERT INTO `resource` VALUES (51, '考研政治8', 0, '视频');
+INSERT INTO `resource` VALUES (52, '考研计算机网络8', 0, '视频');
+INSERT INTO `resource` VALUES (53, '考研数据结构8', 0, '视频');
+INSERT INTO `resource` VALUES (54, '考研计算机组成原理8', 0, '视频');
 
 -- ----------------------------
 -- Table structure for role
@@ -195,7 +285,7 @@ CREATE TABLE `role_power`  (
                                `role_id` int(0) NOT NULL COMMENT '角色ID',
                                `power_id` int(0) NOT NULL DEFAULT 0 COMMENT '权限id',
                                PRIMARY KEY (`role_id`, `power_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_power
@@ -246,10 +336,10 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '仰望星空11', '$2a$10$LN4q82GS4YP7YGXOFf7AD.WNTrq2cB62lc9UB57VFbTK0ijYVZxdm', '15388366005', '2136442@qq.com', 19, '男', 1, '头像11', 0, '这是留言1');
-INSERT INTO `user` VALUES (2, 'hjh', NULL, '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', NULL, NULL, 24, '男', 1, NULL, 0, '这是留言2');
-INSERT INTO `user` VALUES (3, 'lgq', '大海', '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', '17311023002', '224456434@qq.com', 18, '男', 1, '头像', 1, '这是留言3');
-INSERT INTO `user` VALUES (6, 'czy', NULL, '1234', NULL, NULL, 3, '男', 1, NULL, 0, '这是留言4');
+INSERT INTO `user` VALUES (1, 'admin', '仰望星空11', '$2a$10$tXD.fNXa4/FYlOWyre.zXeCf4HkjDSxVy.aTpdUutWMmlXbpn20pq', '13541169382', '2136442@qq.com', 19, '男', 1, '头像11', 0, '这是留言1');
+INSERT INTO `user` VALUES (2, 'hjh', '星空', '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', NULL, NULL, 24, '男', 1, NULL, 0, '这是留言2');
+INSERT INTO `user` VALUES (3, 'lgq', '大海', '$2a$10$LOOtNMJ3e2XFXil4wO8Yfe1c5Zwpz10qLfcxZeGvfOLAWuN37UFlG', '17311023002', '224456434@qq.com', 18, '女', 1, '头像', 1, '这是留言3');
+INSERT INTO `user` VALUES (6, 'czy', '云朵', '1234', NULL, NULL, 3, '男', 1, NULL, 0, '这是留言4');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -274,14 +364,80 @@ INSERT INTO `user_role` VALUES (3, 2);
 DROP TABLE IF EXISTS `video`;
 CREATE TABLE `video`  (
                           `video_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '视频的id',
-                          `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的名称',
-                          `time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '上传时间',
-                          `like_number` int(0) NULL DEFAULT NULL COMMENT '点赞数',
+                          `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的名称',
+                          `time` datetime(0) NULL DEFAULT NULL COMMENT '上传时间',
+                          `like_number` int(0) NULL DEFAULT 0 COMMENT '点赞数',
                           `introduction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的介绍',
-                          `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的类别',
                           `resource_id` int(0) NULL DEFAULT NULL COMMENT '对应的资源id',
+                          `author_id` int(0) NULL DEFAULT NULL COMMENT '作者id',
                           `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频图片',
+                          `collection_num` int(0) UNSIGNED NULL DEFAULT 0 COMMENT '收藏数',
+                          `view_num` int(0) NULL DEFAULT 0 COMMENT '浏览数',
+                          `type_one` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的类别1',
+                          `type_two` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的类别2',
+                          `type_three` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频的类别3',
+                          `duration` int(0) NULL DEFAULT 0 COMMENT '视频时长',
+                          `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '播放链接或url',
+                          `comment_num` int(0) NULL DEFAULT 0 COMMENT '评论数',
                           PRIMARY KEY (`video_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '视频表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '视频表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of video
+-- ----------------------------
+INSERT INTO `video` VALUES (1, '考研英语', '2022-10-15 16:10:52', 0, '这是考研英语', 1, 1, '图片', 0, 0, '英语', NULL, NULL, 19, '无', 0);
+INSERT INTO `video` VALUES (2, '考研数学', '2022-10-15 16:12:31', 0, '这是考研数学', 2, 3, '图片', 0, 0, '数学', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (3, '考研政治', '2022-10-15 16:20:06', 0, '这是考研政治', 3, 6, '图片', 0, 0, '政治', NULL, NULL, 453, '无', 0);
+INSERT INTO `video` VALUES (4, '考研计算机网络', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 4, 3, '图片', 0, 0, '计算机网络', NULL, NULL, 56, '无', 0);
+INSERT INTO `video` VALUES (5, '考研数据结构', '2022-10-15 16:23:21', 0, '这是考研数据结构', 5, 2, '图片', 0, 0, '数据结构', NULL, NULL, 453, '无', 0);
+INSERT INTO `video` VALUES (6, '考研计算机组成原理', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 6, 1, '图片', 0, 0, '计算机组成原理', NULL, NULL, 234, '无', 0);
+INSERT INTO `video` VALUES (7, '考研英语1', '2022-10-15 16:10:52', 0, '这是考研英语', 7, 4, '图片', 0, 0, '英语', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (8, '考研数学1', '2022-10-15 16:12:31', 0, '这是考研数学', 8, 5, '图片', 0, 0, '数学', NULL, NULL, 32, '无', 0);
+INSERT INTO `video` VALUES (9, '考研政治1', '2022-10-15 16:20:06', 0, '这是考研政治', 9, 3, '图片', 0, 0, '政治', NULL, NULL, 4, '无', 0);
+INSERT INTO `video` VALUES (10, '考研计算机网络1', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 10, 2, '图片', 0, 0, '计算机网络', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (11, '考研数据结构1', '2022-10-15 16:23:21', 0, '这是考研数据结构', 11, 1, '图片', 0, 0, '数据结构', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (12, '考研计算机组成原理1', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 12, 5, '图片', 0, 0, '计算机组成原理', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (13, '考研英语2', '2022-10-15 16:10:52', 0, '这是考研英语', 13, 3, '图片', 0, 0, '英语', NULL, NULL, 12, '无', 0);
+INSERT INTO `video` VALUES (14, '考研数学2', '2022-10-15 16:12:31', 0, '这是考研数学', 14, 2, '图片', 0, 0, '数学', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (15, '考研政治2', '2022-10-15 16:20:06', 0, '这是考研政治', 15, 4, '图片', 0, 0, '政治', NULL, NULL, 43, '无', 0);
+INSERT INTO `video` VALUES (16, '考研计算机网络2', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 16, 2, '图片', 0, 0, '计算机网络', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (17, '考研数据结构2', '2022-10-15 16:23:21', 0, '这是考研数据结构', 17, 5, '图片', 0, 0, '数据结构', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (18, '考研计算机组成原理2', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 18, 3, '图片', 0, 0, '计算机组成原理', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (19, '考研英语3', '2022-10-15 16:10:55', 0, '这是考研英语', 19, 2, '图片', 0, 0, '英语', NULL, NULL, 25, '无', 0);
+INSERT INTO `video` VALUES (20, '考研数学3', '2022-10-15 16:12:31', 0, '这是考研数学', 20, 4, '图片', 0, 0, '数学', NULL, NULL, 14, '无', 0);
+INSERT INTO `video` VALUES (21, '考研政治3', '2022-10-15 16:20:06', 0, '这是考研政治', 21, 5, '图片', 0, 0, '政治', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (22, '考研计算机网络3', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 22, 3, '图片', 0, 0, '计算机网络', NULL, NULL, 5, '无', 0);
+INSERT INTO `video` VALUES (23, '考研数据结构3', '2022-10-15 16:23:21', 0, '这是考研数据结构', 23, 2, '图片', 0, 0, '数据结构', NULL, NULL, 56, '无', 0);
+INSERT INTO `video` VALUES (24, '考研计算机组成原理3', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 24, 3, '图片', 0, 0, '计算机组成原理', NULL, NULL, 45, '无', 0);
+INSERT INTO `video` VALUES (25, '考研英语4', '2022-10-15 16:10:52', 0, '这是考研英语', 25, 4, '图片', 0, 0, '英语', NULL, NULL, 65, '无', 0);
+INSERT INTO `video` VALUES (26, '考研数学4', '2022-10-15 16:12:31', 0, '这是考研数学', 26, 3, '图片', 0, 0, '数学', NULL, NULL, 76, '无', 0);
+INSERT INTO `video` VALUES (27, '考研政治4', '2022-10-15 16:20:06', 0, '这是考研政治', 27, 2, '图片', 0, 0, '政治', NULL, NULL, 45, '无', 0);
+INSERT INTO `video` VALUES (28, '考研计算机网络4', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 28, 3, '图片', 0, 0, '计算机网络', NULL, NULL, 234, '无', 0);
+INSERT INTO `video` VALUES (29, '考研数据结构4', '2022-10-15 16:23:21', 0, '这是考研数据结构', 29, 5, '图片', 0, 0, '数据结构', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (30, '考研计算机组成原理4', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 30, 4, '图片', 0, 0, '计算机组成原理', NULL, NULL, 45, '无', 0);
+INSERT INTO `video` VALUES (31, '考研英语5', '2022-10-15 16:10:52', 0, '这是考研英语', 31, 3, '图片', 0, 0, '英语', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (32, '考研数学5', '2022-10-15 16:12:31', 0, '这是考研数学', 32, 2, '图片', 0, 0, '数学', NULL, NULL, 56, '无', 0);
+INSERT INTO `video` VALUES (33, '考研政治5', '2022-10-15 16:20:06', 0, '这是考研政治', 33, 1, '图片', 0, 0, '政治', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (34, '考研计算机网络5', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 34, 2, '图片', 0, 0, '计算机网络', NULL, NULL, 32, '无', 0);
+INSERT INTO `video` VALUES (35, '考研数据结构5', '2022-10-15 16:23:21', 0, '这是考研数据结构', 35, 4, '图片', 0, 0, '数据结构', NULL, NULL, 45, '无', 0);
+INSERT INTO `video` VALUES (36, '考研计算机组成原理5', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 36, 5, '图片', 0, 0, '计算机组成原理', NULL, NULL, 43, '无', 0);
+INSERT INTO `video` VALUES (37, '考研英语6', '2022-10-15 16:10:52', 0, '这是考研英语', 37, 3, '图片', 0, 0, '英语', NULL, NULL, 345, '无', 0);
+INSERT INTO `video` VALUES (38, '考研数学6', '2022-10-15 16:12:31', 0, '这是考研数学', 38, 2, '图片', 0, 0, '数学', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (39, '考研政治6', '2022-10-15 16:20:06', 0, '这是考研政治', 39, 3, '图片', 0, 0, '政治', NULL, NULL, 45, '无', 0);
+INSERT INTO `video` VALUES (40, '考研计算机网络6', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 40, 4, '图片', 0, 0, '计算机网络', NULL, NULL, 65, '无', 0);
+INSERT INTO `video` VALUES (41, '考研数据结构6', '2022-10-15 16:23:21', 0, '这是考研数据结构', 41, 3, '图片', 0, 0, '数据结构', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (42, '考研计算机组成原理6', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 42, 2, '图片', 0, 0, '计算机组成原理', NULL, NULL, 56, '无', 0);
+INSERT INTO `video` VALUES (43, '考研英语7', '2022-10-15 16:10:52', 0, '这是考研英语', 43, 3, '图片', 0, 0, '英语', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (44, '考研数学7', '2022-10-15 16:12:31', 0, '这是考研数学', 44, 4, '图片', 0, 0, '数学', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (45, '考研政治7', '2022-10-15 16:20:06', 0, '这是考研政治', 45, 2, '图片', 0, 0, '政治', NULL, NULL, 23, '无', 0);
+INSERT INTO `video` VALUES (46, '考研计算机网络7', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 46, 3, '图片', 0, 0, '计算机网络', NULL, NULL, 125, '无', 0);
+INSERT INTO `video` VALUES (47, '考研数据结构7', '2022-10-15 16:23:21', 0, '这是考研数据结构', 47, 4, '图片', 0, 0, '数据结构', NULL, NULL, 45, '无', 0);
+INSERT INTO `video` VALUES (48, '考研计算机组成原理7', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 48, 3, '图片', 0, 0, '计算机组成原理', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (49, '考研英语8', '2022-10-15 16:10:52', 0, '这是考研英语', 49, 5, '图片', 0, 0, '英语', NULL, NULL, 65, '无', 0);
+INSERT INTO `video` VALUES (50, '考研数学8', '2022-10-15 16:12:31', 0, '这是考研数学', 50, 3, '图片', 0, 0, '数学', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (51, '考研政治8', '2022-10-15 16:20:06', 0, '这是考研政治', 51, 2, '图片', 0, 0, '政治', NULL, NULL, 6, '无', 0);
+INSERT INTO `video` VALUES (52, '考研计算机网络8', '2022-10-15 16:22:27', 0, '这是考研计算机网络', 52, 5, '图片', 0, 0, '计算机网络', NULL, NULL, 5, '无', 0);
+INSERT INTO `video` VALUES (53, '考研数据结构8', '2022-10-15 16:23:21', 0, '这是考研数据结构', 53, 1, '图片', 0, 0, '数据结构', NULL, NULL, 34, '无', 0);
+INSERT INTO `video` VALUES (54, '考研计算机组成原理8', '2022-10-15 16:24:21', 0, '这是考研计算机组成原理', 54, 4, '图片', 0, 0, '计算机组成原理', NULL, NULL, 23, '无', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
