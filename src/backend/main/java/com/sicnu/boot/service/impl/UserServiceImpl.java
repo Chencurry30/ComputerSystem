@@ -9,6 +9,7 @@ import com.sicnu.boot.service.UserService;
 import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,6 +48,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServerResponse<Map<String,Object>> login(User user) {
+        if (StringUtils.isBlank(user.getUuId())){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "参数非法");
+        }
+        //从redis中获取私钥
+        String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
+        if (StringUtils.isBlank(privateKey)){
+            return ServerResponse.createByErrorMessage("密钥已经失效");
+        }
+        //解密密码
+        user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         //认证失败，抛出异常
@@ -71,6 +83,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServerResponse<String> register(User user) {
+        if (StringUtils.isBlank(user.getUuId())){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "参数非法");
+        }
+        //从redis中获取私钥
+        String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
+        if (StringUtils.isBlank(privateKey)){
+            return ServerResponse.createByErrorMessage("密钥已经失效");
+        }
+        //解密密码
+        user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
         //检查手机号是否存在
         Integer checkPhone = userMapper.checkPhone(user.getPhone());
         if (checkPhone == 1){
@@ -138,6 +161,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServerResponse<String> forgetPassword(User user) {
+        if (StringUtils.isBlank(user.getUuId())){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "参数非法");
+        }
+        //从redis中获取私钥
+        String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
+        if (StringUtils.isBlank(privateKey)){
+            return ServerResponse.createByErrorMessage("密钥已经失效");
+        }
+        //解密密码
+        user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
         //验证是否存在此用户
         User byUsername = userMapper.getByUsername(user.getUsername());
         if (Objects.isNull(byUsername)){
@@ -201,6 +235,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServerResponse<String> updatePassword(UpdateUser updateUser) {
+        if (StringUtils.isBlank(updateUser.getUuId())){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "参数非法");
+        }
+        //从redis中获取私钥
+        String privateKey = redisUtils.getCacheObject(updateUser.getUuId() + ":privateKey");
+        if (StringUtils.isBlank(privateKey)){
+            return ServerResponse.createByErrorMessage("密钥已经失效");
+        }
+        //解密密码
+        updateUser.setPassword(RSAUtils.decryptDataOnJava(updateUser.getPassword(),privateKey));
+        updateUser.setOldPassword(RSAUtils.decryptDataOnJava(updateUser.getOldPassword(),privateKey));
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
@@ -245,7 +291,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ServerResponse<String> getPublicKey() {
+    public ServerResponse<String> getPublicKey(String uuId) {
         try {
             Map<String, Object> map;
             //生成密钥对
@@ -254,7 +300,7 @@ public class UserServiceImpl implements UserService {
             String publicKey = RSAUtils.getPublicKey(map);
             String privateKey = RSAUtils.getPrivateKey(map);
             //将私钥存储到Redis,时限为5分钟
-            redisUtils.setCacheObject("privateKey",privateKey,5,TimeUnit.MINUTES);
+            redisUtils.setCacheObject(uuId + ":privateKey",privateKey,5,TimeUnit.MINUTES);
             //返回公钥
             return ServerResponse.createBySuccess("返回成功",publicKey);
         } catch (Exception e) {
@@ -280,6 +326,5 @@ public class UserServiceImpl implements UserService {
         }
         return ServerResponse.createBySuccess();
     }
-
 
 }

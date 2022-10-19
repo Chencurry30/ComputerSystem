@@ -20,4 +20,5 @@ public class UpdateUser {
     private String password;
     private String oldSmsCode;
     private String smsCode;
+    private String uuId;
 }

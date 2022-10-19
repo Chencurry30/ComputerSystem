@@ -117,9 +117,10 @@ public interface UserService {
     /**
      * description: 获取RSA加密的公钥
      *
+     * @param uuId :
      * @return ServerResponse<String>
      * @author 胡建华
      * Date:  2022/10/18 21:45
      */
-    ServerResponse<String> getPublicKey();
+    ServerResponse<String> getPublicKey(String uuId);
 }

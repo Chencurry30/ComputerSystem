@@ -1,6 +1,7 @@
 package com.sicnu.boot.controller;
 
 import com.sicnu.boot.pojo.User;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.service.UserService;
@@ -217,14 +218,20 @@ public class UserController {
     /**
      * description: 获取RSA加密的公钥
      *
-     * @param :
+     * @param map:
      * @return ServerResponse<String>
      * @author 胡建华
      * Date:  2022/10/18 21:44
      */
-    @GetMapping("/public")
-    public ServerResponse<String> getPublicKey(){
-        return userService.getPublicKey();
+    @PostMapping("/public")
+    public ServerResponse<String> getPublicKey(@RequestBody Map<String,Object> map){
+        String uuIdName = "uuId";
+        if (!map.containsKey(uuIdName)){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "参数非法");
+        }
+        String uuId = (String) map.get(uuIdName);
+        return userService.getPublicKey(uuId);
     }
 
 

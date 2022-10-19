@@ -35,6 +35,11 @@ public class User {
    */
   private String smsCode;
 
+  /**
+   * description: 用户公钥唯一认证码
+   */
+  private String uuId;
+
   public User(Integer userId, UserDetail userDetail){
     this.userId = userId;
     this.nickname = userDetail.getNickname();

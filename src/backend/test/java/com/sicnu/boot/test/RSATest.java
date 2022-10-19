@@ -26,4 +26,12 @@ public class RSATest {
         System.out.println("decryptDataOnJava = " + decryptDataOnJava);
     }
 
+    @Test
+    void test1(){
+        String publicKey = "";
+        String data = "123456";
+        String encryptedDataOnJava = RSAUtils.encryptedDataOnJava(data, publicKey);
+        System.out.println("encryptedDataOnJava = " + encryptedDataOnJava);
+    }
+
 }
