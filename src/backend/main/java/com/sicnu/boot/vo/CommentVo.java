@@ -1,5 +1,6 @@
 package com.sicnu.boot.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sicnu.boot.pojo.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ import java.util.List;
 public class CommentVo {
     private Integer commentId;
     private String content;
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createDate;
     private Integer resourceId;
     private CommentUserVo author;
