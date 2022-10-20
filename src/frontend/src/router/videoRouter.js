@@ -1,5 +1,7 @@
-import videoPage from '@/views/videoView/videoPage';
-import videoSelect from '@/views/videoView/videoSelect';
+
+const videoPage = () =>import('@/views/videoView/videoPage')       //视频的首页
+const videoSelect = () => import('@/views/videoView/videoSelect')  //视频选择页面
+
 export default [
   {
     path: '/videoPage',

@@ -8,9 +8,9 @@
             <img src="../assets/Img/webloge.png" alt="" />
           </div>
           <div class="title">旭升网</div>
-          <span class="welcome">欢迎用户：{{showUsername}}</span>
+          <span class="welcome">{{showUsername}}</span>
         </div>
-        <div class="main-right" v-if="false">
+        <div class="main-right" v-if="showLoginBtn">
           <div class="message-icon">
             <img src="../assets/Img/Icon/message.png" alt="" />
           </div>
@@ -19,10 +19,10 @@
           </div>
         </div>
         <div class="main-right" v-else>
-          <div class="gotoperson">
+          <div class="gotoperson">用户登录
             <router-link :to="{name:'personPage'}">个人中心</router-link>
           </div>
-          <button class="gotologin" @click="gotologin">退出登录</button>
+          <button class="gotologin" @click="gotologin">用户注册</button>
         </div>
         
       </div>
@@ -30,32 +30,10 @@
     <div class="container-xl">
       <div class="select-box">
         <ul class="select-list">
-          <!-- <li class="list-item">
-            <div class="item-info action">
-              <router-link :to="{name:'Home'}">首页</router-link>
-            </div>
-          </li>
-          <li class="list-item">
-            <div class="item-info">
-              <router-link :to="{name:'videoSelect'}">资源学习</router-link>
-            </div>
-          </li>
-          <li class="list-item">
-            <div class="item-info">院校选择</div>
-          </li>
-          <li class="list-item">
-            <div class="item-info">备考大纲</div>
-          </li>
-          <li class="list-item">
-            <div class="item-info">考研政策</div>
-          </li>
-          <li class="list-item">
-            <div class="item-info">更多信息</div>
-          </li> -->
           <li class="list-item" 
           v-for="(item,index) in liList"
             v-on:click="addClass(index)"
-            v-bind:class="{action:index==current}">
+            v-bind:class="{action:index==current}" :key="index">
             <div class="item-info">
             <router-link :to="item.link">{{item.name}}</router-link>
             </div>
@@ -100,8 +78,11 @@ export default {
   },
   computed:{
     showUsername(){
-      return Cookie.get('name') 
-      }
+      return '欢迎用户：'+Cookie.get('name') 
+    },
+    showLoginBtn(){
+      return localStorage.getItem('token') !== null  
+    }
   }
 };
 </script>

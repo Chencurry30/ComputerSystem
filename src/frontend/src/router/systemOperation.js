@@ -1,7 +1,7 @@
 import Home from '@/views/Home'
-import loginView from '@/views/loginView'
-import registerView from '@/views/registerView' //注册页面
 
+const loginView = () => import('@/views/loginView')       //登录页面
+const registerView = () => import('@/views/registerView')  //注册页面
 export default [{
   path: '/',
   redirect: Home,

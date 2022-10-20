@@ -28,12 +28,16 @@
               <div class="schoolInfo">四川大学</div>
           </div>
         </div>
+        <div class="swiper-slide">
+          2
+        </div>
+        <div class="swiper-slide">
+          3
+        </div>
+        <div class="swiper-slide">
+          1
+        </div>
     </div>
-    <!-- 如果需要分页器 -->
-    <div class="swiper-pagination"></div>
-    <!-- 如果需要导航按钮 -->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
 </div>
 </template>
 
@@ -42,31 +46,24 @@ import Swiper from 'swiper'
 export default {
     name:'swiper',
     mounted(){
-  //    new Swiper('.swiper', {
-  //   // direction: 'vertical', // 垂直切换选项
-  //   loop: false, // 循环模式选项
-  //   autoplay:true,
-  //   // 如果需要分页器
-  //   pagination: {
-  //     el: '.swiper-pagination',
-  //     clickable :true,
-  //   },
-  //   // 如果需要前进后退按钮
-  //   navigation: {
-  //     nextEl: '.swiper-button-next',
-  //     prevEl: '.swiper-button-prev',
-  //   },
-  // }) 
+     new Swiper('.swiper', {
+    // direction: 'vertical', // 垂直切换选项
+    loop: true, // 循环模式选项
+    autoplay:true,
+    // 如果需要分页器
+  }) 
   }
 }
 </script>
 
 <style scoped lang="less">
   .swiper{
+    position: relative;
+    
     .swiper-slide{
       margin: 10px 0;
-          .schoolItem{
-            margin: 0 12px;
+      .schoolItem{
+            margin: 0 11px;
             float: left;
             display: flex;
             flex-direction: column;
@@ -81,7 +78,7 @@ export default {
               color: #333;
               text-align: center;
             }
-          }
-        }
+      }
+    }
   }
 </style>
