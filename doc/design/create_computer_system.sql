@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 19/10/2022 11:04:24
+ Date: 20/10/2022 08:13:15
 */
 
 SET NAMES utf8mb4;
@@ -95,12 +95,24 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
                             `comment_id` int(0) NOT NULL AUTO_INCREMENT COMMENT '评论id',
                             `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论内容',
-                            `time` datetime(0) NULL DEFAULT NULL COMMENT '评论时间',
-                            `user_id` int(0) NULL DEFAULT NULL COMMENT '评论者id',
+                            `create_date` datetime(0) NULL DEFAULT NULL COMMENT '评论时间',
                             `resource_id` int(0) NULL DEFAULT NULL COMMENT '评论对应资源id',
+                            `author_id` int(0) NULL DEFAULT NULL COMMENT '评论者id',
+                            `parent_id` int(0) NULL DEFAULT NULL COMMENT '父亲节点id',
+                            `to_uid` int(0) NULL DEFAULT NULL COMMENT '评论对象的id',
+                            `level` int(0) NULL DEFAULT NULL COMMENT '评论的层次',
                             `like_number` int(0) NULL DEFAULT 0 COMMENT '点赞数',
                             PRIMARY KEY (`comment_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+INSERT INTO `comment` VALUES (1, '写的好', '2022-10-19 21:43:34', 1, 3, 0, 0, 1, 0);
+INSERT INTO `comment` VALUES (2, '111', '2022-10-19 21:52:43', 1, 1, 1, 3, 2, 0);
+INSERT INTO `comment` VALUES (3, '2222', '2022-10-19 21:52:54', 1, 2, 2, 1, 3, 3);
+INSERT INTO `comment` VALUES (4, '5555', '2022-10-19 21:54:36', 1, 6, 1, 3, 2, 2);
+INSERT INTO `comment` VALUES (5, '好好好', '2022-10-19 21:54:49', 1, 1, 0, 0, 1, 5);
 
 -- ----------------------------
 -- Table structure for journal
