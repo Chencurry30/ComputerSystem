@@ -52,4 +52,14 @@ public class MajorController {
     public ServerResponse<List<Major>> getAllMajor(){
         return majorService.getAllMajor();
     }
+
+    /**
+     * 分页查询
+     * @param pageNum：页码数
+     * @return Page
+     */
+    @GetMapping("/pages/{pageNum}")
+    public ServerResponse<List<Major>> getMajorPage(@PathVariable Integer pageNum){
+        return majorService.getMajorPage(pageNum);
+    }
 }

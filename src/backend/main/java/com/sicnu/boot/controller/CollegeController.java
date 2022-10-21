@@ -84,6 +84,11 @@ public class CollegeController {
         return collegeService.getCollegeByName(name);
     }
 
+    /**
+     * 分页查询
+     * @param pageNum：页码数
+     * @return Page
+     */
     @GetMapping("/pages/{pageNum}")
     public ServerResponse<List<College>> getCollegePage(@PathVariable Integer pageNum){
         return collegeService.getCollegePage(pageNum);
