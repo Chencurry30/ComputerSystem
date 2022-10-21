@@ -32,4 +32,11 @@ public interface MajorService {
      * @return List
      */
     ServerResponse<List<Major>> getAllMajor();
+
+    /**
+     * 分页查询专业
+     * @param pageNum：页码数
+     * @return Page
+     */
+    ServerResponse<List<Major>> getMajorPage(Integer pageNum);
 }

@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.sicnu.boot.mapper.MajorMapper;
 import com.sicnu.boot.pojo.Major;
 import com.sicnu.boot.service.MajorService;
@@ -37,6 +38,13 @@ public class MajorServiceImpl implements MajorService {
     @Override
     public ServerResponse<Major> getMajorByName(String name) {
         Major major = majorMapper.getMajorByName(name);
+        return ServerResponse.createBySuccess("查询成功",major);
+    }
+
+    @Override
+    public ServerResponse<List<Major>> getMajorPage(Integer pageNum) {
+        PageHelper.startPage(pageNum,6);
+        List<Major> major = majorMapper.getAllMajor();
         return ServerResponse.createBySuccess("查询成功",major);
     }
 }
