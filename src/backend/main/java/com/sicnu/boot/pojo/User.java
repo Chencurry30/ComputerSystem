@@ -1,9 +1,15 @@
 package com.sicnu.boot.pojo;
 
+import com.sicnu.boot.group.Phone;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * description:
@@ -15,9 +21,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
   private Integer userId;
+  @NotBlank(message = "用户名不能为空")
+  @Length(min = 2,max = 12,message = "用户名长度必须为2-12")
   private String username;
   private String nickname;
+  @NotBlank(message = "密码不能为空")
   private String password;
+  @NotBlank(message = "手机号码不能为空", groups = {Phone.class})
+  @NotNull(message = "手机号不能为空", groups = {Phone.class})
+  @Length(min = 11, max = 11, message = "手机号只能为11位")
+  @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式有误")
   private String phone;
   private String email;
   private Integer age;
@@ -33,11 +46,14 @@ public class User {
   /**
    * description: 手机验证码
    */
+  @NotBlank(message = "验证码不能为空",groups = {Phone.class})
+  @Length(min = 4,max = 4,message = "验证码的长度只能为4")
   private String smsCode;
 
   /**
    * description: 用户公钥唯一认证码
    */
+  @Length(min = 10,message = "uuid长度过小")
   private String uuId;
 
   public User(Integer userId, UserDetail userDetail){

@@ -1,5 +1,6 @@
 package com.sicnu.boot.controller;
 
+import com.sicnu.boot.group.Phone;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
@@ -9,10 +10,15 @@ import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * description:   用户控制类
@@ -21,6 +27,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
+@Validated
 @RequestMapping("/users")
 public class UserController {
 
@@ -29,6 +36,8 @@ public class UserController {
 
     @Resource
     private ISmsService smsService;
+
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^1[3-9]\\d{9}$");
 
     /**
      * description: 测试接口
@@ -44,7 +53,7 @@ public class UserController {
     }
 
     /**
-     * description: 登录接口，需要用户名和密码
+     * description: 登录接口，需要用户名和密码，uuid
      *
      * @param user:
      * @return ServerResponse<Map<String,String>>
@@ -52,7 +61,7 @@ public class UserController {
      * Date:  2022/9/28 22:08
      */
     @PostMapping("/login")
-    public ServerResponse<Map<String,Object>> login(@RequestBody User user){
+    public ServerResponse<Map<String,Object>> login(@Valid @RequestBody User user){
         return userService.login(user);
     }
 
@@ -77,7 +86,7 @@ public class UserController {
      * Date:  2022/9/28 22:10
      */
     @PostMapping("/register")
-    public ServerResponse<String> register(@RequestBody User user){
+    public ServerResponse<String> register(@Validated(Phone.class) @RequestBody User user){
         return userService.register(user);
     }
 
@@ -97,6 +106,13 @@ public class UserController {
             return ServerResponse.createByErrorMessage("手机号为空");
         }
         String phone = map.get("phone");
+        //验证手机号是否符合规范
+        Matcher matcher = PHONE_PATTERN.matcher(phone);
+        boolean matches = matcher.matches();
+        if (!matches){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "手机号不符合规范");
+        }
         return smsService.sendSmsCode(phone);
     }
 
@@ -146,12 +162,12 @@ public class UserController {
      * Date:  2022/9/30 16:13
      */
     @PutMapping
-    public ServerResponse<UserDetail> updateUserDetail(@RequestBody UserDetail userDetail){
+    public ServerResponse<UserDetail> updateUserDetail(@Validated @RequestBody UserDetail userDetail){
         return userService.updateUserDetail(userDetail);
     }
 
     /**
-     * description: 忘记密码，需要提供用户名，手机号，验证码，密码
+     * description: 忘记密码，需要提供用户名，手机号，验证码，密码，uuid
      *
      * @param user:
      * @return ServerResponse
@@ -159,7 +175,7 @@ public class UserController {
      * Date:  2022/10/3 16:12
      */
     @PutMapping("/forget/password")
-    public ServerResponse<String> forgetPassword(@RequestBody User user){
+    public ServerResponse<String> forgetPassword(@Validated(Phone.class) @RequestBody User user){
         return userService.forgetPassword(user);
     }
 
@@ -172,7 +188,7 @@ public class UserController {
      * Date:  2022/10/3 16:13
      */
     @PostMapping("/forget/username")
-    public ServerResponse<Map<String,String>> forgetUsername(@RequestBody UserDetail userDetail){
+    public ServerResponse<Map<String,String>> forgetUsername(@Validated(Phone.class) @RequestBody UserDetail userDetail){
         return userService.forgetUsername(userDetail);
     }
 
@@ -185,12 +201,12 @@ public class UserController {
      * Date:  2022/10/3 20:59
      */
     @PutMapping("/phone")
-    public ServerResponse<String> updatePhone(@RequestBody UpdateUser updateUser){
+    public ServerResponse<String> updatePhone(@Validated(Phone.class) @RequestBody UpdateUser updateUser){
         return userService.updatePhone(updateUser);
     }
 
     /**
-     * description: 修改密码，需要旧密码，新密码，手机号，验证码
+     * description: 修改密码，需要旧密码，新密码，手机号，验证码，uuid
      *
      * @param updateUser:
      * @return ServerResponse
@@ -198,7 +214,7 @@ public class UserController {
      * Date:  2022/10/3 21:00
      */
     @PutMapping("/password")
-    public ServerResponse<String> updatePassword(@RequestBody UpdateUser updateUser){
+    public ServerResponse<String> updatePassword(@Validated @RequestBody UpdateUser updateUser){
         return userService.updatePassword(updateUser);
     }
 
@@ -211,7 +227,8 @@ public class UserController {
      * Date:  2022/10/11 15:23
      */
     @GetMapping("/{id}")
-    public ServerResponse<Map<String,String>> getUserByUserId(@PathVariable("id") Integer id){
+    public ServerResponse<Map<String,String>> getUserByUserId(
+            @Min (value = 1,message = "id不在范围内") @PathVariable("id") Integer id){
         return userService.getUserByUserId(id);
     }
 

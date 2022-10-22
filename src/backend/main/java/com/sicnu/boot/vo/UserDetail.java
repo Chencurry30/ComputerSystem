@@ -2,8 +2,13 @@ package com.sicnu.boot.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sicnu.boot.group.Phone;
 import com.sicnu.boot.pojo.User;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.*;
 
 /**
  * description:  返回用户信息的封装类
@@ -17,13 +22,24 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDetail {
     private String username;
+    @Length(min = 2,max = 12,message = "昵称长度必须为2-12")
     private String nickname;
+    @Range(min = 1,max = 150,message = "年龄大小必须为1-150")
     private Integer age;
+    @NotBlank(message = "手机号码不能为空", groups = {Phone.class})
+    @NotNull(message = "手机号不能为空", groups = {Phone.class})
+    @Length(min = 11, max = 11, message = "手机号只能为11位")
+    @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式有误")
     private String phone;
+    @Email(message = "邮箱格式不规范")
     private String email;
     private String image;
+    @Length(min = 1,max = 2,message = "性别长度必须为1-2")
     private String sex;
+    @NotBlank(message = "验证码不能为空",groups = {Phone.class})
+    @Length(min = 4,max = 4,message = "验证码的长度只能为4")
     private String smsCode;
+    @Range(min = 0,max = 1,message = "isHide必须为0-1")
     private Integer isHide;
     private String message;
     public UserDetail(String nickname,String image){

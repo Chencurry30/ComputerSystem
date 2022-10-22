@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * description:
@@ -45,6 +47,8 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private ISmsService smsService;
+
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d).{6,12}$");
 
     @Override
     public ServerResponse<Map<String,Object>> login(User user) {
@@ -94,6 +98,13 @@ public class UserServiceImpl implements UserService {
         }
         //解密密码
         user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
+        //验证密码是否符合规范
+        Matcher matcher = PASSWORD_PATTERN.matcher(user.getPassword());
+        boolean matches = matcher.matches();
+        if (!matches){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "密码不符合规范");
+        }
         //检查手机号是否存在
         Integer checkPhone = userMapper.checkPhone(user.getPhone());
         if (checkPhone == 1){
@@ -172,6 +183,13 @@ public class UserServiceImpl implements UserService {
         }
         //解密密码
         user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
+        //验证密码是否符合规范
+        Matcher matcher = PASSWORD_PATTERN.matcher(user.getPassword());
+        boolean matches = matcher.matches();
+        if (!matches){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "密码不符合规范");
+        }
         //验证是否存在此用户
         User byUsername = userMapper.getByUsername(user.getUsername());
         if (Objects.isNull(byUsername)){
@@ -247,13 +265,20 @@ public class UserServiceImpl implements UserService {
         //解密密码
         updateUser.setPassword(RSAUtils.decryptDataOnJava(updateUser.getPassword(),privateKey));
         updateUser.setOldPassword(RSAUtils.decryptDataOnJava(updateUser.getOldPassword(),privateKey));
+        //验证密码是否符合规范
+        Matcher matcher = PASSWORD_PATTERN.matcher(updateUser.getPassword());
+        boolean matches = matcher.matches();
+        if (!matches){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
+                    , "密码不符合规范");
+        }
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Integer userid = loginUser.getUser().getUserId();
         //验证旧密码是否正确
-        boolean matches = passwordEncoder.matches(updateUser.getOldPassword(), userMapper.getPassword(userid));
-        if (!matches){
+        boolean matches1 = passwordEncoder.matches(updateUser.getOldPassword(), userMapper.getPassword(userid));
+        if (!matches1){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode()
                     , "旧密码错误");
         }
