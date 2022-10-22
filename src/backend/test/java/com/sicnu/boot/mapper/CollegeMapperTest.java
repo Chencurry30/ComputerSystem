@@ -1,12 +1,9 @@
 package com.sicnu.boot.mapper;
 
-import cn.hutool.db.Page;
-import com.github.pagehelper.PageHelper;
+
 import com.sicnu.boot.pojo.College;
-import org.apache.ibatis.annotations.Mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
