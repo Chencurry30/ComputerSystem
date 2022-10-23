@@ -20,19 +20,14 @@
     </vue-particles>
     <div class="register_container">
       <div class="register_box">
+
         <div class="avatar_box">
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
 
-        <el-form label-width="0px" class="login_in" ref="dataForm" :model="dataForm" :rules="checkForm">
-          <div class="navSelect">
-            <div class="select-left">
-              <div class="left-btn">账号注册</div>
-              <div class="btn-selected" v-show="!selectWay"></div>
-            </div>
-          </div>
+        <el-form label-width="0px" class="register_in" ref="dataForm" :model="dataForm" :rules="checkForm">
 
-          <div class="form-info" v-show="!selectWay" >
+          <div class="form-info">
             <el-form-item prop="username">
               <el-input
                 type="text"
@@ -43,14 +38,23 @@
             </el-form-item>
             <el-form-item prop="password">
               <el-input
-                type="password"
+                :type="changeHiddenImg === true ? 'text':'password'"
                 prefix-icon="el-icon-thumb"
                 placeholder="请输入密码"
                 v-model="dataForm.password"
+                @focus="showImg"
               ></el-input>
-            </el-form-item>
+              <div class="clickImg" v-show="showHiddenImg" @click="changeImg">
+                <div :class="changeHiddenImg === true ? 'showImg':'hiddenImg'"></div>
+              </div>
+            </el-form-item> 
+
+
+
+
             <el-form-item prop="phone">
               <el-input
+                label-width="100px"
                 type="text"
                 prefix-icon="el-icon-user"
                 placeholder="请输入手机号"
@@ -64,43 +68,42 @@
                 placeholder="请输入验证码"
                 v-model="dataForm.smsCode"
               ></el-input>
-              <div class="getVerificationCode" @click="getVerCode">
-                {{ verificationCodeInfo }}
-              </div>
+              <SendCodeBtn :phone="this.dataForm.phone"></SendCodeBtn>
+
             </el-form-item>
           </div>
-
           <el-form-item class="btns">
             <el-button type="primary" @click="goToRegister" :disabled="!canRegister">注&nbsp;&nbsp;&nbsp;&nbsp;册</el-button>
           </el-form-item>
 
           <div class="stytem">
-            <div class="stytem-left">
+            <div class="stytem-left font-text">
               <div class="lefttitle" @click="backHome()">返回首页</div>
             </div>
-            <div class="stytem-right">
+            <div class="stytem-right font-text">
               <div class="righttitle">
                 <router-link :to="{ name: 'loginView' }">用户登录</router-link>
               </div>
             </div>
           </div>
+
         </el-form>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { userRegister } from "@/Servers/ServersApi";
-import {retrievePassword} from "@/Servers/ServersApi"
+import { userRegister } from "@/Servers/ServersApi"
+import SendCodeBtn from '../components/sendCodeBtn'
+import {CryAlgorithm} from '../encryption/index'  //公钥加密函数
+import {mapGetters} from 'vuex'  //获取公钥的相关配置
+import rules from '../encryption/rules'
 export default {
   name: "registerView",
   data() {
     return {
-      automaticLogin: false, //自动登录
-      sendTimeCode:5,      //再次发送的时间
-      bVerification:false,   //节流阀，控制点击获取验证码
-      verificationCodeInfo:"发送验证码",
-      selectWay: false, //注册的方式  false 表示账号密码注册  TRUE 表示手机注册
+      showHiddenImg:false,
+      changeHiddenImg:false,
       dataForm:{  
         username: '', //账号
         password: '', //密码
@@ -108,19 +111,33 @@ export default {
         smsCode:'',  //验证码  
       },
       checkForm:{
+        username:[
+          {validator: rules.FormValidate.Form().validateUserName,trigger:'blur'}
+        ],
+        password:[
+          {validator: rules.FormValidate.Form().validatePassWord,trigger:'blur'}
+        ],
         phone:[
-          { len:11,message:'手机号必须是11位',trigger:'blur'},
-          { pattern:/^1\d{10}$/,message:'手机号格式错误',trigger:'blur'}
+          {validator: rules.FormValidate.Form().validatePhone,trigger:'blur'}
+        ],
+        smsCode:[
+          {validator: rules.FormValidate.Form().validateCode,trigger:'blur'}
         ]
       },
     };
+  },
+  components:{
+    SendCodeBtn
   },
   computed:{
     //判断登录条件
     canRegister(){
       const { username,password } = this.dataForm
       return Boolean(username&&password)
-    }
+    },
+    ...mapGetters('encryption',{
+      getkeyInfo:'getkeyInfo'
+    })
   },
   methods: {
     //是否自动登录
@@ -132,47 +149,15 @@ export default {
       let location = { name: "Home" };
       this.$router.push(location);
     },
-    //发送验证码的按钮
-    getVerCode(){
-      if(this.bVerification === true){
-        return;
-      }
-      this.bVerification = true;       //关闭节流阀
-      let time = setInterval(()=>{
-        this.sendTimeCode -= 1
-        this.verificationCodeInfo = `剩余${this.sendTimeCode}秒后发送`
-        if(this.sendTimeCode <=0){
-          this.verificationCodeInfo = '发送验证码'
-          this.sendTimeCode = 5   //对应的间隔时间
-          clearInterval(time)
-           this.bVerification = false  //打开节流阀
-        }
-      },1000)
-      let phone={
-        phone: this.dataForm.phone
-      }
-      retrievePassword(phone).then(res=>{
-        console.log(res.data.code);
-        if(res.data.code===414){
-          this.$message.error("手机号为空，请输入手机号")
-        }else if(res.data.code===413){
-          this.$message.error("手机号已注册，请输入新的手机号")
-        }else if(res.data.code===200){
-          this.$message({
-              message: "验证码已发送，请注意查收",
-              type: "success",
-            })
-        }
-        
-
-      })
-    },
     //注册
     goToRegister() {
-      let data = this.dataForm
-      // console.log(data);
+      let data = {}
+      data.username = this.dataForm.username
+      data.password = CryAlgorithm(this.getkeyInfo.encryPtion,this.dataForm.password)
+      data.phone = this.dataForm.phone     
+      data.smsCode = this.dataForm.smsCode
+      data.uuId = this.getkeyInfo.uuId
       userRegister(data).then( res => {
-          console.log(res.data);
           if(res.data.code===200){
             this.$message({
               message: "恭喜你，注册成功！请登录",
@@ -184,13 +169,25 @@ export default {
             this.$message.error("用户名重复，请重新输入！");
             this.dataForm = {
               username: "",
-              password: ""
+              password: "",
+              phone:"",
+              smsCode:"",
             };
           }
         }
       )
+    },
+    showImg(){
+      this.showHiddenImg = true
+    },
+    changeImg(){
+      console.log(this.changeHiddenImg);
+      this.changeHiddenImg = !this.changeHiddenImg
+    }
   },
-}
+  mounted(){
+    this.$store.dispatch('encryption/getPubKey');
+  }
 }
 </script>
 
@@ -205,21 +202,17 @@ export default {
     background-size: cover;
   }
   .register_container {
-    z-index: 55;
-    background-color: #42b983;
     height: 100%;
   }
   .el-form-item {
-    margin-bottom: 14px;
-    margin-top: 10px;
+    margin-bottom: 20px;
   }
   .register_box {
     width: 450px;
     height: 300px;
-    border-radius: 3px;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 45%;
     transform: translate(-50%, -50%);
     .avatar_box {
       height: 130px;
@@ -241,132 +234,22 @@ export default {
     }
   }
   .btns {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
   }
-  .login_in {
+  .register_in{
     z-index: 999;
     position: absolute;
-    bottom: -70px;
+    bottom: -100px;
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
-    //选择方式
-    .navSelect {    
-      display: flex;
-      justify-content: space-between;
-      color: #ffffff;
-      font-size: 18px;
-      font-family: "楷体";
-      .select-left {
-        position: relative;
-        margin-left: 50px;
-        cursor: pointer;
-        .btn-selected {
-          position: absolute;
-          width: 60px;
-          height: 2px;
-          bottom: -1px;
-          left: 9px;
-          background-color: #ffffff;
-        }
-      }
-      .select-right {
-        position: relative;
-        margin-right: 50px;
-        cursor: pointer;
-        .btn-selected {
-          position: absolute;
-          width: 60px;
-          height: 2px;
-          bottom: -1px;
-          right: 9px;
-          background-color: #ffffff;
-        }
-      }
-    }
     .verification {
       //验证码登录的输入框
       .el-input {
         width: 240px;
       }
-      .getVerificationCode {
-        position: absolute;
-        width: 100px;
-        height: 40px;
-        top: 0px;
-        right: 20px;
-        border-radius: 4px;
-        text-align: center;
-        cursor: pointer;
-        color: #ffffff;
-        background-color: #409eff;
-      }
-    }
-    .tablenav {
-      display: flex;
-      justify-content: space-between;
-      font-family: "楷体";
-      .navleft {
-        margin-left: 30px;
-        .leftbtn {
-          display: flex;
-          //未选中状态
-          .dashDiv {
-            border-radius: 1.8667rem;
-            border: 0.03rem solid #cbcbcb;
-            background-color: #dad6d6;
-            width: 42px;
-            height: 16px;
-            margin-top: 0.26rem;
-            margin-right: 0.4rem;
-            box-sizing: border-box;
-          }
-          .dashDiv .dashSpan {
-            border-radius: 7px;
-            border: 0.03rem solid #cbcbcb;
-            background-color: #ffffff;
-            float: left;
-            margin-left: 0.04rem;
-            margin-top: 0.019rem;
-            width: 24px;
-            height: 14px;
-            box-sizing: border-box;
-          }
-          /*选中状态*/
-          .dashDivSelectd {
-            background-color: #4cd964;
-            transition: 0.5s;
-            border-radius: 1.8667rem;
-            border: 0.03rem solid #ffffff;
-            width: 42px;
-            height: 16px;
-            margin-top: 0.26rem;
-            margin-right: 0.4rem;
-            box-sizing: border-box;
-          }
-          .dashDivSelectd .dashSpan {
-            border-radius: 7px;
-            border: 0.03rem solid #ffffff;
-            background-color: #ffffff;
-            float: right;
-            margin-right: 0.04rem;
-            margin-top: 0.019rem;
-            width: 24px;
-            height: 14px;
-            box-sizing: border-box;
-          }
-        }
-      }
-      .navright {
-        margin-right: 30px;
-      }
-      .prompt {
-        margin-top: 1px;
-        color: #ffffff;
-        font-size: 18px;
-        font-family: 楷体;
-      }
+
     }
     //选择链接 
     .stytem {
@@ -376,15 +259,11 @@ export default {
       .stytem-left {
         .lefttitle {
           margin-left: 35px;
-          font-size: 14px;
-          color: #ffffff;
         }
       }
       .stytem-right {
         .righttitle {
           margin-right: 35px;
-          font-size: 14px;
-          color: #ffffff;
         }
       }
       .righttitle:hover {
@@ -396,10 +275,6 @@ export default {
         cursor: pointer;
       }
     }
-    .prompt:hover {
-      color: rgb(236, 60, 11);
-      cursor: pointer;
-    }
     //修改了button的形式 
     .el-button{
       padding: 12px 110px;
@@ -408,6 +283,31 @@ export default {
     .el-input {
       left: 7%;
       width: 360px;
+    }
+  }
+  /deep/.el-form-item__error{
+      color: #F56C6C;
+      font-size: 14px;
+      padding: 3px 0px;
+      position: absolute;
+      top: 100%;
+      left: 35px;
+  }
+  .clickImg{
+    display: flex;
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    .hiddenImg{
+      width: 24px;
+      height: 24px;
+      background: url(../assets/Img/Icon/hidden1.png) no-repeat center center;
+    }
+    .showImg{
+      width: 24px;
+      height: 24px;
+      background: url(../assets/Img/Icon/show1.png) no-repeat center center;
     }
   }
 </style>

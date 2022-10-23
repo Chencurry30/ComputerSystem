@@ -4,42 +4,40 @@
       linesColor="#e8f659" :linesWidth="1" :lineLinked="true" :lineOpacity="0.4" :linesDistance="150" :moveSpeed="3"
       :hoverEffect="true" hoverMode="grab" :clickEffect="true" clickMode="push">
     </vue-particles>
-    <div class="register_container">
-      <div class="register_box">
+    <div class="login_container">
+      <div class="login_box">
 
         <div class="avatar_box">
           <img src="../assets/Img/LoginImg/tx.jpg" alt="" />
         </div>
 
-        <el-form label-width="0px" class="login_in" @keyup.enter.native="goToLogin">
+        <el-form label-width="0px" class="login_in"  ref="dataForm" :model="dataForm" :rules="checkForm">
 
-          <div class="navSelect">
-            <div class="select-left">
-              <div class="left-btn">账号登录</div>
-            </div>
-          </div>
-
-          <div class="form-info" ref="dataForm">
+          <div class="form-info">
             <el-form-item prop="username">
-              <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入账号" v-model="dataForm.username">
+              <el-input 
+                type="text" 
+                prefix-icon="el-icon-user" 
+                placeholder="请输入账号" 
+                v-model="dataForm.username">
               </el-input>
             </el-form-item>
+
+
             <el-form-item prop="password">
-              <el-input type="password" prefix-icon="el-icon-thumb" placeholder="请输入密码" v-model="dataForm.password">
-              </el-input>
-            </el-form-item>
-          </div>
-          <div class="form-info" v-show="selectWay" ref="dataForm">
-            <el-form-item prop="account">
-              <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入手机号" v-model="dataForm.phone"></el-input>
-            </el-form-item>
-            <el-form-item prop="verificationCode" class="verification">
-              <el-input type="password" prefix-icon="el-icon-thumb" placeholder="请输入验证码"
-                v-model="dataForm.verificateCode"></el-input>
-              <div class="getVerificationCode">
-                {{ verificationCodeInfo }}
+              <el-input
+                :type="changeHiddenImg === true ? 'text':'password'"
+                prefix-icon="el-icon-thumb"
+                placeholder="请输入密码"
+                v-model="dataForm.password"
+                @focus="showImg"
+              ></el-input>
+              <div class="clickImg" v-show="showHiddenImg" @click="changeImg">
+                <div :class="changeHiddenImg === true ? 'showImg':'hiddenImg'"></div>
               </div>
-            </el-form-item>
+            </el-form-item> 
+          
+          
           </div>
 
           <div class="tablenav">
@@ -58,7 +56,6 @@
 
           <el-form-item class="btns">
             <el-button type="primary" @click="goToLogin" :disabled="!canSubmit">登&nbsp;&nbsp;&nbsp;&nbsp;录</el-button>
-            <!-- <el-button type="primary">注册</el-button> -->
           </el-form-item>
 
           <div class="stytem">
@@ -74,27 +71,36 @@
 
         </el-form>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import Cookies from 'js-cookie';
-import { userLogin } from "@/Servers/ServersApi";
+import { userLogin } from '@/Servers/ServersApi';  
+import {CryAlgorithm} from '../encryption/index'  //公钥加密函数
+import {mapGetters} from 'vuex'  //获取公钥的相关配置
+import rules from '../encryption/rules'
+
 export default {
   name: "loginView",
   data() {
     return {
       automaticLogin: false, //自动登录
-      sendTimeCode: 5,      //再次发送的时间
-      bVerification: false,   //节流阀，控制点击获取验证码
-      verificationCodeInfo: "发送验证码",
-      selectWay: false,
+      showHiddenImg:false,
+      changeHiddenImg:false,
       dataForm: {
         username: '', //账号
         password: '', //密码
-        phone: '',         //手机号
-        smsCode: '',  //验证码  
+      },
+      checkForm:{
+        username:[
+          {validator: rules.FormValidate.Form().validateUserName,trigger:'blur'}
+        ],
+        password:[
+          {validator: rules.FormValidate.Form().validatePassWord,trigger:'blur'}
+        ],
       },
     };
   },
@@ -103,7 +109,11 @@ export default {
     canSubmit() {
       const { username, password } = this.dataForm
       return Boolean(username && password)
-    }
+    },
+    //获取公钥的ID以及公钥的内容 
+    ...mapGetters('encryption',{
+      getkeyInfo:'getkeyInfo'
+    })
   },
   methods: {
     //是否自动登录
@@ -117,13 +127,17 @@ export default {
     },
     //登录 
     goToLogin() {
-      let data = this.dataForm
+      let data = {}
+      data.uuId = this.getkeyInfo.uuId
+      data.username = this.dataForm.username
+      data.password = CryAlgorithm(this.getkeyInfo.encryPtion,this.dataForm.password)
       userLogin(data).then(res => {
-        // console.log(res.data);
+        console.log(res);
         Cookies.set('name', this.dataForm.username)
         const name = data.username
         if (res.data.code === 200) {
         const token = res.data.data.token
+        // localStorage.setItem('username',res.data.data.user.nickname)
         localStorage.setItem('token', token)  //保存token到本地浏览器
           this.$message({
             message: "恭喜你，登录成功！欢迎用户: " + name,
@@ -135,14 +149,25 @@ export default {
         }
       })
 
-
     },
     //忘记密码
     gotoretrieve(){
       let location = { name: "Home" };
       this.$router.push(location);
+    },
+    //获取焦点时显示图片 
+    showImg(){
+      this.showHiddenImg = true
+    },
+    //修改可以查看密码的图片样式 
+    changeImg(){
+      console.log(this.changeHiddenImg);
+      this.changeHiddenImg = !this.changeHiddenImg
     }
   },
+  mounted(){
+    this.$store.dispatch('encryption/getPubKey');
+  }
 };
 </script>
 
@@ -155,19 +180,15 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-.register_container {
+.login_container {
   z-index: 55;
   background-color: #42b983;
   height: 100%;
 }
-
 .el-form-item {
-  margin-bottom: 14px;
-  margin-top: 10px;
+  margin-bottom: 20px;
 }
-
-.register_box {
+.login_box {
   width: 450px;
   height: 300px;
   border-radius: 3px;
@@ -196,19 +217,18 @@ export default {
     }
   }
 }
-
 .btns {
   display: flex;
   justify-content: space-between;
 }
-
 .login_in {
-  z-index: 999;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
+    z-index: 999;
+    position: absolute;
+    bottom: -15px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+
 
   //选择方式
   .navSelect {
@@ -392,5 +412,30 @@ export default {
     left: 7%;
     width: 360px;
   }
+}
+/deep/.el-form-item__error{
+      color: #F56C6C;
+      font-size: 14px;
+      padding: 3px 0px;
+      position: absolute;
+      top: 100%;
+      left: 35px;
+}
+.clickImg{
+    display: flex;
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    .hiddenImg{
+      width: 24px;
+      height: 24px;
+      background: url(../assets/Img/Icon/hidden1.png) no-repeat center center;
+    }
+    .showImg{
+      width: 24px;
+      height: 24px;
+      background: url(../assets/Img/Icon/show1.png) no-repeat center center;
+    }
 }
 </style>

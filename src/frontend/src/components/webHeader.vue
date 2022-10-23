@@ -10,12 +10,16 @@
           <div class="title">旭升网</div>
           <span class="welcome">{{showUsername}}</span>
         </div>
-        <div class="main-right" v-if="showLoginBtn">
+        <div class="main-right centerLocation" v-if="showLoginBtn">
           <div class="message-icon">
             <img src="../assets/Img/Icon/message.png" alt="" />
           </div>
           <div class="userimg">
-            <img src="../assets/Img/Icon/userimg.png" alt="用户的头像" />
+            <img src="../assets/Img/Icon/userimg.png" alt="用户的头像"/>
+            <div class="user-select">
+              <div class="select-item">个人中心</div>
+              <div class="select-item" @click="backLogin()">退出登录</div>
+            </div>
           </div>
         </div>
         <div class="main-right" v-else>
@@ -64,6 +68,7 @@ export default {
         {name:'更多信息',link:''},
       ],
       current:0,
+      showBox:false
     }
   },
   methods: {
@@ -74,6 +79,13 @@ export default {
     },
     addClass(index){
       this.current=index
+    },
+    backLogin(){
+      localStorage.removeItem('token')
+      let location = {
+        name:'loginView'
+      }
+      this.$router.push(location)
     }
   },
   computed:{
@@ -91,7 +103,9 @@ export default {
 .header {
   .main-box {
     display: flex;
+    height: 50px;
     justify-content: space-between;
+    align-content: center;
     .main-left {
       display: flex;
       align-items: center;
@@ -130,7 +144,7 @@ export default {
       .message-icon:after {
         display: block;
         position: absolute;
-        top: 2px;
+        top: 0px;
         left: 10px;
         content: "";
         width: 10px;
@@ -139,13 +153,46 @@ export default {
         background-color: red;
       }
       .userimg {
-        width: 32px;
-        height: 32px;
+        position: relative;
+        width: 36px;
+        height: 36px;
         img {
+          display: block;
           width: 100%;
         }
+        .user-select{
+          overflow: hidden;
+          width: 120px;
+          height: 0px;
+          position: absolute;
+          top: 48px;
+          left: -45px;
+          border-radius: 10px;
+          transition: 1s;
+            .select-item{
+              padding: 5px 0px;
+              width: 100%;
+              line-height: 24px;
+              text-align: center;
+              a{
+                  height: 24px;
+                  line-height: 24px;
+                  color: #79A2BD;
+              }
+            }
+            // .user-select::after{
+            //   display: block;
+            //   position: absolute;
+            //   top: -29px;
+            //   left: 50px;
+            //   content: "";
+            //   width: 0px;
+            //   height: 0px;
+            //   border: 15px solid #918f8f;
+            //   border-color: transparent transparent #ffffff transparent;
+            // }
+        }
       }
-
       .gotologin {
         margin-top: 8px;
         padding: 2px 10px;
@@ -220,8 +267,11 @@ export default {
       }
     }
   }
-}
-.router-link-active{
-  text-decoration: none;
+
+  .userimg:hover .user-select{
+    height: 80px !important;
+    background: rgb(11, 171, 234) !important;
+  }
+
 }
 </style>

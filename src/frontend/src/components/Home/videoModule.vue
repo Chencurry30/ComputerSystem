@@ -7,7 +7,7 @@
       <div class="title-middle">
         <ul class="middleBox">
           <li 
-          v-for="(item,index) in liList" 
+          v-for="(item,index) in liList" :key="index" 
           v-on:click="addClass(index)" 
           v-bind:class="{On:index==current}"
           class="BoxItem">
