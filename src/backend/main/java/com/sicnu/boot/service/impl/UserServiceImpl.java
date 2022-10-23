@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
         boolean matches = matcher.matches();
         if (!matches){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
-                    , "密码不符合规范");
+                    , "密码必须为6-12位，且必须包含数字，字母");
         }
         //检查手机号是否存在
         Integer checkPhone = userMapper.checkPhone(user.getPhone());
@@ -188,7 +188,7 @@ public class UserServiceImpl implements UserService {
         boolean matches = matcher.matches();
         if (!matches){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
-                    , "密码不符合规范");
+                    , "密码必须为6-12位，且必须包含数字，字母");
         }
         //验证是否存在此用户
         User byUsername = userMapper.getByUsername(user.getUsername());
@@ -270,7 +270,7 @@ public class UserServiceImpl implements UserService {
         boolean matches = matcher.matches();
         if (!matches){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
-                    , "密码不符合规范");
+                    , "密码必须为6-12位，且必须包含数字，字母");
         }
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
