@@ -22,7 +22,7 @@ import javax.validation.constraints.Pattern;
 public class User {
   private Integer userId;
   @NotBlank(message = "用户名不能为空")
-  @Length(min = 2,max = 12,message = "用户名长度必须为2-12")
+  @Pattern(regexp = "^[a-zA-Z0-9]{2,12}$", message = "用户名长度必须为2-12,且只能包含数字和字母")
   private String username;
   private String nickname;
   @NotBlank(message = "密码不能为空")

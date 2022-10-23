@@ -1,13 +1,11 @@
 package com.sicnu.boot.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sicnu.boot.group.Phone;
 import com.sicnu.boot.pojo.User;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-
 import javax.validation.constraints.*;
 
 /**
@@ -23,6 +21,8 @@ import javax.validation.constraints.*;
 public class UserDetail {
     private String username;
     @Length(min = 2,max = 12,message = "昵称长度必须为2-12")
+    @Pattern(regexp = "^[\\u4e00-\\u9fa5a-zA-Z0-9]{2,12}$",
+            message = "昵称长度必须为2-12,且只能包含数字，字母和中文")
     private String nickname;
     @Range(min = 1,max = 150,message = "年龄大小必须为1-150")
     private Integer age;
