@@ -19,16 +19,13 @@
             <div class="user-select">
               <div class="select-item">个人中心</div>
               <div class="select-item" @click="backLogin()">退出登录</div>
+              
             </div>
           </div>
         </div>
         <div class="main-right" v-else>
-          <div class="gotoperson">用户登录
-            <router-link :to="{name:'personPage'}">个人中心</router-link>
-          </div>
           <button class="gotologin" @click="gotologin">用户注册</button>
         </div>
-        
       </div>
     </div>
     <div class="container-xl">
@@ -163,54 +160,40 @@ export default {
         .user-select{
           overflow: hidden;
           width: 120px;
-          height: 0px;
+          height: 0;
           position: absolute;
-          top: 48px;
+          top: 40px;
           left: -45px;
           border-radius: 10px;
           transition: 1s;
-            .select-item{
-              padding: 5px 0px;
+          .select-item{
+              margin-top: 8px;
               width: 100%;
-              line-height: 24px;
               text-align: center;
-              a{
-                  height: 24px;
-                  line-height: 24px;
-                  color: #79A2BD;
-              }
-            }
-            // .user-select::after{
-            //   display: block;
-            //   position: absolute;
-            //   top: -29px;
-            //   left: 50px;
-            //   content: "";
-            //   width: 0px;
-            //   height: 0px;
-            //   border: 15px solid #918f8f;
-            //   border-color: transparent transparent #ffffff transparent;
-            // }
+              color: black;
+              height: 24px;
+              line-height: 24px;
+              cursor: pointer;
+          }
+        }
+        .gotologin {
+          margin-top: 14px;
+      padding: 2px 16px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #4e71f2;
+      opacity: 0.7;
+        }
+        .gotologin:active {
+          opacity: 1;
         }
       }
-      .gotologin {
-        margin-top: 8px;
-        padding: 2px 10px;
-        border-radius: 10px;
-        color: #fff;
-        background-color: #4e71f2;
-        opacity: 0.7;
-      }
-      .gotoperson{
-        margin-top: 8px;
-        margin-right: 15px;
-        padding: 2px 10px;
-        border-radius: 10px;
-        color: #fff;
-        opacity: 0.7;
-      }
-      .gotologin:active {
-        opacity: 1;
+      .userimg:hover .itemVBox{
+        display: block;
+        transition: 1s;
       }
     }
   }
@@ -269,7 +252,7 @@ export default {
   }
 
   .userimg:hover .user-select{
-    height: 80px !important;
+    height:70px !important;
     background: rgb(11, 171, 234) !important;
   }
 
