@@ -59,7 +59,7 @@ export default {
       liList:[
         {name:'首页',link:'Home'},
         {name:'资源学习',link:'videoSelect'},
-        {name:'院校选择',link:''},
+        {name:'院校选择',link:'schoolSelect'},
         {name:'备考大纲',link:''},
         {name:'考研政策',link:''},
         {name:'更多信息',link:''},
@@ -176,24 +176,20 @@ export default {
               cursor: pointer;
           }
         }
-        .gotologin {
-          margin-top: 14px;
-      padding: 2px 16px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 10px;
-      font-size: 16px;
-      color: #fff;
-      background-color: #4e71f2;
-      opacity: 0.7;
-        }
-        .gotologin:active {
-          opacity: 1;
-        }
       }
-      .userimg:hover .itemVBox{
-        display: block;
-        transition: 1s;
+      .gotologin {
+        margin-top: 14px;
+        padding: 0px 16px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #4e71f2;
+        opacity: 0.7;
+      }
+      .gotologin:active {
+          opacity: 1;
       }
     }
   }
