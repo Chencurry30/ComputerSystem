@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class MyControllerAdvice {
     @ExceptionHandler(value = {BindException.class, ValidationException.class, MethodArgumentNotValidException.class})
     public ServerResponse<String> handleValidatedException(Exception e) {
+        e.printStackTrace();
         String collect = "";
         e.printStackTrace();
         if (e instanceof MethodArgumentNotValidException) {
