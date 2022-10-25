@@ -7,15 +7,14 @@ import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.service.VideoService;
-import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.utils.VideoUtils;
 import com.sicnu.boot.vo.VideoSelective;
+import com.sicnu.boot.vo.VideoType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * description:
@@ -33,34 +32,10 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public ServerResponse<PageInfo<Video>> getVideoListBySelective(VideoSelective videoSelective) {
-        //设置排序名字
-        switch (videoSelective.getVideoSort()){
-            case 0 : {
-                videoSelective.setVideoSortName("");
-                break;
-            }
-            case 1 : {
-                videoSelective.setVideoSortName("duration");
-                break;
-            }
-            case 2 : {
-                videoSelective.setVideoSortName("time");
-                break;
-            }
-            case 3 : {
-                videoSelective.setVideoSortName("view_num");
-                break;
-            }
-            case 4 : {
-                videoSelective.setVideoSortName("comment_num");
-                break;
-            }
-            default:{
-                return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数异常");
-            }
-        }
+        videoSelective.setDurationValue(VideoUtils.getDurationById(videoSelective.getDurationId()));
+        videoSelective.setSortName(VideoUtils.getSortById(videoSelective.getSortId()));
         //获取分页信息
-        PageHelper.startPage(videoSelective.getPageNum(), videoSelective.getPageSize());
+        PageHelper.startPage(videoSelective.getPageNum(), 6);
         List<Video> list = videoMapper.getVideoListBySelective(videoSelective);
         for (Video video : list) {
             //查询作者昵称
@@ -73,6 +48,33 @@ public class VideoServiceImpl implements VideoService {
         }
         PageInfo<Video> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("成功",pageInfo);
+    }
+
+    @Override
+    public ServerResponse<List<Map<String,Object>>> getFilterBox() {
+        List<Map<String,Object>> list = new ArrayList<>();
+        //添加分类筛选
+        List<VideoType> videoType = videoMapper.getVideoType();
+        videoType.add(new VideoType(0,"全部"));
+        videoType.sort(Comparator.comparingInt(VideoType::getTypeId));
+        Map<String,Object> videoMap = new HashMap<>(5);
+        videoMap.put("list",videoType);
+        videoMap.put("id",2432212);
+        videoMap.put("name","分类");
+        list.add(videoMap);
+        //添加时长筛选
+        Map<String,Object> durationMap = new HashMap<>(5);
+        durationMap.put("list", VideoUtils.getDurationList());
+        durationMap.put("id",1343123);
+        durationMap.put("name","时长");
+        list.add(durationMap);
+        //添加排序筛选
+        Map<String,Object> sortMap = new HashMap<>(5);
+        sortMap.put("list", VideoUtils.getSortList());
+        sortMap.put("id",1223423);
+        sortMap.put("name","排列");
+        list.add(sortMap);
+        return ServerResponse.createBySuccess("获取成功",list);
     }
 
     @Override

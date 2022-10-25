@@ -38,7 +38,7 @@ public class UserMapperTest {
     @Test
     void testUpdateUser(){
         UserDetail userDetail = new UserDetail(null,"大海",18,
-                null,null,"","女",null,0,"");
+                null,null,"","女",null,0,"",1);
         User user = new User(3,userDetail);
         Integer integer = userMapper.updateUser(user);
         System.out.println(integer);

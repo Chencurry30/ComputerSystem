@@ -21,8 +21,5 @@ public class VideoMapperTest {
 
     @Test
     void testGetVideoListBySelective(){
-        VideoSelective selective = new VideoSelective(0,0,"考研","英语",null,1,"time");
-        List<Video> list = videoMapper.getVideoListBySelective(selective);
-        list.forEach(System.out :: println);
     }
 }

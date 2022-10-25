@@ -2,6 +2,7 @@ package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.vo.VideoSelective;
+import com.sicnu.boot.vo.VideoType;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -33,4 +34,13 @@ public interface VideoMapper {
      * Date:  2022/10/16 16:27
      */
     Video getVideoByVideoId(Integer videoId);
+
+    /**
+     * description: 获取视频的类型
+     *
+     * @return List<VideoType>
+     * @author 胡建华
+     * Date:  2022/10/25 18:40
+     */
+    List<VideoType> getVideoType();
 }

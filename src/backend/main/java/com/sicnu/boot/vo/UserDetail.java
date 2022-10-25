@@ -42,9 +42,11 @@ public class UserDetail {
     @Range(min = 0,max = 1,message = "isHide必须为0-1")
     private Integer isHide;
     private String message;
-    public UserDetail(String nickname,String image){
+    private Integer role;
+    public UserDetail(String nickname,String image,Integer role){
         this.nickname = nickname;
         this.image = image;
+        this.role = role;
     }
 
     public UserDetail(User user){

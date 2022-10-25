@@ -25,6 +25,7 @@ public class MyControllerAdvice {
     @ExceptionHandler(value = {BindException.class, ValidationException.class, MethodArgumentNotValidException.class})
     public ServerResponse<String> handleValidatedException(Exception e) {
         String collect = "";
+        e.printStackTrace();
         if (e instanceof MethodArgumentNotValidException) {
             // BeanValidation exception
             MethodArgumentNotValidException ex = (MethodArgumentNotValidException) e;

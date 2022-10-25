@@ -10,19 +10,23 @@
             <if test="videoName != null and videoName != ''">
                 and name like "%" #{videoName} "%"
             </if>
-            <if test="videoType != null and videoType != ''">
-                and (type_one = #{videoType}  or type_two = #{videoType} or type_three = #{videoType})
+            <if test="typeId != null and typeId != 0">
+                and type_id = #{typeId}
             </if>
-            <if test="videoDuration != null and videoDuration != ''">
-                and duration <![CDATA[<=]]> #{videoDuration}
+            <if test="durationValue != null and durationValue != 0">
+                and duration <![CDATA[<=]]> #{durationValue}
             </if>
         </where>
-        <if test="videoSortName != null and videoSortName != ''">
-            order by ${videoSortName} desc
+        <if test="sortName != null and sortName != ''">
+            order by ${sortName} desc
         </if>
     </select>
 
     <select id="getVideoByVideoId" resultType="Video">
         select * from video where video_id = #{videoId}
+    </select>
+
+    <select id="getVideoType" resultType="com.sicnu.boot.vo.VideoType">
+        select * from video_type
     </select>
 </mapper>

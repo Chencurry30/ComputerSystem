@@ -30,9 +30,8 @@ public class Video {
   private String image;
   private Integer collectionNum;
   private Integer viewNum;
-  private String typeOne;
-  private String typeTwo;
-  private String typeThree;
+  private String typeName;
+  private Integer typeId;
   private Integer duration;
   private String link;
   private Integer commentNum;

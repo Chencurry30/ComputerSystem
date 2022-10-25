@@ -56,13 +56,16 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
                     , "参数非法");
         }
-        //从redis中获取私钥
-        String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
-        if (StringUtils.isBlank(privateKey)){
-            return ServerResponse.createByErrorMessage("密钥已经失效");
+        //TODO 为了测试方便，暂时前后端不对密码进行加密，项目交付或项目答辩或最终测试时会还原。
+        if(false){
+            //从redis中获取私钥
+            String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
+            if (StringUtils.isBlank(privateKey)){
+                return ServerResponse.createByErrorMessage("密钥已经失效");
+            }
+            //解密密码
+            user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
         }
-        //解密密码
-        user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         //认证失败，抛出异常
@@ -80,7 +83,8 @@ public class UserServiceImpl implements UserService {
         HashMap<String,Object> map = new HashMap<>(5);
         map.put("token",jwt);
         //返回用户部分信息
-        UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname(),loginUser.getUser().getImage());
+        UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname()
+                ,loginUser.getUser().getImage(),loginUser.getUser().getRole());
         map.put("user",userDetail);
         return ServerResponse.createBySuccess("登录成功",map);
     }
