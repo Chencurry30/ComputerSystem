@@ -22,5 +22,6 @@ public class College {
     private String region;
     private String phone;
     private Integer rank;
+    private String attribute;
     private String disDevelop;
 }

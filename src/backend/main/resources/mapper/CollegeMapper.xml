@@ -5,9 +5,9 @@
 
 <mapper namespace="com.sicnu.boot.mapper.CollegeMapper">
 <!--    添加院校-->
-    <insert id="addCollege" parameterType="College">
-        insert into college values(null ,#{name},#{address},#{type},#{region},#{phone},#{rank},#{disDevelop})
-    </insert>
+<!--    <insert id="addCollege" parameterType="College">-->
+<!--        insert into college values(null ,#{name},#{address},#{typeId},#{type},#{region},#{phone},#{rank},#{attribute},#{disDevelop})-->
+<!--    </insert>-->
 <!--    查询院校-->
     <select id="getCollegeById" resultType="College">
         select *from college where college_id=#{collegeId}
@@ -18,10 +18,36 @@
     <delete id="deleteCollege">
         delete from college where college_id=#{collegeId}
     </delete>
-    <update id="updateCollegeById">
-        update college set name=#{name},address=#{address},type=#{type},region=#{region},phone=#{phone},`rank`=#{rank},dis_develop=#{disDevelop} where college_id=#{collegeId}
-    </update>
+<!--    <update id="updateCollegeById">-->
+<!--        update college set name=#{name},address=#{address},type=#{type},region=#{region},phone=#{phone},`rank`=#{rank},dis_develop=#{disDevelop} where college_id=#{collegeId}-->
+<!--    </update>-->
     <select id="getAllCollege" resultType="College">
         select *from college
+    </select>
+    <select id="getCollegeRegion" resultType="com.sicnu.boot.vo.CollegeRegion">
+        select *from college_region
+    </select>
+    <select id="getCollegeType" resultType="com.sicnu.boot.vo.CollegeType">
+        select *from college_type
+    </select>
+    <select id="getCollegeAttribute" resultType="com.sicnu.boot.vo.CollegeAttribute">
+        select *from college_attribute
+    </select>
+    <select id="getCollegeListBySelective" resultType="com.sicnu.boot.vo.CollegeSelective">
+        select college_id,name,address,type,region,phone,`rank`,attribute,dis_develop from college
+        <where>
+            <if test="collegeName != null and collegeName != ''">
+                and name like "%"#{collegeName}"%"
+            </if>
+            <if test="regionId != null and regionId != 0">
+                and region_id = #{regionId}
+            </if>
+            <if test="typeId != null and typeId != 0">
+                and type_id = #{typeId}
+            </if>
+            <if test="attributeId != null and attributeId != 0">
+                and attribute_id = #{attributeId}
+            </if>
+        </where>
     </select>
 </mapper>

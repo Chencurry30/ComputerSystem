@@ -2,14 +2,20 @@ package com.sicnu.boot.service.impl;
 
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.CollegeMapper;
 import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.service.CollegeService;
 import com.sicnu.boot.utils.ServerResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sicnu.boot.vo.CollegeAttribute;
+import com.sicnu.boot.vo.CollegeRegion;
+import com.sicnu.boot.vo.CollegeSelective;
+import com.sicnu.boot.vo.CollegeType;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.annotation.Resource;
+import java.util.*;
 
 
 /**
@@ -23,7 +29,7 @@ import java.util.List;
 @Service
 public class CollegeServiceImpl implements CollegeService {
 
-    @Autowired
+    @Resource
     private CollegeMapper collegeMapper;
 
 
@@ -68,5 +74,47 @@ public class CollegeServiceImpl implements CollegeService {
         PageHelper.startPage(pageNum,6);
         List<College> college = collegeMapper.getAllCollege();
         return ServerResponse.createBySuccess("查询成功",college);
+    }
+
+    @Override
+    public ServerResponse<List<Map<String, Object>>> getFilterBox() {
+        List<Map<String,Object>> list = new ArrayList<>();
+        //添加地区筛选
+        List<CollegeRegion> collegeRegion = collegeMapper.getCollegeRegion();
+        collegeRegion.add(new CollegeRegion(0,"全部"));
+        collegeRegion.sort(Comparator.comparingInt(CollegeRegion::getRegionId));
+        Map<String,Object> RegionMap = new HashMap<>(5);
+        RegionMap.put("list",collegeRegion);
+        RegionMap.put("id",123456);
+        RegionMap.put("name","地区");
+        list.add(RegionMap);
+        //添加类型筛选
+        List<CollegeType> collegeType = collegeMapper.getCollegeType();
+        collegeType.add(new CollegeType(0,"全部"));
+        collegeType.sort(Comparator.comparingInt(CollegeType::getTypeId));
+        Map<String,Object> TypeMap = new HashMap<>(5);
+        TypeMap.put("list",collegeType);
+        TypeMap.put("id",123456);
+        TypeMap.put("name","类型");
+        list.add(TypeMap);
+        //添加属性筛选
+        List<CollegeAttribute> collegeAttribute = collegeMapper.getCollegeAttribute();
+        collegeAttribute.add(new CollegeAttribute(0,"全部"));
+        collegeAttribute.sort(Comparator.comparingInt(CollegeAttribute::getAttributeId));
+        Map<String,Object> AttributeMap = new HashMap<>(5);
+        AttributeMap.put("list",collegeAttribute);
+        AttributeMap.put("id",123456);
+        AttributeMap.put("name","地区");
+        list.add(AttributeMap);
+        return ServerResponse.createBySuccess("获取成功",list);
+    }
+
+    @Override
+    public ServerResponse<PageInfo<College>> getCollegeListBySelective(CollegeSelective collegeSelective) {
+        //获取分页信息
+        PageHelper.startPage(collegeSelective.getPageNum(),6);
+        List<College> list = collegeMapper.getCollegeListBySelective(collegeSelective);
+        PageInfo<College> pageInfo = new PageInfo<>(list);
+        return ServerResponse.createBySuccess("成功",pageInfo);
     }
 }

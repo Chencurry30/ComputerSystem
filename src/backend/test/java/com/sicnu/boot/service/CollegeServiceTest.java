@@ -1,6 +1,7 @@
 package com.sicnu.boot.service;
 
 import com.sicnu.boot.pojo.College;
+import com.sicnu.boot.vo.CollegeSelective;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class CollegeServiceTest {
 
     @Test
     public void testAddCollege(){
-        College college = new College(null,"测试1","测试1","测试1","测试1","测试1",999,"测试1");
+        College college = new College(null,"测试1","测试1","测试1","测试1","测试1",999,"测试","测试1");
         System.out.println(collegeService.addCollege(college));
     }
 
@@ -42,5 +43,16 @@ public class CollegeServiceTest {
     @Test
     public void testGetCollegePage(){
         System.out.println(collegeService.getCollegePage(2));
+    }
+
+    @Test
+    public void testGetFilterBox(){
+        System.out.println(collegeService.getFilterBox());
+    }
+
+    @Test
+    public void testGetCollegeListBySelective(){
+        CollegeSelective collegeSelective = new CollegeSelective("null",0,0,0,1);
+        System.out.println(collegeService.getCollegeListBySelective(collegeSelective));
     }
 }

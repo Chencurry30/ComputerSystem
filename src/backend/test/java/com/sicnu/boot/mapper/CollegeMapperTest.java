@@ -24,7 +24,7 @@ public class CollegeMapperTest {
 
     @Test
     public void testAddCollege(){
-        College college = new College(null,"测试","测试","测试","测试","测试",123,"测试");
+        College college = new College(null,"测试","测试","测试","测试","测试",123, "测试","测试");
         System.out.println(collegeMapper);
         collegeMapper.addCollege(college);
         System.out.println(college);
@@ -50,7 +50,7 @@ public class CollegeMapperTest {
 
     @Test
     public void testUpdateCollegeById(){
-        College college = new College(2,"测试","测试123","测试123","测试123","测试",123,"测试");
+        College college = new College(2,"测试","测试123","测试123","测试123","测试",123,"测试","测试");
         collegeMapper.updateCollegeById(college);
         System.out.println(college);
     }
