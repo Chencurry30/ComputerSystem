@@ -33,7 +33,7 @@
     <select id="getCollegeAttribute" resultType="com.sicnu.boot.vo.CollegeAttribute">
         select *from college_attribute
     </select>
-    <select id="getCollegeListBySelective" resultType="com.sicnu.boot.vo.CollegeSelective">
+    <select id="getCollegeListBySelective" resultType="College">
         select college_id,name,address,type,region,phone,`rank`,attribute,dis_develop from college
         <where>
             <if test="collegeName != null and collegeName != ''">
