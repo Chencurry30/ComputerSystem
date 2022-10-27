@@ -17,4 +17,23 @@ import lombok.NoArgsConstructor;
 public class CollegeType {
     private Integer typeId;
     private String typeName;
+    private Integer id;
+    private String name;
+
+    public CollegeType(Integer typeId, String typeName) {
+        this.typeId = typeId;
+        this.typeName = typeName;
+        this.name = typeName;
+        this.id = typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+        this.id = typeId;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+        this.name = typeName;
+    }
 }

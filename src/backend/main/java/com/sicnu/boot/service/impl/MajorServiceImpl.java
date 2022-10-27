@@ -47,4 +47,10 @@ public class MajorServiceImpl implements MajorService {
         List<Major> major = majorMapper.getAllMajor();
         return ServerResponse.createBySuccess("查询成功",major);
     }
+
+    @Override
+    public ServerResponse<List<Major>> getMajorListByCollegeId(Integer collegeId) {
+        List<Major> major = majorMapper.getMajorListByCollegeId(collegeId);
+        return ServerResponse.createBySuccess("查询成功",major);
+    }
 }

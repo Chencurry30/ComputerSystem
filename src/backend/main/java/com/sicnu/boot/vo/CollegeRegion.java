@@ -17,4 +17,23 @@ import lombok.NoArgsConstructor;
 public class CollegeRegion {
     private Integer regionId;
     private String regionName;
+    private Integer id;
+    private String name;
+
+    public CollegeRegion(Integer regionId, String regionName) {
+        this.regionId = regionId;
+        this.regionName = regionName;
+        this.name = regionName;
+        this.id = regionId;
+    }
+
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
+        this.id = regionId;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+        this.name = regionName;
+    }
 }

@@ -3,10 +3,7 @@ package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.service.CollegeService;
-import com.sicnu.boot.vo.CollegeAttribute;
-import com.sicnu.boot.vo.CollegeRegion;
-import com.sicnu.boot.vo.CollegeSelective;
-import com.sicnu.boot.vo.CollegeType;
+import com.sicnu.boot.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -64,4 +61,5 @@ public interface CollegeMapper {
      * @return List
      */
     List<College> getCollegeListBySelective(CollegeSelective collegeSelective);
+
 }

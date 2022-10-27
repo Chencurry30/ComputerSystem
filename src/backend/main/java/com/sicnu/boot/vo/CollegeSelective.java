@@ -20,5 +20,4 @@ public class CollegeSelective {
     private Integer typeId;
     private Integer attributeId;
     private Integer pageNum;
-
 }

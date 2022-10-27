@@ -16,4 +16,8 @@
     <select id="getAllMajor" resultType="Major">
         select *from major
     </select>
+<!--    通过学校id查询专业-->
+    <select id="getMajorListByCollegeId" resultType="Major">
+        select *from major where major_id in (select major_id from college_major where college_id = #{collegeId})
+    </select>
 </mapper>
