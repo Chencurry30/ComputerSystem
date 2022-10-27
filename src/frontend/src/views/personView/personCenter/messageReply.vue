@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import replyItem from '../../../components/replyItem.vue';
+import replyItem from '../../../components/remark/replyItem.vue';
 export default {
     data(){
     return{
@@ -32,7 +32,7 @@ export default {
           content:'这个课程对我们的帮助都很大，感谢鬼剑相关课程给我',
           resourcename:'计算机组成原理'
         }
-      ]  
+      ]
     }
   },
   components: { replyItem },

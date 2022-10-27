@@ -1,4 +1,4 @@
-//评论回复 
+//评论回复
 <template>
   <div class="allBox">
     <div class="UserBox second">
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import replyItem from '../../../components/replyItem.vue';
+import replyItem from '../../../components/remark/replyItem.vue';
 export default {
     data(){
     return{
@@ -32,7 +32,7 @@ export default {
           content:'你的评论对我很有帮助，感谢',
           resourcename:'回复我的'
         }
-      ]  
+      ]
     }
   },
   components: { replyItem },

@@ -67,13 +67,13 @@
         </div>
         <div class="course-page">
             <PagerView></PagerView>
-        </div>   
+        </div>
     </div>
 
 </template>
 
 <script>
-import PagerView from '../PagerView.vue';
+import PagerView from '../remark/PagerView.vue';
 export default {
     name: "selectMain",
     components: { PagerView }
@@ -119,7 +119,7 @@ export default {
                     padding: 0 8px;
                     margin-bottom: 8px;
                 }
-            }   
+            }
             .courseItem:hover{
                 margin-top: 0px;
                 box-shadow: 0 0 20px 2px #918f8f;

@@ -1,12 +1,12 @@
 //用户的相关存储信息
-import {getUserInfo,changeUserInfo} from '../Servers/userServers'
+import {getUserInfo,changeUserInfo} from '../servers/userServers'
 const userInfo = {
     namespaced:true,   //开启匿名空间
     state:{
         userInfo:{},
     },
     actions:{
-      //获取个人相关信息 
+      //获取个人相关信息
       getUserInfo(context){
         getUserInfo().then((res)=>{
           console.log(res);
@@ -36,9 +36,9 @@ const userInfo = {
 
     },
     getters:{
-      //返回用户的部分信息供头部使用 
+      //返回用户的部分信息供头部使用
       getUserImg(state){
-        //个人页面中上部分对应的内容 
+        //个人页面中上部分对应的内容
         let userImg = {}
         userImg.nickname = state.userInfo.nickname || {}
         userImg.image = state.userInfo.nickname || {}
@@ -46,7 +46,7 @@ const userInfo = {
         return userImg
       },
 
-      //返回用户的全部信息 
+      //返回用户的全部信息
       getUserInfo(state){
         return state.userInfo
       }

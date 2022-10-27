@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import phonePopup from "../../../components/popup/phonePopup.vue";
-import passwordPopup from "../../../components/popup/passwordPopup.vue";
+import phonePopup from "../../../components/popUp/phonePopup.vue";
+import passwordPopup from "../../../components/popUp/passwordPopup.vue";
 export default {
   components: { phonePopup, passwordPopup },
   name: "personSecurity",
