@@ -40,42 +40,12 @@ public class CollegeController {
     }
 
     /**
-     * 添加学校
-     * @param college：学校信息
-     * @return College
-     */
-    @PostMapping
-    public ServerResponse<College> addCollege(@RequestBody College college){
-        return collegeService.addCollege(college);
-    }
-
-    /**
-     * 删除学校
-     * @param id：学校id
-     * @return Integer
-     */
-    @DeleteMapping("/{id}")
-    public ServerResponse<Integer> deleteCollege(@PathVariable("id") Integer id){
-        return collegeService.deleteCollege(id);
-    }
-
-    /**
      * 查询所有学校
      * @return List
      */
     @GetMapping
     public ServerResponse<List<College>> getAllCollege(){
         return collegeService.getAllCollege();
-    }
-
-    /**
-     * 更新学校
-     * @param college：学校信息
-     * @return College
-     */
-    @PutMapping
-    public ServerResponse<College> updateCollege(@RequestBody College college){
-        return collegeService.updateCollege(college);
     }
 
     /**
@@ -87,16 +57,6 @@ public class CollegeController {
     public ServerResponse<List<College>> getCollegeByName(@RequestBody String name){
         return collegeService.getCollegeByName(name);
     }
-
-//    /**
-//     * 分页查询
-//     * @param pageNum：页码数
-//     * @return Page
-//     */
-////    @GetMapping("/pages/{pageNum}")
-//    public ServerResponse<List<College>> getCollegePage(@PathVariable Integer pageNum){
-//        return collegeService.getCollegePage(pageNum);
-//    }
 
     /**
      * 返回学校筛选框

@@ -19,21 +19,16 @@ import java.util.List;
  */
 @Mapper
 public interface CollegeMapper {
-    /**
-     * 添加学校
-     * @param college：学校
-     */
-    void addCollege(College college);
 
     /**
-     * 查询学校
+     * 通过id查询学校
      * @param collegeId：学校id
      * @return College
      */
     College getCollegeById(Integer collegeId);
 
     /**
-     * 查询学校
+     * 通过名字查询学校
      * @param name：学校名
      * @return College
      */
@@ -44,19 +39,6 @@ public interface CollegeMapper {
      * @return College
      */
     List<College> getAllCollege();
-
-    /**
-     * 删除学校
-     * @param collegeId：学校id
-     * @return Integer
-     */
-    Integer deleteCollege(Integer collegeId);
-
-    /**
-     * 更改学校信息
-     * @param college：学校信息
-     */
-    void updateCollegeById(College college);
 
     /**
      * 获取学校地区

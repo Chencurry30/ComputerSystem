@@ -30,12 +30,6 @@ public class CollegeServiceTest {
     }
 
     @Test
-    public void testAddCollege(){
-        College college = new College(null,"测试1","测试1","测试1","测试1","测试1",999,"测试","测试1");
-        System.out.println(collegeService.addCollege(college));
-    }
-
-    @Test
     public void testGetCollegeByName(){
         System.out.println(collegeService.getCollegeByName("院"));
     }

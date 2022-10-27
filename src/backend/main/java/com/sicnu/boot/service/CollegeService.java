@@ -27,35 +27,11 @@ public interface CollegeService {
     ServerResponse<College> getCollegeById(Integer id);
 
     /**
-     * 添加学校
-     *
-     * @param college：学校信息
-     * @return College
-     */
-    ServerResponse<College> addCollege(College college);
-
-    /**
-     * 删除学校
-     *
-     * @param id：学校id
-     * @return College
-     */
-    ServerResponse<Integer> deleteCollege(Integer id);
-
-    /**
      * 查询所有学校
      *
      * @return List
      */
     ServerResponse<List<College>> getAllCollege();
-
-    /**
-     * 修改学校信息
-     *
-     * @param college：学校信息
-     * @return College
-     */
-    ServerResponse<College> updateCollege(College college);
 
     /**
      * 查询学校

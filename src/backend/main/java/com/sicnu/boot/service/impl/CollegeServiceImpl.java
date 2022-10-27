@@ -11,7 +11,6 @@ import com.sicnu.boot.vo.CollegeAttribute;
 import com.sicnu.boot.vo.CollegeRegion;
 import com.sicnu.boot.vo.CollegeSelective;
 import com.sicnu.boot.vo.CollegeType;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -40,28 +39,11 @@ public class CollegeServiceImpl implements CollegeService {
     }
 
     @Override
-    public ServerResponse<College> addCollege(College college) {
-        collegeMapper.addCollege(college);
-        return ServerResponse.createBySuccess("添加成功",college);
-    }
-
-    @Override
-    public ServerResponse<Integer> deleteCollege(Integer id) {
-        collegeMapper.deleteCollege(id);
-        return ServerResponse.createBySuccess("删除成功",id);
-    }
-
-    @Override
     public ServerResponse<List<College>> getAllCollege() {
         List<College> allCollege = collegeMapper.getAllCollege();
         return ServerResponse.createBySuccess("查询成功",allCollege);
     }
 
-    @Override
-    public ServerResponse<College> updateCollege(College college) {
-        collegeMapper.updateCollegeById(college);
-        return ServerResponse.createBySuccess("修改成功",college);
-    }
 
     @Override
     public ServerResponse<List<College>> getCollegeByName(String name) {
