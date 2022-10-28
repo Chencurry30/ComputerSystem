@@ -2,7 +2,6 @@ package com.sicnu.boot.mapper;
 
 
 import com.sicnu.boot.pojo.College;
-import com.sicnu.boot.service.CollegeService;
 import com.sicnu.boot.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 

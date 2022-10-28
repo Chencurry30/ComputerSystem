@@ -67,7 +67,7 @@ public class CollegeServiceImpl implements CollegeService {
         collegeRegion.sort(Comparator.comparingInt(CollegeRegion::getRegionId));
         Map<String,Object> RegionMap = new HashMap<>(5);
         RegionMap.put("list",collegeRegion);
-        RegionMap.put("id",123456);
+        RegionMap.put("id",1366578);
         RegionMap.put("name","地区");
         list.add(RegionMap);
         //添加类型筛选
@@ -76,7 +76,7 @@ public class CollegeServiceImpl implements CollegeService {
         collegeType.sort(Comparator.comparingInt(CollegeType::getTypeId));
         Map<String,Object> TypeMap = new HashMap<>(5);
         TypeMap.put("list",collegeType);
-        TypeMap.put("id",123456);
+        TypeMap.put("id",2699856);
         TypeMap.put("name","类型");
         list.add(TypeMap);
         //添加属性筛选
@@ -85,7 +85,7 @@ public class CollegeServiceImpl implements CollegeService {
         collegeAttribute.sort(Comparator.comparingInt(CollegeAttribute::getAttributeId));
         Map<String,Object> AttributeMap = new HashMap<>(5);
         AttributeMap.put("list",collegeAttribute);
-        AttributeMap.put("id",123456);
+        AttributeMap.put("id",7044331);
         AttributeMap.put("name","地区");
         list.add(AttributeMap);
         return ServerResponse.createBySuccess("获取成功",list);
