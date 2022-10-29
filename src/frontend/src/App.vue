@@ -10,8 +10,8 @@
 
 <script>
 
-import webHeader from './components/webHeader.vue';
-import webFotter from './components/webFotter.vue';
+import webHeader from './components/headerFooer/webHeader.vue';
+import webFotter from './components/headerFooer/webFotter.vue';
 
 
 export default {

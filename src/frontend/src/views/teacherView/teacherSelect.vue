@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import PagerView from "@/components/PagerView";
+import PagerView from "@/components/remark/PagerView";
 export default {
   name: "teacherSelect",
   components: {

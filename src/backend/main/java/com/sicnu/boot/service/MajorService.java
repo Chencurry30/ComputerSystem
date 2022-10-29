@@ -39,4 +39,10 @@ public interface MajorService {
      * @return Page
      */
     ServerResponse<List<Major>> getMajorPage(Integer pageNum);
+
+    /**
+     * 根据学校id查询相应专业列表
+     * @return List
+     */
+    ServerResponse<List<Major>> getMajorListByCollegeId(Integer collegeId);
 }

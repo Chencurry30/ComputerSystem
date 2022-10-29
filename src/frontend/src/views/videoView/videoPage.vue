@@ -76,7 +76,7 @@
           </ul>
         </div>
       </div>
-      
+
       <!--评论阶段-->
       <div class="videocommit">
         <div class="reply-header">
@@ -235,8 +235,8 @@
 </template>
 
 <script>
-import ReleaseItem from "../../components/releaseItem.vue";
-import ReplyItem from "../../components/replyItem.vue";
+import ReleaseItem from "../../components/remark/releaseItem.vue";
+import ReplyItem from "../../components/remark/replyItem.vue";
 import {mapState,mapGetters} from 'vuex'
 export default {
   name: "videoPage",
@@ -261,7 +261,7 @@ export default {
     ...mapGetters('remark',{
       getRemarkList:'getRemarkList',
     }),
-    
+
 
   },
   methods:{
@@ -471,7 +471,7 @@ export default {
               margin: 0 5px;
               // margin-left: 0px;
               height: 16px;
-              .left-img,.right-img{ 
+              .left-img,.right-img{
                 margin-right: 4px;
                 width: 17px;
                 height: 17px;
@@ -489,4 +489,4 @@ export default {
     }
   }
 }
-</style> 
+</style>

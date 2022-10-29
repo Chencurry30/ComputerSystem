@@ -1,13 +1,13 @@
-import Home from '@/views/Home'
+import Home from '@/views/baseViews/Home'
 
-const loginView = () => import('@/views/loginView')       //登录页面
-const registerView = () => import('@/views/registerView')  //注册页面
+const loginView = () => import('@/views/baseViews/loginView')       //登录页面
+const registerView = () => import('@/views/baseViews/registerView')  //注册页面
 export default [{
   path: '/',
   redirect: Home,
 },
 {
-  path: '/Home',
+  path: '/mainHome',
   name: 'Home',
   component: Home,
   meta: {                          //配置相关的参数，保证页面是否展示头部和底部
@@ -19,7 +19,7 @@ export default [{
   path: '/loginView',
   name: 'loginView',
   component: loginView,
-  meta: {                          
+  meta: {
     showTop: false,
     showFotter:false
   },
@@ -28,7 +28,7 @@ export default [{
   path: '/registerView',
   name: 'registerView',
   component: registerView,
-  meta: {                          
+  meta: {
     showTop: false,
     showFotter:false
   },

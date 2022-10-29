@@ -107,8 +107,8 @@
 </template>
 
 <script>
-import QuestionPopup from '../../components/popup/questionPopup.vue';
-import replyItem from "../../components/replyItem.vue";
+import QuestionPopup from '../../components/popUp/questionPopup.vue';
+import replyItem from "../../components/remark/replyItem.vue";
 export default {
   components: { replyItem, QuestionPopup },
   name: "teacherPerson",

@@ -1,7 +1,7 @@
 //封装的相关函数
-import {createUUID} from '../encryption/index'
+import {createUUID} from '../utils'
 //封装获取公钥的相关函数
-import {getPublicKey} from '../Servers/encryption' 
+import {getPublicKey} from '../servers/encryption'
 
 const encryption = {
     namespaced:true,   //开启匿名空间
@@ -33,7 +33,7 @@ const encryption = {
         state.Algorithm = data
       }
     },
-    //返回获得的公钥以及公钥的键值对 
+    //返回获得的公钥以及公钥的键值对
     getters:{
       getkeyInfo(state){
         return state.Algorithm

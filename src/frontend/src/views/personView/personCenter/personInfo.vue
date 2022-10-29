@@ -1,4 +1,4 @@
-//用户信息 
+//用户信息
 <template>
   <div class="allBox">
     <div class="UserBox secondBox">
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import InfoPopup from '../../../components/popup/InfoPopup.vue';
+import InfoPopup from '../../../components/popUp/InfoPopup.vue';
 import {mapGetters} from 'vuex'
 export default {
     name: "personInfo",

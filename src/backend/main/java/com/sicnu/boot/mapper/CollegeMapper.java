@@ -2,6 +2,7 @@ package com.sicnu.boot.mapper;
 
 
 import com.sicnu.boot.pojo.College;
+import com.sicnu.boot.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,21 +15,16 @@ import java.util.List;
  */
 @Mapper
 public interface CollegeMapper {
-    /**
-     * 添加学校
-     * @param college：学校
-     */
-    void addCollege(College college);
 
     /**
-     * 查询学校
+     * 通过id查询学校
      * @param collegeId：学校id
      * @return College
      */
     College getCollegeById(Integer collegeId);
 
     /**
-     * 查询学校
+     * 通过名字查询学校
      * @param name：学校名
      * @return College
      */
@@ -41,16 +37,28 @@ public interface CollegeMapper {
     List<College> getAllCollege();
 
     /**
-     * 删除学校
-     * @param collegeId：学校id
-     * @return Integer
+     * 获取学校地区
+     * @return List
      */
-    Integer deleteCollege(Integer collegeId);
+    List<CollegeRegion> getCollegeRegion();
 
     /**
-     * 更改学校信息
-     * @param college：学校信息
+     * 获取学校类型
+     * @return List
      */
-    void updateCollegeById(College college);
+    List<CollegeType> getCollegeType();
+
+    /**
+     * 获取学校属性
+     * @return List
+     */
+    List<CollegeAttribute> getCollegeAttribute();
+
+    /**
+     * 通过选择，返回学校列表
+     * @param collegeSelective：列表信息
+     * @return List
+     */
+    List<College> getCollegeListBySelective(CollegeSelective collegeSelective);
 
 }

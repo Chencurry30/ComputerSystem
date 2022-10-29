@@ -1,5 +1,5 @@
 const schoolSelect = () => import('@/views/schoolView/schoolSelect')
-const schoolPage = () => import('@/views/schoolView/schoolPage')
+const schoolPage = () => import('@/views/schoolView/schoolSelect')
 
 export default [
     {

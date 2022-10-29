@@ -42,4 +42,10 @@ public class MajorMapperTest {
         System.out.println(allMajor);
     }
 
+    @Test
+    public void testGetByCollegeId(){
+        List<Major> majorList = majorMapper.getMajorListByCollegeId(1);
+        System.out.println(majorList);
+    }
+
 }

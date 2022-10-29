@@ -4,6 +4,7 @@ import com.sicnu.boot.pojo.Major;
 import com.sicnu.boot.service.MajorService;
 import com.sicnu.boot.utils.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -61,5 +62,13 @@ public class MajorController {
     @GetMapping("/pages/{pageNum}")
     public ServerResponse<List<Major>> getMajorPage(@PathVariable Integer pageNum){
         return majorService.getMajorPage(pageNum);
+    }
+
+    /**
+     * 通过学校id查找专业
+     */
+    @GetMapping("/colleges/{collegeId}")
+    public ServerResponse<List<Major>> getMajorListByCollegeId(@PathVariable Integer collegeId){
+        return majorService.getMajorListByCollegeId(collegeId);
     }
 }

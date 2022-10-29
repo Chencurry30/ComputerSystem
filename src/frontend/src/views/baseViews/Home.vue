@@ -11,11 +11,11 @@
 
 
 <script>
-  import bannerFigure from '../components/Home/bannerFigure.vue'
-  import selectModule from '../components/Home/selectModule.vue'
-  import teacherModuleVue from '../components/Home/teacherModule.vue';
-  import VideoModule from '../components/Home/videoModule.vue';
-  import appendixModule from '../components/Home/appendixModule.vue';
+  import bannerFigure from '../../components/mainHome/bannerFigure.vue'
+  import selectModule from '../../components/mainHome/selectModule.vue'
+  import teacherModuleVue from '../../components/mainHome/teacherModule.vue';
+  import VideoModule from '../../components/mainHome/videoModule.vue';
+  import appendixModule from '../../components/mainHome/appendixModule.vue';
   export default {
     name: "Home",
     components:{
@@ -27,7 +27,7 @@
 },
   data() {
     return{
-      
+
     }
   },
 };
