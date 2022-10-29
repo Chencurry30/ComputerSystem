@@ -1,5 +1,6 @@
 package com.sicnu.boot.mapper;
 
+import com.sicnu.boot.pojo.Menu;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,13 +14,13 @@ import java.util.List;
  * Data:    2022/10/12 20:49
  */
 @SpringBootTest
-public class PowerMapperTest {
+public class MenuMapperTest {
     @Resource
-    private PowerMapper powerMapper;
+    private MenuMapper powerMapper;
 
     @Test
     void testPower(){
-        List<String> list = powerMapper.selectPermsByUserId(2);
+        List<Menu> list = powerMapper.getMenuList();
         list.forEach(System.out::println);
     }
 }

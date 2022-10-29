@@ -5,6 +5,7 @@ import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.service.VideoService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.VideoSelective;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -27,9 +28,11 @@ public class VideoController {
 
     @GetMapping("/pages/{typeId}-{durationId}-{sortId}-{pageNum}")
     ServerResponse<PageInfo<Video>> getVideoListBySelective(
-            String videoName, @PathVariable Integer typeId,
-            @PathVariable Integer durationId,@PathVariable Integer sortId,@PathVariable Integer pageNum){
-
+            @Length(max = 20,message = "视频名字的最大值为20") String videoName,
+            @Min(value = 0,message = "typeId的最小值为0") @PathVariable Integer typeId,
+            @Min(value = 0,message = "durationId的最小值为0") @PathVariable Integer durationId,
+            @Min(value = 0,message = "sortId的最小值为0") @PathVariable Integer sortId,
+            @Min(value = 1,message = "pageNum的最小值为1") @PathVariable Integer pageNum){
         return videoService.getVideoListBySelective(new VideoSelective(videoName,typeId,durationId,sortId,pageNum));
     }
 

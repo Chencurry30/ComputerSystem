@@ -61,6 +61,8 @@ public class VideoUtils {
 
     private static Map<String,Object> getSortMap(Integer sortId,String sortName,String sortValue){
         Map<String,Object> map = new HashMap<>(3);
+        map.put("id",sortId);
+        map.put("name",sortName);
         map.put("sortId",sortId);
         map.put("sortName",sortName);
         map.put("sortValue",sortValue);
@@ -69,6 +71,8 @@ public class VideoUtils {
 
     private static Map<String,Object> getDurationMap(Integer durationId,String durationName,Integer durationValue){
         Map<String,Object> map = new HashMap<>(3);
+        map.put("id",durationId);
+        map.put("name",durationName);
         map.put("durationId",durationId);
         map.put("durationName",durationName);
         map.put("durationValue",durationValue);

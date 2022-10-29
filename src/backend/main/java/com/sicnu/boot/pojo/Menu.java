@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * description:  权限实体类
@@ -17,10 +18,16 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Power implements Serializable {
+public class Menu implements Serializable {
     private static final long serialVersionUID = -54979041104113736L;
 
-    private Integer id;
-    private String perms;
+    private Integer menuId;
+    private String path;
+    private String name;
+    private String component;
+    private Integer parentId;
+    private Integer menuType;
+    private Integer level;
 
+    private List<Menu> children;
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.UserManageMapper">
+    <insert id="insertUser">
+
+    </insert>
+    <select id="getUserList" resultType="com.sicnu.boot.vo.UserDetail">
+        select user_id,username,nickname,email,sex,phone,age,message from user
+        <where>
+            <if test="nickname != null and nickname !=''">
+                nickname = "%" #{nickname} "%"
+            </if>
+        </where>
+        order by user_id
+    </select>
+
+    <select id="getUserByUserId" resultType="com.sicnu.boot.vo.UserDetail">
+        select user_id,username,nickname,email,sex,phone,age,message from user
+            where user_id = #{userId}
+    </select>
+
+    <delete id="deleteUserByUserId">
+        delete from user where user_id = #{userId}
+    </delete>
+</mapper>

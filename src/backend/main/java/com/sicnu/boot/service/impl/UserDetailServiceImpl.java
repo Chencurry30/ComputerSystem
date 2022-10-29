@@ -1,6 +1,6 @@
 package com.sicnu.boot.service.impl;
 
-import com.sicnu.boot.mapper.PowerMapper;
+import com.sicnu.boot.mapper.MenuMapper;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.pojo.User;
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private UserMapper userMapper;
 
     @Resource
-    private PowerMapper powerMapper;
+    private MenuMapper menuMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,8 +36,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (Objects.isNull(user)){
             throw new RuntimeException("用户名或密码错误");
         }
-        //查询对应的权限
-        List<String> list = powerMapper.selectPermsByUserId(user.getUserId());
+        //TODO 查询对应的权限
+        List<String> list = new ArrayList<>();
         //把数据封装成UserDetail对象
         return new LoginUser(user,list);
     }
