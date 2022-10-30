@@ -78,7 +78,7 @@
 
 <script>
 import Cookies from 'js-cookie';
-import { userLogin } from '@/servers/ServersApi';
+import { userLogin } from '../../Servers/ServersApi';
 import {CryAlgorithm} from '../../utils'  //公钥加密函数
 import {mapGetters} from 'vuex'  //获取公钥的相关配置
 import rules from '../../utils/rules'
@@ -106,6 +106,9 @@ export default {
       },
     };
   },
+  mounted(){
+    this.$store.dispatch('encryption/getPubKey');
+  },
   computed: {
     //判断提交
     canSubmit() {
@@ -132,8 +135,8 @@ export default {
       let data = {}
       data.uuId = this.getkeyInfo.uuId
       data.username = this.dataForm.username
-      // data.password = this.dataForm.password
-      data.password = CryAlgorithm(this.getkeyInfo.encryPtion,this.dataForm.password)
+      data.password = this.dataForm.password
+      // data.password = CryAlgorithm(this.getkeyInfo.encryPtion,this.dataForm.password)
       userLogin(data).then(res => {
         console.log(res);
         Cookies.set('name', this.dataForm.username)
@@ -146,7 +149,7 @@ export default {
             message: "恭喜你，登录成功！欢迎用户: " + name,
             type: "success",
           })
-          this.$router.push({ name: 'mainHome' })
+          this.$router.push({ name: 'Home' })
         }else if (res.data.code === 400) {
           this.$message.error("用户名或密码错误，请重新输入！")
         }
@@ -164,13 +167,9 @@ export default {
     },
     //修改可以查看密码的图片样式
     changeImg(){
-      console.log(this.changeHiddenImg);
       this.changeHiddenImg = !this.changeHiddenImg
     }
   },
-  mounted(){
-    this.$store.dispatch('encryption/getPubKey');
-  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 //封装的相关函数
 import {createUUID} from '../utils'
 //封装获取公钥的相关函数
-import {getPublicKey} from '../servers/encryption'
+import {getPublicKey} from '../Servers/encryption'
 
 const encryption = {
     namespaced:true,   //开启匿名空间

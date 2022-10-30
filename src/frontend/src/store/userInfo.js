@@ -1,5 +1,5 @@
 //用户的相关存储信息
-import {getUserInfo,changeUserInfo} from '../servers/userServers'
+import {getUserInfo,changeUserInfo} from '../Servers/userServers'
 const userInfo = {
     namespaced:true,   //开启匿名空间
     state:{

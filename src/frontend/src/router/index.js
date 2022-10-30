@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 //系统操作以及相关路由
-import systemOperation from './systemOperation'
+import systemRouter from './systemRouter'
 //老师的路由管理
 import teacherRoute from "./teacherRoute"
 import webAbout from './webAbout'
@@ -30,20 +30,19 @@ const router = new VueRouter({
     mode:'history',
     base: process.env.BASE_URL,
     routes: [
-      ...systemOperation,
+      ...systemRouter,
       ...teacherRoute,
       ...webAbout,
       ...personRoute,
       ...videoRouter,
       ...schoolRouter
     ],
-
   })
 
 //路由守卫
-router.beforeEach((to,from,next) => {
-  const token = localStorage.getItem('token')
-  if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
-  else next()
-})
+// router.beforeEach((to,from,next) => {
+//   const token = localStorage.getItem('token')
+//   if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
+//   else next()
+// })
 export default router
