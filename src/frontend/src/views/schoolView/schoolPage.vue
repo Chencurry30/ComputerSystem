@@ -1,6 +1,7 @@
 <template>
   <div class="allBox">
-    <div class="headerBox clearfix w">
+    <div class="header">
+      <div class="headerBox clearfix w">
         <div class="school-type">
             <div class="title">学校名字</div>
             <div class="ranking">958</div>
@@ -20,7 +21,33 @@
            <div class="school-item4 bg sixth">院校地址</div>
         </div>
     </div>
-    <div class="connectBox"></div>
+    
+    </div>
+    <div class="connect">
+      <div class="connectBox w">
+      <div class="typeItem">
+        <div class="ItemHeader">计算机科学与技术</div>
+        <div class="ItemChild">
+          <div class="childInfo">计算机系统结构</div>
+          <div class="childMore">了解详情</div>
+        </div>
+        <div class="ItemChild">
+          <div class="childInfo">计算机系统结构</div>
+          <div class="childMore">了解详情</div>
+        </div>
+        <div class="ItemChild">
+          <div class="childInfo">计算机系统结构</div>
+          <div class="childMore">了解详情</div>
+        </div>
+      </div>
+      <div class="typeItem">
+        <div class="ItemHeader">计算机科学与技术</div>
+        <div class="ItemChild">计算机系统结构</div>
+        <div class="ItemChild">计算机软件与理论 </div>
+        <div class="ItemChild">计算机应用技术</div>
+      </div>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -33,7 +60,7 @@ export default {
 
 <style lang="less" scoped>
   .allBox{
-    background: rgba(0, 0, 0, .2);
+
     .headerBox{
       padding: 15px 0;
       display: flex;
@@ -121,12 +148,51 @@ export default {
         }
     }
     .connectBox{
-      width: 880px;
-    background: #fff;
-    padding: 1px 32px 40px;
-    box-sizing: border-box;
-    margin-top: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0,.03);
+      margin: 10px auto;
+      width: 1280px;
+      background: #fff;
+      padding: 1px 60px 40px;
+      box-sizing: border-box;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgb(0 0 0 / 3%);
+      .ItemHeader{
+        height: 46px;
+        border: 1px solid #eeeeee;
+        font-size: 18px;
+        color: #333;
+        font-weight: 700;
+        line-height: 46px;
+        position: relative;
+        padding-left: 19px;
+        box-sizing: border-box;
+        margin-top: 32px;
+      }
+      .ItemChild{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+    color: #999;
+    margin-top: 24px;
+    line-height: 18px;
+        .childInfo{
+          margin-left: 20px;
+        }
+        .childMore{
+          margin-right: 20px;
+          font-size: 12px;
+        }
+        }
+    .ItemHeader::before{
+        display: inline-block;
+        content: "";
+        width: 5px;
+        height: 100%;
+        background: #ff9d00;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
     }
   }
 </style>
