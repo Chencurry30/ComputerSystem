@@ -28,6 +28,12 @@ public class Menu implements Serializable {
     private Integer parentId;
     private Integer menuType;
     private Integer level;
-
+    private String label;
+    private String perms;
     private List<Menu> children;
+
+    public void setName(String name) {
+        this.name = name;
+        this.label = name;
+    }
 }

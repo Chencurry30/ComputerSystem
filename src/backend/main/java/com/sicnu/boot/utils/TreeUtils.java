@@ -1,5 +1,6 @@
 package com.sicnu.boot.utils;
 
+import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.vo.CommentVo;
 import com.sicnu.boot.vo.MyTreeNode;
 import org.springframework.stereotype.Component;
@@ -58,6 +59,7 @@ public class TreeUtils {
 
         return root;
     }
+
     /**
      * description: 找到子节点的父节点
      *
@@ -87,5 +89,35 @@ public class TreeUtils {
         }
         return null;
 
+    }
+
+    /**
+     * description: 获取权限树的子节点
+     *
+     * @param id:
+     * @param menuList:
+     * @return List<Menu>
+     * @author 胡建华
+     * Date:  2022/10/29 15:04
+     */
+    public List<Menu> getChildTree(Integer id, List<Menu> menuList) {
+        List<Menu> childList = new ArrayList<>();
+        // 循环获取子节点
+        menuList.forEach(menu -> {
+            if (menu.getParentId() != null){
+                if (menu.getParentId().equals(id) && menu.getLevel() > 1) {
+                    childList.add(menu);
+                }
+            }
+        });
+        // 获取子节点的子节点
+        childList.forEach(menu -> {
+            // 递归获取子节点
+            List<Menu> childTree = this.getChildTree(menu.getMenuId(), menuList);
+            if (childTree.size() > 0) {
+                menu.setChildren(childTree);
+            }
+        });
+        return childList;
     }
 }

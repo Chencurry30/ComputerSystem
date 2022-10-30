@@ -35,7 +35,6 @@ public class User {
   private String email;
   private Integer age;
   private String sex;
-  private Integer role;
   private String image;
   private Integer isHide;
   /**
@@ -53,7 +52,9 @@ public class User {
   /**
    * description: 用户公钥唯一认证码
    */
-  @Length(min = 10,message = "uuid长度过小")
+  @Length(min = 10,message = "uuid长度最小为10")
+  @NotBlank(message = "uuid不能为空")
+  @NotNull(message = "uuid不能为空")
   private String uuId;
 
   public User(Integer userId, UserDetail userDetail){

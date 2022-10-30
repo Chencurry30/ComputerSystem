@@ -35,6 +35,12 @@
     <select id="getPassword" resultType="String">
         select password from user where user_id = #{userId}
     </select>
+    <select id="getUserMenu" resultType="Menu">
+        select m.menu_id, path, m.name, component, parentId, menu_type, level,perms
+            from menu m left join role_menu rm on m.menu_id = rm.menu_id
+            left join user_role u on rm.role_id = u.role_id
+            where user_id = #{userId}
+    </select>
 
     <insert id="register">
         insert into user(username,password,phone) values(#{username},#{password},#{phone})

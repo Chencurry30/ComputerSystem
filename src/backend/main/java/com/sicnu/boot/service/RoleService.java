@@ -4,7 +4,6 @@ import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.RoleVo;
-
 import java.util.List;
 
 /**
@@ -52,4 +51,14 @@ public interface RoleService {
      * Date:  2022/10/27 21:38
      */
     ServerResponse<String> addRole(Role role);
+
+    /**
+     * description: 通过id删除用户角色及其权限
+     *
+     * @param roleId:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/10/29 15:53
+     */
+    ServerResponse<String> deleteRoleByRoleId(Integer roleId);
 }

@@ -1,8 +1,11 @@
 package com.sicnu.boot.mapper;
 
+import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.vo.CommentUserVo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * description:
@@ -141,5 +144,13 @@ public interface UserMapper {
      */
     void updatePasswordByUserId(String password,Integer userId);
 
-
+    /**
+     * description: 通过用户id获取权限列表
+     *
+     * @param userId:
+     * @return List<Menu>
+     * @author 胡建华
+     * Date:  2022/10/29 22:24
+     */
+    List<Menu> getUserMenu(Integer userId);
 }

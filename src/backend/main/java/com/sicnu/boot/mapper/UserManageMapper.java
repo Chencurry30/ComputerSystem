@@ -45,8 +45,37 @@ public interface UserManageMapper {
     /**
      * description: 添加用户
      *
+     * @param userDetail:
      * @author 胡建华
      * Date:  2022/10/28 22:04
      */
-    void insertUser();
+    void insertUser(UserDetail userDetail);
+
+    /**
+     * description: 检验用户是否为管理员
+     *
+     * @param username:
+     * @return int
+     * @author 胡建华
+     * Date:  2022/10/29 23:17
+     */
+    int checkAdmin(String username);
+
+    /**
+     * description: 通过用户id，删除其具有的角色
+     *
+     * @param userId:
+     * @author 胡建华
+     * Date:  2022/10/30 10:02
+     */
+    void deleteUserRole(Integer userId);
+
+    /**
+     * description: 插入用户角色，默认为student
+     *
+     * @param userId:
+     * @author 胡建华
+     * Date:  2022/10/30 10:39
+     */
+    void insertUserRole(Integer userId);
 }
