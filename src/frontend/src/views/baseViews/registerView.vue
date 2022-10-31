@@ -93,7 +93,7 @@
   </div>
 </template>
 <script>
-import { userRegister } from "@/servers/ServersApi"
+import { userRegister } from "../../Servers/ServersApi"
 import SendCodeBtn from '../../components/sendCode/sendCodeBtn'
 import {CryAlgorithm} from '../../utils'  //公钥加密函数
 import {mapGetters} from 'vuex'  //获取公钥的相关配置

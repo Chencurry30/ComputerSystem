@@ -4,8 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sicnu.boot.mapper.UserManageMapper">
-    <insert id="insertUser">
-
+    <insert id="insertUser"  useGeneratedKeys="true" keyProperty="userId"
+            parameterType="com.sicnu.boot.vo.UserDetail">
+        insert into user(user_id, username, password, email, age, sex)
+            values (null,#{username},#{password},#{email},#{age},#{sex})
+    </insert>
+    <insert id="insertUserRole">
+        insert into user_role select #{userId},role_id from role where role_key = 'student'
     </insert>
     <select id="getUserList" resultType="com.sicnu.boot.vo.UserDetail">
         select user_id,username,nickname,email,sex,phone,age,message from user
@@ -21,8 +26,17 @@
         select user_id,username,nickname,email,sex,phone,age,message from user
             where user_id = #{userId}
     </select>
+    <select id="checkAdmin" resultType="java.lang.Integer">
+        select count(*)
+        from menu m left join role_menu rm on m.menu_id = rm.menu_id
+                    left join user_role u on rm.role_id = u.role_id
+        where user_id in (select user_id from user where username = #{username}) and m.path = '/admin'
+    </select>
 
     <delete id="deleteUserByUserId">
         delete from user where user_id = #{userId}
+    </delete>
+    <delete id="deleteUserRole">
+        delete from user_role where user_id = #{userId}
     </delete>
 </mapper>

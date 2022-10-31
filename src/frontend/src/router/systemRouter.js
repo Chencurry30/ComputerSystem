@@ -7,7 +7,7 @@ export default [{
   redirect: Home,
 },
 {
-  path: '/mainHome',
+  path: '/Home',
   name: 'Home',
   component: Home,
   meta: {                          //配置相关的参数，保证页面是否展示头部和底部

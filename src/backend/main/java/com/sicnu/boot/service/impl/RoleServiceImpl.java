@@ -6,12 +6,13 @@ import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.service.RoleService;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.utils.TreeUtils;
 import com.sicnu.boot.vo.RoleVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * description:
@@ -26,6 +27,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Resource
     private MenuMapper menuMapper;
+
+    @Resource
+    private TreeUtils treeUtils;
 
     @Override
     public ServerResponse<List<Menu>> getMenuListByRoleId(Integer roleId) {
@@ -68,6 +72,16 @@ public class RoleServiceImpl implements RoleService {
     public ServerResponse<String> addRole(Role role) {
         roleMapper.insertRole(role);
         return ServerResponse.createBySuccess("添加成功");
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ServerResponse<String> deleteRoleByRoleId(Integer roleId) {
+        //删除该角色的所有权限
+        roleMapper.deleteRoleMenuByRoleId(roleId);
+        //删除该角色
+        roleMapper.deleteRoleByRoleId(roleId);
+        return ServerResponse.createBySuccess("删除成功");
     }
 
 

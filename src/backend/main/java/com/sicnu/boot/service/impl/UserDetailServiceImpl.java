@@ -2,6 +2,7 @@ package com.sicnu.boot.service.impl;
 
 import com.sicnu.boot.mapper.MenuMapper;
 import com.sicnu.boot.mapper.UserMapper;
+import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.pojo.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,9 +26,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Resource
     private UserMapper userMapper;
 
-    @Resource
-    private MenuMapper menuMapper;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //查询用户信息
@@ -37,7 +35,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new RuntimeException("用户名或密码错误");
         }
         //TODO 查询对应的权限
+        List<Menu> menus = userMapper.getUserMenu(user.getUserId());
         List<String> list = new ArrayList<>();
+        for (Menu menu : menus) {
+            if (!Objects.isNull(menu.getPerms())){
+                list.add(menu.getPerms());
+            }
+        }
         //把数据封装成UserDetail对象
         return new LoginUser(user,list);
     }

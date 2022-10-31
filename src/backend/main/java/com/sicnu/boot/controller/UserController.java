@@ -9,6 +9,7 @@ import com.sicnu.boot.service.UserService;
 import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +47,7 @@ public class UserController {
      * Date:  2022/9/28 22:08
      */
     @GetMapping("/hello")
+    @PreAuthorize("hasAuthority('system:user:add')")
     public String hello(){
         return "hello";
     }
@@ -76,7 +78,7 @@ public class UserController {
     }
 
     /**
-     * description: 注册接口，需要用户名，密码，手机号，和手机号验证码
+     * description: 注册接口，需要用户名，密码，手机号，和手机号验证码,uuid
      *
      * @param user:
      * @return ServerResponse<String>

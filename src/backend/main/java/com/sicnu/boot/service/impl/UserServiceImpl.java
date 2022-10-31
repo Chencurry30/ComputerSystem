@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.utils.*;
 import com.sicnu.boot.vo.LoginUser;
@@ -17,9 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,14 +47,13 @@ public class UserServiceImpl implements UserService {
     @Resource
     private ISmsService smsService;
 
+    @Resource
+    private TreeUtils treeUtils;
+
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d).{6,12}$");
 
     @Override
     public ServerResponse<Map<String,Object>> login(User user) {
-        if (StringUtils.isBlank(user.getUuId())){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
-                    , "参数非法");
-        }
         //TODO 为了测试方便，暂时前后端不对密码进行加密，项目交付或项目答辩或最终测试时会还原。
         if(false){
             //从redis中获取私钥
@@ -84,17 +82,25 @@ public class UserServiceImpl implements UserService {
         map.put("token",jwt);
         //返回用户部分信息
         UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname()
-                ,loginUser.getUser().getImage(),loginUser.getUser().getRole());
+                ,loginUser.getUser().getImage());
         map.put("user",userDetail);
+        //返回用户权限树
+        List<Menu> menus = userMapper.getUserMenu(loginUser.getUser().getUserId());
+        List<Menu> menuTree = new ArrayList<>();
+        menus.forEach(menu -> {
+            // 判断是否为顶层节点
+            if (menu.getLevel() == 1) {
+                // 获取子节点
+                menu.setChildren(treeUtils.getChildTree(menu.getMenuId(), menus));
+                menuTree.add(menu);
+            }
+        });
+        map.put("menuList",menuTree);
         return ServerResponse.createBySuccess("登录成功",map);
     }
 
     @Override
     public ServerResponse<String> register(User user) {
-        if (StringUtils.isBlank(user.getUuId())){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
-                    , "参数非法");
-        }
         //从redis中获取私钥
         String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
         if (StringUtils.isBlank(privateKey)){
@@ -176,10 +182,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServerResponse<String> forgetPassword(User user) {
-        if (StringUtils.isBlank(user.getUuId())){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
-                    , "参数非法");
-        }
         //从redis中获取私钥
         String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
         if (StringUtils.isBlank(privateKey)){
@@ -257,10 +259,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServerResponse<String> updatePassword(UpdateUser updateUser) {
-        if (StringUtils.isBlank(updateUser.getUuId())){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
-                    , "参数非法");
-        }
         //从redis中获取私钥
         String privateKey = redisUtils.getCacheObject(updateUser.getUuId() + ":privateKey");
         if (StringUtils.isBlank(privateKey)){
@@ -329,7 +327,7 @@ public class UserServiceImpl implements UserService {
             String publicKey = RSAUtils.getPublicKey(map);
             String privateKey = RSAUtils.getPrivateKey(map);
             //将私钥存储到Redis,时限为5分钟
-            redisUtils.setCacheObject(uuId + ":privateKey",privateKey,5,TimeUnit.MINUTES);
+            redisUtils.setCacheObject(uuId + ":privateKey",privateKey,1,TimeUnit.MINUTES);
             //返回公钥
             return ServerResponse.createBySuccess("返回成功",publicKey);
         } catch (Exception e) {

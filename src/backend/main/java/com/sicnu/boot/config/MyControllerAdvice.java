@@ -3,12 +3,14 @@ package com.sicnu.boot.config;
 
 import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
  * Data:    2022/09/17 17:16
  */
 @RestControllerAdvice
+@Slf4j
 public class MyControllerAdvice {
     @ExceptionHandler(value = {BindException.class, ValidationException.class, MethodArgumentNotValidException.class})
     public ServerResponse<String> handleValidatedException(Exception e) {
@@ -49,6 +52,18 @@ public class MyControllerAdvice {
         }
 
         return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), collect);
+    }
+
+    /**
+     * 处理AccessDeniedException无权限异常
+     * @param e :
+     * @return :
+     */
+    @ExceptionHandler(value = AccessDeniedException.class)
+    @ResponseBody
+    public ServerResponse<String> exceptionHandler(AccessDeniedException e){
+        log.error("不允许访问！原因是:" + e.getMessage());
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.FORBIDDEN.getCode(), "权限不足");
     }
 
     /**

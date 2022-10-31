@@ -19,6 +19,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDetail {
+    private Integer userId;
     private String username;
     @Length(min = 2,max = 12,message = "昵称长度必须为2-12")
     @Pattern(regexp = "^[\\u4e00-\\u9fa5a-zA-Z0-9]{2,12}$",
@@ -31,6 +32,7 @@ public class UserDetail {
     @Length(min = 11, max = 11, message = "手机号只能为11位")
     @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式有误")
     private String phone;
+    private String password;
     @Email(message = "邮箱格式不规范")
     private String email;
     private String image;
@@ -42,11 +44,9 @@ public class UserDetail {
     @Range(min = 0,max = 1,message = "isHide必须为0-1")
     private Integer isHide;
     private String message;
-    private Integer role;
-    public UserDetail(String nickname,String image,Integer role){
+    public UserDetail(String nickname,String image){
         this.nickname = nickname;
         this.image = image;
-        this.role = role;
     }
 
     public UserDetail(User user){
