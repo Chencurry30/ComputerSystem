@@ -16,7 +16,7 @@
         select user_id,username,nickname,email,sex,phone,age,message from user
         <where>
             <if test="nickname != null and nickname !=''">
-                nickname = "%" #{nickname} "%"
+                nickname like "%" #{nickname} "%"
             </if>
         </where>
         order by user_id
@@ -31,6 +31,9 @@
         from menu m left join role_menu rm on m.menu_id = rm.menu_id
                     left join user_role u on rm.role_id = u.role_id
         where user_id in (select user_id from user where username = #{username}) and m.path = '/admin'
+    </select>
+    <select id="getRoleListByUserId" resultType="com.sicnu.boot.pojo.Role">
+        select * from role where role_id in (select role_id from user_role where user_id = #{userId})
     </select>
 
     <delete id="deleteUserByUserId">

@@ -1,13 +1,16 @@
 package com.sicnu.boot.controller;
 
+import com.sicnu.boot.group.Update;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.service.RoleService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.RoleVo;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -17,6 +20,7 @@ import java.util.List;
  * Data:    2022/10/27 19:32
  */
 @RestController
+@Validated
 @RequestMapping("/admin/roles")
 public class RoleController {
     @Resource
@@ -31,7 +35,8 @@ public class RoleController {
      * Date:  2022/10/30 9:36
      */
     @GetMapping("/{roleId}")
-    ServerResponse<List<Menu>> getMenuListByRoleId(@PathVariable Integer roleId){
+    ServerResponse<List<Menu>> getMenuListByRoleId(@Min(value = 1,message = "roleId最小值为1")
+                                                   @PathVariable Integer roleId){
         return roleService.getMenuListByRoleId(roleId);
     }
 
@@ -56,7 +61,7 @@ public class RoleController {
      * Date:  2022/10/30 9:36
      */
     @PutMapping
-    ServerResponse<String> updateRoleMenu(@RequestBody RoleVo roleVo){
+    ServerResponse<String> updateRoleMenu(@Validated(Update.class) @RequestBody RoleVo roleVo){
         return roleService.updateRoleMenu(roleVo);
     }
 
@@ -69,7 +74,7 @@ public class RoleController {
      * Date:  2022/10/30 9:37
      */
     @PostMapping()
-    ServerResponse<String> addRole(@RequestBody Role role){
+    ServerResponse<String> addRole(@Validated @RequestBody Role role){
         return roleService.addRole(role);
     }
 
@@ -82,7 +87,8 @@ public class RoleController {
      * Date:  2022/10/30 9:37
      */
     @DeleteMapping("/{roleId}")
-    ServerResponse<String> deleteRoleByRoleId(@PathVariable("roleId") Integer roleId){
+    ServerResponse<String> deleteRoleByRoleId(@Min(value = 4,message = "角色id最小值为4")
+                                              @PathVariable("roleId") Integer roleId){
 
         return roleService.deleteRoleByRoleId(roleId);
     }

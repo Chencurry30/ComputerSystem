@@ -35,7 +35,7 @@ public class VideoServiceImpl implements VideoService {
         videoSelective.setDurationValue(VideoUtils.getDurationById(videoSelective.getDurationId()));
         videoSelective.setSortName(VideoUtils.getSortById(videoSelective.getSortId()));
         //获取分页信息
-        PageHelper.startPage(videoSelective.getPageNum(), 6);
+        PageHelper.startPage(videoSelective.getPageNum(), 12);
         List<Video> list = videoMapper.getVideoListBySelective(videoSelective);
         for (Video video : list) {
             //查询作者昵称

@@ -1,5 +1,6 @@
 package com.sicnu.boot.mapper;
 
+import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.vo.UserDetail;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -78,4 +79,14 @@ public interface UserManageMapper {
      * Date:  2022/10/30 10:39
      */
     void insertUserRole(Integer userId);
+
+    /**
+     * description: 通过用户id获取其角色列表
+     *
+     * @param userId:
+     * @return List<Role>
+     * @author 胡建华
+     * Date:  2022/10/31 19:02
+     */
+    List<Role> getRoleListByUserId(Integer userId);
 }

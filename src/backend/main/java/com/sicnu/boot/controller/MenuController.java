@@ -1,11 +1,14 @@
 package com.sicnu.boot.controller;
 
+import com.sicnu.boot.group.Update;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.service.MenuService;
 import com.sicnu.boot.utils.ServerResponse;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -14,6 +17,7 @@ import java.util.List;
  * @author :  胡建华
  * Data:    2022/10/27 9:48
  */
+@Validated
 @RestController
 @RequestMapping("/admin/menus")
 public class MenuController {
@@ -40,7 +44,7 @@ public class MenuController {
      * Date:  2022/10/29 15:06
      */
     @PostMapping("/one")
-    ServerResponse<String> insertOneMenu(Menu menu){
+    ServerResponse<String> insertOneMenu(@Validated Menu menu){
         return menuService.insertOneMenu(menu);
     }
 
@@ -52,7 +56,7 @@ public class MenuController {
      * Date:  2022/10/29 15:06
      */
     @PostMapping("/children")
-    ServerResponse<String> insertChildrenMenu(Menu menu){
+    ServerResponse<String> insertChildrenMenu(@Validated Menu menu){
         return menuService.insertChildrenMenu(menu);
     }
 
@@ -65,7 +69,7 @@ public class MenuController {
      * Date:  2022/10/29 15:25
      */
     @PutMapping
-    ServerResponse<String> updateMenu(Menu menu){
+    ServerResponse<String> updateMenu(@Validated(Update.class) Menu menu){
         return menuService.updateMenu(menu);
     }
 
@@ -78,7 +82,8 @@ public class MenuController {
      * Date:  2022/10/29 15:32
      */
     @DeleteMapping("/{menuId}")
-    ServerResponse<String> deleteMenuByMenuId(@PathVariable Integer menuId){
+    ServerResponse<String> deleteMenuByMenuId(@Min(value = 0,message = "id的最小值为1")
+                                              @PathVariable Integer menuId){
         return menuService.deleteMenuByMenuId(menuId);
     }
 }

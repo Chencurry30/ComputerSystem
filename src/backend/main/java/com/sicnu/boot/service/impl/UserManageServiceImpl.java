@@ -3,6 +3,8 @@ package com.sicnu.boot.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.UserManageMapper;
+import com.sicnu.boot.mapper.UserMapper;
+import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserManageService;
 import com.sicnu.boot.service.UserService;
@@ -34,6 +36,9 @@ public class UserManageServiceImpl implements UserManageService {
     private PasswordEncoder passwordEncoder;
 
     @Resource
+    private UserMapper userMapper;
+
+    @Resource
     private UserManageMapper userManageMapper;
 
     @Override
@@ -52,6 +57,10 @@ public class UserManageServiceImpl implements UserManageService {
     public ServerResponse<PageInfo<UserDetail>> getUserList(String nickname, Integer pageNum) {
         PageHelper.startPage(pageNum,6);
         List<UserDetail> list = userManageMapper.getUserList(nickname);
+        for (UserDetail userDetail : list) {
+            List<Role> roleList = userManageMapper.getRoleListByUserId(userDetail.getUserId());
+            userDetail.setRoles(roleList);
+        }
         PageInfo<UserDetail> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
@@ -75,6 +84,12 @@ public class UserManageServiceImpl implements UserManageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServerResponse<String> insertUser(UserDetail userDetail) {
+        //查看是否存在改用户名
+        Integer checkUsername = userMapper.checkUsername(userDetail.getUsername());
+        if (checkUsername > 0){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_REPEAT.getCode(),
+                    "用户名重复，请重新添加");
+        }
         //插入用户,默认密码为123456
         String password = "123456";
         userDetail.setPassword(passwordEncoder.encode(password));

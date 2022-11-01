@@ -1,7 +1,6 @@
 package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.User;
-import com.sicnu.boot.vo.UserDetail;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,11 +36,7 @@ public class UserMapperTest {
 
     @Test
     void testUpdateUser(){
-        UserDetail userDetail = new UserDetail(null,"大海",18,
-                null,null,"","女",null,0,"",1);
-        User user = new User(3,userDetail);
-        Integer integer = userMapper.updateUser(user);
-        System.out.println(integer);
+
     }
 
     @Test

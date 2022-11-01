@@ -1,14 +1,17 @@
 package com.sicnu.boot.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.group.Insert;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserManageService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.UserDetail;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.Map;
 
 /**
@@ -19,6 +22,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin/users")
+@Validated
 public class UserManageController {
     @Resource
     private UserManageService userManageService;
@@ -46,7 +50,8 @@ public class UserManageController {
      * Date:  2022/10/30 9:48
      */
     @GetMapping("/pages/{pageNum}")
-    ServerResponse<PageInfo<UserDetail>> getUserList(String nickname, @PathVariable Integer pageNum){
+    ServerResponse<PageInfo<UserDetail>> getUserList(@Length(max = 10,message = "昵称最长为10") String nickname,
+                   @Min (value = 1,message = "分页数最小为1")@PathVariable Integer pageNum){
         return userManageService.getUserList(nickname,pageNum);
     }
 
@@ -59,12 +64,13 @@ public class UserManageController {
      * Date:  2022/10/30 9:48
      */
     @GetMapping("/{userId}")
-    ServerResponse<UserDetail> getUserByUserId(@PathVariable Integer userId){
+    ServerResponse<UserDetail> getUserByUserId(@Min(value = 1,message = "userId最小为1")
+                                               @PathVariable Integer userId){
         return userManageService.getUserByUserId(userId);
     }
 
     /**
-     * description: 通过用户id，删除用户信息及其对应的信息
+     * description: 通过用户id，删除用户信息及其对应的角色
      *
      * @param userId:
      * @return ServerResponse
@@ -72,7 +78,8 @@ public class UserManageController {
      * Date:  2022/10/30 9:50
      */
     @DeleteMapping("/{userId}")
-    ServerResponse<String> deleteUserByUserId(@PathVariable Integer userId){
+    ServerResponse<String> deleteUserByUserId(@Min(value = 1,message = "userId最小为1")
+                                              @PathVariable Integer userId){
         return userManageService.deleteUserByUserId(userId);
     }
 
@@ -85,7 +92,7 @@ public class UserManageController {
      * Date:  2022/10/30 9:51
      */
     @PostMapping()
-    ServerResponse<String> insertUser(UserDetail userDetail){
+    ServerResponse<String> insertUser(@Validated(Insert.class) @RequestBody UserDetail userDetail){
         return userManageService.insertUser(userDetail);
     }
 

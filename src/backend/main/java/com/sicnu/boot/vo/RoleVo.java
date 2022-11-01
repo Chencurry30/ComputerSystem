@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleVo {
+    @Min(value = 1,message = "roleId最小值为1")
     private Integer roleId;
     private List<Menu> menuList;
 }
