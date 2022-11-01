@@ -18,10 +18,13 @@ public class College {
     private Integer collegeId;
     private String name;
     private String address;
+    private Integer typeId;
     private String type;
+    private Integer regionId;
     private String region;
     private String phone;
     private Integer rank;
+    private Integer attributeId;
     private String attribute;
     private String disDevelop;
 }

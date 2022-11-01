@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import detailsPopup from '../popUp/detailsPopup.vue';
+import detailsPopup from '../popUp/detailsPopup';
 export default {
   components: { detailsPopup },
   name: "replyItem",
