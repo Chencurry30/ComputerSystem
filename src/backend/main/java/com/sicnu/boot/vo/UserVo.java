@@ -1,6 +1,7 @@
 package com.sicnu.boot.vo;
 
-import com.sicnu.boot.pojo.Menu;
+
+import com.sicnu.boot.pojo.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,14 +14,14 @@ import java.util.List;
  * description:
  *
  * @author :  胡建华
- * Data:    2022/10/27 21:16
+ * Data:    2022/11/01 18:55
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleVo {
-    @Min(value = 1,message = "roleId最小值为1")
-    private Integer roleId;
+public class UserVo {
+    @Min(value = 1,message = "userId最小值为1")
+    private Integer userId;
     @Valid
-    private List<Menu> menuList;
+    private List<Role> roleList;
 }

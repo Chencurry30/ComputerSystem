@@ -1,10 +1,13 @@
 package com.sicnu.boot.service;
 
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.UserDetail;
+import com.sicnu.boot.vo.UserVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,7 +68,33 @@ public interface UserManageService {
      */
     ServerResponse<String> insertUser(UserDetail userDetail);
 
+    /**
+     * description: 更新用户角色
+     *
+     * @param userVo:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/1 19:14
+     */
+    ServerResponse<String> updateUserRole(UserVo userVo);
 
+    /**
+     * description: 更新用户信息
+     *
+     * @param userDetail:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/1 19:56
+     */
+    ServerResponse<String> updateUser(UserDetail userDetail);
 
-
+    /**
+     * description: 通过用户id，获取角色列表
+     *
+     * @param userId:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/1 21:21
+     */
+    ServerResponse<List<Role>> getUserRoleByUserId(Integer userId);
 }

@@ -72,13 +72,14 @@ public interface UserManageMapper {
     void deleteUserRole(Integer userId);
 
     /**
-     * description: 插入用户角色，默认为student
+     * description: 插入用户角色
      *
      * @param userId:
+     * @param roleId:
      * @author 胡建华
      * Date:  2022/10/30 10:39
      */
-    void insertUserRole(Integer userId);
+    void insertUserRole(Integer userId,Integer roleId);
 
     /**
      * description: 通过用户id获取其角色列表
@@ -89,4 +90,15 @@ public interface UserManageMapper {
      * Date:  2022/10/31 19:02
      */
     List<Role> getRoleListByUserId(Integer userId);
+
+    /**
+     * description: 更新用户信息
+     *
+     * @param userDetail:
+     * @author 胡建华
+     * Date:  2022/11/1 20:01
+     */
+    void updateUser(UserDetail userDetail);
+
+
 }

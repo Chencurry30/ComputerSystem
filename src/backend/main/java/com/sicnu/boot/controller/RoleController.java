@@ -1,5 +1,6 @@
 package com.sicnu.boot.controller;
 
+import com.sicnu.boot.group.Insert;
 import com.sicnu.boot.group.Update;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.pojo.Role;
@@ -34,7 +35,7 @@ public class RoleController {
      * @author 胡建华
      * Date:  2022/10/30 9:36
      */
-    @GetMapping("/{roleId}")
+    @GetMapping("/menu/{roleId}")
     ServerResponse<List<Menu>> getMenuListByRoleId(@Min(value = 1,message = "roleId最小值为1")
                                                    @PathVariable Integer roleId){
         return roleService.getMenuListByRoleId(roleId);
@@ -60,8 +61,8 @@ public class RoleController {
      * @author 胡建华
      * Date:  2022/10/30 9:36
      */
-    @PutMapping
-    ServerResponse<String> updateRoleMenu(@Validated(Update.class) @RequestBody RoleVo roleVo){
+    @PutMapping("/menu")
+    ServerResponse<String> updateRoleMenu(@Validated @RequestBody RoleVo roleVo){
         return roleService.updateRoleMenu(roleVo);
     }
 
@@ -74,7 +75,7 @@ public class RoleController {
      * Date:  2022/10/30 9:37
      */
     @PostMapping()
-    ServerResponse<String> addRole(@Validated @RequestBody Role role){
+    ServerResponse<String> addRole(@Validated(Insert.class) @RequestBody Role role){
         return roleService.addRole(role);
     }
 
@@ -89,7 +90,19 @@ public class RoleController {
     @DeleteMapping("/{roleId}")
     ServerResponse<String> deleteRoleByRoleId(@Min(value = 4,message = "角色id最小值为4")
                                               @PathVariable("roleId") Integer roleId){
-
         return roleService.deleteRoleByRoleId(roleId);
+    }
+
+    /**
+     * description: 更新角色信息
+     *
+     * @param role:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/1 19:01
+     */
+    @PutMapping()
+    ServerResponse<String> updateRole(@Validated(Update.class) @RequestBody Role role){
+        return roleService.updateRole(role);
     }
 }

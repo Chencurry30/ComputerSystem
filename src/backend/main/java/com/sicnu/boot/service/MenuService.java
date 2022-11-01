@@ -2,7 +2,6 @@ package com.sicnu.boot.service;
 
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.utils.ServerResponse;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -61,4 +60,14 @@ public interface MenuService {
      * Date:  2022/10/29 15:32
      */
     ServerResponse<String> deleteMenuByMenuId(Integer menuId);
+
+    /**
+     * description: 通过id获取权限
+     *
+     * @param menuId:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/1 22:59
+     */
+    ServerResponse<Menu> getMenuByMenuId(Integer menuId);
 }

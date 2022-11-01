@@ -68,5 +68,23 @@ public interface MenuMapper {
      */
     int checkMenuByMenuId(Integer menuId);
 
+    /**
+     * description: 通过menuId，删除角色权限的关联
+     *
+     * @param menuId:
+     * @author 胡建华
+     * Date:  2022/11/1 20:38
+     */
+    void deleteRoleMenuByMenuId(Integer menuId);
+
+    /**
+     * description: 通过id获取权限
+     *
+     * @param menuId:
+     * @return Menu
+     * @author 胡建华
+     * Date:  2022/11/1 23:00
+     */
+    Menu getMenuByMenuId(Integer menuId);
 
 }

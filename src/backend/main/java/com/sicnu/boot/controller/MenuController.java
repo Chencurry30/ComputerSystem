@@ -1,5 +1,6 @@
 package com.sicnu.boot.controller;
 
+import com.sicnu.boot.group.Insert;
 import com.sicnu.boot.group.Update;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.service.MenuService;
@@ -44,7 +45,8 @@ public class MenuController {
      * Date:  2022/10/29 15:06
      */
     @PostMapping("/one")
-    ServerResponse<String> insertOneMenu(@Validated Menu menu){
+    ServerResponse<String> insertOneMenu(@Validated(Insert.class)
+                                         @RequestBody Menu menu){
         return menuService.insertOneMenu(menu);
     }
 
@@ -56,7 +58,8 @@ public class MenuController {
      * Date:  2022/10/29 15:06
      */
     @PostMapping("/children")
-    ServerResponse<String> insertChildrenMenu(@Validated Menu menu){
+    ServerResponse<String> insertChildrenMenu(@Validated(Insert.class)
+                                              @RequestBody Menu menu){
         return menuService.insertChildrenMenu(menu);
     }
 
@@ -69,7 +72,8 @@ public class MenuController {
      * Date:  2022/10/29 15:25
      */
     @PutMapping
-    ServerResponse<String> updateMenu(@Validated(Update.class) Menu menu){
+    ServerResponse<String> updateMenu(@Validated(Update.class)
+                                      @RequestBody Menu menu){
         return menuService.updateMenu(menu);
     }
 
@@ -85,5 +89,11 @@ public class MenuController {
     ServerResponse<String> deleteMenuByMenuId(@Min(value = 0,message = "id的最小值为1")
                                               @PathVariable Integer menuId){
         return menuService.deleteMenuByMenuId(menuId);
+    }
+
+    @GetMapping("/{menuId}")
+    ServerResponse<Menu> getMenuByMenuId(@Min(value = 0,message = "id的最小值为1")
+                                   @PathVariable Integer menuId){
+        return menuService.getMenuByMenuId(menuId);
     }
 }

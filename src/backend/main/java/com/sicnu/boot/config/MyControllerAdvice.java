@@ -16,6 +16,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -50,7 +51,15 @@ public class MyControllerAdvice {
                     .map(ObjectError::getDefaultMessage)
                     .collect(Collectors.joining("; "));
             for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-                data.put(fieldError.getObjectName() + "." + fieldError.getField(), fieldError.getDefaultMessage());
+                String key = fieldError.getObjectName() + "." + fieldError.getField();
+                if (Objects.isNull(data.get(key))){
+                    data.put(key, fieldError.getDefaultMessage());
+                }
+                else {
+                    String values = data.get(key);
+                    values = values + ";" + fieldError.getDefaultMessage();
+                    data.put(key,values);
+                }
             }
         } else if (e instanceof ConstraintViolationException) {
             // BeanValidation GET simple param
@@ -60,9 +69,15 @@ public class MyControllerAdvice {
                     .collect(Collectors.joining("; "));
             System.out.println(ex.getConstraintViolations());
             for (ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
-                System.out.println(constraintViolation.getMessageTemplate());
-                System.out.println(constraintViolation.getPropertyPath());
-                data.put(constraintViolation.getPropertyPath().toString(),constraintViolation.getMessageTemplate());
+                String key = constraintViolation.getPropertyPath().toString();
+                if (Objects.isNull(data.get(key))){
+                    data.put(key,constraintViolation.getMessageTemplate());
+                }
+                else {
+                    String value = data.get(key);
+                    value = value + ";" + constraintViolation.getMessageTemplate();
+                    data.put(key,value);
+                }
             }
 
         } else if (e instanceof BindException) {
@@ -73,7 +88,15 @@ public class MyControllerAdvice {
                     .collect(Collectors.joining("; "));
             for (ObjectError allError : ex.getBindingResult().getAllErrors()) {
                 FieldError fieldError = (FieldError)allError;
-                data.put(fieldError.getObjectName() + "." + fieldError.getField(), fieldError.getDefaultMessage());
+                String key = fieldError.getObjectName() + "." + fieldError.getField();
+                if (Objects.isNull(data.get(key))){
+                    data.put(key, fieldError.getDefaultMessage());
+                }
+                else {
+                    String values = data.get(key);
+                    values = values + ";" + fieldError.getDefaultMessage();
+                    data.put(key,values);
+                }
             }
         }
         System.out.println(data);

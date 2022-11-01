@@ -2,16 +2,20 @@ package com.sicnu.boot.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.group.Insert;
+import com.sicnu.boot.group.Update;
+import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserManageService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.UserDetail;
+import com.sicnu.boot.vo.UserVo;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,5 +100,44 @@ public class UserManageController {
         return userManageService.insertUser(userDetail);
     }
 
+    /**
+     * description: 更新用户角色
+     *
+     * @param userVo:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/1 18:59
+     */
+    @PutMapping("/role")
+    ServerResponse<String> updateUserRole(@Validated @RequestBody UserVo userVo){
+        return userManageService.updateUserRole(userVo);
+    }
+
+    /**
+     * description: 更新用户信息
+     *
+     * @param userDetail:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/1 19:00
+     */
+    @PutMapping()
+    ServerResponse<String> updateUser(@Validated(Update.class) @RequestBody UserDetail userDetail){
+        return userManageService.updateUser(userDetail);
+    }
+
+    /**
+     * description: 获取用户所有角色
+     *
+     * @param userId:
+     * @return ServerResponse<List<Role>>
+     * @author 胡建华
+     * Date:  2022/11/1 21:51
+     */
+    @GetMapping("/role/{userId}")
+    ServerResponse<List<Role>> getUserRoleByUserId(@Min(value = 1,message = "userId最小为1")
+                                       @PathVariable Integer userId){
+        return userManageService.getUserRoleByUserId(userId);
+    }
 
 }

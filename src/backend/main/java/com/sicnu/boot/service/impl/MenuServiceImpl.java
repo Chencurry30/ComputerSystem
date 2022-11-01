@@ -61,8 +61,17 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public ServerResponse<String> deleteMenuByMenuId(Integer menuId) {
+        //删除权限对应的角色
+        menuMapper.deleteRoleMenuByMenuId(menuId);
+        //删除权限
         menuMapper.deleteMenuByMenuId(menuId);
         return ServerResponse.createBySuccess("删除成功");
+    }
+
+    @Override
+    public ServerResponse<Menu> getMenuByMenuId(Integer menuId) {
+        Menu menu = menuMapper.getMenuByMenuId(menuId);
+        return ServerResponse.createBySuccess("获取成功",menu);
     }
 
 

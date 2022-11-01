@@ -10,22 +10,29 @@
     <select id="checkMenuByMenuId" resultType="java.lang.Integer">
         select count(*) from menu where menu_id = #{menuId}
     </select>
+    <select id="getMenuByMenuId" resultType="com.sicnu.boot.pojo.Menu">
+        select * from menu where menu_id = #{menuId}
+    </select>
 
     <insert id="insertOneMenu" parameterType="Menu">
-        insert into menu values(null,#{path},#{name},#{component},null,1,1)
+        insert into menu values(null,#{path},#{name},#{component},null,1,1,null)
     </insert>
 
     <insert id="insertChildrenMenu" parameterType="Menu">
-        insert into menu values(null,#{path},#{name},#{component},#{parentId},#{menuType},#{level})
+        insert into menu values(null,#{path},#{name},#{component},#{parentId},#{menuType},#{level},#{perms})
     </insert>
 
     <update id="updateMenu" parameterType="Menu">
-        update menu set path = #{path} and component = #{component} and name = #{name}
+        update menu set path = #{path},component = #{component},name = #{name}
             where menu_id = #{menuId}
     </update>
 
     <delete id="deleteMenuByMenuId">
         delete from menu where menu_id = #{menuId}
+    </delete>
+
+    <delete id="deleteRoleMenuByMenuId">
+        delete from role_menu where menu_id = #{menuId}
     </delete>
 
 </mapper>

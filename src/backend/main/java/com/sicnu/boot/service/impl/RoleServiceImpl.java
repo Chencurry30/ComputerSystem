@@ -79,9 +79,17 @@ public class RoleServiceImpl implements RoleService {
     public ServerResponse<String> deleteRoleByRoleId(Integer roleId) {
         //删除该角色的所有权限
         roleMapper.deleteRoleMenuByRoleId(roleId);
+        //删除该角色的所有用户
+        roleMapper.deleteUserRoleByRoleId(roleId);
         //删除该角色
         roleMapper.deleteRoleByRoleId(roleId);
         return ServerResponse.createBySuccess("删除成功");
+    }
+
+    @Override
+    public ServerResponse<String> updateRole(Role role) {
+        roleMapper.updateRole(role);
+        return ServerResponse.createBySuccess("更新成功");
     }
 
 

@@ -61,4 +61,14 @@ public interface RoleService {
      * Date:  2022/10/29 15:53
      */
     ServerResponse<String> deleteRoleByRoleId(Integer roleId);
+
+    /**
+     * description: 更新角色信息
+     *
+     * @param role:
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/11/1 20:20
+     */
+    ServerResponse<String> updateRole(Role role);
 }

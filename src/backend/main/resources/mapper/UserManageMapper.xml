@@ -10,8 +10,11 @@
             values (null,#{username},#{password},#{email},#{age},#{sex})
     </insert>
     <insert id="insertUserRole">
-        insert into user_role select #{userId},role_id from role where role_key = 'student'
+        insert into user_role values(#{userId},#{roleId})
     </insert>
+    <update id="updateUser" parameterType="com.sicnu.boot.vo.UserDetail">
+        update user set age = #{age}, email = #{email},sex = #{sex} where user_id = #{userId}
+    </update>
     <select id="getUserList" resultType="com.sicnu.boot.vo.UserDetail">
         select user_id,username,nickname,email,sex,phone,age,message from user
         <where>

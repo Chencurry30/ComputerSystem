@@ -89,5 +89,24 @@ public interface RoleMapper {
      */
     void insertRoleMenu(Integer roleId,Integer menuId);
 
+    /**
+     * description: 通过roleKey查找角色id
+     *
+     * @param roleKey:
+     * @return int
+     * @author 胡建华
+     * Date:  2022/11/1 19:41
+     */
+    int selectRoleIdByRoleKey(String roleKey);
+
+    /**
+     * description: 通过角色id，删除用户角色关联
+     *
+     * @param roleId:
+     * @author 胡建华
+     * Date:  2022/11/1 20:33
+     */
+    void deleteUserRoleByRoleId(Integer roleId);
+
 
 }
