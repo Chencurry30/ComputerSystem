@@ -27,4 +27,6 @@ public class College {
     private Integer attributeId;
     private String attribute;
     private String disDevelop;
+    private Integer subjectionId;
+    private String subjection;
 }
