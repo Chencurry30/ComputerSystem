@@ -96,6 +96,9 @@ public class UserServiceImpl implements UserService {
             }
         });
         map.put("menuList",menuTree);
+        //返回用户权限操作按钮
+        menus.removeIf(next -> next.getMenuType() == 1);
+        map.put("rights",menus);
         return ServerResponse.createBySuccess("登录成功",map);
     }
 

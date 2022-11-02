@@ -10,6 +10,7 @@ import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.UserDetail;
 import com.sicnu.boot.vo.UserVo;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -54,6 +55,7 @@ public class UserManageController {
      * Date:  2022/10/30 9:48
      */
     @GetMapping("/pages/{pageNum}")
+    @PreAuthorize("hasAuthority('system:role:view')")
     ServerResponse<PageInfo<UserDetail>> getUserList(@Length(max = 10,message = "昵称最长为10") String nickname,
                    @Min (value = 1,message = "分页数最小为1")@PathVariable Integer pageNum){
         return userManageService.getUserList(nickname,pageNum);
@@ -68,6 +70,7 @@ public class UserManageController {
      * Date:  2022/10/30 9:48
      */
     @GetMapping("/{userId}")
+    @PreAuthorize("hasAuthority('system:role:view')")
     ServerResponse<UserDetail> getUserByUserId(@Min(value = 1,message = "userId最小为1")
                                                @PathVariable Integer userId){
         return userManageService.getUserByUserId(userId);
@@ -82,6 +85,7 @@ public class UserManageController {
      * Date:  2022/10/30 9:50
      */
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasAuthority('system:user:delete')")
     ServerResponse<String> deleteUserByUserId(@Min(value = 1,message = "userId最小为1")
                                               @PathVariable Integer userId){
         return userManageService.deleteUserByUserId(userId);
@@ -96,6 +100,7 @@ public class UserManageController {
      * Date:  2022/10/30 9:51
      */
     @PostMapping()
+    @PreAuthorize("hasAuthority('system:user:add')")
     ServerResponse<String> insertUser(@Validated(Insert.class) @RequestBody UserDetail userDetail){
         return userManageService.insertUser(userDetail);
     }
@@ -109,6 +114,7 @@ public class UserManageController {
      * Date:  2022/11/1 18:59
      */
     @PutMapping("/role")
+    @PreAuthorize("hasAuthority('system:user:update')")
     ServerResponse<String> updateUserRole(@Validated @RequestBody UserVo userVo){
         return userManageService.updateUserRole(userVo);
     }
@@ -122,6 +128,7 @@ public class UserManageController {
      * Date:  2022/11/1 19:00
      */
     @PutMapping()
+    @PreAuthorize("hasAuthority('system:user:update')")
     ServerResponse<String> updateUser(@Validated(Update.class) @RequestBody UserDetail userDetail){
         return userManageService.updateUser(userDetail);
     }
@@ -135,6 +142,7 @@ public class UserManageController {
      * Date:  2022/11/1 21:51
      */
     @GetMapping("/role/{userId}")
+    @PreAuthorize("hasAuthority('system:role:view')")
     ServerResponse<List<Role>> getUserRoleByUserId(@Min(value = 1,message = "userId最小为1")
                                        @PathVariable Integer userId){
         return userManageService.getUserRoleByUserId(userId);
