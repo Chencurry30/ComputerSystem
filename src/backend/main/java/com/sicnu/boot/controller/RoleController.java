@@ -7,6 +7,7 @@ import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.service.RoleService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.RoleVo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class RoleController {
      * Date:  2022/10/30 9:36
      */
     @GetMapping("/menu/{roleId}")
+    @PreAuthorize("hasAuthority('system:role:view')")
     ServerResponse<List<Menu>> getMenuListByRoleId(@Min(value = 1,message = "roleId最小值为1")
                                                    @PathVariable Integer roleId){
         return roleService.getMenuListByRoleId(roleId);
@@ -49,6 +51,7 @@ public class RoleController {
      * Date:  2022/10/30 9:36
      */
     @GetMapping()
+    @PreAuthorize("hasAuthority('system:role:view')")
     ServerResponse<List<Role>> getRoleList(){
         return roleService.getRoleList();
     }
@@ -62,6 +65,7 @@ public class RoleController {
      * Date:  2022/10/30 9:36
      */
     @PutMapping("/menu")
+    @PreAuthorize("hasAuthority('system:role:getMenu')")
     ServerResponse<String> updateRoleMenu(@Validated @RequestBody RoleVo roleVo){
         return roleService.updateRoleMenu(roleVo);
     }
@@ -75,6 +79,7 @@ public class RoleController {
      * Date:  2022/10/30 9:37
      */
     @PostMapping()
+    @PreAuthorize("hasAuthority('system:role:add')")
     ServerResponse<String> addRole(@Validated(Insert.class) @RequestBody Role role){
         return roleService.addRole(role);
     }
@@ -88,6 +93,7 @@ public class RoleController {
      * Date:  2022/10/30 9:37
      */
     @DeleteMapping("/{roleId}")
+    @PreAuthorize("hasAuthority('system:role:delete')")
     ServerResponse<String> deleteRoleByRoleId(@Min(value = 4,message = "角色id最小值为4")
                                               @PathVariable("roleId") Integer roleId){
         return roleService.deleteRoleByRoleId(roleId);
@@ -102,6 +108,7 @@ public class RoleController {
      * Date:  2022/11/1 19:01
      */
     @PutMapping()
+    @PreAuthorize("hasAuthority('system:role:update')")
     ServerResponse<String> updateRole(@Validated(Update.class) @RequestBody Role role){
         return roleService.updateRole(role);
     }

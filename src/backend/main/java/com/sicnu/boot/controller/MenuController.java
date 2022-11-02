@@ -5,6 +5,7 @@ import com.sicnu.boot.group.Update;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.service.MenuService;
 import com.sicnu.boot.utils.ServerResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class MenuController {
      * Date:  2022/10/27 19:23
      */
     @GetMapping("/tree")
+    @PreAuthorize("hasAuthority('system:menu:view')")
     ServerResponse<List<Menu>> getMenuTree(){
         return menuService.getMenuTree();
     }
@@ -45,6 +47,7 @@ public class MenuController {
      * Date:  2022/10/29 15:06
      */
     @PostMapping("/one")
+    @PreAuthorize("hasAuthority('system:menu:insert')")
     ServerResponse<String> insertOneMenu(@Validated(Insert.class)
                                          @RequestBody Menu menu){
         return menuService.insertOneMenu(menu);
@@ -58,6 +61,7 @@ public class MenuController {
      * Date:  2022/10/29 15:06
      */
     @PostMapping("/children")
+    @PreAuthorize("hasAuthority('system:menu:insert')")
     ServerResponse<String> insertChildrenMenu(@Validated(Insert.class)
                                               @RequestBody Menu menu){
         return menuService.insertChildrenMenu(menu);
@@ -72,6 +76,7 @@ public class MenuController {
      * Date:  2022/10/29 15:25
      */
     @PutMapping
+    @PreAuthorize("hasAuthority('system:menu:update')")
     ServerResponse<String> updateMenu(@Validated(Update.class)
                                       @RequestBody Menu menu){
         return menuService.updateMenu(menu);
@@ -86,12 +91,22 @@ public class MenuController {
      * Date:  2022/10/29 15:32
      */
     @DeleteMapping("/{menuId}")
+    @PreAuthorize("hasAuthority('system:menu:delete')")
     ServerResponse<String> deleteMenuByMenuId(@Min(value = 0,message = "id的最小值为1")
                                               @PathVariable Integer menuId){
         return menuService.deleteMenuByMenuId(menuId);
     }
 
+    /**
+     * description: 通过id获取权限
+     *
+     * @param menuId:
+     * @return ServerResponse<Menu>
+     * @author 胡建华
+     * Date:  2022/11/2 15:32
+     */
     @GetMapping("/{menuId}")
+    @PreAuthorize("hasAuthority('system:menu:view')")
     ServerResponse<Menu> getMenuByMenuId(@Min(value = 0,message = "id的最小值为1")
                                    @PathVariable Integer menuId){
         return menuService.getMenuByMenuId(menuId);
