@@ -24,7 +24,7 @@
         select *from college_attribute
     </select>
     <select id="getCollegeListBySelective" resultType="College">
-        select college_id,name,address,type_id,type,region_id,region,phone,`rank`,attribute_id,attribute,dis_develop from college
+        select college_id,name,address,type_id,type,region_id,region,phone,`rank`,attribute_id,attribute,dis_develop,subjection_id,subjection from college
         <where>
             <if test="collegeName != null and collegeName != ''">
                 and name like "%"#{collegeName}"%"
