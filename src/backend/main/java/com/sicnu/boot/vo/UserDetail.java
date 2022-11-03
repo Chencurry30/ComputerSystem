@@ -57,6 +57,7 @@ public class UserDetail {
     private Integer isHide;
     private String message;
     private List<Role> roles;
+    private Role roleOne;
     public UserDetail(String nickname,String image){
         this.nickname = nickname;
         this.image = image;

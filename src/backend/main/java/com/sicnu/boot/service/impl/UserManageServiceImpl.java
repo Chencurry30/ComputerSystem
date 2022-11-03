@@ -66,6 +66,9 @@ public class UserManageServiceImpl implements UserManageService {
         for (UserDetail userDetail : list) {
             List<Role> roleList = userManageMapper.getRoleListByUserId(userDetail.getUserId());
             userDetail.setRoles(roleList);
+            if (!roleList.isEmpty()){
+                userDetail.setRoleOne(roleList.get(0));
+            }
         }
         PageInfo<UserDetail> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
