@@ -77,6 +77,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ServerResponse<String> deleteRoleByRoleId(Integer roleId) {
+        //查看是否有用户拥有改角色
+        int checkUserHasTheRole = roleMapper.checkUserHasTheRole(roleId);
+        if (checkUserHasTheRole > 0){
+            return ServerResponse.createByErrorMessage("无法删除该角色，该角色已经被分配给用户，请取消分配再删除");
+        }
         //删除该角色的所有权限
         roleMapper.deleteRoleMenuByRoleId(roleId);
         //删除该角色的所有用户

@@ -4,7 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sicnu.boot.mapper.CommentMapper">
+    <insert id="insertComment" parameterType="Comment">
+        insert into comment values(null,#{content},
+          #{createDate},#{resourceId},#{authorId},#{parentId},#{toUid},#{level},0)
+    </insert>
+    <update id="updateCommentLikeNumber">
+        update comment set like_number = like_number + 1 where comment_id = #{commentId}
+    </update>
     <select id="getCommentsById" resultType="Comment">
         select * from comment where resource_id = #{resourceId}
+    </select>
+    <select id="checkResource" resultType="java.lang.Integer">
+        select count(*) from resource where resource_id = #{resourceId}
+    </select>
+    <select id="checkParent" resultType="java.lang.Integer">
+        select count(*) from comment where comment_id = #{parentId}
     </select>
 </mapper>

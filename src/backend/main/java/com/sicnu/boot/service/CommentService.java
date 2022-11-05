@@ -1,5 +1,6 @@
 package com.sicnu.boot.service;
 
+import com.sicnu.boot.pojo.Comment;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.CommentVo;
 
@@ -21,4 +22,24 @@ public interface CommentService {
      * Date:  2022/10/19 20:38
      */
     ServerResponse<List<CommentVo>> getCommentsById(Integer resourceId);
+
+    /**
+     * description: 插入一条评论
+     *
+     * @param comment:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/5 10:11
+     */
+    ServerResponse<String> insertComment(Comment comment);
+
+    /**
+     * description: 为一个评论点赞
+     *
+     * @param commentId:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/5 15:06
+     */
+    ServerResponse<String> updateCommentLikeNumber(Integer commentId);
 }

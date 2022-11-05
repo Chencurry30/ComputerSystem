@@ -34,6 +34,16 @@ public interface RoleMapper {
     List<Role> getRoleList();
 
     /**
+     * description: 检查用户是否拥有改角色
+     *
+     * @param roleId:
+     * @return int
+     * @author 胡建华
+     * Date:  2022/11/5 9:25
+     */
+    int checkUserHasTheRole(Integer roleId);
+
+    /**
      * description: 添加角色
      *
      * @param role:
