@@ -8,7 +8,7 @@
             <img src="../../assets/Img/webloge.png" alt="" />
           </div>
           <div class="title">旭升网</div>
-          <span class="welcome">{{showUsername}}</span>
+          <!-- <span class="welcome">{{showUsername}}</span> -->
         </div>
         <div class="main-right centerLocation" v-if="showLoginBtn">
           <div class="message-icon">

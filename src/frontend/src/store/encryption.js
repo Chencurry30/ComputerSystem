@@ -12,13 +12,11 @@ const encryption = {
       }
     },
     actions:{
-      getPubKey(context){
+      async getPubKey(context){
         let UUID = {
           uuId:createUUID()
         }
-        console.log(UUID);
-        getPublicKey(UUID).then((res)=>{
-          console.log(123123123);
+        await getPublicKey(UUID).then((res)=>{
           console.log(res);
           if(res.data.code === 200){
             UUID.encryPtion = res.data.data
