@@ -19,9 +19,6 @@ Vue.use(BootstrapVue)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-//引入粒子背景 
-import VueParticles from 'vue-particles'
-Vue.use(VueParticles)
 
 
 //全局注册qs序列化object对象(this.$qs运用) 

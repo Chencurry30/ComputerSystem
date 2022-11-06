@@ -6,4 +6,11 @@ export const getVideoNavType = () =>{
   return Servers.get(url);
 }
 
+//获取视屏的具体页面
+export const getVideoList = ({first,second,thild}) =>{
+  // console.log(first,second,thild);
+  const url = `/videos/pages/${first}-${second}-${thild}-4?videoName=`
+  return Servers.get(url)
+}
+
 
