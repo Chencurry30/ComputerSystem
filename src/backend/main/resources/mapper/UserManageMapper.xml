@@ -21,6 +21,9 @@
             <if test="nickname != null and nickname !=''">
                 nickname like "%" #{nickname} "%"
             </if>
+            <trim>
+                and user_id > 1
+            </trim>
         </where>
         order by user_id
     </select>

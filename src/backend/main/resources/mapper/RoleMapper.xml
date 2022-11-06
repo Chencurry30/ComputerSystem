@@ -44,4 +44,7 @@
     <select id="selectRoleIdByRoleKey" resultType="java.lang.Integer">
         select role_id from role where role_key = #{roleKey}
     </select>
+    <select id="checkUserHasTheRole" resultType="java.lang.Integer">
+        select count(*) from user_role where role_id = #{roleId}
+    </select>
 </mapper>
