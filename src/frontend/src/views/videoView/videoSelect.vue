@@ -10,7 +10,7 @@
                     :class="{activeOn1:selectId.first===childItem.typeId,activeOn2:
                     selectId.second === childItem.durationId,activeOn3:selectId.thild === childItem.sortId}" 
                     :data-typeId="childItem.typeId" :data-durationId="childItem.durationId" :data-sortId="childItem.sortId"
-                    @click="showID">{{childItem.name}}</li>
+                    @click="selectVideo">{{childItem.name}}</li>
                 </ul>
           </div>
         </div>
@@ -50,8 +50,11 @@
             </div>
           </div>
         </div>
-
       </div>
+    </div>
+    <div class="MainFooter">
+      <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
+      <PagerView :pageData="getVideoPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
     </div>
   </div>
 
@@ -60,6 +63,7 @@
 <script>
 import _ from 'lodash'
 import {mapGetters} from 'vuex'
+import PagerView from '../../components/remark/PagerView'
 export default {
     name: "videoSelect",
     data(){
@@ -67,14 +71,16 @@ export default {
         selectId:{
           first:0,
           second:0,
-          thild:0
+          thild:0,
+          pageNum:1
         },
-        currentIndex:0
       }
     },
     components: {
+      PagerView
     },
     mounted(){
+      //获取视屏的选择列表 
       this.getVideoNavType()
       //获取最初始化的相关数据 
       this.getvideos()
@@ -89,9 +95,17 @@ export default {
         let first = 0
         let second = 0
         let thild = 0
-        this.$store.dispatch('videoData/getVideoData',{first,second,thild})
+        let pageNum = 1
+        this.$store.dispatch('videoData/getVideoData',{first,second,thild,pageNum})
       },
-      showID:_.throttle(function(event){
+      //获取子组件返回的pageNo 
+      getSonPageNo(pageNum){
+        let {first,second,thild} = this.selectId
+        this.$store.dispatch('videoData/getVideoData',{first,second,thild,pageNum})
+      },
+
+      //根据列表中的选项，返回相关的数据 
+      selectVideo:_.throttle(function(event){
         let element = event.target
         let {typeid,durationid,sortid} = element.dataset
         if(typeid !== undefined){
@@ -106,11 +120,13 @@ export default {
         this.$store.dispatch('videoData/getVideoData',{first,second,thild})
       },1500)
 
+
     },
     computed:{
       ...mapGetters('videoData',{
         getNavType:'getVideoNavType',
-        getDataList:'getVideoDataList'
+        getDataList:'getVideoDataList',
+        getVideoPage:'getVideoPage',
       })
     }
 }

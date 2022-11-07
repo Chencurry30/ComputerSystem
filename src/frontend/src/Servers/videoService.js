@@ -7,10 +7,16 @@ export const getVideoNavType = () =>{
 }
 
 //获取视屏的具体页面
-export const getVideoList = ({first,second,thild}) =>{
-  // console.log(first,second,thild);
-  const url = `/videos/pages/${first}-${second}-${thild}-4?videoName=`
+export const getVideoList = ({first,second,pageNum,thild}) =>{
+  const url = `/videos/pages/${first}-${second}-${thild}-${pageNum}?videoName=`
   return Servers.get(url)
 }
+
+//获取视屏的分页信息
+export const getVideoPageData = (pageNo) =>{
+  const url = `/videos/${pageNo}`
+  return Servers.get(url)
+}
+
 
 
