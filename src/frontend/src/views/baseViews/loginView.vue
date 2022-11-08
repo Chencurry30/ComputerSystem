@@ -5,9 +5,7 @@
 
         <div class="form-info">
           <el-form-item prop="username">
-            <el-input type="text" prefix-icon="el-icon-user" 
-            placeholder="请输入账号" v-model.trim="dataForm.username"
-        >
+            <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入账号" v-model.trim="dataForm.username">
             </el-input>
           </el-form-item>
 
@@ -38,17 +36,16 @@
         </div>
 
         <el-form-item class="btns">
-          <el-button type="primary" @click="goToLogin('dataForm')" :disabled="!canSubmit">登&nbsp;&nbsp;&nbsp;&nbsp;录</el-button>
+          <el-button type="primary" @click="goToLogin('dataForm')" :disabled="!canSubmit">登&nbsp;&nbsp;&nbsp;&nbsp;录
+          </el-button>
         </el-form-item>
 
         <div class="stytem">
-          <div class="stytem-left">
-            <div class="lefttitle" @click="backHome()">返回首页</div>
+          <div class="stytem-left font-text">
+            <router-link :to="{ name: 'Home' }">返回首页</router-link>
           </div>
-          <div class="stytem-right">
-            <div class="righttitle">
-              <router-link :to="{ name: 'registerView' }">用户注册</router-link>
-            </div>
+          <div class="stytem-right font-text">
+            <router-link :to="{ name: 'registerView' }">用户注册</router-link>
           </div>
         </div>
 
@@ -59,7 +56,7 @@
 
 <script>
 import Cookies from 'js-cookie';
-import { userLogin } from '../../Servers/ServersApi';
+import { userLogin } from '../../service/ServersApi';
 import { CryAlgorithm } from '../../utils'  //公钥加密函数
 import { mapGetters } from 'vuex'  //获取公钥的相关配置
 import rules from '../../utils/rules'
@@ -78,7 +75,7 @@ export default {
       checkForm: {
         //用户名校验
         username: [
-          { validator: rules.FormValidate.Form().validateUserName, trigger: 'change' },
+          { validator: rules.FormValidate.Form().validateUserName, trigger: 'blur' },
         ],
         //密码校验
         password: [
@@ -100,7 +97,7 @@ export default {
   },
   methods: {
     //获取公钥逻辑
-    getPublicKey(){
+    getPublicKey() {
       this.$store.dispatch('encryption/getPubKey');
     },
     //是否自动登录
@@ -126,46 +123,45 @@ export default {
       this.changeHiddenImg = !this.changeHiddenImg
     },
     //登录逻辑
-     goToLogin(dataForm) {
+    goToLogin(dataForm) {
       this.getPublicKey();
-      setTimeout(()=>{
+      setTimeout(() => {
         this.$refs[dataForm].validate(valid => {
-        //验证通过
-        // if (valid){
-        //   if(this.getkeyInfo.encryPtion === ''){
-        //      this.$message.error("密码加密失败，请重新点击登录按钮")
-        //   }else{
-            let data = {}
-            data.uuId = this.getkeyInfo.uuId
-            data.username = this.dataForm.username
-            data.password = this.dataForm.password
-            // data.password = CryAlgorithm(this.getkeyInfo.encryPtion,this.dataForm.password)
-            userLogin(data).then(res => {
-              console.log(res);
-              Cookies.set('name', this.dataForm.username)
-              const name = data.username
-              if (res.data.code === 200) {
-                const token = res.data.data.token
-                // localStorage.setItem('username',res.data.data.user.nickname)
-                localStorage.setItem('token', token)  //保存token到本地浏览器
-                this.$message({
-                  message: "恭喜你，登录成功！欢迎用户: " + name,
-                  type: "success",
-                })
-                this.$router.push({ name: 'Home' })
-              } else if (res.data.code === 400) {
-                this.$message.error("用户名或密码错误，请重新输入！")
-              }
-            }) 
-        //   }
-        // }
-        // 验证未通过
-        // else {
-        //   this.$message.error("请按照提示要求修改后再进行登录")
-        //   this.dataForm = {}
-        // }
-      })        
-      },1000);
+          //验证通过
+          // if (valid){
+          //   if(this.getkeyInfo.encryPtion === ''){
+          //      this.$message.error("密码加密失败，请重新点击登录按钮")
+          //   }else{
+          let data = {}
+          data.uuId = this.getkeyInfo.uuId
+          data.username = this.dataForm.username
+          data.password = this.dataForm.password
+          // data.password = CryAlgorithm(this.getkeyInfo.encryPtion,this.dataForm.password)
+          userLogin(data).then(res => {
+            console.log(res);
+            Cookies.set('name', this.dataForm.username)
+            const name = data.username
+            if (res.data.code === 200) {
+              const token = res.data.data.token
+              sessionStorage.setItem('token', token)  //保存token到本地浏览器
+              this.$message({
+                message: "恭喜你，登录成功！欢迎用户: " + name,
+                type: "success",
+              })
+              this.$router.push({ name: 'Home' })
+            } else if (res.data.code === 400) {
+              this.$message.error("用户名或密码错误，请重新输入！")
+            }
+          })
+          //   }
+          // }
+          // 验证未通过
+          // else {
+          //   this.$message.error("请按照提示要求修改后再进行登录")
+          //   this.dataForm = {}
+          // }
+        })
+      }, 1000);
     }
 
   },
@@ -175,11 +171,10 @@ export default {
 <style scoped lang="less">
 .login-wrap-bg {
   position: relative;
-  height: 500px;
+  height: 440px;
   width: 100%;
   background: url(../../assets/Img/LoginImg/login_img.png) no-repeat 20% 50px #ddd;
 }
-
 .login_box {
   width: 450px;
   height: 350px;
@@ -201,8 +196,6 @@ export default {
     }
 
     //选择方式
-
-
     .tablenav {
       margin: 10px 0px;
       display: flex;
@@ -276,7 +269,6 @@ export default {
         font-family: 楷体;
       }
     }
-
     //选择链接
     .stytem {
       display: flex;
@@ -286,47 +278,35 @@ export default {
       line-height: 22px;
 
       .stytem-left {
-        .lefttitle {
-          margin-left: 35px;
+        margin-left: 35px;
+        a {
+          color: #666;
         }
       }
 
       .stytem-right {
-        .righttitle {
-          cursor: pointer;
-
-          .router-link-active {
-            text-decoration: none;
-            color: #ffd04b;
-          }
-
-          a {
-            color: #666;
-            text-decoration: none;
-          }
+        margin-right: 35px;
+        a {
+          color: #666;
         }
       }
     }
-
     //修改了button的形式
     .el-button {
       padding: 12px 110px;
     }
-
     //修改输入框大小
     .el-input {
-      left: 7%;
+      left: 5%;
       width: 360px;
     }
   }
 }
-
 .btns {
   display: flex;
   justify-content: space-between;
 }
-
-/deep/.el-form-item__error {
+:deep .el-form-item__error {
   color: #F56C6C;
   font-size: 14px;
   padding: 3px 0px;
@@ -334,7 +314,6 @@ export default {
   top: 100%;
   left: 35px;
 }
-
 .clickImg {
   display: flex;
   position: absolute;

@@ -1,5 +1,5 @@
 //院校相关的存储信息
-import {getSchoolNavType,getschoolList} from '../Servers/schoolService'
+import {getSchoolNavType,getschoolList} from '../service/schoolService'
 const schoolData = {
     namespaced:true,   //开启匿名空间
     state:{
@@ -50,11 +50,11 @@ const schoolData = {
       //返回与分页相关的数据 
       getSchoolPage(state){
         let data = {}
-        data.pageNo = state.videoDataList.pageNum || 1,  //当前的页码数
-        data.pagesize = state.videoDataList.pageSize || 0, //每页所展示的相关条数
-        data.total = state.videoDataList.total || 0,     //总共的条数
-        data.pageTotal = state.videoDataList.pages||0   //总共的页数
-        return data
+        data.pageNo = state.schoolDataList.pageNum || 1,  //当前的页码数
+        data.pagesize = state.schoolDataList.pageSize || 0, //每页所展示的相关条数
+        data.total = state.schoolDataList.total || 0,     //总共的条数
+        data.pageTotal = state.schoolDataList.pages||0   //总共的页数
+        return data;
       }
     }
 }

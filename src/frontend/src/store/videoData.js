@@ -1,5 +1,5 @@
 //用户的相关存储信息
-import {getVideoNavType,getVideoList} from '../Servers/videoService'
+import {getVideoNavType,getVideoList} from '../service/videoService'
 const videoData = {
     namespaced:true,   //开启匿名空间
     state:{

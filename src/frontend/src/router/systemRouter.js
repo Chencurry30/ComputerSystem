@@ -20,8 +20,8 @@ export default [{
   name: 'loginView',
   component: loginView,
   meta: {
-    showTop: true,
-    showFotter:true
+    showTop: false,
+    showFotter:false
   },
 },
 {

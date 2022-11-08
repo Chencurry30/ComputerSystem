@@ -4,7 +4,7 @@ const videoSelect = () => import('@/views/videoView/videoSelect')  //视频选�
 
 export default [
   {
-    path: '/videoPage',
+    path: '/videoPage:videoId?',
     name: 'videoPage',
     component: videoPage,
     meta: {                          

@@ -5,7 +5,7 @@ import nProgress from 'nprogress';
 import "nprogress/nprogress.css"
 import router from '../router';
 const baseurl = '/api'
-const Servers = axios.create({
+const service = axios.create({
     baseURL: baseurl,
     timeout: 3000,
     headers: {  //请求头
@@ -13,8 +13,8 @@ const Servers = axios.create({
     }
 })
 //请求拦截器
-Servers.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
+service.interceptors.request.use((config) => {
+  const token = sessionStorage.getItem('token')
     if(token !== null){
       config.headers['token'] = token;  
     }
@@ -25,7 +25,7 @@ Servers.interceptors.request.use((config) => {
 
 });
 //响应拦截器
-Servers.interceptors.response.use((response) => {
+service.interceptors.response.use((response) => {
     nProgress.done();
     if(response.data.code === 403){
       //如果token验证失败，跳转到登录页面 
@@ -37,4 +37,4 @@ Servers.interceptors.response.use((response) => {
     return Promise.reject(error);
 })
 
-export default Servers
+export default service

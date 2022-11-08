@@ -18,7 +18,7 @@
     </div>
     <div class="MainContent">
       <div class="video-list">
-        <div class="list-item" v-for="(videoItem) in getDataList" :key="videoItem.videoId">
+        <div class="list-item" v-for="(videoItem) in getDataList" :key="videoItem.videoId" @click="getoVideoPage(videoItem.videoId)">
           <div class="video-card">
             <div class="cardImg">
               <div class="cardMask">
@@ -119,8 +119,14 @@ export default {
         console.log(first);
         this.$store.dispatch('videoData/getVideoData',{first,second,thild})
       },1500)
-
-
+      ,
+      //去往具体的视屏页面 
+      getoVideoPage(videoId){
+        let location = {}
+        location.name = 'videoPage'
+        location.query = {videoId:videoId}
+        this.$router.push(location)
+      },
     },
     computed:{
       ...mapGetters('videoData',{

@@ -22,7 +22,7 @@
       <div class="school-list">
         <thead>
           <tr>
-            <th style="width:150px">院校名称</th>
+            <th style="width:230px">院校名称</th>
             <th style="width:150px">院校类型</th>
             <th style="width:250px">院校地址</th>
             <th style="width:150px">院校隶属</th>
@@ -31,7 +31,10 @@
         </thead>
         <tbody>
           <tr v-for="(item) in getSchoolDataList" :key="item.collegeId">
-            <td>{{item.name}}</td>
+            <td @click="gotoSchoolPage(item.collegeId)">
+              <a href="javascript:;">{{item.name}}</a>
+              <span class="schoolloge">{{item.attribute}}</span>
+            </td>
             <td>{{item.type}}</td>
             <td>{{item.address}}</td>
             <td>{{item.subjection}}</td>
@@ -40,10 +43,10 @@
         </tbody>
       </div>
     </div>
-    <!--<div class="MainFooter"> -->
+    <div class="MainFooter"> -->
       <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
-      <!-- <PagerView :pageData="getVideoPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
-    </div> -->
+      <PagerView :pageData="getSchoolPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
+    </div>
   </div>
 
 </template>
@@ -71,7 +74,7 @@ export default {
       //获取视屏的选择列表 
       this.getschoolNavType()
       //获取最初始化的相关数据 
-      this.getvideos()
+      this.getschools()
     },
     methods:{
       //获取院校的选择列表 
@@ -79,20 +82,21 @@ export default {
         this.$store.dispatch('schoolData/getNavType')
       },
       //获取初始化的相关数据
-      getvideos(){
+      getschools(){
         let first = 0
         let second = 0
         let thild = 0
         let pageNum = 1
-        this.$store.dispatch('videoData/getVideoData',{first,second,thild,pageNum})
+        this.$store.dispatch('schoolData/getschoolData',{first,second,thild,pageNum})
       },
       //获取子组件返回的pageNo 
       getSonPageNo(pageNum){
+        console.log(pageNum);
         let {first,second,thild} = this.selectId
-        this.$store.dispatch('videoData/getVideoData',{first,second,thild,pageNum})
+        this.$store.dispatch('schoolData/getschoolData',{first,second,thild,pageNum})
       },
 
-      //根据列表中的选项，返回相关的数据 
+      //根据列表中的选项，返回相关的数据(利用npm中自带的lodash) 
       selectVideo:_.throttle(function(event){
         let element = event.target
         let {regionid,typeid,attributeid} = element.dataset
@@ -107,14 +111,22 @@ export default {
         console.log(first,second,thild,pageNum);
         this.$store.dispatch('schoolData/getschoolData',{first,second,thild,pageNum})
       },1500)
-
+      ,
+      //根据用户点击的不同，进行相应的跳转 
+      gotoSchoolPage(collegeId){
+        console.log(12);
+        let location = {}
+        location.query = {collegeId:collegeId}
+        location.name = 'schoolPage'
+        this.$router.push(location)
+      }
 
     },
     computed:{
       ...mapGetters('schoolData',{
         getNavType:'getSchoolNavType',
         getSchoolDataList:'getSchoolDataList',
-        getVideoPage:'getVideoPage',
+        getSchoolPage:'getSchoolPage',
       })
     }
 }
@@ -184,10 +196,21 @@ export default {
       }
       td{
         padding: 12px 10px;
-    border-bottom: 1px solid #e9e9e9;
-    font-size: 16px;
-    color: #666;
-    text-align: left;
+        border-bottom: 1px solid #e9e9e9;
+        font-size: 16px;
+        color: #666;
+        text-align: left;
+      }
+      .schoolloge{
+        display: inline-block;
+    padding: 2px 6px;
+    font-size: 12px;
+    vertical-align: 1.5px;
+    line-height: 16px;
+    margin-left: 8px;
+    border-radius: 3px;
+    background: #ebf4fb;
+    color: #54acf3;
       }
     }
   }
