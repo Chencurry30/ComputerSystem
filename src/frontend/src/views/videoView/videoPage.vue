@@ -3,20 +3,20 @@
   <div class="MainBox w">
     <div class="MainBox-left">
       <div class="videotitle">
-        <h1 class="title">视屏的信息</h1>
+        <h1 class="title">{{videoInfo.name}}</h1>
         <div class="video-data">
           <div class="video-data-list">
             <span class="videoItem">
               <img src="../../assets/Img/Icon/video.png" alt="" />
-              1.4万人
+              {{videoInfo.viewNum}}
             </span>
             <span class="videoItem">
               <img src="../../assets/Img/Icon/videomessage.png" alt="" />
-              2400
+              {{videoInfo.commentNum}}
             </span>
             <span class="videoItem">
               <img src="../../assets/Img/Icon/time.png" alt="" />
-              2020-9-10
+              {{videoInfo.time}}
             </span>
           </div>
         </div>
@@ -32,9 +32,9 @@
             alt=""
             class="icon"
           />
-          <span class="test-info">2131</span>
+          <span class="test-info">{{videoInfo.likeNumber}}</span>
         </span>
-        <span class="collection">
+        <!-- <span class="collection">
           <img
             src="../../assets/Img/Icon/shoucang.png"
             alt=""
@@ -51,7 +51,7 @@
             class="icon"
           />
           <span class="test-info">31</span>
-        </span>
+        </span> -->
       </div>
       <div class="videoinfo">
         <span class="infoconnect">
@@ -238,6 +238,7 @@
 import ReleaseItem from "../../components/remark/releaseItem.vue";
 import ReplyItem from "../../components/remark/replyItem.vue";
 import {mapState,mapGetters} from 'vuex'
+import {getVideoInfo} from '../../service/videoService.js'
 export default {
   name: "videoPage",
   data() {
@@ -247,12 +248,37 @@ export default {
       Type:{
         first:'回复',
         second:'提问',
-      }
+      },
+      videoInfo:{}
     };
   },
   components: {
     ReleaseItem,
     ReplyItem,
+  },
+  mounted(){
+    this.getPageData()
+  },
+  methods:{
+    showMoreInfo(item){
+      this.showMoreID = item.id;
+    },
+
+    //获取视屏页面的具体信息 
+    getPageData(){
+      let videoId = this.$route.query.videoId
+      getVideoInfo(videoId).then((res)=>{
+        console.log(res);
+        this.videoInfo = res.data.data
+      })
+    }
+
+
+
+
+
+
+
   },
   computed:{
     ...mapState('remark',{
@@ -264,11 +290,6 @@ export default {
 
 
   },
-  methods:{
-    showMoreInfo(item){
-      this.showMoreID = item.id;
-    },
-  }
 };
 </script>
 

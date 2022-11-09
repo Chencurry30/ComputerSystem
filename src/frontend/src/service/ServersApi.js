@@ -1,16 +1,16 @@
-import servers from './Servers'
+import service from './services'
 //登录
 export const userLogin = (data) =>{
     const url = '/users/login'
-    return servers.post(url,data);
+    return service.post(url,data);
 }
 //注册
 export const userRegister = (data) =>{
     const url = '/users/register'
-    return servers.post(url,data);
+    return service.post(url,data);
 }
 //获取验证码
 export const retrievePassword = (phone) =>{
     const url = '/users/sms'
-    return servers.post(url,phone);
+    return service.post(url,phone);
 }

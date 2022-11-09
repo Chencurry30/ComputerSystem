@@ -8,7 +8,7 @@
             <img src="../../assets/Img/webloge.png" alt="" />
           </div>
           <div class="title">旭升网</div>
-          <span class="welcome">{{showUsername}}</span>
+          <!-- <span class="welcome">{{showUsername}}</span> -->
         </div>
         <div class="main-right centerLocation" v-if="showLoginBtn">
           <div class="message-icon">
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="container-xl">
+    <div class="container-xl" >
       <div class="select-box">
         <ul class="select-list">
           <li class="list-item"
@@ -50,7 +50,6 @@
   </div>
 </template>
 <script>
-import Cookie from 'js-cookie';
 export default {
   name: "webHeader",
   data(){
@@ -85,12 +84,16 @@ export default {
     }
   },
   computed:{
-    showUsername(){
-      return '欢迎用户：'+Cookie.get('name')
-    },
+
     showLoginBtn(){
-      return localStorage.getItem('token') !== null
-    }
+      return localStorage.getItem('token') === null
+    },
+    hiddenTopComponent() {
+      return this.$route.meta.showTop;
+    },
+    hiddenFotterComponent() {
+      return this.$route.meta.showFotter;
+    },
   }
 };
 </script>

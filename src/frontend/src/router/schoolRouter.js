@@ -12,12 +12,12 @@ export default [
           },
     },
     {
-        path:'/schoolPage',
+        path:'/schoolPage/:collegeId?',
         name:'schoolPage',
         component:schoolPage,
         meta: {                          
-            showTop: true,
-            showFotter:true
+            showTop: false,
+            showFotter:false
           },  
     }
 ]

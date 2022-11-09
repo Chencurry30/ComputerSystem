@@ -4,19 +4,19 @@
     <div class="pagerBox centerLocation">
         <ul class="pagination">
           <!-- 上一页 -->
-          <li @click="prePage()" :class="{'disabledBox':disabledPre}">
+          <li @click="prePage(),giveFatherPageNo()" :class="{'disabledBox':disabledPre}">
             <a aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
            <li v-for="(page,index) in pageNumber" :key="index" :class="{'active':page === pageData.pageNo}"
-           @click="gotoPage(page)" >
+           @click="gotoPage(page),giveFatherPageNo()">
             <a>
               {{page}}
             </a>
           </li>
         
-          <li @click="nextPage()" :class="{'disabled':disabledNext}" >
+          <li @click="nextPage(),giveFatherPageNo()" :class="{'disabled':disabledNext}" >
             <a aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
@@ -27,16 +27,13 @@
 </template>
 
 <script>
+import { mapGetters} from 'vuex';
 export default {
   name:'PagerView',
+  props:['pageData'],
   data(){
     return{
-      pageData:{
-        pageNo:2,      //当前的页码数
-        pageTotal:16,   //总共的页码数
-        total:921,     //总的条数
-        pagesize:16,   //每一页所展示的相关数据
-      }
+      // pageData:this.pageData
     }
   },
   methods:{
@@ -73,8 +70,23 @@ export default {
       }else{
         this.pageData.pageNo = page
         this.calculatePage();
+        // this.getPageData();
       }
+    },
+
+    //利用下面的点击选项，从子组件向父组件进行相关参数的传递 
+    giveFatherPageNo(){
+      this.$emit("giveFatherPageNo", this.pageData.pageNo);
     } 
+    
+
+
+
+
+
+
+
+
   },
   //computed里面尽量不要做修改data数据的相关操作 
   computed:{
@@ -89,21 +101,28 @@ export default {
     //用来展示下面分页器中所展示的相关数据,通过方法封装,避免在comput操作data的数据 
     pageNumber(){
       return this.calculatePage();
-    }
-  }
+    },
+    ...mapGetters('videoData',{
+      getVideoPage:'getVideoPage'
+    })
+  },
+
 }
 </script>
 
 <style lang="less" scoped>
-
-.pagerBox{
+.pagerview{
+  margin:25px 0px 20px 0;
+  .pagerBox{
+  margin: 5px 0px;
   text-align: center;
   .pagination{
+    margin-bottom: 0px;
     li{
       margin: 0 5px;
       padding: 0 4px;
       display: inline-block;
-      min-width: 40px;
+      min-width: 50px;
       height: 28px;
       line-height: 28px;
       font-size: 14px;
@@ -121,7 +140,9 @@ export default {
   .disabledBox{
     display: none;
   }
+  }
 }
+
 </style>
 
 
