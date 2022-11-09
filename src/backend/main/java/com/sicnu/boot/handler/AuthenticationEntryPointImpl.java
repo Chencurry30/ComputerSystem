@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException){
-        ServerResponse<String> serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.FORBIDDEN.getCode(), "认证失败请重新登录");
+        ServerResponse<String> serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.UNAUTHORIZED.getCode(), "认证失败请重新登录");
         String json = JSON.toJSONString(serverResponse);
         WebUtils.renderString(response,json);
     }

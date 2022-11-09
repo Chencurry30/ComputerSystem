@@ -3,6 +3,7 @@ package com.sicnu.boot.service;
 import com.sicnu.boot.pojo.Comment;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.CommentVo;
+import com.sicnu.boot.vo.CommentVos;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface CommentService {
      * @author 胡建华
      * Date:  2022/10/19 20:38
      */
-    ServerResponse<List<CommentVo>> getCommentsById(Integer resourceId);
+    ServerResponse<List<CommentVos>> getCommentsById(Integer resourceId);
 
     /**
      * description: 插入一条评论

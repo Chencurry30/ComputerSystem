@@ -3,7 +3,7 @@ package com.sicnu.boot.controller;
 import com.sicnu.boot.pojo.Comment;
 import com.sicnu.boot.service.CommentService;
 import com.sicnu.boot.utils.ServerResponse;
-import com.sicnu.boot.vo.CommentVo;
+import com.sicnu.boot.vo.CommentVos;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -32,7 +32,7 @@ public class CommentController {
      * Date:  2022/11/5 10:47
      */
     @GetMapping("/tree/{resourceId}")
-    ServerResponse<List<CommentVo>> getCommentTree(@Min(value = 1,message = "id最小值为1")
+    ServerResponse<List<CommentVos>> getCommentTree(@Min(value = 1,message = "id最小值为1")
                                                    @PathVariable("resourceId") Integer resourceId){
         return commentService.getCommentsById(resourceId);
     }

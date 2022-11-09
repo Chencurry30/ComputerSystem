@@ -7,10 +7,7 @@ import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.CommentService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.TreeUtils;
-import com.sicnu.boot.vo.CommentUserVo;
-import com.sicnu.boot.vo.CommentVo;
-import com.sicnu.boot.vo.LoginUser;
-import com.sicnu.boot.vo.MyTreeNode;
+import com.sicnu.boot.vo.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -38,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
     private TreeUtils treeUtils;
 
     @Override
-    public ServerResponse<List<CommentVo>> getCommentsById(Integer resourceId) {
+    public ServerResponse<List<CommentVos>> getCommentsById(Integer resourceId) {
         //查询文章所有的评论
         List<Comment> comments = commentMapper.getCommentsById(resourceId);
         //补充评论用户信息
@@ -63,7 +60,16 @@ public class CommentServiceImpl implements CommentService {
         for (MyTreeNode child : children) {
             level1CommentVo.add(child.getContent());
         }
-        return ServerResponse.createBySuccess("返回成功",level1CommentVo);
+        List<CommentVos> commentVosList = new ArrayList<>();
+        for (CommentVo commentVo : level1CommentVo) {
+            CommentVos commentVos1 = new CommentVos();
+            commentVos1.setId(commentVo.getCommentId());
+            commentVos1.setComment(commentVo);
+            commentVos1.setChildren(commentVo.getChildren());
+            commentVos1.getComment().setChildren(null);
+            commentVosList.add(commentVos1);
+        }
+        return ServerResponse.createBySuccess("返回成功",commentVosList);
     }
 
     @Override
