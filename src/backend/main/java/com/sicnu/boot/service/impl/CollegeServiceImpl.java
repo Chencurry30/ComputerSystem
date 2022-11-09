@@ -65,36 +65,36 @@ public class CollegeServiceImpl implements CollegeService {
         List<CollegeRegion> collegeRegion = collegeMapper.getCollegeRegion();
         collegeRegion.add(new CollegeRegion(0,"全部"));
         collegeRegion.sort(Comparator.comparingInt(CollegeRegion::getRegionId));
-        Map<String,Object> RegionMap = new HashMap<>(5);
-        RegionMap.put("list",collegeRegion);
-        RegionMap.put("id",1366578);
-        RegionMap.put("name","地区");
-        list.add(RegionMap);
+        Map<String,Object> regionMap = new HashMap<>(5);
+        regionMap.put("list",collegeRegion);
+        regionMap.put("id",1366578);
+        regionMap.put("name","地区");
+        list.add(regionMap);
         //添加类型筛选
         List<CollegeType> collegeType = collegeMapper.getCollegeType();
         collegeType.add(new CollegeType(0,"全部"));
         collegeType.sort(Comparator.comparingInt(CollegeType::getTypeId));
-        Map<String,Object> TypeMap = new HashMap<>(5);
-        TypeMap.put("list",collegeType);
-        TypeMap.put("id",2699856);
-        TypeMap.put("name","类型");
-        list.add(TypeMap);
+        Map<String,Object> typeMap = new HashMap<>(5);
+        typeMap.put("list",collegeType);
+        typeMap.put("id",2699856);
+        typeMap.put("name","类型");
+        list.add(typeMap);
         //添加属性筛选
         List<CollegeAttribute> collegeAttribute = collegeMapper.getCollegeAttribute();
         collegeAttribute.add(new CollegeAttribute(0,"全部"));
         collegeAttribute.sort(Comparator.comparingInt(CollegeAttribute::getAttributeId));
-        Map<String,Object> AttributeMap = new HashMap<>(5);
-        AttributeMap.put("list",collegeAttribute);
-        AttributeMap.put("id",7044331);
-        AttributeMap.put("name","地区");
-        list.add(AttributeMap);
+        Map<String,Object> attributeMap = new HashMap<>(5);
+        attributeMap.put("list",collegeAttribute);
+        attributeMap.put("id",7044331);
+        attributeMap.put("name","地区");
+        list.add(attributeMap);
         return ServerResponse.createBySuccess("获取成功",list);
     }
 
     @Override
     public ServerResponse<PageInfo<College>> getCollegeListBySelective(CollegeSelective collegeSelective) {
         //获取分页信息
-        PageHelper.startPage(collegeSelective.getPageNum(),6);
+        PageHelper.startPage(collegeSelective.getPageNum(),12);
         List<College> list = collegeMapper.getCollegeListBySelective(collegeSelective);
         PageInfo<College> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("成功",pageInfo);
