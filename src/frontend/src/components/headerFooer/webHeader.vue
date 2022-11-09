@@ -17,7 +17,7 @@
           <div class="userimg">
             <img src="../../assets/Img/Icon/userimg.png" alt="用户的头像"/>
             <div class="user-select">
-              <div class="select-item">个人中心</div>
+              <div class="select-item" @click="gotoPerson()">个人中心</div>
               <div class="select-item" @click="backLogin()">退出登录</div>
             </div>
           </div>
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="container-xl" >
+    <div class="container-xl" v-if="hiddenTopComponent">
       <div class="select-box">
         <ul class="select-list">
           <li class="list-item"
@@ -67,6 +67,7 @@ export default {
     }
   },
   methods: {
+    //前往登录页面 
     gotologin() {
       let location = { name: "loginView" };
       localStorage.clear('token')
@@ -75,24 +76,29 @@ export default {
     addClass(index){
       this.current=index
     },
+    //退出登录 
     backLogin(){
       localStorage.removeItem('token')
       let location = {
         name:'loginView'
       }
       this.$router.push(location)
-    }
+    },
+    //前往个人中心
+    gotoPerson(){
+      let location = {
+        name:'personInfo'
+      }
+      this.$router.push(location)
+    },
   },
   computed:{
 
     showLoginBtn(){
-      return localStorage.getItem('token') === null
+      return sessionStorage.getItem('token') !== null
     },
     hiddenTopComponent() {
       return this.$route.meta.showTop;
-    },
-    hiddenFotterComponent() {
-      return this.$route.meta.showFotter;
     },
   }
 };

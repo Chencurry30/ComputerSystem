@@ -24,4 +24,10 @@ export const getVideoInfo = (videoId) =>{
   return service.get(url)
 } 
 
+//获取相应的评论资源
+
+export const getVideoRemark = (videoId) =>{
+  const url = `/comments/tree/${videoId}`
+  return service.get(url)
+} 
 

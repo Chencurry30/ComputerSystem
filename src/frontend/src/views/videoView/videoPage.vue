@@ -55,7 +55,7 @@
       </div>
       <div class="videoinfo">
         <span class="infoconnect">
-          asdjawjdka jdkasjdlkawjdlka jsdlkjawlkdj
+          {{videoInfo.introduction}}
         </span>
       </div>
       <div class="videotype">
@@ -96,10 +96,10 @@
         </div>
 
         <!--消息回复的组件-->
-        <div class="reply-List" v-for="(item) in getRemarkList" :key="item.id">
-          <replyItem :replyInfo="item.father" :showId="item.id"></replyItem>
+        <div class="reply-List" v-for="(fatherItem) in getRemarkList" :key="fatherItem.commentId">
+          <replyItem :replyInfo="getFatherItem(fatherItem)" :showId="item.id"></replyItem>
           <div class="children-List hidden " :class="{unhidden:item.id === showMoreID}" >
-            <replyItem  v-for="(child) in item.children" :key="child.id" :replyInfo="child" :showId="item.id"></replyItem>
+            <replyItem  v-for="(child) in item.children" :key="child.id" :replyInfo="child" :showId="item.commentId"></replyItem>
           </div>
           <div class="totalNumber">
             <div class="total" >共1223条回复</div>
@@ -238,7 +238,7 @@
 import ReleaseItem from "../../components/remark/releaseItem.vue";
 import ReplyItem from "../../components/remark/replyItem.vue";
 import {mapState,mapGetters} from 'vuex'
-import {getVideoInfo} from '../../service/videoService.js'
+import {getVideoInfo,getVideoRemark} from '../../service/videoService.js'
 export default {
   name: "videoPage",
   data() {
@@ -249,7 +249,8 @@ export default {
         first:'回复',
         second:'提问',
       },
-      videoInfo:{}
+      videoInfo:{},
+      getRemarkList:{}
     };
   },
   components: {
@@ -258,6 +259,9 @@ export default {
   },
   mounted(){
     this.getPageData()
+
+    //获取相应资源的评论信息 
+    this.getPageRemark()
   },
   methods:{
     showMoreInfo(item){
@@ -271,22 +275,55 @@ export default {
         console.log(res);
         this.videoInfo = res.data.data
       })
+    },
+
+    //获取对应的评论信息 
+    getPageRemark(){
+      let videoId = this.$route.query.videoId
+      getVideoRemark(videoId).then((res)=>{
+        this.getRemarkList = res.data.data
+        console.log(res);
+      })
+    },
+
+    getFatherInfo(item){
+      let fatherItem = {}
+      console.log(item);
+      // fatherItem.commentId = item.commentId
+      // fatherItem.content = item.content
+      // fatherItem.createDate = item.createDate
+      // fatherItem.resourceId = item.resourceId
+      // fatherItem.author = item.author
+      // fatherItem.parentId = item.parentId
+      // fatherItem.toUser = item.toUser
+      // fatherItem.likeNumber = item.likeNumber
+      // level: 1
+      console.log(fatherItem);
+      return fatherItem
     }
 
 
-
+  
 
 
 
 
   },
   computed:{
-    ...mapState('remark',{
-      backOtherInfo:"backOtherInfo",   //点击回复时候所回复人的相关储存信息
-    }),
-    ...mapGetters('remark',{
-      getRemarkList:'getRemarkList',
-    }),
+    getFatherItem(item){
+     return this.getFatherInfo(item)
+    }
+
+
+
+
+
+    // ...mapState('remark',{
+    //   backOtherInfo:"backOtherInfo",   //点击回复时候所回复人的相关储存信息
+    // }),
+    // ...mapGetters('remark',{
+    //   getRemarkList:'getRemarkList',
+    // }),
 
 
   },
@@ -345,16 +382,15 @@ export default {
       background: red;
     }
     .video-toolbar {
-      box-sizing: content-box;
       padding-top: 16px;
       padding-bottom: 12px;
-      height: 28px;
-      line-height: 28px;
+      height: 50px;
+      line-height: 25px;
       border-bottom: 1px solid #e3e5e7;
       color: #61666d;
-      .like,
-      .share,
-      .collection {
+      .like,.share,.collection {
+        display: flex;
+        align-items: center;
         margin-right: 45px;
       }
       .icon {

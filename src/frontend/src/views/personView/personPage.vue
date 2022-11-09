@@ -145,6 +145,7 @@
               <span class="headerP1">我的资料</span>
               <span class="headerP2">MY PROFILE</span>
               <span class="headerP3">SETTINGS</span>
+              <div class="headerP4" @click="backHome()">返回首页</div>
             </div>
             <div class="containMain">
               <div class="userImg"></div>
@@ -165,6 +166,14 @@
 import {mapGetters} from 'vuex'
 export default {
   name: "personPage",
+  methods:{
+    backHome(){
+      let location = {
+        name:'Home'
+      }
+      this.$router.push(location)
+    }
+  },
   computed:{
     ...mapGetters('userInfo',
     {
@@ -175,7 +184,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.containBox {
+.MainBox{
+  margin-top: 15px;
+  .containBox {
   margin-top: 5px;
   display: flex;
   .contain-left {
@@ -259,6 +270,12 @@ export default {
         }
         .headerP3 {
           margin-left: 10px;
+        }
+        .headerP4{
+          float: right;
+          margin-right: 40px;
+          font-weight: 700;
+          cursor: pointer;
         }
       }
       .containMain {
@@ -345,5 +362,6 @@ export default {
       width: 820px;
     }
   }
+}
 }
 </style>

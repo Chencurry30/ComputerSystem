@@ -24,7 +24,7 @@ export default [
         name: 'personInfo',
         component: personInfo,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       },
@@ -33,7 +33,7 @@ export default [
         name: 'personSecurity',
         component: personSecurity,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       },
@@ -42,7 +42,7 @@ export default [
         name: 'messageReply',
         component: messageReply,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       },
@@ -51,7 +51,7 @@ export default [
         name: 'commentsReply',
         component: commentsReply,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       }, 
@@ -60,7 +60,7 @@ export default [
         name: 'myComment',
         component: myComment,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       }, 
@@ -69,7 +69,7 @@ export default [
         name: 'teacherReply',
         component: teacherReply,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       }, 
@@ -78,7 +78,7 @@ export default [
         name: 'otherReply',
         component: otherReply,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       },
@@ -87,7 +87,7 @@ export default [
         name: 'thumbVideo',
         component: thumbVideo,
         meta: {                          //配置相关的参数，保证页面是否展示头部和底部
-          showTop: true,
+          showTop: false,
           showFotter:true
         },
       }
