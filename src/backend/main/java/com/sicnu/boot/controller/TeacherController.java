@@ -1,14 +1,20 @@
 package com.sicnu.boot.controller;
 
 
+import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.group.Insert;
+import com.sicnu.boot.group.Update;
 import com.sicnu.boot.pojo.Teacher;
 import com.sicnu.boot.service.TeacherService;
 import com.sicnu.boot.utils.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
+import java.util.List;
 
 /**
  * description:
@@ -28,6 +34,40 @@ public class TeacherController {
     @GetMapping("/{id}")
     public ServerResponse<Teacher> getTeacherById(@PathVariable("id") Integer id){
         return teacherService.getTeacherById(id);
+    }
+
+    @GetMapping()
+    ServerResponse<PageInfo<Teacher>> getTeacherPage(
+            @Min(value = 1,message = "pageNum的最小值为1") @PathVariable Integer pageNum){
+        return teacherService.getTeacherPage(pageNum);
+    }
+
+
+    @GetMapping
+    public ServerResponse<List<Teacher>> getAllTeacher(){
+        return teacherService.getAllTeacher();
+    }
+
+    @PostMapping("/one")
+    @PreAuthorize("hasAuthority('system:teacher:insert')")
+    ServerResponse<String> insertTeacher(@Validated(Insert.class)
+                                         @RequestBody Teacher teacher){
+        return teacherService.insertTeacher(teacher);
+    }
+
+
+    @PutMapping
+    @PreAuthorize("hasAuthority('system:teacher:update')")
+    ServerResponse<String> updateTeacher(@Validated(Update.class)
+                                      @RequestBody Teacher teacher){
+        return teacherService.updateTeacher(teacher);
+    }
+
+    @DeleteMapping("/{teacherId}")
+    @PreAuthorize("hasAuthority('system:teacher:delete')")
+    ServerResponse<String> deleteTeacherByTeacherId(@Min(value = 0,message = "id的最小值为1")
+                                              @PathVariable Integer teacherId){
+        return teacherService.deleteTeacherByTeacherId(teacherId);
     }
 
 }

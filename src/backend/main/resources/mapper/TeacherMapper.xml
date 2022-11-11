@@ -8,4 +8,17 @@
     <select id="getTeacherById" resultType="Teacher">
         select *from Teacher where teacher_id=#{teacherId}
     </select>
+
+    <insert id="insertTeacher" parameterType="Teacher">
+        insert into teacher values (null,#{name},#{backgroud},#{directionId},#{directionName},null,1,#{information},1,#{qualification},1)
+    </insert>
+
+    <update id="updateTeacher" parameterType="Teacher">
+        update teacher set name = #{name},background = #{backgroud},direction_name = #{directionName}
+        where teacher_id = #{teacherId}
+    </update>
+
+    <delete id="deleteTeacherByTeacherId">
+        delete from teacher where teacher_id = #{teacherId}
+    </delete>
 </mapper>
