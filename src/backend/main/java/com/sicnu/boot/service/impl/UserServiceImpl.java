@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.service.ISmsService;
 import com.sicnu.boot.utils.*;
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d).{6,12}$");
 
     @Override
+    @SysLogAnnotation(operModel = "用户模块",operType = "登录",operDesc = "用户前台登录")
     public ServerResponse<Map<String,Object>> login(User user) {
         //TODO 为了测试方便，暂时前后端不对密码进行加密，项目交付或项目答辩或最终测试时会还原。
         if(false){
@@ -103,6 +105,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "用户模块",operType = "注册",operDesc = "用户前台注册")
     public ServerResponse<String> register(User user) {
         //从redis中获取私钥
         String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
@@ -167,6 +170,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "用户模块",operType = "更新",operDesc = "更新用户信息")
     public ServerResponse<UserDetail> updateUserDetail(UserDetail userDetail) {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -230,6 +234,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "用户模块",operType = "更新",operDesc = "用户更新手机号")
     public ServerResponse<String> updatePhone(UpdateUser updateUser) {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -261,6 +266,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "用户模块",operType = "更新",operDesc = "用户修改密码")
     public ServerResponse<String> updatePassword(UpdateUser updateUser) {
         //从redis中获取私钥
         String privateKey = redisUtils.getCacheObject(updateUser.getUuId() + ":privateKey");

@@ -2,6 +2,7 @@ package com.sicnu.boot.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.RoleMapper;
 import com.sicnu.boot.mapper.UserManageMapper;
 import com.sicnu.boot.mapper.UserMapper;
@@ -48,6 +49,7 @@ public class UserManageServiceImpl implements UserManageService {
     private RoleMapper roleMapper;
 
     @Override
+    @SysLogAnnotation(operModel = "用户管理",operType = "登录",operDesc = "用户后台登录系统")
     public ServerResponse<Map<String, Object>> login(User user) {
         //验证用户是否具有管理员权限
         int checkAdmin = userManageMapper.checkAdmin(user.getUsername());
@@ -82,6 +84,7 @@ public class UserManageServiceImpl implements UserManageService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @SysLogAnnotation(operModel = "用户管理",operType = "删除",operDesc = "删除指定用户")
     public ServerResponse<String> deleteUserByUserId(Integer userId) {
         //删除用户对应的角色
         userManageMapper.deleteUserRole(userId);
@@ -92,6 +95,7 @@ public class UserManageServiceImpl implements UserManageService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @SysLogAnnotation(operModel = "用户管理",operType = "插入",operDesc = "插入一条用户记录")
     public ServerResponse<String> insertUser(UserDetail userDetail) {
         //查看是否存在改用户名
         Integer checkUsername = userMapper.checkUsername(userDetail.getUsername());
@@ -111,6 +115,7 @@ public class UserManageServiceImpl implements UserManageService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @SysLogAnnotation(operModel = "用户管理",operType = "更新",operDesc = "更新用户的角色信息")
     public ServerResponse<String> updateUserRole(UserVo userVo) {
         //查询改用户是否存在
         User user = userMapper.getUserById(userVo.getUserId());

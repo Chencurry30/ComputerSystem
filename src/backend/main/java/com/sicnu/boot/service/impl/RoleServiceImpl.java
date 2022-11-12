@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.MenuMapper;
 import com.sicnu.boot.mapper.RoleMapper;
 import com.sicnu.boot.pojo.Menu;
@@ -45,6 +46,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
+    @SysLogAnnotation(operModel = "角色管理",operType = "更新",operDesc = "更新角色所具有的权限")
     public ServerResponse<String> updateRoleMenu(RoleVo roleVo) {
         //查询改角色是否存在
         int count = roleMapper.checkRoleByRoleId(roleVo.getRoleId());
@@ -69,6 +71,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "角色管理",operType = "添加",operDesc = "添加一个角色")
     public ServerResponse<String> addRole(Role role) {
         roleMapper.insertRole(role);
         return ServerResponse.createBySuccess("添加成功");
@@ -76,6 +79,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @SysLogAnnotation(operModel = "角色管理",operType = "删除",operDesc = "删除指定角色")
     public ServerResponse<String> deleteRoleByRoleId(Integer roleId) {
         //查看是否有用户拥有改角色
         int checkUserHasTheRole = roleMapper.checkUserHasTheRole(roleId);
@@ -92,6 +96,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "角色管理",operType = "更新",operDesc = "更新指定角色")
     public ServerResponse<String> updateRole(Role role) {
         roleMapper.updateRole(role);
         return ServerResponse.createBySuccess("更新成功");

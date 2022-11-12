@@ -3,15 +3,26 @@ server:
   servlet:
     #设置访问url前缀
     context-path: /api
+
 jasypt:
+  #对数据库连接串加密的方法
   encryptor:
     # 你的秘钥
     password: sicnu
+
+logging:
+  #配置日志配置文件地方
+  config: classpath:logback_spring.xml
+  level:
+    root: info
+    #开启sql打印
+    com.sicnu.boot.mapper: debug
 
 spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
+      #对数据库连接串加密
       url: ENC(y7VIwY2A4BCPayCZE2kZqS1F4arB7igrmHeQ96CHzh3eYrtjOGz0upinU3FhcA0zBeOCSIoY/baMPYnmoZ2DZtDwBAHDij3wTVpEcMqTre8SB9RMt39X650ShMwysCHv)
       username: ENC(r5A15Jti3Re6N0Zl0xtVzQ==)
       password: ENC(8qqyb8ZlnsJqv82c4f0aUA==)
@@ -56,11 +67,6 @@ pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
-
-logging:
-  level:
-    #开启sql打印
-    com.sicnu.boot.mapper: debug
 
 # 腾讯云短信服务配置
 sms-config:

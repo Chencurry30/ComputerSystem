@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.MenuMapper;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.service.MenuService;
@@ -42,24 +43,28 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "权限管理",operType = "添加",operDesc = "添加一个一级权限")
     public ServerResponse<String> insertOneMenu(Menu menu) {
         menuMapper.insertOneMenu(menu);
         return ServerResponse.createBySuccess("添加成功");
     }
 
     @Override
+    @SysLogAnnotation(operModel = "权限管理",operType = "添加",operDesc = "添加一个子权限")
     public ServerResponse<String> insertChildrenMenu(Menu menu) {
         menuMapper.insertChildrenMenu(menu);
         return ServerResponse.createBySuccess("添加成功");
     }
 
     @Override
+    @SysLogAnnotation(operModel = "权限管理",operType = "更新",operDesc = "更新指定权限")
     public ServerResponse<String> updateMenu(Menu menu) {
         menuMapper.updateMenu(menu);
         return ServerResponse.createBySuccess("更新成功");
     }
 
     @Override
+    @SysLogAnnotation(operModel = "权限管理",operType = "删除",operDesc = "删除指定权限")
     public ServerResponse<String> deleteMenuByMenuId(Integer menuId) {
         //删除权限对应的角色
         menuMapper.deleteRoleMenuByMenuId(menuId);

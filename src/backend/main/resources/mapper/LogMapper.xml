@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.LogMapper">
+
+    <insert id="insertLog" parameterType="Log">
+        insert into log values
+            (null,#{username},#{method},#{ip},#{createDate},#{type},#{model},#{result},#{description},#{url})
+    </insert>
+    <delete id="deleteLogByLogId">
+        delete from log where log_id = #{logId}
+    </delete>
+    <delete id="deleteLogByLogIds">
+        delete from log where log_id in
+        <foreach collection="logIds" open="(" close=")" separator="," item="logId">
+            #{logId}
+        </foreach>
+    </delete>
+    <select id="getLogList" resultType="com.sicnu.boot.pojo.Log">
+        select * from log order by create_date desc
+    </select>
+
+</mapper>
