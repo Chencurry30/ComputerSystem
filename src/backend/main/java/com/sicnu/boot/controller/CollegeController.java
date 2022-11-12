@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,8 @@ public class CollegeController {
      * @return College
      */
     @GetMapping("/{id}")
-    public ServerResponse<College> getCollegeById(@PathVariable("id") Integer id){
+    public ServerResponse<College> getCollegeById(@Min(value = 0,message = "院校id最小值为1")
+                                                      @PathVariable("id") Integer id){
         return collegeService.getCollegeById(id);
     }
 
@@ -79,10 +81,10 @@ public class CollegeController {
     @GetMapping("/pages/{regionId}-{typeId}-{attributeId}-{pageNum}")
     ServerResponse<PageInfo<College>> getCollegeListBySelective(
             String collegeName,
-            @PathVariable("regionId") Integer regionId,
-            @PathVariable("typeId") Integer typeId,
-            @PathVariable("attributeId") Integer attributeId,
-            @PathVariable("pageNum") Integer pageNum){
+            @Min (value = 0,message = "地区id最小值为0") @PathVariable("regionId") Integer regionId,
+            @Min (value = 0,message = "类型id最小值为0") @PathVariable("typeId") Integer typeId,
+            @Min (value = 0,message = "属性id最小值为0") @PathVariable("attributeId") Integer attributeId,
+            @Min (value = 1,message = "页数id最小值为1") @PathVariable("pageNum") Integer pageNum){
         return collegeService.getCollegeListBySelective(new CollegeSelective(collegeName,regionId,typeId,attributeId,pageNum));
     }
 

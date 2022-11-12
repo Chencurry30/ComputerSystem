@@ -14,14 +14,14 @@ import java.util.List;
  */
 public interface MajorService {
     /**
-     * 查询专业
+     * 通过专业id查询专业
      * @param id：专业id
      * @return Major
      */
     ServerResponse<Major> getMajorById(Integer id);
 
     /**
-     * 查询专业
+     * 通过专业名查询专业
      * @param name：专业名
      * @return Major
      */
@@ -42,6 +42,7 @@ public interface MajorService {
 
     /**
      * 根据学校id查询相应专业列表
+     * @param collegeId：院校id
      * @return List
      */
     ServerResponse<List<Major>> getMajorListByCollegeId(Integer collegeId);
