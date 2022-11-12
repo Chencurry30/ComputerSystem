@@ -8,27 +8,55 @@
         </div>
       </div>
       <div class="userInput">
-        <textarea class="InputBox" :placeholder="showplacehodler"></textarea>
+        <textarea class="InputBox" :placeholder="showplacehodler" v-model="content"></textarea>
       </div>
       <div class="userBtn">
-        <div class="Btn-text">发送</div>
+        <div class="Btn-text" @click="sendIndo">发送</div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
+import { sendVideoRemark } from '../../service/videoService'
 export default {
   name: "releaseItem",
-  props:['typeSelect'],
-  computed:{
-    ...mapState('remark',{
-      backOtherInfo:'backOtherInfo',
+  props: ['typeSelect', 'fatherInfo'],
+  data() {
+    return {
+      content: ''
+    }
+  },
+  // 该视频对我的相关学习起到了很好的作用
+  methods: {
+    sendIndo() {
+      let data = {}
+      data.content = this.content
+      data.resourceId = parseInt(this.$route.query.videoId)
+      console.log(data);
+      if (this.fatherInfo === undefined) {
+        data.level = 1    //表示的是用户发表的评论
+        data.parentId = 0
+        data.toUid = 0
+      } else {
+        //表示的是用户回复其他人的评论
+        data.toUid = this.backOtherInfo.toUser 
+        data.parentId = this.fatherInfo.commentId
+        data.level = 2
+      }
+      sendVideoRemark(data).then((res)=>{
+        console.log(res);
+      })
+    }
+  },
+  computed: {
+    ...mapState('remark', {
+      backOtherInfo: 'backOtherInfo',
     }),
-    showplacehodler(){
-      if(this.typeSelect === '回复'){
-        return '@'+this.backOtherInfo.nickname
-      }else{
+    showplacehodler() {
+      if (this.typeSelect === '回复') {
+        return '@' + this.backOtherInfo.nickname
+      } else {
         return '发送一条相关的评论'
       }
     }
@@ -39,15 +67,18 @@ export default {
 <style lang='less' scoped>
 .releaseItem {
   width: 100%;
+
   .ItemInfo {
     display: flex;
     height: 50px;
+
     .userImg {
       display: flex;
       justify-content: center;
       align-content: center;
       width: 80px;
       height: 50px;
+
       .active-img {
         width: 48px;
         height: 48px;
@@ -55,8 +86,10 @@ export default {
         background: red;
       }
     }
+
     .userInput {
       flex: 7;
+
       .InputBox {
         width: 100%;
         height: 100%;
@@ -69,6 +102,7 @@ export default {
         background-color: #f1f2f3;
       }
     }
+
     .userBtn {
       display: flex;
       flex: 1;
@@ -79,6 +113,7 @@ export default {
       border-radius: 4px;
       background: #00aeec;
       cursor: pointer;
+
       .Btn-text {
         position: absolute;
         z-index: 1;

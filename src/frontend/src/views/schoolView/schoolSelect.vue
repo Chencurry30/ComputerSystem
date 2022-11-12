@@ -45,7 +45,7 @@
     </div>
     <div class="MainFooter"> -->
       <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
-      <PagerView :pageData="getSchoolPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
+      <PagerView :pagedata="getSchoolPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
     </div>
   </div>
 

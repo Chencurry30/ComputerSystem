@@ -54,7 +54,7 @@
     </div>
     <div class="MainFooter">
       <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
-      <PagerView :pageData="getVideoPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
+      <PagerView :pageInfo="getVideoPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
     </div>
   </div>
 
@@ -80,10 +80,11 @@ export default {
       PagerView
     },
     mounted(){
-      //获取视屏的选择列表 
-      this.getVideoNavType()
       //获取最初始化的相关数据 
       this.getvideos()
+      //获取视屏的选择列表 
+      this.getVideoNavType()
+
     },
     methods:{
       //获取视屏的选择列表 
@@ -115,9 +116,8 @@ export default {
         }else if(sortid !== undefined){
           this.selectId.thild = parseInt(sortid)
         }
-        let {first,second,thild} = this.selectId
-        console.log(first);
-        this.$store.dispatch('videoData/getVideoData',{first,second,thild})
+        let {first,second,thild,pageNum} = this.selectId
+        this.$store.dispatch('videoData/getVideoData',{first,second,thild,pageNum})
       },1500)
       ,
       //去往具体的视屏页面 

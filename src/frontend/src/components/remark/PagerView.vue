@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import { mapGetters} from 'vuex';
+
 export default {
   name:'PagerView',
-  props:['pageData'],
+  props:['pageInfo'],
   data(){
     return{
-      // pageData:this.pageData
+      pageData:this.pageInfo || {}
     }
   },
   methods:{
@@ -68,7 +68,8 @@ export default {
       if(page === '...'){
         return;
       }else{
-        this.pageData.pageNo = page
+        // 
+        this.giveFatherPageNo(page)
         this.calculatePage();
         // this.getPageData();
       }
@@ -76,14 +77,9 @@ export default {
 
     //利用下面的点击选项，从子组件向父组件进行相关参数的传递 
     giveFatherPageNo(){
-      this.$emit("giveFatherPageNo", this.pageData.pageNo);
+      this.$emit("giveFatherPageNo",this.pageData.pageNo);
     } 
     
-
-
-
-
-
 
 
 
@@ -102,10 +98,14 @@ export default {
     pageNumber(){
       return this.calculatePage();
     },
-    ...mapGetters('videoData',{
-      getVideoPage:'getVideoPage'
-    })
   },
+
+  watch:{
+    //利用属性的监听 
+    pageInfo(newData){
+      this.pageData = newData
+    }
+  }
 
 }
 </script>

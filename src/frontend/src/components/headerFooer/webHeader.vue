@@ -8,7 +8,6 @@
             <img src="../../assets/Img/webloge.png" alt="" />
           </div>
           <div class="title">旭升网</div>
-          <!-- <span class="welcome">{{showUsername}}</span> -->
         </div>
         <div class="main-right centerLocation" v-if="showLoginBtn">
           <div class="message-icon">
@@ -52,6 +51,9 @@
 <script>
 export default {
   name: "webHeader",
+  //App中传入的一个相关的方法,用于帮助进行页面刷新 
+  inject:['reload'],
+
   data(){
     return{
       liList:[
@@ -70,7 +72,7 @@ export default {
     //前往登录页面 
     gotologin() {
       let location = { name: "loginView" };
-      localStorage.clear('token')
+      sessionStorage.removeItem('token')
       this.$router.push(location);
     },
     addClass(index){
@@ -78,11 +80,13 @@ export default {
     },
     //退出登录 
     backLogin(){
-      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
       let location = {
         name:'loginView'
       }
+      
       this.$router.push(location)
+      this.reload()
     },
     //前往个人中心
     gotoPerson(){
@@ -93,14 +97,13 @@ export default {
     },
   },
   computed:{
-
     showLoginBtn(){
       return sessionStorage.getItem('token') !== null
     },
     hiddenTopComponent() {
       return this.$route.meta.showTop;
     },
-  }
+  },
 };
 </script>
 
