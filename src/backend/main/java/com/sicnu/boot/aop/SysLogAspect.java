@@ -1,5 +1,9 @@
 package com.sicnu.boot.aop;
 
+
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.sicnu.boot.mapper.LogMapper;
 import com.sicnu.boot.pojo.Log;
 import com.sicnu.boot.pojo.User;
@@ -20,6 +24,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -127,7 +132,14 @@ public class SysLogAspect {
             log.setUsername(user.getUsername());
         }
         else {
-            log.setUsername(null);
+            JSONObject jsonObject = getJsonStrByRequest(request);
+            String username = "username";
+            if (jsonObject.get(username) != null){
+                log.setUsername((String) jsonObject.get("username"));
+            }
+            else {
+                log.setUsername(null);
+            }
         }
         //操作IP IPUtils工具类网上大把的，比如工具类集锦的hutool.jar
         log.setIp(HttpUtils.getIpAddr(request));
@@ -147,6 +159,27 @@ public class SysLogAspect {
             rtnMap.put(key, paramMap.get(key)[0]);
         }
         return rtnMap;
+    }
+
+    /**
+     * 获取json格式 请求参数
+     */
+    public JSONObject getJsonStrByRequest(HttpServletRequest request) {
+        JSONObject jsonObject = null;
+        try {
+
+            BufferedReader streamReader = request.getReader();
+            StringBuilder responseStrBuilder = new StringBuilder();
+            String inputStr;
+            while ((inputStr = streamReader.readLine()) != null) {
+                responseStrBuilder.append(inputStr);
+            }
+
+            jsonObject = JSONObject.parseObject(responseStrBuilder.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
     /**
