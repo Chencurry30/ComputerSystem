@@ -1,114 +1,54 @@
-//评论和回复的相关信息同行
+//评论和回复的相关信息信息
+import { getVideoRemark } from '../service/videoService'
 const remark = {
-    namespaced:true,   //开启匿名空间
-    state:{
-        backOtherInfo:{},  //点击回复时储存的当前人的相关信息
-        remarkList: [
-            {
-              id:123123123,   //循环的key值的ID值
-              father:{          
-              id: 1232,
-              image: "1231231231232.123",
-              nickname: "高山",
-              time: "2022-6-30",
-              content: "你的评论对我很有帮助，感谢你的发言",
-              resourcename: "回复我的",
-              },
-              
-              children:[
-                {
-                  id: 1232123,  //循环的keyID值,
-                  userId:1232,
-                  image: "1231231231232.123",
-                  nickname: "高山",
-                  time: "2022-6-30",
-                  content: "你的评论对我很有帮助，感谢你的发言",
-                  resourcename: "回复我的",
-                },
-                {
-                  id: 12312,
-                  image: "1231231231232.123",
-                  nickname: "高山",
-                  time: "2022-6-30",
-                  content: "你的评论对我很有帮助，感谢你的发言",
-                  resourcename: "回复我的",
-                },
-                {
-                  id: 123122,
-                  image: "1231231231232.123",
-                  nickname: "高山",
-                  time: "2022-6-30",
-                  content: "你的评论对我很有帮助，感谢你的发言",
-                  resourcename: "回复我的",
-                },
-                {
-                  id: 12312298,
-                  image: "1231231231232.123",
-                  nickname: "高山",
-                  time: "2022-6-30",
-                  content: "你的评论对我很有帮助，感谢你的发言",
-                  resourcename: "回复我的",
-                },
-                {
-                  id: 12323122,
-                  image: "1231231231232.123",
-                  nickname: "高山",
-                  time: "2022-6-30",
-                  content: "你的评论对我很有帮助，感谢你的发言",
-                  resourcename: "回复我的",
-                }
-              ]
-            },
-            {
-              id:1231231,   //循环的key值的ID值
-              father:{          
-              id: 1232,
-              image: "1231231231232.123",
-              nickname: "高山",
-              time: "2022-6-30",
-              content: "你的评论对我很有帮助，感谢你的发言",
-              resourcename: "回复我的",
-              },
-              children:[
-                {
-                  id: 1232123213123,
-                  image: "1231231231232.123",
-                  nickname: "高山",
-                  time: "2022-6-30",
-                  content: "你的评论对我很有帮助，感谢你的发言",
-                  resourcename: "回复我的",
-                },
-                {
-                  id: 12312123,
-                  image: "1231231231232.123",
-                  nickname: "高山",
-                  time: "2022-6-30",
-                  content: "你的评论对我很有帮助，感谢你的发言",
-                  resourcename: "回复我的",
-                }
-              ]
-            }      
-        ],
+  namespaced: true,   //开启匿名空间
+  state: {
+    backOtherInfo:{},
+    remarkList: [],
+  },
+  actions: {
+
+    //获取点击回复时存储其他用户的信息
+    getotherinfo(context, otherinfo) {
+      context.commit('GETOTHERINFO', otherinfo);
     },
-    actions:{
-        getotherinfo(context,otherinfo){
-            console.log(otherinfo);
-            context.commit('GETOTHERINFO',otherinfo);
+
+
+    //获取视屏评论的信息
+    getVideoRemark(context, videoId) {
+      getVideoRemark(videoId).then((res) => {
+        console.log(res);
+        if (res.data.code === 200) {
+          let data = res.data.data
+          context.commit('GETVIDEOREMARK', data)
         }
+      })
     },
-    mutations:{
-        GETOTHERINFO(state,otherinfo){    //处理组件的信息
-            state.backOtherInfo = otherinfo
-        }
+    
+  },
+  mutations: {
+    //处理组件的信息
+    GETOTHERINFO(state, otherinfo) {
+      state.backOtherInfo = otherinfo
     },
-    getters:{
-        getOtherInfo(state){
-            return state.backOtherInfo || {};
-        },
-        //返回的是接口返回的评论的数据 
-        getRemarkList(state){ 
-            return state.remarkList || {};
-        }
+
+    GETVIDEOREMARK(state, data) {
+      state.remarkList = data
     }
+
+  },
+  getters: {
+
+    //返回点击回复时存储的用户的信息 
+    getOtherInfo(state) {
+      console.log(state.backOtherInfo,'我是这个点击回服的相关信息');
+      return state.backOtherInfo || {};
+    },
+
+    //返回的是这个视屏评论的信息列表 
+    getRemarkList(state) {
+      return state.remarkList
+    }
+  }
 }
 export default remark

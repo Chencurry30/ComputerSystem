@@ -63,6 +63,8 @@ import rules from '../../utils/rules'
 
 export default {
   name: "loginView",
+  //App中传入的一个相关的方法,用于帮助进行页面刷新 
+  inject:['reload'],
   data() {
     return {
       automaticLogin: false, //自动登录
@@ -84,16 +86,8 @@ export default {
       },
     };
   },
-  computed: {
-    //判断提交
-    canSubmit() {
-      const { username, password } = this.dataForm
-      return Boolean(username && password)
-    },
-    //获取公钥的ID以及公钥的内容
-    ...mapGetters('encryption', {
-      getkeyInfo: 'getkeyInfo'
-    })
+  mounted(){
+    this.reload()
   },
   methods: {
     //获取公钥逻辑
@@ -139,8 +133,6 @@ export default {
           // data.password = CryAlgorithm(this.getkeyInfo.encryPtion,this.dataForm.password)
           userLogin(data).then(res => {
             console.log(res);
-            Cookies.set('name', this.dataForm.username)
-            const name = data.username
             if (res.data.code === 200) {
               const token = res.data.data.token
               sessionStorage.setItem('token', token)  //保存token到本地浏览器
@@ -149,6 +141,8 @@ export default {
                 type: "success",
               })
               this.$router.push({ name: 'Home' })
+              //刷新页面 
+              this.reload()
             } else if (res.data.code === 400) {
               this.$message.error("用户名或密码错误，请重新输入！")
             }
@@ -164,6 +158,17 @@ export default {
       }, 1000);
     }
 
+  },
+  computed: {
+    //判断提交
+    canSubmit() {
+      const { username, password } = this.dataForm
+      return Boolean(username && password)
+    },
+    //获取公钥的ID以及公钥的内容
+    ...mapGetters('encryption', {
+      getkeyInfo: 'getkeyInfo'
+    })
   },
 };
 </script>

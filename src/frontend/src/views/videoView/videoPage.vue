@@ -79,6 +79,7 @@
 
       <!--评论阶段-->
       <div class="videocommit">
+
         <div class="reply-header">
           <div class="reply-notecion">
             <ul class="reply-bar">
@@ -96,22 +97,26 @@
         </div>
 
         <!--消息回复的组件-->
-        <div class="reply-List" v-for="(fatherItem) in getRemarkList" :key="fatherItem.commentId">
-          <replyItem :replyInfo="getFatherItem(fatherItem)" :showId="item.id"></replyItem>
-          <div class="children-List hidden " :class="{unhidden:item.id === showMoreID}" >
-            <replyItem  v-for="(child) in item.children" :key="child.id" :replyInfo="child" :showId="item.commentId"></replyItem>
+        <div class="reply-List" v-for="(fatherItem) in getRemarkList" :key="fatherItem.id">
+          <replyItem :replyInfo="fatherItem.comment" :showId="fatherItem.id"></replyItem>
+           <div class="children-List hidden" :class="{hiddenBox:fatherItem.children === null,showBox:showMoreID === fatherItem.id
+          }">
+            <replyItem  v-for="(child) in fatherItem.children" :replyInfo="child" :showId="fatherItem.id" :key="child.commentId"></replyItem>
           </div>
           <div class="totalNumber">
-            <div class="total" >共1223条回复</div>
-            <div class="getMore" @click="showMoreInfo(item)">点击查看</div>
+            <div class="getMore" @click="showMoreInfo(fatherItem.id)">查看全部</div>
           </div>
-          <!--这里就是利用父组件循环的ID来控制展示的相关回复的信息-->
-          <div class="children-Commit hiddenBox" :class="{showBox:item.id === backOtherInfo.showId}">
-            <ReleaseItem :typeSelect="Type.first"></ReleaseItem>
-          </div>
+
+          <div class="children-Commit hiddenBox" :class="{showBox:fatherItem.id === getOtherInfo.showId}">
+            <!--将每个评论的父亲传入，是每次回复的时候都是回复到父亲管理-->
+            <ReleaseItem :typeSelect="Type.first" :fatherInfo="fatherItem.comment"></ReleaseItem>
+          </div> 
+
         </div>
       </div>
     </div>
+
+      <!--这里就是利用父组件循环的ID来控制展示的相关回复的信息-->
     <div class="MainBox-right">
       <div class="videoList">
         <div class="video-list-item">
@@ -237,20 +242,16 @@
 <script>
 import ReleaseItem from "../../components/remark/releaseItem.vue";
 import ReplyItem from "../../components/remark/replyItem.vue";
-import {mapState,mapGetters} from 'vuex'
-import {getVideoInfo,getVideoRemark} from '../../service/videoService.js'
+import {mapGetters} from 'vuex'
 export default {
   name: "videoPage",
   data() {
     return {
       showMoreID:0,
-      showRemarkID:0,
       Type:{
         first:'回复',
         second:'提问',
       },
-      videoInfo:{},
-      getRemarkList:{}
     };
   },
   components: {
@@ -264,67 +265,38 @@ export default {
     this.getPageRemark()
   },
   methods:{
-    showMoreInfo(item){
-      this.showMoreID = item.id;
-    },
-
-    //获取视屏页面的具体信息 
+    //获取视屏页面的具体信息
     getPageData(){
       let videoId = this.$route.query.videoId
-      getVideoInfo(videoId).then((res)=>{
-        console.log(res);
-        this.videoInfo = res.data.data
-      })
+      this.$store.dispatch('videoData/getInfo',videoId)
     },
-
     //获取对应的评论信息 
     getPageRemark(){
       let videoId = this.$route.query.videoId
-      getVideoRemark(videoId).then((res)=>{
-        this.getRemarkList = res.data.data
-        console.log(res);
-      })
+      this.$store.dispatch('remark/getVideoRemark',videoId)
     },
-
-    getFatherInfo(item){
-      let fatherItem = {}
-      console.log(item);
-      // fatherItem.commentId = item.commentId
-      // fatherItem.content = item.content
-      // fatherItem.createDate = item.createDate
-      // fatherItem.resourceId = item.resourceId
-      // fatherItem.author = item.author
-      // fatherItem.parentId = item.parentId
-      // fatherItem.toUser = item.toUser
-      // fatherItem.likeNumber = item.likeNumber
-      // level: 1
-      console.log(fatherItem);
-      return fatherItem
-    }
-
-
-  
-
-
+    //将隐藏的评论全部展示
+    showMoreInfo(fatherId){
+      this.showMoreID = fatherId
+    } 
 
 
   },
   computed:{
-    getFatherItem(item){
-     return this.getFatherInfo(item)
-    }
 
 
-
-
-
-    // ...mapState('remark',{
-    //   backOtherInfo:"backOtherInfo",   //点击回复时候所回复人的相关储存信息
-    // }),
-    // ...mapGetters('remark',{
-    //   getRemarkList:'getRemarkList',
-    // }),
-
+    //从vuex中获取视屏的基本信息 
+    ...mapGetters('videoData',{
+      videoInfo:'getVideoInfo'
+    }),
+    
+  
+    //从vuex中获取基本的评论列表
+    ...mapGetters('remark',{
+      getRemarkList:'getRemarkList',
+      //获取的是点击回复评论时被回复人的相关信息 
+      getOtherInfo:'getOtherInfo'
+    }),
 
   },
 };
@@ -463,7 +435,7 @@ export default {
           margin: 10px 0;
           margin-left: 5%;
           width: 95%;
-          }
+        }
         .totalNumber{
           display: flex;
           margin-left: 10%;
@@ -476,12 +448,23 @@ export default {
             color: #00aeec;
           }
         }
+
+        //显示子评论的宽度 
         .hidden{
-          height: 160px;
+          height: 90px;
+          overflow: hidden;
+          transition: 3;
+        }
+
+        //将没有子评论的相关信息隐藏 
+        .hiddenBox{
+          height: 0px;
           overflow: hidden;
         }
-        .unhidden{
+        //显示相关信息 
+        .showBox{
           height: 100%;
+          overflow:auto;
         }
       }
     }

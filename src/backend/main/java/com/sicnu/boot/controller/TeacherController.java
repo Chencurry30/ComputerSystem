@@ -36,7 +36,7 @@ public class TeacherController {
         return teacherService.getTeacherById(id);
     }
 
-    @GetMapping()
+    @GetMapping("/{pageNum}")
     ServerResponse<PageInfo<Teacher>> getTeacherPage(
             @Min(value = 1,message = "pageNum的最小值为1") @PathVariable Integer pageNum){
         return teacherService.getTeacherPage(pageNum);
