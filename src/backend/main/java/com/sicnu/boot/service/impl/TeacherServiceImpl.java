@@ -49,14 +49,14 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public ServerResponse<String> insertTeacher(Teacher teacher) {
         teacherMapper.insertTeacher(teacher);
-        return ServerResponse.createBySuccess("添加成功");
+        return ServerResponse.createBySuccessMessage("添加成功");
     }
 
 
     @Override
     public ServerResponse<String> updateTeacher(Teacher teacher) {
         teacherMapper.updateTeacher(teacher);
-        return ServerResponse.createBySuccess("更新成功");
+        return ServerResponse.createBySuccessMessage("更新成功");
     }
 
     @Override
@@ -64,6 +64,6 @@ public class TeacherServiceImpl implements TeacherService {
         //删除权限对应的角色
         teacherMapper.deleteRoleTeacherByTeacherId(teacherId);
         //删除权限
-        return ServerResponse.createBySuccess("删除成功");
+        return ServerResponse.createBySuccessMessage("删除成功");
     }
 }
