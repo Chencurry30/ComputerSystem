@@ -36,13 +36,13 @@ public class LogServiceImpl implements LogService {
     @SysLogAnnotation(operModel = "日志管理",operType = "删除",operDesc = "删除指定日志")
     public ServerResponse<String> deleteLogByLogId(Integer logId) {
         logMapper.deleteLogByLogId(logId);
-        return ServerResponse.createBySuccess("删除成功");
+        return ServerResponse.createBySuccessMessage("删除成功");
     }
 
     @Override
     @SysLogAnnotation(operModel = "日志管理",operType = "删除",operDesc = "批量删除日志")
     public ServerResponse<String> deleteLogByLogIds(List<Integer> logIds) {
         logMapper.deleteLogByLogIds(logIds);
-        return ServerResponse.createBySuccess("批量删除成功");
+        return ServerResponse.createBySuccessMessage("批量删除成功");
     }
 }

@@ -100,12 +100,12 @@ public class CommentServiceImpl implements CommentService {
         //设置评论时间
         comment.setCreateDate(LocalDateTime.now());
         commentMapper.insertComment(comment);
-        return ServerResponse.createBySuccess("插入成功");
+        return ServerResponse.createBySuccessMessage("插入成功");
     }
 
     @Override
     public ServerResponse<String> updateCommentLikeNumber(Integer commentId) {
         commentMapper.updateCommentLikeNumber(commentId);
-        return ServerResponse.createBySuccess("点赞成功");
+        return ServerResponse.createBySuccessMessage("点赞成功");
     }
 }

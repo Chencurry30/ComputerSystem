@@ -46,21 +46,21 @@ public class MenuServiceImpl implements MenuService {
     @SysLogAnnotation(operModel = "权限管理",operType = "添加",operDesc = "添加一个一级权限")
     public ServerResponse<String> insertOneMenu(Menu menu) {
         menuMapper.insertOneMenu(menu);
-        return ServerResponse.createBySuccess("添加成功");
+        return ServerResponse.createBySuccessMessage("添加成功");
     }
 
     @Override
     @SysLogAnnotation(operModel = "权限管理",operType = "添加",operDesc = "添加一个子权限")
     public ServerResponse<String> insertChildrenMenu(Menu menu) {
         menuMapper.insertChildrenMenu(menu);
-        return ServerResponse.createBySuccess("添加成功");
+        return ServerResponse.createBySuccessMessage("添加成功");
     }
 
     @Override
     @SysLogAnnotation(operModel = "权限管理",operType = "更新",operDesc = "更新指定权限")
     public ServerResponse<String> updateMenu(Menu menu) {
         menuMapper.updateMenu(menu);
-        return ServerResponse.createBySuccess("更新成功");
+        return ServerResponse.createBySuccessMessage("更新成功");
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MenuServiceImpl implements MenuService {
         menuMapper.deleteRoleMenuByMenuId(menuId);
         //删除权限
         menuMapper.deleteMenuByMenuId(menuId);
-        return ServerResponse.createBySuccess("删除成功");
+        return ServerResponse.createBySuccessMessage("删除成功");
     }
 
     @Override

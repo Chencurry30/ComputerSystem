@@ -67,14 +67,14 @@ public class RoleServiceImpl implements RoleService {
             //添加权限
             roleMapper.insertRoleMenu(roleVo.getRoleId(),menu.getMenuId());
         }
-        return ServerResponse.createBySuccess("修改成功");
+        return ServerResponse.createBySuccessMessage("修改成功");
     }
 
     @Override
     @SysLogAnnotation(operModel = "角色管理",operType = "添加",operDesc = "添加一个角色")
     public ServerResponse<String> addRole(Role role) {
         roleMapper.insertRole(role);
-        return ServerResponse.createBySuccess("添加成功");
+        return ServerResponse.createBySuccessMessage("添加成功");
     }
 
     @Override
@@ -92,14 +92,14 @@ public class RoleServiceImpl implements RoleService {
         roleMapper.deleteUserRoleByRoleId(roleId);
         //删除该角色
         roleMapper.deleteRoleByRoleId(roleId);
-        return ServerResponse.createBySuccess("删除成功");
+        return ServerResponse.createBySuccessMessage("删除成功");
     }
 
     @Override
     @SysLogAnnotation(operModel = "角色管理",operType = "更新",operDesc = "更新指定角色")
     public ServerResponse<String> updateRole(Role role) {
         roleMapper.updateRole(role);
-        return ServerResponse.createBySuccess("更新成功");
+        return ServerResponse.createBySuccessMessage("更新成功");
     }
 
 

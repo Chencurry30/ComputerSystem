@@ -110,7 +110,7 @@ public class UserManageServiceImpl implements UserManageService {
         //插入用户权限，默认student
         int roleId = roleMapper.selectRoleIdByRoleKey("student");
         userManageMapper.insertUserRole(userDetail.getUserId(),roleId);
-        return ServerResponse.createBySuccess("添加成功");
+        return ServerResponse.createBySuccessMessage("添加成功");
     }
 
     @Override
@@ -136,13 +136,13 @@ public class UserManageServiceImpl implements UserManageService {
             //添加角色
             userManageMapper.insertUserRole(userVo.getUserId(),role.getRoleId());
         }
-        return ServerResponse.createBySuccess("修改成功");
+        return ServerResponse.createBySuccessMessage("修改成功");
     }
 
     @Override
     public ServerResponse<String> updateUser(UserDetail userDetail) {
         userManageMapper.updateUser(userDetail);
-        return ServerResponse.createBySuccess("修改成功");
+        return ServerResponse.createBySuccessMessage("修改成功");
     }
 
     @Override
