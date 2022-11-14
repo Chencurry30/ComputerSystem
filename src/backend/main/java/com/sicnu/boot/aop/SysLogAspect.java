@@ -124,7 +124,7 @@ public class SysLogAspect {
         //操作时间
         log.setCreateDate(LocalDateTime.now());
         //操作用户 --登录时有把用户的信息保存在session中，可以直接取出
-        //获取SecurityContextHolder中的用户信息
+        //获取SecurityContextHolder中的用户信息（即token中的用户id）
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof LoginUser){
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
@@ -132,6 +132,7 @@ public class SysLogAspect {
             log.setUsername(user.getUsername());
         }
         else {
+            //否则，用户没有登录，获取json参数中的username
             JSONObject jsonObject = getJsonStrByRequest(request);
             String username = "username";
             if (jsonObject.get(username) != null){
@@ -167,14 +168,12 @@ public class SysLogAspect {
     public JSONObject getJsonStrByRequest(HttpServletRequest request) {
         JSONObject jsonObject = null;
         try {
-
             BufferedReader streamReader = request.getReader();
             StringBuilder responseStrBuilder = new StringBuilder();
             String inputStr;
             while ((inputStr = streamReader.readLine()) != null) {
                 responseStrBuilder.append(inputStr);
             }
-
             jsonObject = JSONObject.parseObject(responseStrBuilder.toString());
         } catch (Exception e) {
             e.printStackTrace();

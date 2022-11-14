@@ -5,6 +5,7 @@ import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.pojo.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +22,7 @@ import java.util.Objects;
  * Data:    2022/09/26 19:27
  */
 @Service
+@Slf4j
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Resource
@@ -32,9 +34,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         User user = userMapper.getByUsername(username);
         //如果没有查询到用户就抛出异常
         if (Objects.isNull(user)){
+            log.error("登录用户时，登录失败，失败原因：无法从数据库中查询到该用户");
             throw new RuntimeException("用户名或密码错误");
         }
-        //TODO 查询对应的权限
         List<Menu> menus = userMapper.getUserMenu(user.getUserId());
         List<String> list = new ArrayList<>();
         for (Menu menu : menus) {

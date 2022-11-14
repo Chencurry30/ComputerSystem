@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
             //从redis中获取私钥
             String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
             if (StringUtils.isBlank(privateKey)){
+                log.error("用户登录时，登录失败，失败原因：密码加密的密钥已经失效");
                 return ServerResponse.createByErrorMessage("密钥已经失效");
             }
             //解密密码
@@ -118,18 +119,21 @@ public class UserServiceImpl implements UserService {
         Matcher matcher = PASSWORD_PATTERN.matcher(user.getPassword());
         boolean matches = matcher.matches();
         if (!matches){
+            log.error("用户注册时，注册失败，失败原因：密码格式不符合规范");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
                     , "密码必须为6-12位，且必须包含数字，字母");
         }
         //检查手机号是否存在
         Integer checkPhone = userMapper.checkPhone(user.getPhone());
         if (checkPhone == 1){
+            log.error("用户注册时，注册失败，失败原因：用户待注册的手机号已经存在");
             log.error("手机号已存在，请重新注册");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.PHONE_REPEAT.getCode(), "手机号已存在，请重新注册");
         }
         //首先判断用户名是否存在
         Integer checkUsername = userMapper.checkUsername(user.getUsername());
         if(checkUsername == 1){
+            log.error("用户注册时，注册失败，失败原因：用户名重复");
             log.error("用户名已经存在，请重新注册");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_REPEAT.getCode(), "用户名已经存在，请重新注册");
         }
@@ -188,6 +192,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "用户模块",operType = "更新",operDesc = "忘记密码")
     public ServerResponse<String> forgetPassword(User user) {
         //从redis中获取私钥
         String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
@@ -200,12 +205,14 @@ public class UserServiceImpl implements UserService {
         Matcher matcher = PASSWORD_PATTERN.matcher(user.getPassword());
         boolean matches = matcher.matches();
         if (!matches){
+            log.error("忘记密码时，重置密码失败，失败原因为：密码格式不符合规范");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
                     , "密码必须为6-12位，且必须包含数字，字母");
         }
         //验证是否存在此用户
         User byUsername = userMapper.getByUsername(user.getUsername());
         if (Objects.isNull(byUsername)){
+            log.error("忘记密码时，重置密码失败，失败原因为：不存在该用户");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USER_NOT_FOUND.getCode(), "不存在此用户");
         }
         //验证手机验证码是否正确
@@ -243,17 +250,20 @@ public class UserServiceImpl implements UserService {
         //检查手机号是否已经存在
         Integer integer = userMapper.checkPhone(updateUser.getPhone());
         if (integer != 0){
+            log.error("更新用户手机号时，更新失败，失败原因：该手机号已经存在");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.PHONE_REPEAT.getCode(), "手机号已经存在");
         }
         //验证旧手机号验证码
         ServerResponse<String> verifyCode = verifySmsCode(updateUser.getOldPhone(),updateUser.getOldSmsCode());
         if (verifyCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            log.error("更新用户手机号时，更新失败，失败原因：手机号的验证码错误");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(),
                     "旧手机号的验证码错误");
         }
         //验证新手机号验证码
         ServerResponse<String> verifySmsCode = verifySmsCode(updateUser.getPhone(), updateUser.getSmsCode());
         if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            log.error("更新用户手机号时，更新失败，失败原因：手机号的验证码错误");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode()
                     , "新手机号的验证码错误");
         }
@@ -271,6 +281,7 @@ public class UserServiceImpl implements UserService {
         //从redis中获取私钥
         String privateKey = redisUtils.getCacheObject(updateUser.getUuId() + ":privateKey");
         if (StringUtils.isBlank(privateKey)){
+            log.error("更新用户密码时，更新失败，失败原因：加密密码的密钥失效");
             return ServerResponse.createByErrorMessage("密钥已经失效");
         }
         //解密密码
@@ -280,6 +291,7 @@ public class UserServiceImpl implements UserService {
         Matcher matcher = PASSWORD_PATTERN.matcher(updateUser.getPassword());
         boolean matches = matcher.matches();
         if (!matches){
+            log.error("更新用户密码时，更新失败，失败原因：密码格式不符合规范");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode()
                     , "密码必须为6-12位，且必须包含数字，字母");
         }
@@ -290,12 +302,14 @@ public class UserServiceImpl implements UserService {
         //验证旧密码是否正确
         boolean matches1 = passwordEncoder.matches(updateUser.getOldPassword(), userMapper.getPassword(userid));
         if (!matches1){
+            log.error("更新用户密码时，更新失败，失败原因：密码不正确");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode()
                     , "旧密码错误");
         }
         //验证手机验证码是否正确
         ServerResponse<String> verifySmsCode = verifySmsCode(updateUser.getPhone(), updateUser.getSmsCode());
         if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            log.error("更新用户密码时，更新失败，失败原因：手机号的验证码错误");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode()
                     , "手机号的验证码错误");
         }

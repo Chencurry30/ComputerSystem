@@ -100,6 +100,7 @@ public class UserManageServiceImpl implements UserManageService {
         //查看是否存在改用户名
         Integer checkUsername = userMapper.checkUsername(userDetail.getUsername());
         if (checkUsername > 0){
+            log.error("插入用户时，插入失败，失败原因：用户名重复");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_REPEAT.getCode(),
                     "用户名重复，请重新添加");
         }
@@ -120,6 +121,7 @@ public class UserManageServiceImpl implements UserManageService {
         //查询改用户是否存在
         User user = userMapper.getUserById(userVo.getUserId());
         if (Objects.isNull(user)){
+            log.error("更新用户角色时，更新失败，失败原因：更新的用户不存在");
             return ServerResponse.createByErrorMessage("该用户不存在");
         }
         //删除改用户的所有角色
@@ -130,6 +132,7 @@ public class UserManageServiceImpl implements UserManageService {
             int checkRoleByRoleId = roleMapper.checkRoleByRoleId(role.getRoleId());
             if (checkRoleByRoleId < 1){
                 //如果该角色不存在，说明前端可能把角色传错误了，需要回滚
+                log.error("更新用户角色时，更新失败，失败原因：前端传入非法角色，角色id：{}",role.getRoleId());
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return ServerResponse.createByErrorMessage("传入后端的权限发生了错误");
             }

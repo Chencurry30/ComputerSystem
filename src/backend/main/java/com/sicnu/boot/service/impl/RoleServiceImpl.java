@@ -9,6 +9,7 @@ import com.sicnu.boot.service.RoleService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.TreeUtils;
 import com.sicnu.boot.vo.RoleVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -22,6 +23,7 @@ import java.util.List;
  * Data:    2022/10/27 11:22
  */
 @Service
+@Slf4j
 public class RoleServiceImpl implements RoleService {
     @Resource
     private RoleMapper roleMapper;
@@ -51,6 +53,7 @@ public class RoleServiceImpl implements RoleService {
         //查询改角色是否存在
         int count = roleMapper.checkRoleByRoleId(roleVo.getRoleId());
         if (count < 1){
+            log.error("更新角色权限时，不存在修改的角色，角色id：{}",roleVo.getRoleId());
             return ServerResponse.createByErrorMessage("该角色不存在");
         }
         //删除改角色的所有权限
@@ -62,6 +65,7 @@ public class RoleServiceImpl implements RoleService {
             if (checkMenuByMenuId < 1){
                 //如果该权限不存在，说明前端可能把权限传错误了，需要回滚
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                log.error("更新角色权限时，前端传入非法权限，权限id：{}",menu.getMenuId());
                 return ServerResponse.createByErrorMessage("传入后端的权限发生了错误");
             }
             //添加权限
@@ -84,6 +88,7 @@ public class RoleServiceImpl implements RoleService {
         //查看是否有用户拥有改角色
         int checkUserHasTheRole = roleMapper.checkUserHasTheRole(roleId);
         if (checkUserHasTheRole > 0){
+            log.error("删除角色时，无法删除该角色，原因为：该角色已经被分配给用户");
             return ServerResponse.createByErrorMessage("无法删除该角色，该角色已经被分配给用户，请取消分配再删除");
         }
         //删除该角色的所有权限

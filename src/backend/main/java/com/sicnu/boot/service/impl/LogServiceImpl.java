@@ -26,7 +26,7 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public ServerResponse<PageInfo<Log>> getLogPage(Integer pageNum) {
-        PageHelper.startPage(pageNum,12);
+        PageHelper.startPage(pageNum,8);
         List<Log> list = logMapper.getLogList();
         PageInfo<Log> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("返回成功",pageInfo);

@@ -30,8 +30,7 @@ public class VideoUtils {
     }
 
     public static Integer getDurationById(Integer durationId){
-        List<Map<String, Object>> durationList = getDurationList();
-        for (Map<String, Object> map : durationList) {
+        for (Map<String, Object> map : getDurationList()) {
             if (map.get("durationId") == durationId){
                 return (Integer) map.get("durationValue");
             }
@@ -50,8 +49,7 @@ public class VideoUtils {
     }
 
     public static String getSortById(Integer sortId){
-        List<Map<String, Object>> sortList = getSortList();
-        for (Map<String, Object> map : sortList) {
+        for (Map<String, Object> map : getSortList()) {
             if (map.get("sortId") == sortId){
                 return (String) map.get("sortValue");
             }

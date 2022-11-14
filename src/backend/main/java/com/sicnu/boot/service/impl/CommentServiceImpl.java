@@ -8,6 +8,7 @@ import com.sicnu.boot.service.CommentService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.TreeUtils;
 import com.sicnu.boot.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.List;
  * Data:    2022/10/19 21:38
  */
 @Service
+@Slf4j
 public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentMapper commentMapper;
@@ -60,6 +62,7 @@ public class CommentServiceImpl implements CommentService {
         for (MyTreeNode child : children) {
             level1CommentVo.add(child.getContent());
         }
+        //构造前端想要的数据
         List<CommentVos> commentVosList = new ArrayList<>();
         for (CommentVo commentVo : level1CommentVo) {
             CommentVos commentVos1 = new CommentVos();
@@ -77,12 +80,14 @@ public class CommentServiceImpl implements CommentService {
         //检查是否拥有该资源
         int checkResource = commentMapper.checkResource(comment.getResourceId());
         if (checkResource < 1){
+            log.error("插入评论时，不存在该评论评论的资源，资源id：{}",comment.getResourceId());
             return ServerResponse.createByErrorMessage("该资源不存在");
         }
         //检查parentId是否正确
         if (comment.getParentId() != 0){
             int checkParent = commentMapper.checkParent(comment.getParentId());
             if (checkParent < 1){
+                log.error("插入评论时，不存在该评论的父id，父id：{}",comment.getParentId());
                 return ServerResponse.createByErrorMessage("父id不存在");
             }
         }
@@ -90,6 +95,7 @@ public class CommentServiceImpl implements CommentService {
         if (comment.getToUid() != 0){
             User user = userMapper.getUserById(comment.getToUid());
             if (user == null){
+                log.error("插入评论时，评论对象的id不存在，评论对象id：{}",comment.getToUid());
                 return ServerResponse.createByErrorMessage("评论对象id不存在");
             }
         }
