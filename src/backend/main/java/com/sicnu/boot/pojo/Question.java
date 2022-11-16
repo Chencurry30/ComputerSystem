@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +30,22 @@ public class Question {
      */
     private String questionTitle;
     /**
+     * description: 题目答案
+     */
+    private String answer;
+    /**
+     * description: 题目分析
+     */
+    private String analysis;
+    /**
+     * description: 题目解答
+     */
+    private String solution;
+    /**
+     * description: 题目考点
+     */
+    private String sites;
+    /**
      * description:
      */
     private Integer classifyId;
@@ -36,17 +54,17 @@ public class Question {
      */
     private String classifyName;
     /**
-     * description: 题目附件
+     * description: 题目难度
      */
-    private String documentLocation;
+    private BigDecimal difficult;
     /**
-     * description: 题目答案
+     * description: 题目来源
      */
-    private String answer;
+    private String source;
     /**
-     * description: 题目解析
+     * description: 题目年份
      */
-    private String analysis;
+    private Date year;
     /**
      * description: 选择题选项列表
      */

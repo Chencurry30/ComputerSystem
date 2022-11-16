@@ -2,10 +2,12 @@ package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.Question;
 import com.sicnu.boot.pojo.QuestionChoice;
+import com.sicnu.boot.vo.QuestionSelective;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -21,14 +23,12 @@ public class QuestionMapperTest {
 
     @Test
     void testGetQuestionList(){
-        List<Question> questionList = questionMapper.getQuestionList(5);
-        for (Question question : questionList) {
-            List<QuestionChoice> choice = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
-            question.setQuestionChoiceList(choice);
-        }
-        List<Question> questionList1 = createRandoms(questionList, 10);
-        createRandoms(questionList, 12);
-        questionList1.forEach(System.out :: println);
+
+        QuestionSelective questionSelective = new QuestionSelective(null,3,null,
+                BigDecimal.valueOf(0.3), BigDecimal.valueOf(0.6),2,
+                null,"408",null,new Date(),null);
+        List<Question> questionList = questionMapper.getQuestionList(questionSelective);
+        questionList.forEach(System.out :: println);
     }
 
     private List<Question> createRandoms(List<Question> list, int n) {

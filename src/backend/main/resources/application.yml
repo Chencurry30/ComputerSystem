@@ -59,6 +59,8 @@ mybatis:
   configuration:
     # 数据库自动驼峰转换 user-name 对应 userName
     map-underscore-to-camel-case: true
+    # spring boot集成mybatis的方式打印sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   #mapper文件地址
   mapper-locations: classpath:mapper/*Mapper.xml
 

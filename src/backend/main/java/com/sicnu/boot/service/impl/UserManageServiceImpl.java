@@ -11,9 +11,12 @@ import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.UserManageService;
 import com.sicnu.boot.service.UserService;
 import com.sicnu.boot.utils.*;
+import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.UserDetail;
 import com.sicnu.boot.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +51,9 @@ public class UserManageServiceImpl implements UserManageService {
     @Resource
     private RoleMapper roleMapper;
 
+    @Resource
+    private RedisUtils redisUtils;
+
     @Override
     @SysLogAnnotation(operModel = "用户管理",operType = "登录",operDesc = "用户后台登录系统")
     public ServerResponse<Map<String, Object>> login(User user) {
@@ -59,6 +65,18 @@ public class UserManageServiceImpl implements UserManageService {
                     , "权限不足");
         }
         return userService.login(user);
+    }
+
+    @Override
+    @SysLogAnnotation(operModel = "用户管理",operType = "注销",operDesc = "用户后台退出登录")
+    public ServerResponse<String> logout() {
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userid = loginUser.getUser().getUserId();
+        //删除redis的值
+        redisUtils.deleteObject("login:"+userid);
+        return ServerResponse.createBySuccessMessage("退出成功");
     }
 
     @Override

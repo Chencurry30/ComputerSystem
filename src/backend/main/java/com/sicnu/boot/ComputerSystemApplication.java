@@ -17,7 +17,6 @@ public class ComputerSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ComputerSystemApplication.class, args);
-
     }
 
 }

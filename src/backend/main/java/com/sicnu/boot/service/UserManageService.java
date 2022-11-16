@@ -28,6 +28,15 @@ public interface UserManageService {
     ServerResponse<Map<String, Object>> login(User user);
 
     /**
+     * description: 退出登录
+     *
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/11/16 15:39
+     */
+    ServerResponse<String> logout();
+
+    /**
      * description: 通过nickname进行模糊查询，获取用户列表
      *
      * @param nickname:

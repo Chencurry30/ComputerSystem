@@ -46,6 +46,18 @@ public class UserManageController {
     }
 
     /**
+     * description: 退出登录接口，需要请求头携带token
+     *
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/9/28 22:08
+     */
+    @PostMapping("/logout")
+    public ServerResponse<String> logout(){
+        return userManageService.logout();
+    }
+
+    /**
      * description: 获取用户列表
      *
      * @param nickname:

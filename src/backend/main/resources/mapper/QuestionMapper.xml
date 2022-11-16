@@ -5,10 +5,34 @@
 
 <mapper namespace="com.sicnu.boot.mapper.QuestionMapper">
 
-    <select id="getQuestionList" resultType="com.sicnu.boot.pojo.Question">
-        select * from question where classify_id = #{questionClassify}
+    <select id="getQuestionList" resultType="com.sicnu.boot.pojo.Question" parameterType="com.sicnu.boot.vo.QuestionSelective">
+        select question_id,question_title,question_type,classify_id,difficult,source,year from question
+        <where>
+            <if test="typeName != null and typeName != 0">
+                question_type = #{typeName}
+            </if>
+            <if test="difficultMinValue != null and difficultMinValue != 0">
+                and ( difficult <![CDATA[ >= ]]> #{difficultMinValue}
+                and difficult <![CDATA[ <= ]]> #{difficultMaxValue})
+            </if>
+            <if test="classifyId != null and classifyId != 0">
+                and classify_id = #{classifyId}
+            </if>
+            <if test="sourceName != null and sourceName != ''">
+                and `source` = #{sourceName}
+            </if>
+            <if test="yearName != null">
+                and `year` = Year(#{yearName})
+            </if>
+        </where>
     </select>
     <select id="getQuestionChoiceByQuestionId" resultType="com.sicnu.boot.pojo.QuestionChoice">
         select * from question_choice where question_id = #{questionId}
+    </select>
+    <select id="getQuestionClassifyList" resultType="com.sicnu.boot.vo.QuestionClassify">
+        select * from question_classify
+    </select>
+    <select id="getQuestionById" resultType="com.sicnu.boot.pojo.Question">
+        select * from question where question_id = #{questionId}
     </select>
 </mapper>

@@ -153,6 +153,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "用户模块",operType = "注销",operDesc = "用户前台退出登录")
     public ServerResponse<String> logout() {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
