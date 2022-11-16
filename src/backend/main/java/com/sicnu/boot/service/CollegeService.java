@@ -1,6 +1,5 @@
 package com.sicnu.boot.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.utils.ServerResponse;
@@ -42,8 +41,9 @@ public interface CollegeService {
     ServerResponse<List<College>> getCollegeByName(String name);
 
     /**
-     * @param pageNum；页码数
-     * @return Page
+     * 分页获取学校
+     * @param pageNum：页数
+     * @return List
      */
     ServerResponse<List<College>> getCollegePage(Integer pageNum);
 
@@ -55,7 +55,7 @@ public interface CollegeService {
     ServerResponse<List<Map<String, Object>>> getFilterBox();
 
     /**
-     * 通过选择，返回视频列表
+     * 通过选择，返回学校列表
      *
      * @param collegeSelective：列表信息
      * @return ServerResponse

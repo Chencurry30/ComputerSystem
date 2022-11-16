@@ -4,6 +4,7 @@ import com.sicnu.boot.pojo.Major;
 import com.sicnu.boot.utils.ServerResponse;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * description:
@@ -46,4 +47,18 @@ public interface MajorService {
      * @return List
      */
     ServerResponse<List<Major>> getMajorListByCollegeId(Integer collegeId);
+
+    /**
+     * 获取专业分类筛选框
+     * @return List
+     */
+    ServerResponse<List<Map<String, Object>>> getFilterBox();
+
+    /**
+     * 通过选择获取专业
+     * @param collegeId：学校id
+     * @param classifyId：分类id
+     * @return List
+     */
+    ServerResponse<List<Major>> getMajorListBySelective(Integer collegeId,Integer classifyId);
 }
