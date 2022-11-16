@@ -60,7 +60,7 @@ export default {
         {name:'首页',link:'Home'},
         {name:'资源学习',link:'videoSelect'},
         {name:'院校选择',link:'schoolSelect'},
-        {name:'备考大纲',link:''},
+        {name:'题库学习',link:'questionSelect'},
         {name:'考研政策',link:''},
         {name:'更多信息',link:''},
       ],

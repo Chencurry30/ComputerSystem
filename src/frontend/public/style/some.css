@@ -1,63 +1,82 @@
-*{
-    padding: 0;
-    margin: 0;
- }
- em,i{
-    font-style: normal;
- }
-ul,ol,li{
-    list-style: none;
+* {
+  padding: 0;
+  margin: 0;
 }
-a{
-    color: #666;
-    text-decoration: none;
+
+em,
+i {
+  font-style: normal;
 }
-input{
+
+ul,
+ol,
+dl {
+  list-style: none;
+  margin-top: 0;
+  margin-bottom: 0 !important;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+input {
   border: 0;
   outline: 0;
 }
-p{
+
+p {
   margin-bottom: 0 !important;
-}
-dd,dl{
-  margin-bottom: 0 !important;
-}
- /*统一的宽度*/
-.w{
-    width: 1200px;
-    margin: 0 auto;
 }
 
- button{
-    border: 0;
- }
- .hiddenBox{
-   display: none;
- }
- .showBox{
-   display: block;
- }
- /*隐藏多余的文字*/
- .hiddenText{  
-   overflow: hidden;
-   text-overflow: ellipsis;
- }
- img{
-   vertical-align: top !important;
- }
+dd,
+dl {
+  margin-bottom: 0 !important;
+}
+
+/*统一的宽度*/
+.w {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+button {
+  border: 0;
+}
+
+.hiddenBox {
+  display: none;
+}
+
+.showBox {
+  display: block;
+}
+
+/*隐藏多余的文字*/
+.hiddenText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+img {
+  vertical-align: top !important;
+}
+
 /*flex布局的垂直和水平居中*/
- .centerLocation{
-    display: flex;
-    justify-content: center;
-    align-items: center;
- }
+.centerLocation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
- /*首页每个模块的位置*/
- .video-item,.teacher-item {
-      margin-top: 5px;
-      padding: 10px 3px;
- }
- .first{
+/*首页每个模块的位置*/
+.video-item,
+.teacher-item {
+  margin-top: 5px;
+  padding: 10px 3px;
+}
+
+.first {
   margin-left: 0px !important;
- }
- 
+}

@@ -6,7 +6,6 @@
           <div class="school-type-header">
             <div class="title">{{ schoolInfo.name }}</div>
             <div class="ranking">{{ schoolInfo.attribute }}</div>
-            <div class="link">高校的官网地址</div>
           </div>
           <div class="phone">
             <span>联系电话</span>
@@ -19,8 +18,8 @@
             <li class="second bg">类别：{{ schoolInfo.type }}</li>
             <li class="third bg">隶属：{{ schoolInfo.subjection }}</li>
           </ul>
-          <div class="school-item2 bg fourth">学科建设：{{ schoolInfo.disDevelop }}</div>
-          <div class="school-item3 bg fifth">院校排名：{{ schoolInfo.rank }}</div>
+          <div class="school-item4 bg fourth">院校邮箱：{{ schoolInfo.mail }}</div>
+          <div class="school-item4 bg fifth">院校官网：{{ schoolInfo.web }}</div>
           <div class="school-item4 bg sixth">院校地址：{{ schoolInfo.address }}</div>
         </div>
       </div>
@@ -40,32 +39,10 @@
           </div>
         </div>
         <div class="schoolIntroduce" :class="{ showHeight: first }">
-          北京大学创办于1898年，初名京师大学堂，是中国第一所国立综合性大学，也是当时中国最高教育行政机关。辛亥革命后，于1912年改为现名。
-
-          作为新文化运动的中心和“五四”运动的策源地，作为中国最早传播马克思主义和民主科学思想的发祥地，作为中国共产党最早的活动基地，北京大学为民族的振兴和解放、国家的建设和发展、社会的文明和进步做出了不可替代的贡献，在中国走向现代化的进程中起到了重要的先锋作用。爱国、进步、民主、科学的传统精神和勤奋、严谨、求实、创新的学风在这里生生不息、代代相传。
-
-          1917年，著名教育家蔡元培出任北京大学校长，他“循思想自由原则，取兼容并包主义”，对北京大学进行了卓有成效的改革，促进了思想解放和学术繁荣。陈独秀、李大钊、毛泽东以及鲁迅、胡适等一批杰出人才都曾在北京大学任职或任教。
-
-          1937年卢沟桥事变后，北京大学与清华大学、南开大学南迁长沙，共同组成长沙临时大学。不久，临时大学又迁到昆明，改称国立西南联合大学。抗日战争胜利后，北京大学于1946年10月在北平复学。
+          {{schoolInfo.introduction}}
         </div>
       </div>
-      <div class="column-title-left">
-        <div class="column-title-left-header">
-          <h3>学科建设</h3>
-          <div>
-            <a href="javascript:;" class="rightLink">展开全部</a>
-          </div>
-        </div>
-        <div class="schoolIntroduce">
-          目前，北京大学共有53个一级学科博士学位授权点，50个一级学科硕士学位授权点，7个专业学位博士授权店，29个专业学位硕士授权点。
 
-          北京大学现有博士生导师2800余人，是一个老中青相结合的高水平导师群体。
-
-          截至2022年3月，北京大学有在校研究生30000余人，其中，博士研究生12000余人，硕士研究生17000余人。
-
-          截至2022年3月，北京大学共授予35467人博士学位，128656人硕士学位。
-        </div>
-      </div>
 
       <h2 class="big-title">专业简介</h2>
       <div class="column-title-left">
@@ -166,7 +143,7 @@ export default {
         .school-type-header {
           display: flex;
           align-items: center;
-
+          margin: 15px 0px 15px 0;
           .title {
             font-size: 26px;
           }
@@ -251,6 +228,7 @@ export default {
         }
 
         .sixth {
+          width: 370px;
           background-position: -5px -71px;
         }
       }
@@ -308,13 +286,17 @@ export default {
 
       .schoolIntroduce {
         padding: 2px 20px;
-        height: 75px;
+        height: 50px;
         overflow: hidden;
         transition: all 1s;
+        overflow : hidden;
+        display: -webkit-box; 
+        -webkit-box-orient: vertical;
+         -webkit-line-clamp: 5; 
       }
 
       .showHeight {
-        height: 145px;
+        height: 120px;
       }
 
       .rightLink {

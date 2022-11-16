@@ -6,6 +6,7 @@ const webAboutService = () => import('@/views/webAbout/webAboutService')  //ËÅîÁ
 export default  [
   {
     path: '/webAboutIndex',
+    
     name: 'webAboutIndex',
     component: webAboutIndex,
     meta: {                          
