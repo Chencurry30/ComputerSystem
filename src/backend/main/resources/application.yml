@@ -14,7 +14,6 @@ logging:
   #配置日志配置文件地方
   config: classpath:logback_spring.xml
   level:
-    root: info
     #开启sql打印
     com.sicnu.boot.mapper: debug
 

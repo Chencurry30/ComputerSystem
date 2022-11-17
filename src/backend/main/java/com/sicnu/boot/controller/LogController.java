@@ -59,7 +59,7 @@ public class LogController {
      * @author 胡建华
      * Date:  2022/11/12 15:46
      */
-    @DeleteMapping
+    @PostMapping
     ServerResponse<String> deleteLogByLogIds(@RequestBody List<Log> list){
         List<Integer> logIds = new ArrayList<>();
         for (Log log : list) {

@@ -47,7 +47,7 @@
     </appender>
 
     <!-- project default level -->
-    <logger name="net.sh.rgface.serive" level="ERROR" />
+    <logger name="net.sh.rgface.serive" level="ERROR"/>
 
     <!-- 日志输出级别 -->
     <root level="INFO">
