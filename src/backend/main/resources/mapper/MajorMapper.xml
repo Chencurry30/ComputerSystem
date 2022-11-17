@@ -20,4 +20,12 @@
     <select id="getMajorListByCollegeId" resultType="Major">
         select *from major where major_id in (select major_id from college_major where college_id = #{collegeId})
     </select>
+<!--    获取分类列表-->
+    <select id="getMajorClassify" resultType="com.sicnu.boot.vo.MajorClassify">
+        select *from major_classify
+    </select>
+<!--    通过选择获取专业信息-->
+    <select id="getMajorListBySelective" resultType="Major">
+        select *from major where major_id in (select major_id from college_major where college_id = #{collegeId} and classify_id = #{classifyId})
+    </select>
 </mapper>

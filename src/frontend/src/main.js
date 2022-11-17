@@ -21,6 +21,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
 
+
 //全局注册qs序列化object对象(this.$qs运用) 
 import qs from 'qs';
 Vue.prototype.$qs = qs

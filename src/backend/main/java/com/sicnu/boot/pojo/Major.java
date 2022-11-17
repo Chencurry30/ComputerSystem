@@ -19,10 +19,7 @@ public class Major {
     private Integer majorId;
     private String name;
     private Integer majorCode;
+    private Integer classifyId;
     private String classify;
-    private String category;
-    private Integer schoolingLength;
-    private String degree;
-    private String level;
     private String instruction;
 }

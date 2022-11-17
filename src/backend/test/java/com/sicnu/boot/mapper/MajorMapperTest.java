@@ -1,6 +1,5 @@
 package com.sicnu.boot.mapper;
 
-import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.pojo.Major;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,4 +47,9 @@ public class MajorMapperTest {
         System.out.println(majorList);
     }
 
+    @Test
+    public void testGetMajorListBySelective(){
+        List<Major> majorList = majorMapper.getMajorListBySelective(1,1);
+        System.out.println(majorList);
+    }
 }

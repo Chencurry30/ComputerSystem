@@ -41,7 +41,6 @@ const videoData = {
         state.videoNavType = data
       },
       GETVIDEOLIST(state,data){
-        console.log(data);
         state.videoDataList = data
       },
       GETINFO(state,data){

@@ -5,10 +5,11 @@ import com.sicnu.boot.mapper.MajorMapper;
 import com.sicnu.boot.pojo.Major;
 import com.sicnu.boot.service.MajorService;
 import com.sicnu.boot.utils.ServerResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sicnu.boot.vo.MajorClassify;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.annotation.Resource;
+import java.util.*;
 
 /**
  * description:
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Service
 public class MajorServiceImpl implements MajorService {
-    @Autowired
+    @Resource
     private MajorMapper majorMapper;
 
 
@@ -52,5 +53,24 @@ public class MajorServiceImpl implements MajorService {
     public ServerResponse<List<Major>> getMajorListByCollegeId(Integer collegeId) {
         List<Major> major = majorMapper.getMajorListByCollegeId(collegeId);
         return ServerResponse.createBySuccess("查询成功",major);
+    }
+
+    @Override
+    public ServerResponse<List<Map<String, Object>>> getFilterBox() {
+        List<Map<String,Object>> list = new ArrayList<>();
+        List<MajorClassify> majorClassify = majorMapper.getMajorClassify();
+        majorClassify.sort(Comparator.comparingInt(MajorClassify::getClassifyId));
+        Map<String,Object> classifyMap = new HashMap<>(5);
+        classifyMap.put("list",majorClassify);
+        classifyMap.put("id",5590773);
+        classifyMap.put("name","分类");
+        list.add(classifyMap);
+        return ServerResponse.createBySuccess("获取成功",list);
+    }
+
+    @Override
+    public ServerResponse<List<Major>> getMajorListBySelective(Integer collegeId,Integer classifyId) {
+        List<Major> major = majorMapper.getMajorListBySelective(collegeId,classifyId);
+        return ServerResponse.createBySuccess("成功",major);
     }
 }

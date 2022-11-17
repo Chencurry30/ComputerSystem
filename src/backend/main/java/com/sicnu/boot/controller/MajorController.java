@@ -4,10 +4,10 @@ import com.sicnu.boot.pojo.Major;
 import com.sicnu.boot.service.MajorService;
 import com.sicnu.boot.utils.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -64,11 +64,25 @@ public class MajorController {
         return majorService.getMajorPage(pageNum);
     }
 
+//    /**
+//     * 通过学校id查找专业
+//     */
+//    @GetMapping("/colleges/{collegeId}")
+//    public ServerResponse<List<Major>> getMajorListByCollegeId(@PathVariable Integer collegeId){
+//        return majorService.getMajorListByCollegeId(collegeId);
+//    }
+
     /**
-     * 通过学校id查找专业
+     * 通过选择获取相应专业
+     * @param collegeId：学校id
+     * @param classifyId：类别id
+     * @return majorSelective
      */
-    @GetMapping("/colleges/{collegeId}")
-    public ServerResponse<List<Major>> getMajorListByCollegeId(@PathVariable Integer collegeId){
-        return majorService.getMajorListByCollegeId(collegeId);
+    @GetMapping("/colleges/{collegeId}-{classifyId}")
+    public ServerResponse<List<Major>> getMajorListBySelective(
+            @Min (value = 1,message = "学校id最小值为1")@PathVariable Integer collegeId,
+            @Min (value = 1,message = "类别id最小值为1")@PathVariable Integer classifyId
+    ){
+        return majorService.getMajorListBySelective(collegeId,classifyId);
     }
 }

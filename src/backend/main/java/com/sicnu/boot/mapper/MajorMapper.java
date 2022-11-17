@@ -1,7 +1,7 @@
 package com.sicnu.boot.mapper;
 
-import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.pojo.Major;
+import com.sicnu.boot.vo.MajorClassify;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -37,9 +37,23 @@ public interface MajorMapper {
 
     /**
      * 通过选择学校查询专业
-     * @param CollegeId：学校id
+     * @param collegeId：学校id
      * @return List
      */
-    List<Major> getMajorListByCollegeId(Integer CollegeId);
+    List<Major> getMajorListByCollegeId(Integer collegeId);
+
+    /**
+     * 获取专业分类
+     * @return List
+     */
+    List<MajorClassify> getMajorClassify();
+
+    /**
+     * 通过选择获取专业
+     * @param collegeId：学校id
+     * @param classifyId：分类id
+     * @return List
+     */
+    List<Major> getMajorListBySelective(Integer collegeId,Integer classifyId);
 
 }
