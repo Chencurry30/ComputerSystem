@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.MessageMapper">
+<!--    查询老师-->
+    <select id="getMessageById" resultType="Message">
+        select content,message_time from message where teacher_id=#{teacherId}
+    </select>
+
+    <insert id="insertMessage" parameterType="Message">
+        insert into message values(null,#{userId},#{nickname},
+                                   #{content},#{messageTime},#{teacherId})
+    </insert>
+</mapper>
