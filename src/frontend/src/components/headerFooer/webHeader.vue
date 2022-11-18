@@ -114,6 +114,7 @@ export default {
     height: 50px;
     justify-content: space-between;
     align-content: center;
+    margin-bottom: 10px;
     .main-left {
       display: flex;
       align-items: center;

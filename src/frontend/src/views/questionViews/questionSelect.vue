@@ -16,13 +16,6 @@
                 activeOn4: selectItem.sourceId === childItem.sourceId,
                 activeOn5: selectItem.yearId === childItem.yearId
               }" @click="selectQuestion">{{ childItem.name }}</li>
-
-
-
-
-
-
-
           </ul>
         </div>
       </div>
@@ -31,20 +24,22 @@
       <div class="Mainleft">
         <div class="questionList">
           <ul>
-            <li class="questionItem" v-for="(questionItem) in getQuestionList.list" :key="questionItem.questionId">
+            <li class="questionItem" v-for="(questionItem) in getQuestionList.list" :key="questionItem.questionId"
+            @click="gotoPage">
               <div class="questionTitle">
                 有理数a,b在数轴上表示如下，下列判断错误的是()
               </div>
               <div class="questionSelect">
-                <div class="item" v-for="(questionChildItem) in questionItem.questionChoiceList" :key="questionChildItem.choiceId">
-                  <span>{{questionChildItem.choiceName}}. {{questionChildItem.choiceTitle}}</span>
+                <div class="item" v-for="(questionChildItem) in questionItem.questionChoiceList"
+                  :key="questionChildItem.choiceId">
+                  <span>{{ questionChildItem.choiceName }}. {{ questionChildItem.choiceTitle }}</span>
                 </div>
 
               </div>
               <div class="questionBottom">
                 <div class="BottomLeft">
-                  <span class="time">上传时间:{{(questionItem.year).substring(0,10)}}</span>
-                  <span class="difficulty">难度:{{questionItem.difficult}}</span>
+                  <span class="time">上传时间:{{ (questionItem.year).substring(0, 10) }}</span>
+                  <span class="difficulty">难度:{{ questionItem.difficult }}</span>
                   <span class="icon-analyze">
                     <img src="../../assets/Img/Icon/fuwu-1.png" alt="">
                     解析
@@ -69,7 +64,7 @@
           </ul>
         </div>
         <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
-        <PagerView :pageInfo="getQuestionPage"  @giveFatherPageNo="getSonPageNo"></PagerView>
+        <PagerView :pageInfo="getQuestionPage" @giveFatherPageNo="getSonPageNo"></PagerView>
       </div>
       <div class="Mainright">
         <div class="mid-content">
@@ -108,6 +103,14 @@
               {{ difficultyItem.name }}
             </div>
           </div>
+          <p>科目设置</p>
+          <div class="titlePt4">
+            <div class="PtItem" v-for="(subjectItem) in subjectList" :key="subjectItem.id"
+            @click="selectSubject(subjectItem)" :class="{ activeOn: subjectId === subjectItem.id }"
+            >
+              {{ subjectItem.name }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -123,7 +126,7 @@ import { mapGetters } from 'vuex'
 import PagerView from '../../components/remark/PagerView'
 export default {
   name: 'questionSelect',
- 
+
   data() {
     return {
       showId1: true,
@@ -131,6 +134,7 @@ export default {
       showId3: true,
       showId4: true,
       difficultyId: 0,
+      subjectId:0,
       //用来记录选择框的属性
       selectItem: {
         typeId: 0,
@@ -160,11 +164,34 @@ export default {
 
 
 
-      ]
+      ],
+      //用来记录遍历的科目
+      subjectList: [
+        {
+          id: 20001,
+          name: '英语'
+        },
+        {
+          id: 20002,
+          name: '数学'
+        },
+        {
+          id: 20003,
+          name: '政治'
+        },
+        {
+          id: 20004,
+          name: '数据结构'
+        },
+        {
+          id: 20005,
+          name: '计网'
+        },
+      ],
     }
   },
-  components:{
-    PagerView 
+  components: {
+    PagerView
   },
   mounted() {
     //获取题目的选择列表 
@@ -183,17 +210,17 @@ export default {
       this.$store.dispatch('questionData/getQuestionData', { typeId, difficultId, classifyId, sourceId, yearId, pageNum })
     },
     //根据分页器选择的页面数返回对应选择的几页
-    getSonPageNo(pageNum){
-        let { typeId, difficultId, classifyId, sourceId, yearId } = this.selectItem
-        console.log();
-        this.$store.dispatch('questionData/getQuestionData',{typeId,difficultId,classifyId,sourceId,yearId,pageNum})
-    }, 
+    getSonPageNo(pageNum) {
+      let { typeId, difficultId, classifyId, sourceId, yearId } = this.selectItem
+      console.log();
+      this.$store.dispatch('questionData/getQuestionData', { typeId, difficultId, classifyId, sourceId, yearId, pageNum })
+    },
 
     //根据选择的题库获取对应的题库信息
     selectQuestion: _.throttle(function (event) {
       let element = event.target
       let { typeid, difficultid, classifyid, sourceid, yearid } = element.dataset
-      //利用v-bind 
+      //利用v-bind绑定对应的属性 
       if (typeid !== undefined) {
         this.selectItem.typeId = parseInt(typeid)
       } else if (difficultid !== undefined) {
@@ -226,6 +253,9 @@ export default {
     selectDifficulty(difficultyItem) {
       this.difficultyId = difficultyItem.id
     },
+    selectSubject(subjuctItem){
+      this.subjectId = subjuctItem.id
+    },
 
 
     gotoPage() {
@@ -239,7 +269,7 @@ export default {
     ...mapGetters('questionData', {
       questionNavSelect: 'getQuestionNav',
       getQuestionList: 'getQuestionList',
-      getQuestionPage:'getQuestionPage' //获取对应的分页数据传给分页组件
+      getQuestionPage: 'getQuestionPage' //获取对应的分页数据传给分页组件
     })
   }
 }
@@ -378,7 +408,8 @@ export default {
       }
 
       .titlePt1,
-      .titilePt3 {
+      .titilePt3,
+      .titlePt4 {
         margin: 5px 10px;
         display: flex;
         justify-content: space-around;

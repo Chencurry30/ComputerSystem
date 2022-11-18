@@ -29,6 +29,7 @@ const videoData = {
       //获取对应视屏的相关信息 
       getInfo(context,videoId){
         getVideoInfo(videoId).then((res)=>{
+          console.log(res);
           if(res.data.code === 200){
             let data = res.data.data
             context.commit('GETINFO',data)

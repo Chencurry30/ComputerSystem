@@ -29,7 +29,6 @@ service.interceptors.response.use((response) => {
     nProgress.done();
     if(response.data.code === 401){
       //如果token验证失败，跳转到登录页面 
-      console.log(response.data.message);
       Vue.prototype.$message.error(response.data.message)
       sessionStorage.removeItem('token')
       router.push('/loginView')

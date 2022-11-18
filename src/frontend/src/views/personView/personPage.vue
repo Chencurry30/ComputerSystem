@@ -148,10 +148,15 @@
               <div class="headerP4" @click="backHome()">返回首页</div>
             </div>
             <div class="containMain">
-              <div class="userImg"></div>
+              <div class="userImg">
+                <!--上传头像的子组件-->
+                <uploadPicture></uploadPicture>
+
+
+              </div>
               <div class="userInfo">
-                <div class="nickname">昵称:{{getUserImg.nickname}}</div>
-                <div class="personintroduce">个人留言:{{getUserImg.message}}</div>
+                <div class="nickname">昵称:&nbsp;&nbsp;&nbsp;{{getUserImg.nickname}}</div>
+                <div class="personintroduce">个人留言:&nbsp;&nbsp;&nbsp;{{getUserImg.message}}</div>
               </div>
             </div>
           </div>
@@ -164,8 +169,10 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import uploadPicture from '../../components/upload/uploadPicture.vue';
 export default {
   name: "personPage",
+  components: { uploadPicture },
   methods:{
     backHome(){
       let location = {

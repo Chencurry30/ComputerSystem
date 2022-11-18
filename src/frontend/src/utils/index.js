@@ -13,3 +13,7 @@ export const CryAlgorithm = (info,data) =>{
 export const createUUID = () =>{
   return uuidv4();
 }
+
+export const createPublicUrl = () =>{
+  return 'http://system-123.oss-cn-hangzhou.aliyuncs.com/'
+}

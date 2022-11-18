@@ -22,7 +22,11 @@
         </div>
       </div>
       <!--视屏的主题-->
-      <div class="videomain"></div>
+      <div class="videomain">
+        <videoPlay :videoLink="videoInfo.link" :videoImg:="videoInfo.image"></videoPlay>
+
+
+      </div>
 
       <div class="video-toolbar">
         <span class="like">
@@ -242,6 +246,7 @@
 <script>
 import ReleaseItem from "../../components/remark/releaseItem.vue";
 import ReplyItem from "../../components/remark/replyItem.vue";
+import videoPlay from "../../components/videoPlay/videoPlay"
 import {mapGetters} from 'vuex'
 export default {
   name: "videoPage",
@@ -257,6 +262,7 @@ export default {
   components: {
     ReleaseItem,
     ReplyItem,
+    videoPlay,
   },
   mounted(){
     this.getPageData()
@@ -350,8 +356,6 @@ export default {
     }
     .videomain {
       width: 100%;
-      height: 480px;
-      background: red;
     }
     .video-toolbar {
       padding-top: 16px;

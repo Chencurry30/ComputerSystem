@@ -54,18 +54,13 @@
         </span>
       </div>
     </div>
-
-    <QuestionItem></QuestionItem>
   </div>
 </template>
 
 <script>
-import QuestionItem from '../../components/question/questionItem.vue'
 export default {
   name: 'questionPage',
-  components:{
-    QuestionItem
-  },
+
   
   methods:{
     backSelectPage(){
