@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class LogController {
      * Date:  2022/11/12 15:39
      */
     @GetMapping("/pages/{pageNum}")
-    ServerResponse<PageInfo<Log>> getLogPage(@PathVariable Integer pageNum){
+    ServerResponse<PageInfo<Log>> getLogPage(@Min(value = 1,message = "分页数最小为1")
+                                             @PathVariable Integer pageNum){
         return logService.getLogPage(pageNum);
     }
 
@@ -47,7 +49,8 @@ public class LogController {
      * Date:  2022/11/12 15:46
      */
     @DeleteMapping("/{logId}")
-    ServerResponse<String> deleteLogByLogId(@PathVariable Integer logId){
+    ServerResponse<String> deleteLogByLogId(@Min(value = 1,message = "logId最小为1")
+                                            @PathVariable Integer logId){
         return logService.deleteLogByLogId(logId);
     }
 
@@ -60,7 +63,7 @@ public class LogController {
      * Date:  2022/11/12 15:46
      */
     @PostMapping
-    ServerResponse<String> deleteLogByLogIds(@RequestBody List<Log> list){
+    ServerResponse<String> deleteLogByLogIds(@Validated @RequestBody List<Log> list){
         List<Integer> logIds = new ArrayList<>();
         for (Log log : list) {
             logIds.add(log.getLogId());

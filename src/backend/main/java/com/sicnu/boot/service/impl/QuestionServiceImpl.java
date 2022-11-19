@@ -99,4 +99,38 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return ServerResponse.createBySuccess("获取成功",question);
     }
+
+    @Override
+    public ServerResponse<List<Question>> getGeneratingPaper(QuestionSelective questionSelective) {
+        List<Question> list = new ArrayList<>();
+        if (questionSelective.getSingleChoiceNum() > 0){
+            List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
+                    1, questionSelective.getSingleChoiceNum());
+            for (Question question : generatingPaper) {
+                List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
+                question.setQuestionChoiceList(choiceList);
+            }
+            list.addAll(generatingPaper);
+        }
+        if (questionSelective.getMultipleChoiceNum() > 0){
+            List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
+                    2, questionSelective.getMultipleChoiceNum());
+            for (Question question : generatingPaper) {
+                List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
+                question.setQuestionChoiceList(choiceList);
+            }
+            list.addAll(generatingPaper);
+        }
+        if (questionSelective.getJudgeNum() > 0){
+            List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
+                    3, questionSelective.getJudgeNum());
+            list.addAll(generatingPaper);
+        }
+        if (questionSelective.getAnswerNum() > 0){
+            List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
+                    4, questionSelective.getAnswerNum());
+            list.addAll(generatingPaper);
+        }
+        return ServerResponse.createBySuccess("获取成功",list);
+    }
 }

@@ -54,4 +54,16 @@ public interface QuestionMapper {
      * Date:  2022/11/16 16:05
      */
     Question getQuestionById(Integer questionId);
+
+    /**
+     * description: 通过题目分类，题目类型获取指定数量的题目
+     *
+     * @param classifyId:
+     * @param questionType:
+     * @param questionNum:
+     * @return List<Question>
+     * @author 胡建华
+     * Date:  2022/11/17 10:38
+     */
+    List<Question> getGeneratingPaper(Integer classifyId,Integer questionType,Integer questionNum);
 }

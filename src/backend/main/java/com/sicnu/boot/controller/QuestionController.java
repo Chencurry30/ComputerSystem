@@ -6,10 +6,7 @@ import com.sicnu.boot.service.QuestionService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.QuestionSelective;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Min;
@@ -65,9 +62,30 @@ public class QuestionController {
         return questionService.getFilterBox();
     }
 
+    /**
+     * description: 通过id，获取具体题目信息
+     *
+     * @param questionId:
+     * @return ServerResponse<Question>
+     * @author 胡建华
+     * Date:  2022/11/17 10:27
+     */
     @GetMapping("/{questionId}")
     public ServerResponse<Question> getQuestionById(@Min(value = 0,message = "difficultId的最小值为0")
                                               @PathVariable Integer questionId){
         return questionService.getQuestionById(questionId);
+    }
+
+    /**
+     * description: 题库组卷功能
+     *
+     * @param questionSelective:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/17 10:27
+     */
+    @PostMapping("/paper")
+    public ServerResponse<List<Question>> getGeneratingPaper(@Validated @RequestBody QuestionSelective questionSelective){
+        return questionService.getGeneratingPaper(questionSelective);
     }
 }

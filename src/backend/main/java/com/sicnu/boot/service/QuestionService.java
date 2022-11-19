@@ -43,4 +43,14 @@ public interface QuestionService {
      * Date:  2022/11/16 16:04
      */
     ServerResponse<Question> getQuestionById(Integer questionId);
+
+    /**
+     * description: 题库组卷功能
+     *
+     * @param questionSelective:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/17 10:27
+     */
+    ServerResponse<List<Question>> getGeneratingPaper(QuestionSelective questionSelective);
 }

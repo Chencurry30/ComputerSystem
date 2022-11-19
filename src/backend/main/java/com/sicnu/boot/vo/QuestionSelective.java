@@ -1,12 +1,14 @@
 package com.sicnu.boot.vo;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -25,6 +27,8 @@ public class QuestionSelective {
     private Integer difficultId;
     private BigDecimal difficultMinValue;
     private BigDecimal difficultMaxValue;
+    @NotNull(message = "题目分类不能为空")
+    @Min(value = 1,message = "题目分类id最小值为1")
     private Integer classifyId;
     private Integer sourceId;
     private String sourceName;
@@ -32,6 +36,31 @@ public class QuestionSelective {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date yearName;
     private Integer pageNum;
+
+    /**
+     * description: 选择题题量
+     */
+    @NotNull(message = "选择题题量不能为空")
+    @Range(min = 0,max = 10,message = "选择题题量必须为0 - 10")
+    private Integer singleChoiceNum;
+    /**
+     * description: 多选题题量
+     */
+    @NotNull(message = "多选题题量不能为空")
+    @Range(min = 0,max = 10,message = "多选题题量必须为0 - 10")
+    private Integer multipleChoiceNum;
+    /**
+     * description: 判断题题量
+     */
+    @NotNull(message = "判断题题量不能为空")
+    @Range(min = 0,max = 10,message = "判断题题量必须为0 - 10")
+    private Integer judgeNum;
+    /**
+     * description: 解答题题量
+     */
+    @NotNull(message = "解答题题量不能为空")
+    @Range(min = 0,max = 10,message = "解答题题量必须为0 - 10")
+    private Integer answerNum;
 
     public QuestionSelective(Integer typeId, Integer difficultId, Integer classifyId, Integer sourceId, Integer yearId,Integer pageNum) {
         this.typeId = typeId;

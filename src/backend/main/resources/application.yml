@@ -69,6 +69,14 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
 
+#配置Oss
+oss-config:
+  accessId: 1
+  accessKey: 1
+  endpoint: 1
+  bucket: 1
+  host: https://${oss-config.bucket}.${oss-config.endpoint}
+
 # 腾讯云短信服务配置
 sms-config:
   # 腾讯云账户密钥对 secretId 和 secretKey

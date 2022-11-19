@@ -35,4 +35,8 @@
     <select id="getQuestionById" resultType="com.sicnu.boot.pojo.Question">
         select * from question where question_id = #{questionId}
     </select>
+    <select id="getGeneratingPaper" resultType="com.sicnu.boot.pojo.Question">
+        SELECT * FROM question where question_type = #{questionType} and classify_id = #{classifyId}
+        ORDER BY  RAND() LIMIT #{questionNum}
+    </select>
 </mapper>

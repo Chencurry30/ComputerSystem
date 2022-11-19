@@ -58,7 +58,8 @@ public class CommentController {
      * Date:  2022/11/5 15:05
      */
     @PutMapping("/like/{commentId}")
-    ServerResponse<String> updateCommentLikeNumber(@PathVariable Integer commentId){
+    ServerResponse<String> updateCommentLikeNumber(@Min(value = 1,message = "id最小值为1")
+                                                   @PathVariable Integer commentId){
         return commentService.updateCommentLikeNumber(commentId);
     }
 }
