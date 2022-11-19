@@ -22,6 +22,13 @@ export default [
       showFotter:true
     },
   },
-
-
+  {
+    path: '/questionVolume',
+    name: 'questionVolume',
+    component:()=>import('@/views/questionViews/questionVolume'),  
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
+  }, 
 ]

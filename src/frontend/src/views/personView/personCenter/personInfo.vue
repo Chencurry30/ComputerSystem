@@ -48,12 +48,6 @@
           </li>
           <li class="Info-item">
             <div class="item-title">
-              <span class="laber">隐私设置：</span>
-              <span>{{showprivacy}}</span>
-            </div>
-          </li>
-          <li class="Info-item">
-            <div class="item-title">
               <span class="laber">个人留言：</span>
               <span >{{getUserInfo.message}}</span>
             </div>

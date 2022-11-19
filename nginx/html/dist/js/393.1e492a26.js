@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkweb_7"]=self["webpackChunkweb_7"]||[]).push([[393],{7393:function(t,n,e){e.r(n),e.d(n,{default:function(){return l}});var s=function(){var t=this;t._self._c;return t._m(0)},u=[function(){var t=this,n=t._self._c;return n("div",{staticClass:"ContainBox"},[n("div",{staticClass:"FormBox"})])}],a={name:"webAboutContact",data(){return{}}},r=a,c=e(1001),i=(0,c.Z)(r,s,u,!1,null,"70c7f653",null),l=i.exports}}]);
+//# sourceMappingURL=393.1e492a26.js.map

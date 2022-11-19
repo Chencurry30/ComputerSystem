@@ -1,0 +1,43 @@
+/*用于存储页面弹窗的公共CSS*/
+/*用户提供阴影部分的遮光布*/
+.userDialog{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.DialogHeader {
+  display: flex;
+  justify-content: center;
+  height: 80px;
+  background: #59c3fb;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+.closeImg {
+    position: absolute;
+    top: 16px;
+    right: 14px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+.Dialogtitle {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 80px;
+}
+
+/*保存相关信息的按钮*/
+.saveBtn {
+  padding: 10px 5px;
+  text-align: center;
+  border-radius: 8px;
+  background: #59c3fb;
+  color: #fff;
+}

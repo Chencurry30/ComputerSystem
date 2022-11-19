@@ -21,6 +21,7 @@
         <div class="list-item" v-for="(videoItem) in getDataList" :key="videoItem.videoId" @click="getoVideoPage(videoItem.videoId)">
           <div class="video-card">
             <div class="cardImg">
+              <img :src='[publicUrl+videoItem.image]' alt="">
               <div class="cardMask">
                 <div class="MaskInfo">
                   <div class="Mask-left">
@@ -63,6 +64,7 @@
 <script>
 import _ from 'lodash'
 import {mapGetters} from 'vuex'
+import {createPublicUrl} from '../../utils/index'
 import PagerView from '../../components/remark/PagerView'
 export default {
     name: "videoSelect",
@@ -133,7 +135,12 @@ export default {
         getNavType:'getVideoNavType',
         getDataList:'getVideoDataList',
         getVideoPage:'getVideoPage',
-      })
+      }),
+
+      publicUrl(){
+        return createPublicUrl()
+      }
+
     }
 }
 </script>
@@ -195,7 +202,11 @@ export default {
             width: 100%;
             height: 180px;
             background: red;
-            border-radius: 10px;
+            img{
+              width: 100%;
+              height: 100%;
+              border-radius: 10px;
+            }
             .cardMask{
               position: absolute;
               width: 100%;

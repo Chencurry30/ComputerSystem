@@ -5,7 +5,7 @@
  * @Description: 校验数据的公共方法
 */
 // 账号{要求2-12位}
-let usernameReg = /^(?![0-9]*$)(?![a-zA-Z]*$)[a-zA-Z0-9]{2,20}$/
+let usernameReg = /^(?![0-9]*$)(?![a-zA-Z]*$)[a-zA-Z0-9]{2,12}$/
 
 // 电话{要求11位}
 let phoneReg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/
@@ -13,29 +13,17 @@ let phoneReg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/
 // 密码{6-12位}
 let passwordReg = /^(?![0-9]*$)(?![a-zA-Z]*$)[a-zA-Z0-9]{6,12}$/
 
-//验证码(要求{4位})
+//验证年龄
+let ageReg = /^120$|^[1-9]$|^(1[0-1]|[1-9])\d$/
 
-let codeReg = /^(?![0-9]*$){4,4}/
-
-
-
-
-
-
-
-
-
-
-// 必须为数字
-let numberReg = /^\d+$|^\d+[.]?\d+$/
-
-
-// 联系人
-let contactsReg = /^[\u0391-\uFFE5A-Za-z]+$/
-
-let regId = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-
+//验证邮箱 
 let emailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+
+//验证昵称
+let nicknameReg =  /^[\u4e00-\u9fa5]{2,6}$ |(?![0-9]*$)(?![a-zA-Z]*$)[a-zA-Z0-9]{2,12}$/
+
+//验证个人留言 
+let personalMessageReg = /^[\u4e00-\u9fa5]{5,20}$/
 
 let FormValidate = (function () {
   function FormValidate () {}
@@ -75,91 +63,57 @@ let FormValidate = (function () {
           callback()
         }
       },
-      //用于验证验证码
-      validateCode(rule,value,callback){
-        if(value === ''){
-          return callback(new Error('验证码不能为空'))
-        }
-        if(!codeReg.test(value)){
-          return callback(new Error('验证码位数不对'))          
-        }else{
-          callback()
-        }
-      }, 
-
-
-
-
-
-
-
-
-
-
-
-
       //只用于年龄的验证规则
-      validateNumber (rule, value, callback) {
+      validataAge (rule, value, callback) {
         if (value !== '') {
-          if (!numberReg.test(value)) {
-            callback(new Error('年龄只能是纯数字'))
+          if (!ageReg.test(value)) {
+            callback(new Error('年龄的范围为1-120'))
           } else {
             callback()
           }
         } else {
-          callback()
+          callback('请输入年龄')
         }
       },
-
-      // 密码的验证
-      validatePsdReg (rule, value, callback) {
-        if (!value) {
-          return callback(new Error('请输入密码'))
-        }
-        if (!passwordReg.test(value)) {
-          callback(new Error('请输入6-20位英文字母、数字或者符号（除空格），且字母、数字和标点符号至少包含两种'))
-        } else {
-          callback()
-        }
-      },
-
-      // 联系人
-      validateContacts (rule, value, callback) {
-        if (!value) {
-          return callback(new Error('请输入联系人'))
-        }
-        if (!contactsReg.test(value)) {
-          callback(new Error('联系人不可输入特殊字符'))
-        } else {
-          callback()
-        }
-      },
-
-      // 邮箱的验证规则
+      //邮箱的验证规则
       validateEmail (rule, value, callback) {
         if (value !== '') {
           if (!emailReg.test(value)) {
+            console.log(123);
             callback(new Error('邮箱格式不正确'))
           } else {
             callback()
           }
         } else {
-          callback()
+          callback(new Error('请输入邮箱'))
         }
       },
-
-
-      // 身份证的验证规则
-      ID (rule, value, callback) {
-        if (!value) {
-          return callback(new Error('身份证不能为空'))
-        }
-        if (!regId.test(value)) {
-          callback(new Error('请输入正确的二代身份证号码'))
+      //昵称的验证
+      validateNickName(rule,value,callback){
+        if (value !== '') {
+          if ( !nicknameReg.test(value)) {
+            callback(new Error('昵称格式不对(2-12位要包含数字,字母,中文)'))
+          } else {
+            callback()
+          }
         } else {
-          callback()
+          callback(new Error('请输入昵称'))
         }
-      }
+      },
+      //个人留言的验证
+      validatePersonalMessage(rule,value,callback){
+        if (value !== '') {
+          if ( !personalMessageReg.test(value)) {
+            callback(new Error('留言格式不对(5~20)只能是中文'))
+          } else {
+            callback()
+          }
+        } else {
+          callback(new Error('请输入个人留言'))
+        }
+      } 
+      
+
     }
   }
   return FormValidate
