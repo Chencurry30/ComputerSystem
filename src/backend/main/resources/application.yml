@@ -71,10 +71,10 @@ pagehelper:
 
 #配置Oss
 oss-config:
-  accessId: 1
-  accessKey: 1
-  endpoint: 1
-  bucket: 1
+  accessId: LTAI5tHLnt7NtvSi4yj2YNGW
+  accessKey: 5gkuKtSHzonUTmYDEjbAscjLy7eDg7
+  endpoint: oss-cn-hangzhou.aliyuncs.com
+  bucket: system-123
   host: https://${oss-config.bucket}.${oss-config.endpoint}
 
 # 腾讯云短信服务配置
