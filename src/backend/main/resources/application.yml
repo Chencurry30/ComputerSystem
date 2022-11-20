@@ -52,6 +52,9 @@ spring:
     #设置时间格式
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  session:
+    #设置session存储类型
+    store-type: redis
 
 mybatis:
   type-aliases-package: com.sicnu.boot.pojo
