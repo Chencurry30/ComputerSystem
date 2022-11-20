@@ -2,6 +2,8 @@ package com.sicnu.boot.service;
 
 import com.sicnu.boot.utils.ServerResponse;
 
+import java.util.Map;
+
 /**
  * description:  TODO
  *
@@ -17,5 +19,5 @@ public interface OssService {
      * @author 胡建华
      * Date:  2022/11/19 14:49
      */
-    ServerResponse policy(String fileName);
+    ServerResponse<Map<String, String>> policy(String fileName);
 }
