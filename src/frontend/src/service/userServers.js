@@ -8,3 +8,9 @@ export const changeUserInfo = (userinfo) =>{
   const url = '/users'
   return service.put(url,userinfo);
 }
+
+//上传用户头像
+export const uploadUserPicture = (picture) =>{
+  const url =`/oss/policy/user/${picture}`
+  return service.get(url)
+}  

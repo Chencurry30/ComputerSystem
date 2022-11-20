@@ -24,43 +24,9 @@
       <div class="Mainleft">
         <div class="questionList">
           <ul>
-            <li class="questionItem" v-for="(questionItem) in getQuestionList.list" :key="questionItem.questionId"
-            @click="gotoPage">
-              <div class="questionTitle">
-                有理数a,b在数轴上表示如下，下列判断错误的是()
-              </div>
-              <div class="questionSelect">
-                <div class="item" v-for="(questionChildItem) in questionItem.questionChoiceList"
-                  :key="questionChildItem.choiceId">
-                  <span>{{ questionChildItem.choiceName }}. {{ questionChildItem.choiceTitle }}</span>
-                </div>
-
-              </div>
-              <div class="questionBottom">
-                <div class="BottomLeft">
-                  <span class="time">上传时间:{{ (questionItem.year).substring(0, 10) }}</span>
-                  <span class="difficulty">难度:{{ questionItem.difficult }}</span>
-                  <span class="icon-analyze">
-                    <img src="../../assets/Img/Icon/fuwu-1.png" alt="">
-                    解析
-                  </span>
-                  <span class="icon-college">
-                    <img src="../../assets/Img/Icon/fuwu-2.png" alt="">
-                    收藏
-                  </span>
-                </div>
-              </div>
-
-
-
-
-
-
-
-
-
-            </li>
-
+            <!--利用questionInfo向子组件中传递返回列表中的题目信息-->
+            <questionItem v-for="(Item) in getQuestionList.list" :key="Item.questionId" :questionItem="Item">
+            </questionItem>
           </ul>
         </div>
         <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
@@ -80,37 +46,34 @@
           <div class="titilePt2">
             <div class="pt2Item" :class="{ hiddenBox: showId1 }">
               <em>选择题</em>
-              <input type="text" placeholder="输入题量" maxlength="2">
+              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
+              v-model="selectInput.singleChoiceNum">
             </div>
             <div class="pt2Item" :class="{ hiddenBox: showId2 }">
               <em>多选题</em>
-              <input type="text" placeholder="输入题量" maxlength="2">
+              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
+              v-model="selectInput.multipleChoiceNum">
             </div>
             <div class="pt2Item" :class="{ hiddenBox: showId3 }">
               <em>填空题</em>
-              <input type="text" placeholder="输入题量" maxlength="2">
+              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
+              v-model="selectInput.judgeNum">
             </div>
             <div class="pt2Item" :class="{ hiddenBox: showId4 }">
               <em>解答题</em>
-              <input type="text" placeholder="输入题量" maxlength="2">
+              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
+              v-model="selectInput.answerNum">
             </div>
 
           </div>
-          <p>难度设置</p>
-          <div class="titilePt3">
-            <div class="PtItem" v-for="(difficultyItem) in difficultyList" :key="difficultyItem.id"
-              @click="selectDifficulty(difficultyItem)" :class="{ activeOn: difficultyId === difficultyItem.id }">
-              {{ difficultyItem.name }}
-            </div>
-          </div>
           <p>科目设置</p>
           <div class="titlePt4">
-            <div class="PtItem" v-for="(subjectItem) in subjectList" :key="subjectItem.id"
-            @click="selectSubject(subjectItem)" :class="{ activeOn: subjectId === subjectItem.id }"
-            >
+            <div class="PtItem" v-for="(subjectItem) in subjectList" :key="subjectItem.classifyId"
+              @click="selectSubject(subjectItem)" :class="{ activeOn: subjectId === subjectItem.classifyId }">
               {{ subjectItem.name }}
             </div>
           </div>
+          <div class="mid-bottom" @click="submitSelect">点击组卷</div>
         </div>
       </div>
     </div>
@@ -124,6 +87,8 @@
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
 import PagerView from '../../components/remark/PagerView'
+import QuestionItem from '../../components/questionItem/questionItem'
+import {setVolume} from '../../service/questionService'
 export default {
   name: 'questionSelect',
 
@@ -134,7 +99,9 @@ export default {
       showId3: true,
       showId4: true,
       difficultyId: 0,
-      subjectId:0,
+
+      //选择科目的组卷ID 
+      subjectId: 0,
       //用来记录选择框的属性
       selectItem: {
         typeId: 0,
@@ -144,54 +111,41 @@ export default {
         yearId: 0,
         pageNum: 1
       },
-      //用来记录遍历的题目难度 
-      difficultyList: [
-        {
-          id: 10000,
-          name: '易'
-        },
-        {
-          id: 10001,
-          name: '较易'
-        },
-        {
-          id: 10002,
-          name: '中等'
-        }, {
-          id: 10003,
-          name: '难'
-        }
-
-
-
-      ],
       //用来记录遍历的科目
       subjectList: [
         {
-          id: 20001,
-          name: '英语'
-        },
-        {
-          id: 20002,
+          classifyId: 2,
           name: '数学'
         },
         {
-          id: 20003,
+          classifyId: 3,
           name: '政治'
         },
         {
-          id: 20004,
+          classifyId: 4,
           name: '数据结构'
         },
         {
-          id: 20005,
+          classifyId: 5,
           name: '计网'
         },
+        {
+          classifyId: 6,
+          name: "计组"
+        }
       ],
+      //组卷方面的相关数据 
+      selectInput: {
+        singleChoiceNum:0,
+        multipleChoiceNum: 0,
+        judgeNum:0,
+        answerNum:0,
+      }
     }
   },
   components: {
-    PagerView
+    PagerView,
+    QuestionItem
   },
   mounted() {
     //获取题目的选择列表 
@@ -250,11 +204,8 @@ export default {
         this.showId4 = !this.showId4
       }
     },
-    selectDifficulty(difficultyItem) {
-      this.difficultyId = difficultyItem.id
-    },
-    selectSubject(subjuctItem){
-      this.subjectId = subjuctItem.id
+    selectSubject(subjuctItem) {
+      this.subjectId = subjuctItem.classifyId
     },
 
 
@@ -263,6 +214,34 @@ export default {
         name: 'questionPage'
       }
       this.$router.push(location)
+    },
+
+    //组卷按钮 
+    submitSelect(){
+      if(this.subjectId === 0){
+        this.$message({
+                message: "请选择要组卷的题目",
+                type: "error",
+              })
+      }else if(this.selectInput.singleChoiceNum === 0 &&
+      this.selectInput.multipleChoiceNum===0&&
+      this.selectInput.judgeNum===0&&
+      this.selectInput.answerNum === 0){
+        this.$message({
+                message: "请至少选择一项组卷题目的类型",
+                type: "error",
+              }) 
+      }else{
+        let data = {}
+        data.classifyId = this.subjectId
+        data.singleChoiceNum = parseInt(this.selectInput.singleChoiceNum),
+        data.multipleChoiceNum = parseInt(this.selectInput.multipleChoiceNum),
+        data.judgeNum = parseInt(this.selectInput.judgeNum),
+        data.answerNum = parseInt(this.selectInput.answerNum)
+        setVolume(data).then((res)=>{
+          console.log(res);
+        })
+      }
     }
   },
   computed: {
@@ -322,85 +301,16 @@ export default {
   }
 
 }
-
 .MainConnect {
   display: flex;
-
   .Mainleft {
     width: 840px;
-
-    .questionList {
-      .questionItem {
-
-        margin-bottom: 15px;
-        border: 1px solid #dadada;
-        border-radius: 10px;
-        position: relative;
-
-        .questionTitle {
-          overflow: hidden;
-          zoom: 1;
-          clear: both;
-          line-height: 25px;
-          font-size: 14px;
-          padding: 20px 20px 20px 20px;
-          position: relative;
-          cursor: pointer;
-
-        }
-
-        .questionSelect {
-          padding: 0px 20px 20px 20px;
-          display: flex;
-
-          .item {
-            flex: 10%;
-
-            span {
-              margin-left: 20px;
-            }
-          }
-        }
-
-        .questionBottom {
-          display: flex;
-          align-items: center;
-          height: 32px;
-          line-height: 16px;
-          background-color: #f4f4f4;
-          border-top: 1px solid #dadada;
-          padding: 0 20px;
-          color: #666666;
-          border-radius: 0 0 10px 10px;
-          position: relative;
-          font-size: 12px;
-
-          .time,
-          .difficulty,
-          .icon-analyze,
-          .icon-college {
-            margin-left: 10px;
-          }
-
-          .icon-analyze,
-          .icon-college {
-            img {
-              width: 16px;
-              height: 16px;
-            }
-          }
-
-        }
-      }
-    }
   }
-
   .Mainright {
     margin-left: 10px;
     width: 350px;
     border-radius: 10px;
     border: 1px solid #dadada;
-
     .mid-content {
       .mid-title {
         padding: 15px;
@@ -464,29 +374,6 @@ export default {
         }
 
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       p {
         text-align: left;
         color: #666666;
@@ -494,12 +381,19 @@ export default {
       }
 
     }
-
-
-
-
-
-
+    .mid-bottom{
+      margin: 10px auto;
+      display: flex;
+      justify-content: center;
+      width: 80%;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 8px;
+      text-align: cente;
+      cursor: pointer;
+      color: #ffffff;
+      background-color: #4a9efa;
+    }
   }
 }
 </style>

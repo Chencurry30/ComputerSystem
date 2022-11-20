@@ -1,66 +1,108 @@
-<!--上传头像的相关组件-->
-
 <template>
-  <div class="upload">
-    <el-upload class="avatar-uploader" 
-    action="https://jsonplaceholder.typicode.com/posts/" 
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+  <div id="upload" class="uploadBox">
+    <el-upload class="upload-demo" :action="objectData.host" :before-upload="getPolicy" :data="objectData"
+      :on-preview="handlePreview" :on-remove="handleRemove"  list-type="picture">
+      <img :src='[publicUrl+imageUrl]' class="avatar">
+      <i  class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
   </div>
+
 </template>
 
 <script>
+import { uploadUserPicture} from '../../service/userServers'
+import {mapState} from 'vuex'
+import {createPublicUrl} from '../../utils/index'
 export default {
-  name:'uploadPicture',
+  props:['userImage'],
+  name: "uploadPicture",
   data() {
     return {
-      imageUrl: ''
+      fileList: {},
+      objectData: {
+        OSSAccessKeyId: "",
+        policy: "",
+        Signature: "",
+        key: "",
+        host: '',
+        dir: ''
+      },
+      imageUrl: this.userImage,
     };
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
     },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+    handlePreview(file) {
+      console.log(file);
+    },
+    getPolicy(file) {
+      let picture = file.name
+      console.log(picture);
+      uploadUserPicture(picture).then((res) => {
 
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
+        this.objectData.OSSAccessKeyId = res.data.data.accessid; // Bucket拥有者的AccessKey ID。
+        this.objectData.policy = res.data.data.policy; //Policy规定了请求表单域的合法性。
+        this.objectData.Signature = res.data.data.signature;//根据AccessKey Secret和Policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性。
+        this.objectData.dir = res.data.data.dir;//前缀
+        this.objectData.host = res.data.data.host;// "https://" + bucketname + '.' + endpoint;  (前端请求oss服务路径)
+        // this.objectData.key = res.data.dir + "${filename}";
+        this.objectData.key = res.data.data.key;//dir + fileName (上传Object的名称。)
+        // this.fileList = { name: res.data.data.key, url: res.data.data.host + "/" + res.data.data.key }
+        console.log(res);
+        console.log(this.objectData);
+        this.userInfo.image = res.data.data.key
+        this.$store.dispatch('userInfo/changeUserInfo',this.userInfo)
+        
+      })
+     
+
+    }
+  },
+  computed:{
+    ...mapState('userInfo',{
+    userInfo:'userInfo'
+  }),
+  //获取公共的URL函数 
+  publicUrl(){
+    return createPublicUrl();
+  }
+  },
+  watch:{
+    userImage(newData) {
+      console.log(this.userImage);
+      console.log(newData);
+      this.imageUrl = newData
     }
   }
 }
+
 </script>
 
-<style lang="less" scoped>
-.upload{
+<style scoped lang="less">
+.uploadBox {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
 }
+
 .avatar-uploader .el-upload {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
 }
+
 .avatar-uploader-icon {
-  font-size: 40px;
+  font-size: 36px;
   color: #8c939d;
   text-align: center;
 }
