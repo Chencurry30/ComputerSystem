@@ -17,4 +17,5 @@ public class QuestionChoice {
     private Integer choiceId;
     private String choiceName;
     private String choiceTitle;
+    private boolean checked;
 }
