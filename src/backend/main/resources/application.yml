@@ -76,7 +76,7 @@ pagehelper:
 oss-config:
   accessId: LTAI5tHLnt7NtvSi4yj2YNGW
   accessKey: 5gkuKtSHzonUTmYDEjbAscjLy7eDg7
-  endpoint: oss-cn-hangzhou.aliyuncs.com
+  endpoint: oss-cn-chengdu.aliyuncs.com
   bucket: system-1234
   host: https://${oss-config.bucket}.${oss-config.endpoint}
 
