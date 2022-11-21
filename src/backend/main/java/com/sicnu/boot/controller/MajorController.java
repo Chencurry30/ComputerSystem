@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Map;
 
 /**
  * description:
@@ -64,13 +65,14 @@ public class MajorController {
         return majorService.getMajorPage(pageNum);
     }
 
-//    /**
-//     * 通过学校id查找专业
-//     */
-//    @GetMapping("/colleges/{collegeId}")
-//    public ServerResponse<List<Major>> getMajorListByCollegeId(@PathVariable Integer collegeId){
-//        return majorService.getMajorListByCollegeId(collegeId);
-//    }
+    /**
+     * 返回专业筛选框
+     * @return List
+     */
+    @GetMapping("/filterBox")
+    ServerResponse<List<Map<String,Object>>> getFilterBox(){
+        return majorService.getFilterBox();
+    }
 
     /**
      * 通过选择获取相应专业

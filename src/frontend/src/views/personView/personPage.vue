@@ -150,9 +150,7 @@
             <div class="containMain">
               <div class="userImg">
                 <!--上传头像的子组件-->
-                <uploadPicture></uploadPicture>
-
-
+                <uploadPicture :userImage="getUserImg.image"></uploadPicture>
               </div>
               <div class="userInfo">
                 <div class="nickname">昵称:&nbsp;&nbsp;&nbsp;{{getUserImg.nickname}}</div>
