@@ -9,6 +9,10 @@
         select *from Teacher where teacher_id=#{teacherId}
     </select>
 
+    <select id="getAllTeacher" resultType="Teacher">
+        select * from teacher
+    </select>
+
     <insert id="insertTeacher" parameterType="Teacher">
         insert into teacher values (null,#{name},#{backgroud},#{directionId},#{directionName},null,1,#{information},1,#{qualification},1)
     </insert>
