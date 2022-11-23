@@ -26,7 +26,7 @@
           <th style="width:150px">院校类型</th>
           <th style="width:270px">院校地址</th>
           <th style="width:150px">院校隶属</th>
-          <th style="width:300px">院校官网</th>
+          <th style="width:320px">院校官网</th>
           <th style="width:200px">官网电话</th>
         </tr>
         </thead>
@@ -39,7 +39,11 @@
           <td>{{item.type}}</td>
           <td>{{item.address}}</td>
           <td>{{item.subjection}}</td>
-          <td>{{item.web}}</td>
+          <td>
+            <a :href="item.web" target="_blank">
+              {{item.web}}
+            </a>
+          </td>
           <td>{{item.phone}}</td>
         </tr>
         </tbody>

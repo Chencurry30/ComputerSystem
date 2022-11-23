@@ -8,12 +8,12 @@
         <div class="banner-middle">
           <div class="middleBox">
             <div class="middle-header">
-              <div class="middle-left">王小五</div>
-              <div class="middle-right" >与他留言</div>
+              <div class="middle-left">{{teacherMsg.name}}</div>
+              <div class="middle-right">与他留言</div>
               <questionPopup ref="questionPopup"></questionPopup>
             </div>
             <div class="middle-main">
-              <p>学位:博士</p>
+              <p>学位:{{teacherMsg.background}}</p>
               <p>教师科目:高数，现代</p>
               <p>关注人数:10202021</p>
             </div>
@@ -92,7 +92,7 @@
           </div>
         </div>
       </div>
-      <div class="main-fotter">
+      <!-- <div class="main-fotter">
         <div class="fotter-header">用户评论</div>
         <div class="fotter-connect">
           <replyItem
@@ -101,19 +101,21 @@
             :replyInfo="item"
           ></replyItem>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
-import QuestionPopup from '../../components/popUp/questionPopup.vue';
+import QuestionPopup from "../../components/popUp/questionPopup.vue";
 import replyItem from "../../components/remark/replyItem.vue";
+import { getTeacher } from "../../service/teacherService";
 export default {
   components: { replyItem, QuestionPopup },
   name: "teacherPerson",
   data() {
     return {
+      teacherId: "",
       DataList: [
         {
           id: 1232,
@@ -132,11 +134,23 @@ export default {
           resourcename: "回复我的",
         },
       ],
+      teacherMsg: {
+        name: "",
+        background: "",
+        directionName: "",
+        information: "",
+        Id: "",
+      },
     };
   },
   mounted() {
-    console.log(this.$route);
+    this.teacherId = this.$route.query.teacherId;
+    getTeacher(this.teacherId).then((res) => {
+      this.teacherMsg = res.data.data;
+      console.log(this.teacherMsg);
+    });
   },
+  methods: {},
 };
 </script>
 

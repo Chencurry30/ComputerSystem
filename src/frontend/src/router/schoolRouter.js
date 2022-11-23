@@ -6,7 +6,7 @@ export default [
         path:'/schoolSelect',
         name:'schoolSelect',
         component:schoolSelect,
-        meta: {                          
+        meta: {
             showTop: true,
             showFotter:true
           },
@@ -15,9 +15,9 @@ export default [
         path:'/schoolPage/:collegeId?',
         name:'schoolPage',
         component:schoolPage,
-        meta: {                          
+        meta: {
             showTop: false,
             showFotter:false
-          },  
+          },
     }
 ]

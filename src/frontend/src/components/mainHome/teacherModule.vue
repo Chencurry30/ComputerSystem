@@ -25,136 +25,33 @@
         <li class="listItem">
           <div class="mainBox">
             <ul class="Box">
-              <li class="BoxItem">
+              <li
+                class="BoxItem"
+                v-for="item in teachers"
+                :key="item.teacherId"
+                @click="goTeacherperson(item.teacherId)"
+              >
                 <div class="item-Info">
                   <div class="itemImg">
                     <img src="../../assets/Img/teacherImg/1.png" alt="" />
                   </div>
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
-                      <span class="teacherInfo">张小武</span>
+                      <span class="teacherInfo">{{ item.name }}</span>
                       <span class="professional">数学</span>
                     </div>
                     <div class="Introduce-right">
                       <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                      查看更多
+                      <router-link :to="{ name: 'teacherPerson' }"
+                        >点击更多</router-link
+                      >
                     </div>
                   </div>
                 </div>
                 <div class="teacher">
-                  <div>张小五</div>
-                  <p>讲解方向:高数，现代，离散</p>
-                  <p>学业背景:博士</p>
-                </div>
-              </li>
-              <li class="BoxItem">
-                <div class="item-Info">
-                  <div class="itemImg">
-                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
-                  </div>
-                  <div class="itemIntroduce">
-                    <div class="Introduce-left">
-                      <span class="teacherInfo">张小武</span>
-                      <span class="professional">数学</span>
-                    </div>
-                    <div class="Introduce-right">
-                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                      查看更多
-                    </div>
-                  </div>
-                </div>
-                <div class="teacher">
-                  <div>张小五</div>
-                  <p>讲解方向:高数，现代，离散</p>
-                  <p>学业背景:博士</p>
-                </div>
-              </li>
-              <li class="BoxItem">
-                <div class="item-Info">
-                  <div class="itemImg">
-                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
-                  </div>
-                  <div class="itemIntroduce">
-                    <div class="Introduce-left">
-                      <span class="teacherInfo">张小武</span>
-                      <span class="professional">数学</span>
-                    </div>
-                    <div class="Introduce-right">
-                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                      查看更多
-                    </div>
-                  </div>
-                </div>
-                <div class="teacher">
-                  <div>张小五</div>
-                  <p>讲解方向:高数，现代，离散</p>
-                  <p>学业背景:博士</p>
-                </div>
-              </li>
-              <li class="BoxItem">
-                <div class="item-Info">
-                  <div class="itemImg">
-                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
-                  </div>
-                  <div class="itemIntroduce">
-                    <div class="Introduce-left">
-                      <span class="teacherInfo">张小武</span>
-                      <span class="professional">数学</span>
-                    </div>
-                    <div class="Introduce-right">
-                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                      查看更多
-                    </div>
-                  </div>
-                </div>
-                <div class="teacher">
-                  <div>张小五</div>
-                  <p>讲解方向:高数，现代，离散</p>
-                  <p>学业背景:博士</p>
-                </div>
-              </li>
-              <li class="BoxItem">
-                <div class="item-Info">
-                  <div class="itemImg">
-                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
-                  </div>
-                  <div class="itemIntroduce">
-                    <div class="Introduce-left">
-                      <span class="teacherInfo">张小武</span>
-                      <span class="professional">数学</span>
-                    </div>
-                    <div class="Introduce-right">
-                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                      查看更多
-                    </div>
-                  </div>
-                </div>
-                <div class="teacher">
-                  <div>张小五</div>
-                  <p>讲解方向:高数，现代，离散</p>
-                  <p>学业背景:博士</p>
-                </div>
-              </li>
-              <li class="BoxItem">
-                <div class="item-Info">
-                  <div class="itemImg">
-                    <img src="../../assets/Img/teacherImg/1.png" alt="" />
-                  </div>
-                  <div class="itemIntroduce">
-                    <div class="Introduce-left">
-                      <span class="teacherInfo">张小武</span>
-                      <span class="professional">数学</span>
-                    </div>
-                    <div class="Introduce-right">
-                      <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                      查看更多
-                    </div>
-                  </div>
-                </div>
-                <div class="teacher">
-                  <div>张小五</div>
-                  <p>讲解方向:高数，现代，离散</p>
-                  <p>学业背景:博士</p>
+                  <div>{{ item.name }}</div>
+                  <p>{{ item.information }}</p>
+                  <p>{{ item.background }}</p>
                 </div>
               </li>
             </ul>
@@ -164,14 +61,45 @@
     </div>
   </div>
 </template>
+
 <script>
+import { getTeachers } from "../../service/teacherService";
 export default {
-  name:'teacherModule',
+  name: "teacherModule",
   data() {
-    return {};
+    return {
+      teachers: {
+        name: "",
+        background: "",
+        directionName: "",
+        information: "",
+        teacherId: "",
+      },
+    };
+  },
+  created() {
+    getTeachers().then((res) => {
+      // console.log(res);
+      this.teachers = res.data.data;
+      console.log(this.teachers);
+    });
+  },
+  methods: {
+    goTeacherperson(id) {
+      let location = { name: "teacherPerson" };
+      location.query = { teacherId: id };
+      this.$router.push(location);
+      // getTeacher(id).then((res) => {
+      //   // console.log(res);
+      //   let teacherMsg = res.data.data
+
+      // });
+    },
   },
 };
 </script>
+
+
 <style lang="less" scoped>
 .teacher-item {
   .title {
@@ -195,7 +123,7 @@ export default {
         margin-left: 30px;
         .BoxItem {
           float: left;
-          display: block;
+          display: flex;
           padding: 0 15px;
           border-bottom: 4px solid #f7f7f7;
           line-height: 27px;
