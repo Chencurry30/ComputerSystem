@@ -38,7 +38,7 @@
                   <div class="itemIntroduce">
                     <div class="Introduce-left">
                       <span class="teacherInfo">{{ item.name }}</span>
-                      <span class="professional">数学</span>
+                      <span class="professional">{{item.directionName}}</span>
                     </div>
                     <div class="Introduce-right">
                       <img src="../../assets/Img/Icon/gestures.png" alt="" />

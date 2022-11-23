@@ -14,8 +14,8 @@
             </div>
             <div class="middle-main">
               <p>学位:{{teacherMsg.background}}</p>
-              <p>教师科目:高数，现代</p>
-              <p>关注人数:10202021</p>
+              <p>教师科目:{{teacherMsg.directionName}}</p>
+              <p>关注人数:{{teacherMsg.attentPeople}}</p>
             </div>
           </div>
         </div>
@@ -135,6 +135,7 @@ export default {
         },
       ],
       teacherMsg: {
+        attentPeople:'',
         name: "",
         background: "",
         directionName: "",
