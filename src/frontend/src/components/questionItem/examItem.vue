@@ -1,7 +1,7 @@
 <!--题目列表对应的组件-->
 <template>
   <div>
-    <li class="questionItem" @click="gotoPage">
+    <li class="questionItem">
       <div class="questionTitle">
         <span>({{questioHead}})</span>
         有理数a,b在数轴上表示如下，下列判断错误的是()
@@ -9,15 +9,15 @@
       <div class="questionSelect" v-if="questionItem.questionType === 1 || questionItem.questionType === 2">
         <div class="item" v-for="(questionChildItem) in questionItem.questionChoiceList"
           :key="questionChildItem.choiceId">
-          <span @click="select(questionChildItem)">{{ questionChildItem.choiceName }}. {{ questionChildItem.choiceTitle }}</span>
+          <span @click="givefather(questionChildItem)" class="answerBtn">{{ questionChildItem.choiceName }}. {{ questionChildItem.choiceTitle }}</span>
         </div>
       </div>
       <div class="questionSelect" v-else-if="questionItem.questionType === 3">
         <div class="item">
           <div class="selectOption" v-for="(item) in judgeList" :key="item.id">
             <input type="radio">
-            <span class="span1">{{item.option}}&nbsp;:&nbsp;</span>
-            <span class="span2">{{item.name}}</span>
+            <span class="span1 answerBtn" >{{item.option}}&nbsp;:&nbsp;</span>
+            <span class="span2 answerBtn">{{item.name}}</span>
           </div>
         </div>
 
@@ -26,7 +26,7 @@
         <div class="item">
           <span>答：</span>
           <input type="text" class="line">
-          <button>提交</button>
+          <button class="answerBtn">提交</button>
         </div>
 
       </div>
@@ -42,7 +42,6 @@
             <img src="../../assets/Img/Icon/fuwu-2.png" alt="">
             收藏
           </span>
-          <span class="addQuestion">收藏</span>
         </div>
       </div>
 
@@ -61,7 +60,7 @@
 <script>
 export default {
   props: ['questionItem'],
-  name: 'questionItem',
+  name: 'examItem',
   data() {
     return {
       judgeList: [
@@ -79,12 +78,8 @@ export default {
     }
   },
   methods: {
-    select(questionChildItem){
-      console.log(questionChildItem);
-    },
-    gotoPage() {
-      console.log(this.questionItem);
-    }
+
+
   },
   computed:{
     questioHead(){
@@ -143,6 +138,9 @@ export default {
         height: 20px;
         border-bottom: 1px solid #666666;
       }
+      .answerBtn{
+        cursor: pointer;
+      }
     }
   }
 
@@ -173,17 +171,7 @@ export default {
         height: 16px;
       }
     }
-    
-    .addQuestion{
-      margin-left: 8px;
-      height: 18px;
-    line-height: 18px;
-    min-width: 28px;
-    border-radius: 8px;
-    background-color: #ff8a00;
-    padding: 4px 8px;
-    color: #666666;
-    }
+
   }
 }
 </style>

@@ -15,5 +15,5 @@ export const createUUID = () =>{
 }
 
 export const createPublicUrl = () =>{
-  return 'http://system-123.oss-cn-hangzhou.aliyuncs.com/'
+  return 'https://system-1234.oss-cn-chengdu.aliyuncs.com/'
 }

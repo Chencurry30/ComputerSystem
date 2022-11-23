@@ -135,6 +135,8 @@ export default {
             console.log(res);
             if (res.data.code === 200) {
               const token = res.data.data.token
+              const userImg = res.data.data.user.image
+              sessionStorage.setItem('userImg',userImg)
               sessionStorage.setItem('token', token)  //保存token到本地浏览器
               this.$message({
                 message: "恭喜你，登录成功！欢迎用户: " + name,

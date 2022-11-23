@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="schoolIntroduce" :class="{ showHeight: first }">
-          {{schoolInfo.introduction}}
+          {{ schoolInfo.introduction }}
         </div>
       </div>
 
@@ -50,16 +50,22 @@
           <h3>硕士专业</h3>
         </div>
         <div class="tab-header clearfix">
-          <div class="tab-item" :class="{ selected: countIndex === item.id }" v-for="(item) in collegeList" :key="item.id
-          " @click="selectItem(item.id)">
-            <a href="javascript:;">{{ item.name }}</a>
+          <div class="tab-item" v-for="(fatherItem) in collegeList" :key="fatherItem.id">
+            <a href="javascript:;">{{ fatherItem.name }}</a>
+            <ul>
+              <li v-for="(childItem) in fatherItem.list" :key="childItem.id" class="collegeItem"
+                :class="{ selected: countIndex === childItem.id }" @click="selectItem(childItem.classifyId)">
+                {{ childItem.classifyName }}</li>
+            </ul>
           </div>
         </div>
-        <div class="tab-connect">
+        <div class="tab-connect" :class="{hiddenBox:countIndex===0}">
           <div class="item-connect">
             <ul class="clearfix">
-              <li>高等教育学[专业的编号]</li>
-              <li>教育技术学[专业的编号]</li>
+              <li v-for="(item) in majorList" :key="item.majorId">
+                <span class="item-connect-name">{{item.name}}[{{item.majorCode}}]</span>
+                <span class="item-connect-introduce">专业介绍:{{item.instruction}}</span>
+              </li>
             </ul>
 
           </div>
@@ -71,49 +77,46 @@
 
 <script>
 
-import { getschoolInfo } from '../../service/schoolService'
+import { getschoolInfo, getSchoolMajorNavType ,getSchoolMajor} from '../../service/schoolService'
 export default {
   name: 'schoolPage',
   data() {
     return {
       schoolInfo: {},
       first: false,
-      collegeList: [
-        {
-          id: 0,
-          name: '教育学'
-        },
-        {
-          id: 12350,
-          name: '工学'
-        },
-        {
-          id: 1235089,
-          name: '理学'
-        }
-      ],
+      //专业大类的选择列表 
+      collegeList: [],
+      //对应的专业选择列表 
+      majorList:[],
+
       countIndex: 0,
     }
   },
   mounted() {
-
     //获取具体院校相关的信息
     this.getSchool()
+    //获取该院校的具体专业大类 
+    this.getMajorNavType()
   },
   methods: {
     //获取具体院校相关的信息
-    getSchool(){
+    getSchool() {
       let collegeId = this.$route.query.collegeId
       getschoolInfo(collegeId).then((res) => {
-      this.schoolInfo = res.data.data
-      console.log(res);
+        this.schoolInfo = res.data.data
+        console.log(res);
       })
     },
 
-
-
-
-
+    getMajorNavType() {
+      //将所有的专业信息获取出来 
+      getSchoolMajorNavType().then((res) => {
+        if(res.data.code === 200){
+          this.collegeList = res.data.data
+        }
+        console.log(res);
+      })
+    },
 
 
     hex() {
@@ -121,6 +124,13 @@ export default {
     },
     selectItem(id) {
       this.countIndex = id
+      getSchoolMajor({collegeId:this.$route.query.collegeId,classfyId:id}).then((res)=>{
+        console.log(res);
+        if(res.data.code === 200){
+          this.majorList = res.data.data
+        }
+      })
+
     }
   }
 }
@@ -130,6 +140,7 @@ export default {
   .header {
     width: 100%;
     background: #add9fc url(../../assets/Img/schoolImg/zx-bg.jpg) 50% 0 no-repeat;
+
     .headerBox {
       padding: 15px 0;
       display: flex;
@@ -144,9 +155,11 @@ export default {
           display: flex;
           align-items: center;
           margin: 15px 0px 15px 0;
+
           .title {
             font-size: 26px;
           }
+
           .ranking {
             display: inline-block;
             margin: 5px 10px;
@@ -160,12 +173,14 @@ export default {
             text-align: center;
           }
         }
+
         .phone {
           font-size: 16px;
           line-height: 24px;
           margin-top: 5px;
         }
       }
+
       .school-introduce {
         width: 620px;
         margin-right: 20px;
@@ -269,7 +284,6 @@ export default {
     .column-title-left {
       padding: 10px 0;
 
-      // border-bottom: 1px solid #e5e5e5;
       .column-title-left-header {
         display: flex;
         justify-content: space-between;
@@ -289,10 +303,10 @@ export default {
         height: 50px;
         overflow: hidden;
         transition: all 1s;
-        overflow : hidden;
-        display: -webkit-box; 
+        overflow: hidden;
+        display: -webkit-box;
         -webkit-box-orient: vertical;
-         -webkit-line-clamp: 5; 
+        -webkit-line-clamp: 5;
       }
 
       .showHeight {
@@ -303,18 +317,17 @@ export default {
         font-size: 12px;
       }
 
-      .tab-header{
+      .tab-header {
         position: relative;
         height: auto;
-        margin-bottom: 20px;
 
         .tab-item {
-          float: left;
+          display: flex;
+          align-items: center;
           border-bottom: 2px solid transparent;
           margin-right: 10px;
 
           a {
-            padding: 2px 10px;
             margin-top: 5px;
             display: block;
             color: #666;
@@ -325,31 +338,51 @@ export default {
           a:hover {
             text-decoration: none;
           }
+
+          .selected {
+            border-bottom: 2px solid #1787e0;
+          }
+
+          .collegeItem {
+            float: left;
+            margin-top: 5px;
+            display: block;
+            color: #666;
+            font-size: 16px;
+            padding: 4px 15px 5px;
+            cursor: pointer;
+          }
         }
 
-        .selected {
-          border-color: #1787e0;
-        }
+
       }
 
-      .tab-connect{
-        .item-connect{
+      .tab-connect {
+        .item-connect {
           padding: 10px 0;
           min-height: 60px;
-          ul{
-            margin-bottom: 0;
+
+          ul {
             padding: 10px 0;
             background: #f7f9fa;
           }
-          li{
-            float: left;
-            width: 255px;
+
+          li {
+            width: 100%;
             padding: 0 20px;
             height: 35px;
             line-height: 35px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            .item-connect-name{
+              display: inline-block;
+              width: 180px;
+              text-align: right;
+            }
+            .item-connect-introduce{
+              margin-left: 10px;
+            }
           }
 
         }
@@ -357,6 +390,5 @@ export default {
 
     }
   }
-
 }
 </style>

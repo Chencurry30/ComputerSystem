@@ -40,9 +40,9 @@ const userInfo = {
       getUserImg(state){
         //个人页面中上部分对应的内容
         let userImg = {}
-        userImg.nickname = state.userInfo.nickname || {}
-        userImg.image = state.userInfo.image || {}
-        userImg.message = state.userInfo.message || {}
+        userImg.nickname = state.userInfo.nickname || ""
+        userImg.image = state.userInfo.image || ""
+        userImg.message = state.userInfo.message || ""
         return userImg
       },
 

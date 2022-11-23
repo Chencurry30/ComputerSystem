@@ -16,3 +16,22 @@ export const getschoolInfo = (collegeId) =>{
   const url = `/colleges/${collegeId}`
   return service.get(url)
 } 
+
+//获取专业的选择列表的相关信息
+export const getSchoolMajorNavType = () =>{
+  //返回的是院校加classfy的列表 
+  // const url = `/majors/colleges/1-1`
+  //返回的所有的列表 
+  // const url = `/majors`
+  const url = `/majors/filterBox`
+  return service.get(url)
+} 
+
+//返回具体专业的相关信息
+export const getSchoolMajor = ({collegeId,classfyId}) =>{
+  const url = `/majors/colleges/${collegeId}-${classfyId}`
+  return service.get(url)
+}
+
+
+
