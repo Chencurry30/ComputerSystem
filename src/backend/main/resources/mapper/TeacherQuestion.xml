@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.TeacherQuestionMapper">
+<!--根据老师ID查询对老师的问题-->
+    <select id="getTeacherQuestionById" resultType="TeacherQuestion">
+        select question from teacher_question where teacher_id=#{teacherId}
+    </select>
+</mapper>
