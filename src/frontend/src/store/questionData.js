@@ -4,7 +4,8 @@ const questionData = {
   namespaced: true,   //开启匿名空间
   state: {
     questionNav: {},
-    questionDataList: {}
+    questionDataList: {},
+    setVolumeData:{}            //组卷的相关数据
   },
   actions: {
     //获取题库的选择列表 
@@ -35,7 +36,13 @@ const questionData = {
     },
     GETQUESTIONDATA(state, data) {
       state.questionDataList = data
+    },
+
+    //在questionSelect中的组卷功能调用 
+    GETSETVOLUMEDATA(state,data){
+      state.setVolumeData = data
     }
+
 
   },
   getters: {
@@ -57,7 +64,10 @@ const questionData = {
       console.log(data);
       return data
     },
-
+    //返回相关的组题数据 
+    getSetvolumeData(state){
+      return state.setVolumeData
+    }
   }
 }
 export default questionData

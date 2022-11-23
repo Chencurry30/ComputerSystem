@@ -108,10 +108,10 @@
 
 <script>
 import QuestionPopup from "../../components/popUp/questionPopup.vue";
-import replyItem from "../../components/remark/replyItem.vue";
+// import replyItem from "../../components/remark/replyItem.vue";
 import { getTeacher } from "../../service/teacherService";
 export default {
-  components: { replyItem, QuestionPopup },
+  components: {  QuestionPopup },
   name: "teacherPerson",
   data() {
     return {

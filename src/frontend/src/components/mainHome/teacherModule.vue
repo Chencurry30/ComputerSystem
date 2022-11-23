@@ -89,11 +89,6 @@ export default {
       let location = { name: "teacherPerson" };
       location.query = { teacherId: id };
       this.$router.push(location);
-      // getTeacher(id).then((res) => {
-      //   // console.log(res);
-      //   let teacherMsg = res.data.data
-
-      // });
     },
   },
 };

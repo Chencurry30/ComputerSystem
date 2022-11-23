@@ -3,20 +3,20 @@
   <div class="MainBox w">
     <div class="MainBox-left">
       <div class="videotitle">
-        <h1 class="title">{{videoInfo.name}}</h1>
+        <h1 class="title">{{ videoInfo.name }}</h1>
         <div class="video-data">
           <div class="video-data-list">
             <span class="videoItem">
               <img src="../../assets/Img/Icon/video.png" alt="" />
-              {{videoInfo.viewNum}}
+              {{ videoInfo.viewNum }}
             </span>
             <span class="videoItem">
               <img src="../../assets/Img/Icon/videomessage.png" alt="" />
-              {{videoInfo.commentNum}}
+              {{ videoInfo.commentNum }}
             </span>
             <span class="videoItem">
               <img src="../../assets/Img/Icon/time.png" alt="" />
-              {{videoInfo.time}}
+              {{ videoInfo.time }}
             </span>
           </div>
         </div>
@@ -30,13 +30,8 @@
 
       <div class="video-toolbar">
         <span class="like">
-          <img
-            src="../../assets/Img/Icon/dianzan.png"
-            title="点赞"
-            alt=""
-            class="icon"
-          />
-          <span class="test-info">{{videoInfo.likeNumber}}</span>
+          <img src="../../assets/Img/Icon/dianzan.png" title="点赞" alt="" class="icon" />
+          <span class="test-info">{{ videoInfo.likeNumber }}</span>
         </span>
         <!-- <span class="collection">
           <img
@@ -59,7 +54,7 @@
       </div>
       <div class="videoinfo">
         <span class="infoconnect">
-          {{videoInfo.introduction}}
+          {{ videoInfo.introduction }}
         </span>
       </div>
       <div class="videotype">
@@ -99,28 +94,29 @@
         <div class="reply-content">
           <ReleaseItem :typeSelect="Type.second"></ReleaseItem>
         </div>
-
         <!--消息回复的组件-->
         <div class="reply-List" v-for="(fatherItem) in getRemarkList" :key="fatherItem.id">
           <replyItem :replyInfo="fatherItem.comment" :showId="fatherItem.id"></replyItem>
-           <div class="children-List hidden" :class="{hiddenBox:fatherItem.children === null,showBox:showMoreID === fatherItem.id
+          <div class="children-List hidden" :class="{
+            hiddenBox: fatherItem.children === null, showBox: showMoreID === fatherItem.id
           }">
-            <replyItem  v-for="(child) in fatherItem.children" :replyInfo="child" :showId="fatherItem.id" :key="child.commentId"></replyItem>
+            <replyItem v-for="(child) in fatherItem.children" :replyInfo="child" :showId="fatherItem.id"
+              :key="child.commentId"></replyItem>
           </div>
           <div class="totalNumber">
             <div class="getMore" @click="showMoreInfo(fatherItem.id)">查看全部</div>
           </div>
 
-          <div class="children-Commit hiddenBox" :class="{showBox:fatherItem.id === getOtherInfo.showId}">
+          <div class="children-Commit hiddenBox" :class="{ showBox: fatherItem.id === getOtherInfo.showId }">
             <!--将每个评论的父亲传入，是每次回复的时候都是回复到父亲管理-->
             <ReleaseItem :typeSelect="Type.first" :fatherInfo="fatherItem.comment"></ReleaseItem>
-          </div> 
+          </div>
 
         </div>
       </div>
     </div>
 
-      <!--这里就是利用父组件循环的ID来控制展示的相关回复的信息-->
+    <!--这里就是利用父组件循环的ID来控制展示的相关回复的信息-->
     <div class="MainBox-right">
       <div class="videoList">
         <div class="video-list-item">
@@ -247,15 +243,15 @@
 import ReleaseItem from "../../components/remark/releaseItem.vue";
 import ReplyItem from "../../components/remark/replyItem.vue";
 import videoPlay from "../../components/videoPlay/videoPlay"
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: "videoPage",
   data() {
     return {
-      showMoreID:0,
-      Type:{
-        first:'回复',
-        second:'提问',
+      showMoreID: 0,
+      Type: {
+        first: '回复',
+        second: '提问',
       },
     };
   },
@@ -264,44 +260,44 @@ export default {
     ReplyItem,
     videoPlay,
   },
-  mounted(){
+  mounted() {
     this.getPageData()
 
     //获取相应资源的评论信息 
     this.getPageRemark()
   },
-  methods:{
+  methods: {
     //获取视屏页面的具体信息
-    getPageData(){
+    getPageData() {
       let videoId = this.$route.query.videoId
-      this.$store.dispatch('videoData/getInfo',videoId)
+      this.$store.dispatch('videoData/getInfo', videoId)
     },
     //获取对应的评论信息 
-    getPageRemark(){
+    getPageRemark() {
       let videoId = this.$route.query.videoId
-      this.$store.dispatch('remark/getVideoRemark',videoId)
+      this.$store.dispatch('remark/getVideoRemark', videoId)
     },
     //将隐藏的评论全部展示
-    showMoreInfo(fatherId){
+    showMoreInfo(fatherId) {
       this.showMoreID = fatherId
-    } 
+    }
 
 
   },
-  computed:{
+  computed: {
 
 
     //从vuex中获取视屏的基本信息 
-    ...mapGetters('videoData',{
-      videoInfo:'getVideoInfo'
+    ...mapGetters('videoData', {
+      videoInfo: 'getVideoInfo'
     }),
-    
-  
+
+
     //从vuex中获取基本的评论列表
-    ...mapGetters('remark',{
-      getRemarkList:'getRemarkList',
+    ...mapGetters('remark', {
+      getRemarkList: 'getRemarkList',
       //获取的是点击回复评论时被回复人的相关信息 
-      getOtherInfo:'getOtherInfo'
+      getOtherInfo: 'getOtherInfo'
     }),
 
   },
@@ -312,12 +308,15 @@ export default {
 .MainBox {
   display: flex;
   margin-top: 15px;
+
   .MainBox-left {
     width: 800px;
     padding: 10px 20px 10px 70px;
+
     .videotitle {
       padding-top: 12px;
       height: 85px;
+
       .title {
         margin-bottom: 12px;
         overflow: hidden;
@@ -326,6 +325,7 @@ export default {
         font-weight: 500;
         color: #18191c;
       }
+
       .video-data {
         display: flex;
         position: relative;
@@ -335,17 +335,20 @@ export default {
         align-items: center;
         font-size: 12px;
         color: #9499a0;
+
         .video-data-list {
           display: flex;
           align-items: center;
           overflow: hidden;
           box-sizing: border-box;
+
           .videoItem {
             margin-right: 12px;
             display: inline-flex;
             text-align: center;
             overflow: hidden;
           }
+
           img {
             margin-right: 4px;
             width: 20px;
@@ -354,9 +357,11 @@ export default {
         }
       }
     }
+
     .videomain {
       width: 100%;
     }
+
     .video-toolbar {
       padding-top: 16px;
       padding-bottom: 12px;
@@ -364,17 +369,22 @@ export default {
       line-height: 25px;
       border-bottom: 1px solid #e3e5e7;
       color: #61666d;
-      .like,.share,.collection {
+
+      .like,
+      .share,
+      .collection {
         display: flex;
         align-items: center;
         margin-right: 45px;
       }
+
       .icon {
         margin-top: -6px;
         margin-right: 8px;
         width: 24px;
         height: 24px;
       }
+
       .test-info {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -382,9 +392,11 @@ export default {
         white-space: nowrap;
       }
     }
+
     .videoinfo {
       margin: 16px 0;
       min-height: 30px;
+
       .infoconnect {
         white-space: pre-line;
         font-size: 15px;
@@ -394,14 +406,17 @@ export default {
         overflow: hidden;
       }
     }
+
     .videotype {
       margin: 16px 0 10px 0;
       padding-bottom: 12px;
       height: 46px;
       border-bottom: 1px solid #e3e5e7;
+
       .tag {
         float: left;
         margin: 0 12px 8px 0;
+
         .taginfo {
           padding: 0 12px;
           height: 28px;
@@ -413,15 +428,20 @@ export default {
         }
       }
     }
+
     .videocommit {
       margin-top: 24px;
+
       .reply-notecion {
         margin-bottom: 22px;
+
         .reply-bar {
           display: flex;
           align-items: center;
+
           .nav-item {
             font-size: 20px;
+
             .total-reply {
               margin: 0 36px 0 6px;
               color: #9499a0;
@@ -430,57 +450,66 @@ export default {
           }
         }
       }
-      .reply-List{
-        .children-List{
+
+      .reply-List {
+        .children-List {
           margin-left: 6%;
           width: 100%;
         }
-        .children-Commit{
+
+        .children-Commit {
           margin: 10px 0;
           margin-left: 5%;
           width: 95%;
         }
-        .totalNumber{
+
+        .totalNumber {
           display: flex;
           margin-left: 10%;
           color: #9499a0;
           font-size: 12px;
-          .total{
+
+          .total {
             margin-right: 10px;
           }
-          .getMore:hover{
+
+          .getMore:hover {
             color: #00aeec;
           }
         }
 
         //显示子评论的宽度 
-        .hidden{
+        .hidden {
           height: 90px;
           overflow: hidden;
           transition: 3;
         }
 
         //将没有子评论的相关信息隐藏 
-        .hiddenBox{
+        .hiddenBox {
           height: 0px;
           overflow: hidden;
         }
+
         //显示相关信息 
-        .showBox{
+        .showBox {
           height: 100%;
-          overflow:auto;
+          overflow: auto;
         }
       }
     }
   }
+
   .MainBox-right {
     padding: 0 25px;
     width: 400px;
-    .videoList{
-      .item-box{
+
+    .videoList {
+      .item-box {
         display: flex;
         margin-bottom: 10px;
-        .item-img-box{
+
+        .item-img-box {
           display: flex;
           flex: 1;
           justify-content: center;
@@ -489,41 +518,52 @@ export default {
           height: 80px;
           background: red;
         }
-        .item-info{
+
+        .item-info {
           flex: 1;
           max-width: 180px;
           margin-left: 10px;
-          .item-info-title{
+
+          .item-info-title {
             font-size: 14px;
             height: 26px;
             line-height: 26px;
             font-weight: 700;
           }
-          .item-info-contest{
+
+          .item-info-contest {
             height: 24px;
             line-height: 24px;
             font-weight: 400;
             font-size: 12px;
           }
-          .item-info-total{
+
+          .item-info-total {
             display: flex;
             justify-content: space-between;
             align-content: center;
             margin-top: 5px;
-            .total-left,.total-right{
+
+            .total-left,
+            .total-right {
               display: flex;
               margin: 0 5px;
               // margin-left: 0px;
               height: 16px;
-              .left-img,.right-img{
+
+              .left-img,
+              .right-img {
                 margin-right: 4px;
                 width: 17px;
                 height: 17px;
-                img{
+
+                img {
                   width: 100%;
                 }
               }
-              .left-info,.right-info{
+
+              .left-info,
+              .right-info {
                 font-size: 12px;
               }
             }

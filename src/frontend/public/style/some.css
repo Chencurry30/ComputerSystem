@@ -15,7 +15,9 @@ dl {
   margin-top: 0;
   margin-bottom: 0 !important;
 }
-
+li{
+  list-style: none;
+}
 a {
   color: #666;
   text-decoration: none;
