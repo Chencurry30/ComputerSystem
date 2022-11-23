@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -21,6 +23,8 @@ public class Message {
     private Integer userId;
     private String nickname;
     private String content;
+    @NotNull(message = "评论内容不能为空")
+    @NotBlank(message = "评论内容不能为空字符串")
     private LocalDateTime messageTime;
     private Integer teacherId;
 
