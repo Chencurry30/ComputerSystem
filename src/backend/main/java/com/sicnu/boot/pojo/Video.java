@@ -36,4 +36,5 @@ public class Video {
   private String link;
   private Integer commentNum;
   private String nickname;
+  private Boolean isCollected;
 }
