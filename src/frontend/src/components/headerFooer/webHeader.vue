@@ -30,8 +30,7 @@
     <div class="container-xl" v-if="hiddenTopComponent">
       <div class="select-box">
         <ul class="select-list">
-          <li class="list-item" v-for="(item, index) in liList" v-on:click="addClass(index)"
-            v-bind:class="{ action: index == current }" :key="index">
+          <li class="list-item" v-for="(item, index) in liList" :key="index">
             <div class="item-info">
               <router-link :to="item.link">{{ item.name }}</router-link>
             </div>
@@ -66,7 +65,6 @@ export default {
         { name: '考研政策', link: '' },
         { name: '更多信息', link: '' },
       ],
-      current: 0,
       showBox: false
     }
   },
@@ -76,9 +74,6 @@ export default {
       let location = { name: "loginView" };
       sessionStorage.removeItem('token')
       this.$router.push(location);
-    },
-    addClass(index) {
-      this.current = index
     },
     //退出登录 
     backLogin() {
@@ -108,10 +103,10 @@ export default {
     publicUrl() {
       const userImg = sessionStorage.getItem('userImg')
       return createPublicUrl() + userImg
-      
+
     },
     //判断用户是否有头像 
-    hidddenDefaultImg(){
+    hidddenDefaultImg() {
       return sessionStorage.getItem('userImg')
     }
   },

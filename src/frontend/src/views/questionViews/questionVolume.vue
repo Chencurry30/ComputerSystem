@@ -1,76 +1,34 @@
+<template>
+  <div class="questionView">
+    <div class="questionBread w">
 
+      <span>当前位置：</span>
+      <a href="javascript:;">试卷选择</a>
+      <span></span>
+      <a href="javascript:;">组卷详情</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <template>
-  <div class="questionView w">
-    <div class="questionConnect">
-      <div v-for="(questionItem) in dataList" :key="questionItem.questionId" class="questionItem"
-      @click="judgeQuestion(questionItem)">
-        <examItem :questionItem="questionItem" @giveFather="getSno"></examItem>
-      </div>
     </div>
+    <div class="questionConnect w" id="main-content">
+      <div class="questionHeader">随机组成试卷一</div>
+      <div class="questionConnect">
+        <div v-for="(questionItem) in dataList" :key="questionItem.questionId" class="questionItem">
+          <examPageItem :questionItem="questionItem" @giveFather="getSno"></examPageItem>
+        </div>
+      </div>
+      <button type="primary" size="small" @click="printOutDPF('#main-content')">点击下载</button>
+    </div>
+
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import examItem from '../../components/questionItem/examItem'
+import examPageItem from '../../components/questionItem/examPaperItem'
 export default {
-  components: { examItem },
+  components: { examPageItem },
   name: 'questionVolume',
   data() {
     return {
-      swiper: {},
-      isShowAnswer: -1,// 控制是否显示解析
-      isActive: -1,
       dataList: [
         {
           "questionId": 17,
@@ -473,37 +431,10 @@ export default {
           "year": "2019-01-01 00:00:00"
         }
       ],
+      htmlTitle: '页面导出PDF文件名'
     }
   },
   methods: {
-    chechan(v1, v2, index, index1) {
-
-      if (v1.userAnswer !== -1) return // 代表已经答过了
-      this.isActive = index1//选中当前选项
-      this.isShowAnswer = index //选完显示答案和解析
-      v1.userAnswer = index1;   //此处非常关键，已经改变了 tmList数组
-      if (index1 === v1.correct) {
-        this.nextto();
-      }
-      console.log("点击的答案" + v1, "正确答案" + `${v2}`, "第" + `${index + 1}` + "题", `点击了第${index + 1}题的第${index1 + 1}答案`);
-
-      //判断最后一个  此判断只适用于最后一个题目的答案 和没一道题的 选项唯一   根据自己的业务判断最后一个题
-      let clicklast = v1.content;
-      let arrlast = this.tmList[this.tmList.length - 1].content;
-      if (clicklast === arrlast) {
-        alert("恭喜你完成答题")
-      }
-    },
-    getSno(data){
-      console.log(data);
-    },
-    judgeQuestion(questionItem){
-      console.log(questionItem);
-    } 
-
-
-
-
 
 
   },
@@ -515,96 +446,30 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.questionView {}
-</style> 
-
-
-
-
-
-
-
-<!-- 
 <style lang="less" scoped>
-[v-cloak] {
-  display: none
-}
+.questionView {
+  background-color: #f5f5f5;
 
+  .questionBread {
+    padding-top: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    font-size: 14px
+  }
 
-/* swiper */
-.box {
-  width: 94%;
-  margin: 0 auto;
-}
+  .questionConnect {
+    background-color: #fff;
 
-.qes-num {
-  margin-left: 8px;
-}
+    .questionHeader {
+      font-size: 24px;
+      text-align: center;
+      line-height: 50px;
+      padding-top: 10px;
+    }
 
-.anlist {
-  margin-top: 15px;
+    .questionItem {
+      margin: 0px 15px;
+    }
+  }
 }
-
-.anlist ul li {
-  padding: 10px 0px;
-  background: #f6f6f6;
-  margin: 5px;
-  border-radius: 7px;
-  text-indent: 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.anlist .success-active {
-  background: #021a02ad;
-  color: #fff;
-  position: relative;
-}
-
-.anlist .success-active::before {
-  position: absolute;
-  content: "✔";
-  top: 8px;
-  left: 2px;
-  font-size: 25px;
-  color: #80e4ba;
-}
-
-.anlist .error-active {
-  background: #c15a5a;
-  color: #fff;
-  position: relative;
-}
-
-.anlist .error-active::before {
-  position: absolute;
-  content: "×";
-  top: 8px;
-  left: 2px;
-  font-size: 35px;
-  color: #80e4ba;
-}
-
-.van-radio {
-  margin: 10px 0px;
-}
-
-.redcol {
-  color: red;
-}
-
-.mar20 {
-  margin: 20px auto;
-}
-
-.pa20 {
-  background: #7c937014;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #999;
-  line-height: 28px;
-}
-</style> -->
+</style> 
