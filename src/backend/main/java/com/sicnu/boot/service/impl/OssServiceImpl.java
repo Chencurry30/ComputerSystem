@@ -11,10 +11,8 @@ import com.sicnu.boot.service.OssService;
 import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,7 +30,7 @@ public class OssServiceImpl implements OssService {
     private OssProperties ossProperties;
 
     @Override
-    public ServerResponse<Map<String, String>> policy(String fileName) {
+    public ServerResponse<Map<String, String>> getUserPolicy(String fileName) {
         // 请填写您的AccessKeyId。
         String accessId = ossProperties.getAccessId();
         //// 请填写您的AccessKeyId。
@@ -45,9 +43,37 @@ public class OssServiceImpl implements OssService {
         String host = "https://" + bucket + "." + endpoint;
         // 用户上传文件时指定的前缀。
         String dir = "user/userImage/";
-        //文件名生成
+        return getMapServerResponse(fileName, dir, accessId, accessKey, endpoint, host, dir);
+    }
+
+    @Override
+    public ServerResponse<Map<String, String>> getQuestionPolicy(String fileName, String dir) {
+        String accessId = ossProperties.getAccessId();
+        String accessKey = ossProperties.getAccessKey();
+        String endpoint = ossProperties.getEndpoint();
+        String bucket = ossProperties.getBucket();
+        String host = "https://" + bucket + "." + endpoint;
+        String dirs = "question/" + dir +  "/";
+        return getMapServerResponse(fileName, dir, accessId, accessKey, endpoint, host, dirs);
+    }
+
+    /**
+     * description: 生成代理
+     *
+     * @param fileName:
+     * @param dir:
+     * @param accessId:
+     * @param accessKey:
+     * @param endpoint:
+     * @param host:
+     * @param dirs:
+     * @return ServerResponse<Map<String,String>>
+     * @author 胡建华
+     * Date:  2022/11/24 15:47
+     */
+    private ServerResponse<Map<String, String>> getMapServerResponse(String fileName, String dir, String accessId, String accessKey, String endpoint, String host, String dirs) {
         fileName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
-        String key = dir + fileName;
+        String key = dirs + fileName;
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessId, accessKey);
         try {
@@ -71,13 +97,13 @@ public class OssServiceImpl implements OssService {
             //根据AccessKey Secret和Policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性。
             respMap.put("signature", postSignature);
             //前缀
-            respMap.put("dir", dir);
+            respMap.put("dir", dirs);
             // "https://" + bucketname + '.' + endpoint;  (前端请求oss服务路径)
             respMap.put("host", host);
             //dir + fileName (上传Object的名称。)
             respMap.put("key", key);
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
-            return ServerResponse.createBySuccess("返回成功",respMap);
+            return ServerResponse.createBySuccess("返回成功", respMap);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {

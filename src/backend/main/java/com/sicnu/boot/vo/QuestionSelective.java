@@ -50,11 +50,11 @@ public class QuestionSelective {
     @Range(min = 0,max = 10,message = "多选题题量必须为0 - 10")
     private Integer multipleChoiceNum;
     /**
-     * description: 判断题题量
+     * description: 填空题题量
      */
-    @NotNull(message = "判断题题量不能为空")
-    @Range(min = 0,max = 10,message = "判断题题量必须为0 - 10")
-    private Integer judgeNum;
+    @NotNull(message = "填空题题量不能为空")
+    @Range(min = 0,max = 10,message = "填空题题量必须为0 - 10")
+    private Integer completionNum;
     /**
      * description: 解答题题量
      */

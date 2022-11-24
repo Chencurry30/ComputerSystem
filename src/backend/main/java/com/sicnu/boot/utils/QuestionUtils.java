@@ -38,7 +38,7 @@ public class QuestionUtils {
         list.add(getTypeMap(0,"全部",0));
         list.add(getTypeMap(1,"单选题",1));
         list.add(getTypeMap(2,"多选题",2));
-        list.add(getTypeMap(3,"判断题",3));
+        list.add(getTypeMap(3,"填空题",3));
         list.add(getTypeMap(4,"解答题",4));
         return list;
     }

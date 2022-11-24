@@ -121,9 +121,9 @@ public class QuestionServiceImpl implements QuestionService {
             }
             list.addAll(generatingPaper);
         }
-        if (questionSelective.getJudgeNum() > 0){
+        if (questionSelective.getCompletionNum() > 0){
             List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
-                    3, questionSelective.getJudgeNum());
+                    3, questionSelective.getCompletionNum());
             list.addAll(generatingPaper);
         }
         if (questionSelective.getAnswerNum() > 0){
