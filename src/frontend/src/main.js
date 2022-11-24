@@ -23,8 +23,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
-
 Vue.use(VideoPlayer) 
+
+//引入导出为pdf的函数 
+import htmlToPdf from '@/utils/htmlToPdf';
+Vue.use(htmlToPdf);
+
 
 
 
