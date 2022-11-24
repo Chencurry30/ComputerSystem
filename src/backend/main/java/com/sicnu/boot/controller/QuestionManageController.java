@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * description:  
+ * description:
  *
  * @author :  胡建华
  * Data:    2022/11/24 16:24
