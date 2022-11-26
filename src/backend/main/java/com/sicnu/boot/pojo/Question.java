@@ -2,6 +2,8 @@ package com.sicnu.boot.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sicnu.boot.group.Insert;
+import com.sicnu.boot.group.Update;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,8 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Question {
+    @NotNull(message = "题目id不能为空",groups = {Update.class})
+    @Min(value = 1,message = "题目id最小为1")
     private Integer questionId;
     /**
      * description: 题目题干
@@ -64,13 +68,13 @@ public class Question {
     /**
      * description: 题目考点
      */
-    @NotNull(message = "题目考点不能为空")
-    @NotBlank(message = "题目考点不能为空")
+    @NotNull(message = "题目考点不能为空",groups = {Insert.class})
+    @NotBlank(message = "题目考点不能为空",groups = {Insert.class})
     private String sites;
     /**
      * description:
      */
-    @NotNull(message = "题目分类不能为空")
+    @NotNull(message = "题目分类不能为空",groups = {Insert.class})
     @Min(value = 1,message = "题目分类最小值为1")
     private Integer classifyId;
     /**
@@ -80,21 +84,23 @@ public class Question {
     /**
      * description: 题目难度
      */
-    @NotNull(message = "题目难度不能为空")
+    @NotNull(message = "题目难度不能为空",groups = {Insert.class})
     @DecimalMin(value = "0.1",message = "题目难度最小值为0.1")
     private BigDecimal difficult;
     /**
      * description: 题目来源
      */
-    @NotNull(message = "题目来源不能为空")
-    @NotBlank(message = "题目来源不能为空")
+    @NotNull(message = "题目来源不能为空",groups = {Insert.class})
+    @NotBlank(message = "题目来源不能为空",groups = {Insert.class})
     private String source;
     /**
      * description: 题目年份
      */
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy")
-    @NotNull(message = "题目年份不能为空")
+    @NotNull(message = "题目年份不能为空",groups = {Insert.class})
     private Date year;
+
+    private Boolean isCollected;
     /**
      * description: 选择题选项列表
      */

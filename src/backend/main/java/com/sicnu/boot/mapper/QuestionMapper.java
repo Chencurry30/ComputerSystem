@@ -66,4 +66,45 @@ public interface QuestionMapper {
      * Date:  2022/11/17 10:38
      */
     List<Question> getGeneratingPaper(Integer classifyId,Integer questionType,Integer questionNum);
+
+    /**
+     * description: 查看该用户是否收藏题目
+     *
+     * @param userId:
+     * @param questionId:
+     * @return int
+     * @author 胡建华
+     * Date:  2022/11/26 10:35
+     */
+    int checkCollectQuestion(Integer userId, Integer questionId);
+
+    /**
+     * description: 取消收藏题目
+     *
+     * @param userId:
+     * @param questionId:
+     * @author 胡建华
+     * Date:  2022/11/26 10:37
+     */
+    void deleteCollectQuestion(Integer userId, Integer questionId);
+
+    /**
+     * description: 收藏题目
+     *
+     * @param userId:
+     * @param questionId:
+     * @author 胡建华
+     * Date:  2022/11/26 10:38
+     */
+    void collectQuestion(Integer userId, Integer questionId);
+
+    /**
+     * description: 获取收藏列表
+     *
+     * @param userId:
+     * @return List<Question>
+     * @author 胡建华
+     * Date:  2022/11/26 10:38
+     */
+    List<Question> getCollectQuestionList(Integer userId);
 }

@@ -18,7 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * description:  TODO
+ * description:
  *
  * @author :  胡建华
  * Data:    2022/11/19 14:45
@@ -39,11 +39,11 @@ public class OssServiceImpl implements OssService {
         String endpoint = ossProperties.getEndpoint();
         // 请填写您的 bucketName 。
         String bucket = ossProperties.getBucket();
-        // host的格式为 bucketname.endpoint
+        // host的格式为 bucketName.endpoint
         String host = "https://" + bucket + "." + endpoint;
         // 用户上传文件时指定的前缀。
         String dir = "user/userImage/";
-        return getMapServerResponse(fileName, dir, accessId, accessKey, endpoint, host, dir);
+        return getMapServerResponse(fileName, accessId, accessKey, endpoint, host, dir);
     }
 
     @Override
@@ -54,14 +54,13 @@ public class OssServiceImpl implements OssService {
         String bucket = ossProperties.getBucket();
         String host = "https://" + bucket + "." + endpoint;
         String dirs = "question/" + dir +  "/";
-        return getMapServerResponse(fileName, dir, accessId, accessKey, endpoint, host, dirs);
+        return getMapServerResponse(fileName, accessId, accessKey, endpoint, host, dirs);
     }
 
     /**
      * description: 生成代理
      *
      * @param fileName:
-     * @param dir:
      * @param accessId:
      * @param accessKey:
      * @param endpoint:
@@ -71,7 +70,7 @@ public class OssServiceImpl implements OssService {
      * @author 胡建华
      * Date:  2022/11/24 15:47
      */
-    private ServerResponse<Map<String, String>> getMapServerResponse(String fileName, String dir, String accessId, String accessKey, String endpoint, String host, String dirs) {
+    private ServerResponse<Map<String, String>> getMapServerResponse(String fileName, String accessId, String accessKey, String endpoint, String host, String dirs) {
         fileName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
         String key = dirs + fileName;
         // 创建OSSClient实例。

@@ -2,6 +2,7 @@ package com.sicnu.boot.service;
 
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Question;
+import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.QuestionSelective;
 
@@ -53,4 +54,24 @@ public interface QuestionService {
      * Date:  2022/11/17 10:27
      */
     ServerResponse<List<Question>> getGeneratingPaper(QuestionSelective questionSelective);
+
+    /**
+     * description: 收藏或取消收藏题目
+     *
+     * @param questionId:
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/11/26 10:30
+     */
+    ServerResponse<String> collectQuestion(Integer questionId);
+
+    /**
+     * description: 获取用户的收藏列表
+     *
+     * @param pageNum:
+     * @return ServerResponse<PageInfo<Video>>
+     * @author 胡建华
+     * Date:  2022/11/26 10:31
+     */
+    ServerResponse<PageInfo<Question>> getCollectQuestionList(Integer pageNum);
 }

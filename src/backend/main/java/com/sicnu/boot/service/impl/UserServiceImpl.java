@@ -78,8 +78,8 @@ public class UserServiceImpl implements UserService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getUserId().toString();
         String jwt = JwtUtil.createJWT(userId);
-        //authenticate存入redis,失效时间为30分钟
-        redisUtils.setCacheObject("login:"+userId,loginUser,30, TimeUnit.MINUTES);
+        //authenticate存入redis,失效时间为180分钟,3个小时
+        redisUtils.setCacheObject("login:"+userId,loginUser,180, TimeUnit.MINUTES);
         //把token响应给前端
         HashMap<String,Object> map = new HashMap<>(5);
         map.put("token",jwt);

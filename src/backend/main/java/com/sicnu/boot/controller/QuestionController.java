@@ -88,4 +88,32 @@ public class QuestionController {
     public ServerResponse<List<Question>> getGeneratingPaper(@Validated @RequestBody QuestionSelective questionSelective){
         return questionService.getGeneratingPaper(questionSelective);
     }
+
+    /**
+     * description: 收藏题目，或取消收藏题目
+     *
+     * @param questionId:
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/11/23 18:56
+     */
+    @PostMapping("/collect/{questionId}")
+    ServerResponse<String> collectQuestion(@Min (value = 1,message = "题目id最小值为1")
+                                        @PathVariable("questionId")Integer questionId){
+        return questionService.collectQuestion(questionId);
+    }
+
+    /**
+     * description: 获取用户的收藏列表
+     *
+     * @param pageNum :
+     * @return ServerResponse<PageInfo<Video>>
+     * @author 胡建华
+     * Date:  2022/11/23 19:39
+     */
+    @GetMapping("/collect/{pageNum}")
+    ServerResponse<PageInfo<Question>> getCollectQuestionList(@Min(value = 1,message = "pageNum的最小值为1")
+                                                        @PathVariable Integer pageNum){
+        return questionService.getCollectQuestionList(pageNum);
+    }
 }

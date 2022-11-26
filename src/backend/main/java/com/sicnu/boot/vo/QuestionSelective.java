@@ -22,6 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionSelective {
+    private String questionName;
     private Integer typeId;
     private Integer typeName;
     private Integer difficultId;
@@ -68,6 +69,13 @@ public class QuestionSelective {
         this.classifyId = classifyId;
         this.sourceId = sourceId;
         this.yearId = yearId;
+        this.pageNum = pageNum;
+    }
+
+    public QuestionSelective(String questionName, Integer classifyId, Integer sourceId, Integer pageNum) {
+        this.questionName = questionName;
+        this.classifyId = classifyId;
+        this.sourceId = sourceId;
         this.pageNum = pageNum;
     }
 }
