@@ -6,7 +6,8 @@
 <mapper namespace="com.sicnu.boot.mapper.QuestionMapper">
 
     <select id="getQuestionList" resultType="com.sicnu.boot.pojo.Question" parameterType="com.sicnu.boot.vo.QuestionSelective">
-        select question_id,question_title,question_type,classify_id,difficult,source,year from question
+        select question_id,question_title,title_image,enclosure_image,question_type,
+               classify_id,difficult,source,year from question
         <where>
             <if test="typeName != null and typeName != 0">
                 question_type = #{typeName}
