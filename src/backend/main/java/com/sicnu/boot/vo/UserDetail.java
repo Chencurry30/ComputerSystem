@@ -58,9 +58,10 @@ public class UserDetail {
     private String message;
     private List<Role> roles;
     private Role roleOne;
-    public UserDetail(String nickname,String image){
+    public UserDetail(String nickname,String image,Integer userId){
         this.nickname = nickname;
         this.image = image;
+        this.userId = userId;
     }
 
     public UserDetail(User user){

@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
         map.put("token",jwt);
         //返回用户部分信息
         UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname()
-                ,loginUser.getUser().getImage());
+                ,loginUser.getUser().getImage(),loginUser.getUser().getUserId());
         map.put("user",userDetail);
         //返回用户权限树
         List<Menu> menus = userMapper.getUserMenu(loginUser.getUser().getUserId());
