@@ -42,4 +42,13 @@ public interface DynamicService {
      * Date 2022/11/26 16:00
      */
     ServerResponse<List<Dynamic>> getDynamicByUserId(Integer userId);
+
+    /**
+     * description:
+     *
+     * @return com.sicnu.boot.utils.ServerResponse<java.util.List<com.sicnu.boot.pojo.Dynamic>>
+     * @author 蔡名展
+     * Date 2022/11/28 14:19
+     */
+    ServerResponse<List<Dynamic>> getAllDynamic();
 }

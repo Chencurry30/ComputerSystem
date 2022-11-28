@@ -34,7 +34,7 @@ public interface DynamicMapper {
     void deleteDynamic(Integer dynamicId,Integer userId);
 
     /**
-     * description:
+     * description: 通过用户id查询动态
      *
      * @param userId:
      * @return java.util.List<com.sicnu.boot.pojo.Dynamic>
@@ -42,4 +42,13 @@ public interface DynamicMapper {
      * Date 2022/11/26 15:57
      */
     List<Dynamic> getDynamicByUserId(Integer userId);
+
+    /**
+     * description: 查询所有动态
+     *
+     * @return java.util.List<com.sicnu.boot.pojo.Dynamic>
+     * @author 蔡名展
+     * Date 2022/11/28 14:16
+     */
+    List<Dynamic> getAllDynamic();
 }

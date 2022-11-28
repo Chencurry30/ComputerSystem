@@ -38,4 +38,9 @@ public class DynamicController {
     ServerResponse<List<Dynamic>> getDynamicByUserId(@Min(value = 1,message = "id最小值为1")@PathVariable Integer userId){
         return dynamicService.getDynamicByUserId(userId);
     }
+
+    @GetMapping("")
+    ServerResponse<List<Dynamic>> getAllDynamic(){
+        return dynamicService.getAllDynamic();
+    }
 }

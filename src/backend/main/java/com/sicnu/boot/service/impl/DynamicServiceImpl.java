@@ -54,4 +54,10 @@ public class DynamicServiceImpl implements DynamicService {
         List<Dynamic> dynamicList = dynamicMapper.getDynamicByUserId(userId);
         return ServerResponse.createBySuccess("查询成功",dynamicList);
     }
+
+    @Override
+    public ServerResponse<List<Dynamic>> getAllDynamic() {
+        List<Dynamic> allDynamic = dynamicMapper.getAllDynamic();
+        return ServerResponse.createBySuccess("查询成功",allDynamic);
+    }
 }

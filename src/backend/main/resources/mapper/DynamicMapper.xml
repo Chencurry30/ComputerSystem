@@ -13,4 +13,7 @@
     <select id="getDynamicByUserId" resultType="Dynamic">
         select *from user_dynamic where user_id = #{userId}
     </select>
+    <select id="getAllDynamic" resultType="Dynamic">
+        select *from user_dynamic
+    </select>
 </mapper>
