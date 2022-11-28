@@ -1,7 +1,6 @@
 <!--题库选择页面-->
 <template>
   <div class="questionConnect">
-
     <div class="headerConnect">
       <div class="wrapper">
         <div class="selectItem" v-for="(fatherItem) in questionNavSelect" :key="fatherItem.id">
@@ -25,7 +24,7 @@
         <div class="questionList">
           <ul>
             <!--利用questionInfo向子组件中传递返回列表中的题目信息-->
-            <questionItem v-for="(Item) in getQuestionList.list" :key="Item.questionId" :questionItem="Item">
+            <questionItem v-for="(Item) in getQuestionList.list" :key="Item.questionId" :questionData="Item">
             </questionItem>
           </ul>
         </div>
@@ -33,62 +32,18 @@
         <PagerView :pageInfo="getQuestionPage" @giveFatherPageNo="getSonPageNo"></PagerView>
       </div>
       <div class="Mainright">
-        <div class="mid-content">
-          <div class="mid-title">题目设置</div>
-          <p>请选择题型</p>
-          <div class="titlePt1">
-            <div class="PtItem" :data-typeId="1" @click="selectNumber" :class="{ activeOn: !showId1 }">选择题</div>
-            <div class="PtItem" :data-typeId="2" @click="selectNumber" :class="{ activeOn: !showId2 }">多选题</div>
-            <div class="PtItem" :data-typeId="3" @click="selectNumber" :class="{ activeOn: !showId3 }">填空题</div>
-            <div class="PtItem" :data-typeId="4" @click="selectNumber" :class="{ activeOn: !showId4 }">解答题</div>
-          </div>
-          <p>题量设置</p>
-          <div class="titilePt2">
-            <div class="pt2Item" :class="{ hiddenBox: showId1 }">
-              <em>选择题</em>
-              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
-              v-model="selectInput.singleChoiceNum">
-            </div>
-            <div class="pt2Item" :class="{ hiddenBox: showId2 }">
-              <em>多选题</em>
-              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
-              v-model="selectInput.multipleChoiceNum">
-            </div>
-            <div class="pt2Item" :class="{ hiddenBox: showId3 }">
-              <em>填空题</em>
-              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
-              v-model="selectInput.judgeNum">
-            </div>
-            <div class="pt2Item" :class="{ hiddenBox: showId4 }">
-              <em>解答题</em>
-              <input type="text" placeholder="输入题量" maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')"
-              v-model="selectInput.answerNum">
-            </div>
-
-          </div>
-          <p>科目设置</p>
-          <div class="titlePt4">
-            <div class="PtItem" v-for="(subjectItem) in subjectList" :key="subjectItem.classifyId"
-              @click="selectSubject(subjectItem)" :class="{ activeOn: subjectId === subjectItem.classifyId }">
-              {{ subjectItem.name }}
-            </div>
-          </div>
-          <div class="mid-bottom" @click="submitSelect">点击组卷</div>
-        </div>
+          <questionPopup></questionPopup>
       </div>
     </div>
   </div>
-
-
-
 </template>
-
 <script>
 import _ from 'lodash'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import PagerView from '../../components/remark/PagerView'
 import QuestionItem from '../../components/questionItem/questionItem'
-import {setVolume} from '../../service/questionService'
+import questionPopup from '../../components/popUp/questionPopup'
+import { setVolume } from '../../service/questionService'
 export default {
   name: 'questionSelect',
   data() {
@@ -135,16 +90,17 @@ export default {
       ],
       //组卷方面的相关数据 
       selectInput: {
-        singleChoiceNum:0,
-        multipleChoiceNum: 0,
-        judgeNum:0,
-        answerNum:0,
+        singleChoiceNum: '',
+        multipleChoiceNum: '',
+        judgeNum: '',
+        answerNum: '',
       }
     }
   },
   components: {
     PagerView,
-    QuestionItem
+    QuestionItem,
+    questionPopup
   },
   mounted() {
     //获取题目的选择列表 
@@ -216,32 +172,54 @@ export default {
     },
 
     //组卷按钮 
-    submitSelect(){
-      if(this.subjectId === 0){
+    submitSelect() {
+      if (this.subjectId === 0) {
         this.$message({
-                message: "请选择要组卷的题目",
-                type: "error",
-              })
-      }else if(this.selectInput.singleChoiceNum === 0 &&
-      this.selectInput.multipleChoiceNum===0&&
-      this.selectInput.judgeNum===0&&
-      this.selectInput.answerNum === 0){
+          message: "请选择要组卷的题目",
+          type: "error",
+        })
+      } else if (this.selectInput.singleChoiceNum === 0 &&
+        this.selectInput.multipleChoiceNum === 0 &&
+        this.selectInput.judgeNum === 0 &&
+        this.selectInput.answerNum === 0) {
         this.$message({
-                message: "请至少选择一项组卷题目的类型",
-                type: "error",
-              }) 
-      }else{
+          message: "请至少选择一项组卷题目的类型",
+          type: "error",
+        })
+      } else {
         let data = {}
         data.classifyId = this.subjectId
         data.singleChoiceNum = parseInt(this.selectInput.singleChoiceNum),
-        data.multipleChoiceNum = parseInt(this.selectInput.multipleChoiceNum),
-        data.judgeNum = parseInt(this.selectInput.judgeNum),
-        data.answerNum = parseInt(this.selectInput.answerNum)
-        setVolume(data).then((res)=>{
-          console.log(res);
+          data.multipleChoiceNum = parseInt(this.selectInput.multipleChoiceNum),
+          data.judgeNum = parseInt(this.selectInput.judgeNum),
+          data.answerNum = parseInt(this.selectInput.answerNum)
+        setVolume(data).then((res) => {
+          if (res.data.code === 406) {
+            this.$message({
+              message: res.data.message,
+              type: "error",
+            })
+          } else if (res.data.code === 200) {
+            this.getVolumeData(res.data.data)
+            this.$message({
+              message: "组卷成功将自动跳转到答题页面",
+              type: "success",
+            })
+            console.log(res.data.data);
+            this.getVolumeData(res.data.data)
+            let location = {
+              name: 'questionVolume'
+            }
+            this.$router.push(location)
+          }
         })
       }
-    }
+    },
+
+    //将返回的数据存储到vuex中供答题页面读取 
+    ...mapMutations('questionData', {
+      getVolumeData: 'GETSETVOLUMEDATA'
+    })
   },
   computed: {
     ...mapGetters('questionData', {
@@ -300,98 +278,42 @@ export default {
   }
 
 }
+
 .MainConnect {
   display: flex;
+
   .Mainleft {
     width: 840px;
   }
+
   .Mainright {
-    margin-left: 10px;
-    width: 350px;
-    border-radius: 10px;
-    border: 1px solid #dadada;
-    .mid-content {
-      .mid-title {
-        padding: 15px;
-        text-align: left;
-      }
+    padding-left: 40px;
+    width: 340px;
 
-      .titlePt1,
-      .titilePt3,
-      .titlePt4 {
-        margin: 5px 10px;
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-
-        .PtItem {
-          margin-bottom: 10px;
-          height: 34px;
-          line-height: 34px;
-          min-width: 64px;
-          padding: 0 8px;
-          color: #666666;
-          background-color: #e8e8e8;
-          cursor: pointer;
-          text-align: center;
-          border-radius: 4px;
-        }
-
-        .activeOn {
-          color: #ffffff;
-          background-color: #4a9efa;
-        }
-      }
-
-      .titilePt2 {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        line-height: 30px;
-        margin-bottom: 10px;
-
-        .pt2Item {
-          margin: 5px 0px;
-
-          em {
-            color: #fff;
-            background-color: #2489f6;
-            text-align: center;
-            float: left;
-            min-width: 60px;
-            padding: 0 5px;
-          }
-
-          input {
-            width: 96px;
-            height: 30px;
-            line-height: 30px;
-            border: 1px solid #e8e8e8;
-            border-radius: 6px;
-            padding: 0 15px;
-          }
-        }
-
-      }
-      p {
-        text-align: left;
-        color: #666666;
-        margin: 10px auto;
-      }
+    .title-box {
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: normal;
+      text-align: center;
+      vertical-align: middle;
+      touch-action: manipulation;
+      cursor: pointer;
+      background-image: none;
+      border: 1px solid transparent;
+      user-select: none;
+      font-size: 14px;
+      border-radius: 4px;
 
     }
-    .mid-bottom{
-      margin: 10px auto;
-      display: flex;
-      justify-content: center;
-      width: 80%;
-      height: 40px;
-      line-height: 40px;
-      border-radius: 8px;
-      text-align: cente;
-      cursor: pointer;
+
+    .div-card {
+      margin-top: 10px;
+      width: 100%;
       color: #ffffff;
-      background-color: #4a9efa;
+      background-color: #ff8a00;
+      height: 36px;
+      line-height: 36px;
+      border-radius: 8px;
     }
   }
 }
