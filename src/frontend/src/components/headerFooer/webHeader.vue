@@ -52,7 +52,7 @@
 import { createPublicUrl } from '../../utils/index'
 export default {
   name: "webHeader",
-  //App中传入的一个相关的方法,用于帮助进行页面刷新 
+  //App中传入的一个相关的方法,用于帮助进行页面刷新
   inject: ['reload'],
 
   data() {
@@ -69,13 +69,13 @@ export default {
     }
   },
   methods: {
-    //前往登录页面 
+    //前往登录页面
     gotologin() {
       let location = { name: "loginView" };
       sessionStorage.removeItem('token')
       this.$router.push(location);
     },
-    //退出登录 
+    //退出登录
     backLogin() {
       sessionStorage.removeItem('token')
       sessionStorage.removeItem('userImg')
@@ -105,7 +105,7 @@ export default {
       return createPublicUrl() + userImg
 
     },
-    //判断用户是否有头像 
+    //判断用户是否有头像
     hidddenDefaultImg() {
       return sessionStorage.getItem('userImg')
     }
@@ -181,10 +181,11 @@ export default {
         position: relative;
         width: 36px;
         height: 36px;
-
         img {
           display: block;
           width: 100%;
+          height: 100%;
+          border-radius: 50%;
         }
 
         .user-select {

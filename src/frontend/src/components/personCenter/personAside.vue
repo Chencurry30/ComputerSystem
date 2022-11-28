@@ -55,6 +55,14 @@
               <router-link :to="{ name: 'teacherReply' }" style="text-decoration: none">老师回复</router-link>
             </div>
           </li>
+          <li class="list-item">
+            <div class="list-icon">
+              <img src="../../assets/Img/Icon/notice.png" alt="" />
+            </div>
+            <div class="list-info">
+              <router-link :to="{ name: 'myDynamics' }" style="text-decoration: none">我的动态</router-link>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

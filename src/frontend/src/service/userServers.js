@@ -1,4 +1,4 @@
-//个人用户的相关接口 
+//个人用户的相关接口
 import service from './services'
 export const getUserInfo = (token) =>{
   const url = '/users'
@@ -13,4 +13,28 @@ export const changeUserInfo = (userinfo) =>{
 export const uploadUserPicture = (picture) =>{
   const url =`/oss/policy/user/${picture}`
   return service.get(url)
-}  
+}
+
+//发送我的动态
+export const setDynamics = (data) =>{
+  const url = `/dynamics`
+  return service.post(url,data)
+}
+
+//查询我的动态
+export const getDynamics = (id) =>{
+  const url = `/dynamics/${id}`
+  return service.get(url)
+}
+
+//删除我的动态
+export const deleteDynamics = (id) => {
+  const url = `/dynamics/${id}`
+  return service.delete(url)
+}
+
+//查询所有我的动态
+export const getallDynamics = () =>{
+  const url = `/dynamics`
+  return service.get(url)
+}
