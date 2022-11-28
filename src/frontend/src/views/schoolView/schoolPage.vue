@@ -1,5 +1,6 @@
 <template>
   <div class="allBox">
+    <breadCrumb></breadCrumb>
     <div class="header">
       <div class="headerBox clearfix w">
         <div class="school-type">
@@ -76,17 +77,18 @@
 </template>
 
 <script>
-
+import breadCrumb from '../../components/smallCom/breadCrumb'
 import { getschoolInfo, getSchoolMajorNavType ,getSchoolMajor} from '../../service/schoolService'
 export default {
   name: 'schoolPage',
+  components:{breadCrumb},
   data() {
     return {
       schoolInfo: {},
       first: false,
-      //专业大类的选择列表 
+      //专业大类的选择列表
       collegeList: [],
-      //对应的专业选择列表 
+      //对应的专业选择列表
       majorList:[],
 
       countIndex: 0,
@@ -95,7 +97,7 @@ export default {
   mounted() {
     //获取具体院校相关的信息
     this.getSchool()
-    //获取该院校的具体专业大类 
+    //获取该院校的具体专业大类
     this.getMajorNavType()
   },
   methods: {
@@ -109,7 +111,7 @@ export default {
     },
 
     getMajorNavType() {
-      //将所有的专业信息获取出来 
+      //将所有的专业信息获取出来
       getSchoolMajorNavType().then((res) => {
         if(res.data.code === 200){
           this.collegeList = res.data.data

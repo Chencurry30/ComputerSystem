@@ -55,5 +55,14 @@ export default [
       showTop: true,
       showFotter: false
     },
-  }
+  },
+  {
+    path: '/myDynamics',
+    name: 'myDynamics',
+    component: () => import('@/views/personView/myDynamics'),
+    meta: {                          //配置相关的参数，保证页面是否展示头部和底部
+      showTop: false,
+      showFotter: true
+    },
+  },
 ]
