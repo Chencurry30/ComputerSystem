@@ -19,43 +19,39 @@
         </div>
       </div>
     </div>
+    <div class="questionPopup w">
+      <div @click="checkQuestion()" class="checkBtn">点击组卷</div>
+            <questionPopup ref="questionPopup"></questionPopup>
+    </div>
     <div class="MainConnect w">
       <div class="Mainleft">
         <div class="questionList">
           <ul>
             <!--利用questionInfo向子组件中传递返回列表中的题目信息-->
-            <questionItem v-for="(Item) in getQuestionList.list" :key="Item.questionId" :questionItem="Item">
+            <questionItem v-for="(Item) in getQuestionList.list" :key="Item.questionId" :questionData="Item">
             </questionItem>
           </ul>
         </div>
         <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
         <PagerView :pageInfo="getQuestionPage" @giveFatherPageNo="getSonPageNo"></PagerView>
       </div>
-      <div class="Mainright">
-        <div class="title-box div-card">收藏中心</div>
-      </div>
+
+
+
     </div>
   </div>
 </template>
 <script>
 import _ from 'lodash'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 import PagerView from '../../components/remark/PagerView'
 import QuestionItem from '../../components/questionItem/questionItem'
-import { setVolume } from '../../service/questionService'
+import questionPopup from '../../components/popUp/questionPopup'
+
 export default {
   name: 'questionSelect',
   data() {
     return {
-      showId1: true,
-      showId2: true,
-      showId3: true,
-      showId4: true,
-      difficultyId: 0,
-
-      //选择科目的组卷ID 
-      subjectId: 0,
-      //用来记录选择框的属性
       selectItem: {
         typeId: 0,
         difficultId: 0,
@@ -64,41 +60,12 @@ export default {
         yearId: 0,
         pageNum: 1
       },
-      //用来记录遍历的科目
-      subjectList: [
-        {
-          classifyId: 2,
-          name: '数学'
-        },
-        {
-          classifyId: 3,
-          name: '政治'
-        },
-        {
-          classifyId: 4,
-          name: '数据结构'
-        },
-        {
-          classifyId: 5,
-          name: '计网'
-        },
-        {
-          classifyId: 6,
-          name: "计组"
-        }
-      ],
-      //组卷方面的相关数据 
-      selectInput: {
-        singleChoiceNum: '',
-        multipleChoiceNum: '',
-        judgeNum: '',
-        answerNum: '',
-      }
     }
   },
   components: {
     PagerView,
-    QuestionItem
+    QuestionItem,
+    questionPopup
   },
   mounted() {
     //获取题目的选择列表 
@@ -144,22 +111,8 @@ export default {
       this.$store.dispatch('questionData/getQuestionData', { typeId, difficultId, classifyId, sourceId, yearId, pageNum })
     }, 1500),
 
-    selectNumber(e) {
-      let element = e.target
-      let { typeid } = element.dataset
-      if (typeid === '1') {
-        this.showId1 = !this.showId1
-      } else if (typeid === '2') {
-        this.showId2 = !this.showId2
-      } else if (typeid === '3') {
-        this.showId3 = !this.showId3
-      } else {
-        this.showId4 = !this.showId4
-      }
-    },
-    selectSubject(subjuctItem) {
-      this.subjectId = subjuctItem.classifyId
-    },
+
+
 
 
     gotoPage() {
@@ -169,55 +122,12 @@ export default {
       this.$router.push(location)
     },
 
-    //组卷按钮 
-    submitSelect() {
-      if (this.subjectId === 0) {
-        this.$message({
-          message: "请选择要组卷的题目",
-          type: "error",
-        })
-      } else if (this.selectInput.singleChoiceNum === 0 &&
-        this.selectInput.multipleChoiceNum === 0 &&
-        this.selectInput.judgeNum === 0 &&
-        this.selectInput.answerNum === 0) {
-        this.$message({
-          message: "请至少选择一项组卷题目的类型",
-          type: "error",
-        })
-      } else {
-        let data = {}
-        data.classifyId = this.subjectId
-        data.singleChoiceNum = parseInt(this.selectInput.singleChoiceNum),
-          data.multipleChoiceNum = parseInt(this.selectInput.multipleChoiceNum),
-          data.judgeNum = parseInt(this.selectInput.judgeNum),
-          data.answerNum = parseInt(this.selectInput.answerNum)
-        setVolume(data).then((res) => {
-          if (res.data.code === 406) {
-            this.$message({
-              message: res.data.message,
-              type: "error",
-            })
-          } else if (res.data.code === 200) {
-            this.getVolumeData(res.data.data)
-            this.$message({
-              message: "组卷成功将自动跳转到答题页面",
-              type: "success",
-            })
-            console.log(res.data.data);
-            this.getVolumeData(res.data.data)
-            let location = {
-              name: 'questionVolume'
-            }
-            this.$router.push(location)
-          }
-        })
-      }
-    },
+    //组卷按钮（展示随机组卷的弹窗）
+    checkQuestion(){
+      this.$refs.questionPopup.showPopup()
 
-    //将返回的数据存储到vuex中供答题页面读取 
-    ...mapMutations('questionData', {
-      getVolumeData: 'GETSETVOLUMEDATA'
-    })
+    }
+
   },
   computed: {
     ...mapGetters('questionData', {
@@ -232,7 +142,6 @@ export default {
 <style lang="less" scoped>
 .headerConnect {
   background: #f2f4f6;
-
   .wrapper {
     margin: 5px auto;
     width: 1100px;
@@ -240,7 +149,6 @@ export default {
     padding: 5px 0px;
     font-size: 14px;
 
-    // background: #f2f4f6;
     .selectItem {
       margin: 5px 0;
       display: flex;
@@ -274,45 +182,20 @@ export default {
       }
     }
   }
-
 }
-
-.MainConnect {
+.questionPopup{
   display: flex;
-
-  .Mainleft {
-    width: 840px;
-  }
-
-  .Mainright {
-    padding-left: 40px;
-    width: 340px;
-
-    .title-box {
-      display: inline-block;
-      margin-bottom: 0;
-      font-weight: normal;
-      text-align: center;
-      vertical-align: middle;
-      touch-action: manipulation;
-      cursor: pointer;
-      background-image: none;
-      border: 1px solid transparent;
-      user-select: none;
-      font-size: 14px;
-      border-radius: 4px;
-
-    }
-
-    .div-card {
-      margin-top: 10px;
-      width: 100%;
-      color: #ffffff;
-      background-color: #ff8a00;
-      height: 36px;
-      line-height: 36px;
-      border-radius: 8px;
-    }
-  }
 }
+.checkBtn{
+  margin: 5px 15px;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #4a9efa;
+}
+
 </style>

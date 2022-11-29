@@ -40,6 +40,10 @@ import passwordPopup from "../../components/popUp/passwordPopup.vue";
 export default {
   components: { phonePopup, passwordPopup, personAside, personHeader },
   name: "personSecurity",
+  //避免页面刷新导致vuex中的数据丢失
+  mounted() {
+    this.$store.dispatch('userInfo/getUserInfo')
+  },
   methods: {
     changePhone() {
       this.$refs.phonePopup.showPopup();

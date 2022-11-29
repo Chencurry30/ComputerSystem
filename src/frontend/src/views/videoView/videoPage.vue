@@ -24,34 +24,30 @@
       <!--视屏的主题-->
       <div class="videomain">
         <videoPlay :videoLink="videoInfo.link" :videoImg:="videoInfo.image"></videoPlay>
-
-
       </div>
 
+      <!--视屏的相关操作(如收藏，点赞等)-->
       <div class="video-toolbar">
-        <span class="like">
+
+
+        <div class="like">
           <img src="../../assets/Img/Icon/dianzan.png" title="点赞" alt="" class="icon" />
           <span class="test-info">{{ videoInfo.likeNumber }}</span>
-        </span>
-        <!-- <span class="collection">
-          <img
-            src="../../assets/Img/Icon/shoucang.png"
-            alt=""
-            title="收藏"
-            class="icon"
-          />
-          <span class="test-info">131</span>
-        </span>
-        <span class="share">
-          <img
-            src="../../assets/Img/Icon/fenxiang.png"
-            alt=""
-            title="转发"
-            class="icon"
-          />
-          <span class="test-info">31</span>
-        </span> -->
+        </div>
+        <div class="collection">
+          <img src="../../assets/Img/Icon/shoucang.png" alt="收藏" title="收藏" class="icon" @click="collectVideo" />
+        </div>
+
       </div>
+
+
+
+
+
+
+
+
+
       <div class="videoinfo">
         <span class="infoconnect">
           {{ videoInfo.introduction }}
@@ -113,6 +109,7 @@
           </div>
 
         </div>
+
       </div>
     </div>
 
@@ -240,10 +237,12 @@
 </template>
 
 <script>
+import { collectVideo } from '../../service/videoService'
 import ReleaseItem from "../../components/remark/releaseItem.vue";
 import ReplyItem from "../../components/remark/replyItem.vue";
 import videoPlay from "../../components/videoPlay/videoPlay"
 import { mapGetters } from 'vuex'
+import _ from 'lodash'
 export default {
   name: "videoPage",
   data() {
@@ -261,8 +260,8 @@ export default {
     videoPlay,
   },
   mounted() {
+    //获取对应视屏的相关信息 
     this.getPageData()
-
     //获取相应资源的评论信息 
     this.getPageRemark()
   },
@@ -279,9 +278,23 @@ export default {
     },
     //将隐藏的评论全部展示
     showMoreInfo(fatherId) {
-      this.showMoreID = fatherId
-    }
+      if(this.showMoreID === fatherId){
+        this.showMoreID = 0
+      }else{
+        this.showMoreID = fatherId
+      }
 
+    },
+    //判断用户是否收藏了这视频(10秒钟执行一次) 
+    collectVideo:_.throttle(function(){
+      let videoId = this.$route.query.videoId
+      collectVideo(videoId).then((res) => {
+        if(res.data.code === 200){
+          this.$message.success(res.data.message)
+        }
+      })
+    },10000)
+    
 
   },
   computed: {
@@ -363,15 +376,13 @@ export default {
     }
 
     .video-toolbar {
-      padding-top: 16px;
-      padding-bottom: 12px;
-      height: 50px;
-      line-height: 25px;
+      display: flex;
+      align-items: center;
+      padding: 10px 0px 10px 5px;
       border-bottom: 1px solid #e3e5e7;
       color: #61666d;
 
       .like,
-      .share,
       .collection {
         display: flex;
         align-items: center;
@@ -379,10 +390,10 @@ export default {
       }
 
       .icon {
-        margin-top: -6px;
         margin-right: 8px;
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
       }
 
       .test-info {
@@ -392,6 +403,11 @@ export default {
         white-space: nowrap;
       }
     }
+
+
+
+
+
 
     .videoinfo {
       margin: 16px 0;
@@ -482,7 +498,6 @@ export default {
         .hidden {
           height: 90px;
           overflow: hidden;
-          transition: 3;
         }
 
         //将没有子评论的相关信息隐藏 
@@ -494,7 +509,7 @@ export default {
         //显示相关信息 
         .showBox {
           height: 100%;
-          overflow: auto;
+          // overflow: auto;
         }
       }
     }

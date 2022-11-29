@@ -31,4 +31,13 @@ export default [
       showFotter:true
     },
   }, 
+  {
+    path: '/questionQS',
+    name: 'questionQS',
+    component: ()=>import('@/views/questionViews/questionQS'),
+    meta: {                          
+      showTop: true,
+      showFotter:true
+    },
+  },
 ]

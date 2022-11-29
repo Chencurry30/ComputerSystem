@@ -6,12 +6,14 @@
             <div class="wrapper-user">
                 <div class="user-info">
                     <div class="user-img">
-                        <!-- <img src="" alt=""> -->
+                         <img :src="[publicUrl + userMsg.image]" alt="">
                     </div>
                     <div class="user-basic">
-                        <div class="nickName">高山</div>
+                        <div class="nickName">{{userMsg.nickname}}</div>
+                        <div>性别：{{userMsg.sex}}</div>
+                        <div>年龄：{{userMsg.age}}</div>
                         <div class="personalProfile">
-                            这个人很无聊，什么都没有留下
+                          个性签名：{{userMsg.message}}
                         </div>
                     </div>
                 </div>
@@ -21,75 +23,128 @@
             <div class="navigator-info">主页</div>
         </div>
     </div>
-    <div class="wrapper Main-info">
-        <div class="col-left">
-            <div class="personVideo">
-                <div class="person-title">收藏的视屏</div>
+    <div class="wrapper collect-Main">
+
+      <div class="collect-Main-header">
+        <div class="person-title">收藏的视屏</div>
+      </div>
+
+
+      <div class="collect-Main-connect">
+        <div class="connect-header">
+          <div class="Main-item"
+               v-for="item in Collections"
+               :key="item.videoId">
+            <div class="item-img">
+              <img :src="[publicUrl + item.image]">
             </div>
-            <div class="personMain">
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
-                    </div>
-
-
-
-                </div>
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
-                    </div>
-                </div>
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
-                    </div>
-                </div>
-                                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
-                    </div>
-                </div>
+            <div class="item-title">{{item.name}}</div>
+            <div class="item-others">
+              <div class="left">{{item.nickname}}</div>
+              <div class="right">{{item.time}}</div>
             </div>
+          </div>
         </div>
-        <div class="col-right">
-            <div class="personBox">
-                <div class="person-info-title centerLocation">个人资料</div>
-                <div class="person-info-connect">
-                    <div class="info-person">
-                        <span class="laber">用户ID:</span>
-                        <span class="laber-info">123</span>
-                    </div>
-                    <div class="info-person">
-                        <span class="laber">性别:</span>
-                        <span class="laber-info">保密</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <pagerView :pageInfo="collectPage"  @giveFatherPageNo="getSonPageNo"></pagerView>
+      </div>
     </div>
+    <!-- <el-table
+        :data="content"
+        stripe
+        style="width: 100%">
+      <el-table-column
+          prop="createDate"
+          label="日期"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="content"
+          label="内容"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="userId"
+          label="用户">
+      </el-table-column>
+    </el-table> -->
   </div>
 </template>
 
 <script>
+import {getDynamics,getuserMsg,userVideoCollect} from '../../service/userServers'
+import {createPublicUrl} from "@/utils";
+import PagerView from "@/components/remark/PagerView.vue";
+
 export default {
-    name:'ohterPerson'
+    name:'otherPerson',
+  components: {PagerView},
+  data(){
+      return{
+        userId:'',
+        content:{},//动态信息
+        userMsg:{},//其他用户信息
+        Collections:{},//收藏信息
+        collectPage:{} //分页器中存储的信息
+      }
+  },
+  mounted() {
+    this.userId = this.$route.query.userId
+    getDynamics(this.userId).then((res=>{
+      this.content = res.data.data
+    }))
+    this.getothersMsg(),
+    this.getotherCollect(1)
+  },
+  methods:{
+    //获取用户的动态列表
+    getothersMsg() {
+      getuserMsg(this.userId).then((res=>{
+        this.userMsg = res.data.data
+      }))
+    },
+
+    //获取用户收藏视屏列表
+    getotherCollect(pageNum){
+      console.log(this.userId)
+      userVideoCollect(pageNum,this.userId).then((res)=>{
+        console.log(res)
+        if(res.data.code === 200){
+          let data = {}
+          data.pageNo = res.data.data.pageNum     //当前的页码数
+          data.pagesize = res.data.data.pageSize  //每一页的大小
+          data.total = res.data.data.total        //总共的个数
+          data.pageTotal = res.data.data.pages    //总共有几页
+
+          //将获取的分页数据转化给分页器中
+          this.collectPage = data
+          this.Collections = res.data.data.list
+        }
+      })
+    },
+    //获取分页器中传递的数据
+    getSonPageNo(pageNum){
+      this.getotherCollect(pageNum)
+
+    }
+  },
+  computed:{
+    publicUrl(){
+      return createPublicUrl()
+    }
+  },
 }
 </script>
 
 <style lang="less" scoped>
+
+    .el-table{
+      padding: 15px;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
     .wrapper{
         width: 1100px;
         margin: 0 auto;
@@ -99,7 +154,7 @@ export default {
             height: 200px;
             background: url(../../assets/Img/banner/person.png) no-repeat;
             background-size: 100%;
-            .wrapper-user{    
+            .wrapper-user{
                 display: flex;
                 position: absolute;
                 bottom: 0;
@@ -112,8 +167,11 @@ export default {
                     .user-img{
                         width: 72px;
                         height: 72px;
-                        border-radius: 50%;
-                        background: red;
+                        img{
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 50%;
+                        }
                     }
                     .user-basic{
                         margin-left: 20px;
@@ -145,87 +203,59 @@ export default {
             }
         }
     }
-    .Main-info{
-        margin-top: 15px;
-        display: flex;
-        justify-content: space-between;
-        .col-left{
-            padding: 15px;
-            width: 712px;
-            background: #fff;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            .personVideo{
-                margin-bottom: 17px;
-                border-bottom: 1px solid #eee;
-                .person-title{
-                    line-height: 33px;
-                    padding: 0 0 15px;
-                    font-size: 20px;
-                    color: #000;
-                }
-            }
-            .personMain{
-                max-height: 935px;
-                .Main-item{
-                    margin: 0 0 3px;
-                    padding: 10px 10px 10px 0;
-                    float: left;
-                    width: 226px;
-                    .item-img{
-                      width: 216px;
-                      height: 110px;
-                      border-radius: 4px;
-                      background: red;
-                    }
-                    .item-title{
-                      line-height: 20px;
-                      height: 38px;
-                      margin-top: 6px;
-                      overflow: hidden;
-
-                    }
-                    .item-others{
-                      margin-top: 6px;
-                      display: flex;
-                      justify-content: space-between;
-                      white-space: nowrap;
-                      height: 14px;
-                      line-height: 14px;
-                      color:#999;
-                      font-size: 12px;
-                    }
-                }
-            }
+    .collect-Main{
+      margin-top: 15px;
+      .collect-Main-header{
+        margin-bottom: 17px;
+        border-bottom: 1px solid #eee;
+        .person-title{
+          line-height: 33px;
+          padding: 0 0 15px;
+          font-size: 20px;
+          color: #000;
         }
-        .col-right{
-            padding: 0 10px;
-            width: 388px;
-            .personBox{
-                margin-left: 10px;
-                padding: 15px 20px 18px;
-                margin-bottom: 10px;
-                background: #fff;
-                border: 1px solid #eee;
-                border-radius: 4px;
-                .person-info-title{
-                    padding-bottom: 18px;
-                    border-bottom: 1px solid #e5e9ef;
-                    margin-bottom: 10px;
-
-                }
-                .person-info-connect{
-                  width: 100%;
-                  .info-person{
-                    margin: 5px auto;
-                    width: 80%;
-                    display: flex;
-                    .laber{
-                      margin-right: 10px;
-                  }
-                }
+      }
+      .collect-Main-connect{
+        width: 100%;
+        .connect-header{
+          display: flex;
+          flex-wrap: wrap;
+          .Main-item{
+            margin: 0 0 3px;
+            padding: 10px 10px 10px 0;
+            width: 275px;
+            .item-img{
+              width: 100%;
+              height: 160px;
+              border-radius: 4px;
+              background: red;
+              img{
+                width: 100%;
+                height: 100%;
               }
             }
+            .item-title{
+              line-height: 20px;
+              height: 38px;
+              margin-top: 6px;
+              overflow: hidden;
+
+            }
+            .item-others{
+              margin-top: 6px;
+              display: flex;
+              justify-content: space-between;
+              white-space: nowrap;
+              height: 14px;
+              line-height: 14px;
+              color:#999;
+              font-size: 12px;
+            }
+          }
         }
-    }
+         }
+
+        }
+
+
 </style>

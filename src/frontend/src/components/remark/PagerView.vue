@@ -68,20 +68,20 @@ export default {
     },
 
     //利用lodash来防止抖动 
-    gotoPage: _.throttle(function (page) {
+    gotoPage(page) {
       if (page === '...') {
         return;
       } else {
         this.giveFatherPageNo(page)
         this.calculatePage();
       }
-    }, 3000),
+    },
 
 
     //利用下面的点击选项，从子组件向父组件进行相关参数的传递 
-    giveFatherPageNo: _.throttle(function(page) {
+    giveFatherPageNo(page) {
       this.$emit("giveFatherPageNo", page);
-    },2000),
+    },
 
 
 

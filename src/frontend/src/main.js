@@ -26,7 +26,9 @@ import 'vue-video-player/src/custom-theme.css'
 
 Vue.use(VideoPlayer) 
 
-
+//引入导出为pdf的函数(方法为printOutPDF) 
+import htmlToPdf from '@/utils/htmlToPdf';
+Vue.use(htmlToPdf);
 
 //全局注册qs序列化object对象(this.$qs运用) 
 import qs from 'qs';

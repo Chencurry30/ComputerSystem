@@ -37,13 +37,6 @@ const questionData = {
     GETQUESTIONDATA(state, data) {
       state.questionDataList = data
     },
-
-    //在questionSelect中的组卷功能调用 
-    GETSETVOLUMEDATA(state,data){
-      state.setVolumeData = data
-    }
-
-
   },
   getters: {
     //返回题库的选择数据 
@@ -61,13 +54,8 @@ const questionData = {
         total:state.questionDataList.total || 0,
         pageTotal:state.questionDataList.pages || 0
       }
-      console.log(data);
       return data
     },
-    //返回相关的组题数据 
-    getSetvolumeData(state){
-      return state.setVolumeData
-    }
   }
 }
 export default questionData

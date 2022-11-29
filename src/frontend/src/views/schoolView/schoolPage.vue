@@ -25,6 +25,7 @@
       </div>
 
     </div>
+    <breadCrumb></breadCrumb>
     <div class="connect w">
       <div class="column-title">
         <h3>院校概况</h3>
@@ -76,7 +77,7 @@
 </template>
 
 <script>
-
+import breadCrumb from '../../components/smallCom/breadCrumb'
 import { getschoolInfo, getSchoolMajorNavType ,getSchoolMajor} from '../../service/schoolService'
 export default {
   name: 'schoolPage',
@@ -91,6 +92,9 @@ export default {
 
       countIndex: 0,
     }
+  },
+  components:{
+    breadCrumb
   },
   mounted() {
     //获取具体院校相关的信息
