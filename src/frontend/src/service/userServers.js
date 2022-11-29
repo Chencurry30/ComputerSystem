@@ -21,6 +21,18 @@ export const userVideoCollect = (userId) =>{
   return service.get(url)
 }
 
+
+//获取其他用户信息
+export const getuserMsg = (userId) =>{
+  const url = `/users/${userId}`
+  return service.get(url)
+}
+
+
+
+
+
+
 //发送我的动态
 export const setDynamics = (data) =>{
   const url = `/dynamics`
@@ -42,17 +54,5 @@ export const deleteDynamics = (id) => {
 //查询所有我的动态
 export const getallDynamics = () =>{
   const url = `/dynamics`
-  return service.get(url)
-}
-
-//获取其他用户信息
-export const getuserMsg = (userId) =>{
-  const url = `/users/${userId}`
-  return service.get(url)
-}
-
-//获取收藏信息
-export const getCollect = (userId) =>{
-  const url = `/videos/collect/${userId}`
   return service.get(url)
 }

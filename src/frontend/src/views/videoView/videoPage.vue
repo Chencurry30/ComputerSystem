@@ -260,8 +260,8 @@ export default {
     videoPlay,
   },
   mounted() {
+    //获取对应视屏的相关信息 
     this.getPageData()
-
     //获取相应资源的评论信息 
     this.getPageRemark()
   },
@@ -278,7 +278,12 @@ export default {
     },
     //将隐藏的评论全部展示
     showMoreInfo(fatherId) {
-      this.showMoreID = fatherId
+      if(this.showMoreID === fatherId){
+        this.showMoreID = 0
+      }else{
+        this.showMoreID = fatherId
+      }
+
     },
     //判断用户是否收藏了这视频(10秒钟执行一次) 
     collectVideo:_.throttle(function(){
@@ -290,7 +295,6 @@ export default {
       })
     },10000)
     
-
 
   },
   computed: {
@@ -494,7 +498,6 @@ export default {
         .hidden {
           height: 90px;
           overflow: hidden;
-          transition: 3;
         }
 
         //将没有子评论的相关信息隐藏 
@@ -506,7 +509,7 @@ export default {
         //显示相关信息 
         .showBox {
           height: 100%;
-          overflow: auto;
+          // overflow: auto;
         }
       }
     }

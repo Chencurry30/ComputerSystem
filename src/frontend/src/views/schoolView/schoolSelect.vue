@@ -24,9 +24,9 @@
           <tr>
             <th style="width:230px">院校名称</th>
             <th style="width:150px">院校类型</th>
-            <th style="width:500px">院校地址</th>
+            <th style="width:450px">院校地址</th>
             <th style="width:100px">院校隶属</th>
-            <th style="width:150px">院校电话</th>
+            <th style="width:120px">院校电话</th>
             <th style="width:150px">院校官网</th>
           </tr>
         </thead>
@@ -73,13 +73,13 @@ export default {
     PagerView
   },
   mounted() {
-    //获取视屏的选择列表
+    //获取视屏的选择列表 
     this.getschoolNavType()
-    //获取最初始化的相关数据
+    //获取最初始化的相关数据 
     this.getschools()
   },
   methods: {
-    //获取院校的选择列表
+    //获取院校的选择列表 
     getschoolNavType() {
       this.$store.dispatch('schoolData/getNavType')
     },
@@ -91,14 +91,14 @@ export default {
       let pageNum = 1
       this.$store.dispatch('schoolData/getschoolData', { first, second, thild, pageNum })
     },
-    //获取子组件返回的pageNo
+    //获取子组件返回的pageNo 
     getSonPageNo(pageNum) {
       console.log(pageNum);
       let { first, second, thild } = this.selectId
       this.$store.dispatch('schoolData/getschoolData', { first, second, thild, pageNum })
     },
 
-    //根据列表中的选项，返回相关的数据(利用npm中自带的lodash)
+    //根据列表中的选项，返回相关的数据(利用npm中自带的lodash) 
     selectVideo: _.throttle(function (event) {
       let element = event.target
       let { regionid, typeid, attributeid } = element.dataset
@@ -113,7 +113,7 @@ export default {
       this.$store.dispatch('schoolData/getschoolData', { first, second, thild, pageNum })
     }, 1500)
     ,
-    //根据用户点击的不同，进行相应的跳转
+    //根据用户点击的不同，进行相应的跳转 
     gotoSchoolPage(collegeId) {
       console.log(12);
       let location = {}

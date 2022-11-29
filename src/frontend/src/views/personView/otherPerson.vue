@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import {getDynamics,getuserMsg,getCollect} from '../../service/userServers'
+import {getDynamics,getuserMsg,userVideoCollect} from '../../service/userServers'
 import {createPublicUrl} from "@/utils";
 
 export default {
@@ -102,7 +102,7 @@ export default {
       }))
     },
     getotherCollect(){
-      getCollect(this.userId).then((res)=>{
+      userVideoCollect(this.userId).then((res)=>{
         console.log(res)
         this.Collections = res.data.data.list
         console.log(this.Collections)
