@@ -57,6 +57,28 @@ public class OssServiceImpl implements OssService {
         return getMapServerResponse(fileName, accessId, accessKey, endpoint, host, dirs);
     }
 
+    @Override
+    public ServerResponse<Map<String, String>> getVideoPolicy(String fileName) {
+        String accessId = ossProperties.getAccessId();
+        String accessKey = ossProperties.getAccessKey();
+        String endpoint = ossProperties.getEndpoint();
+        String bucket = ossProperties.getBucket();
+        String host = "https://" + bucket + "." + endpoint;
+        String dir = "video/videoImg/";
+        return getMapServerResponse(fileName, accessId, accessKey, endpoint, host, dir);
+    }
+
+    @Override
+    public ServerResponse<Map<String, String>> getDynamicPolicy(String fileName) {
+        String accessId = ossProperties.getAccessId();
+        String accessKey = ossProperties.getAccessKey();
+        String endpoint = ossProperties.getEndpoint();
+        String bucket = ossProperties.getBucket();
+        String host = "https://" + bucket + "." + endpoint;
+        String dir = "dynamic/image/";
+        return getMapServerResponse(fileName, accessId, accessKey, endpoint, host, dir);
+    }
+
     /**
      * description: 生成代理
      *

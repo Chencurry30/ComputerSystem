@@ -111,9 +111,11 @@ public class QuestionController {
      * @author 胡建华
      * Date:  2022/11/23 19:39
      */
-    @GetMapping("/collect/{pageNum}")
+    @GetMapping("/collect/{pageNum}-{userId}")
     ServerResponse<PageInfo<Question>> getCollectQuestionList(@Min(value = 1,message = "pageNum的最小值为1")
-                                                        @PathVariable Integer pageNum){
-        return questionService.getCollectQuestionList(pageNum);
+                                                        @PathVariable Integer pageNum,
+                                                              @Min(value = 1,message = "userId的最小值为1")
+                                                              @PathVariable Integer userId){
+        return questionService.getCollectQuestionList(pageNum,userId);
     }
 }

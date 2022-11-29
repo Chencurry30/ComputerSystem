@@ -118,11 +118,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public ServerResponse<PageInfo<Video>> getCollectVideoList(Integer pageNum) {
-        //获取SecurityContextHolder中的用户id
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Integer userId = loginUser.getUser().getUserId();
+    public ServerResponse<PageInfo<Video>> getCollectVideoList(Integer pageNum, Integer userId) {
         PageHelper.startPage(pageNum,8);
         List<Video> videoList = videoMapper.getCollectVideoList(userId);
         for (Video video : videoList) {

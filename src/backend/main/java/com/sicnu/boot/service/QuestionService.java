@@ -2,10 +2,10 @@ package com.sicnu.boot.service;
 
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Question;
-import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.QuestionSelective;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Map;
 
@@ -68,10 +68,11 @@ public interface QuestionService {
     /**
      * description: 获取用户的收藏列表
      *
-     * @param pageNum:
+     * @param pageNum :
+     * @param userId :
      * @return ServerResponse<PageInfo<Video>>
      * @author 胡建华
      * Date:  2022/11/26 10:31
      */
-    ServerResponse<PageInfo<Question>> getCollectQuestionList(Integer pageNum);
+    ServerResponse<PageInfo<Question>> getCollectQuestionList(Integer pageNum, Integer userId);
 }

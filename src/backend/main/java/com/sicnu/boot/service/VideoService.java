@@ -5,6 +5,7 @@ import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.VideoSelective;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Map;
 
@@ -58,10 +59,11 @@ public interface VideoService {
     /**
      * description: 获取用户的收藏列表
      *
-     * @param pageNum:
+     * @param pageNum :
+     * @param userId :
      * @return ServerResponse
      * @author 胡建华
      * Date:  2022/11/23 19:29
      */
-    ServerResponse<PageInfo<Video>> getCollectVideoList(Integer pageNum);
+    ServerResponse<PageInfo<Video>> getCollectVideoList(Integer pageNum,Integer userId);
 }

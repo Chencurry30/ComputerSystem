@@ -14,7 +14,6 @@ import com.sicnu.boot.vo.QuestionSelective;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.*;
 
@@ -168,11 +167,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public ServerResponse<PageInfo<Question>> getCollectQuestionList(Integer pageNum) {
-        //获取SecurityContextHolder中的用户id
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Integer userId = loginUser.getUser().getUserId();
+    public ServerResponse<PageInfo<Question>> getCollectQuestionList(Integer pageNum,Integer userId) {
         PageHelper.startPage(pageNum,8);
         List<Question> questionList = questionMapper.getCollectQuestionList(userId);
         for (Question question : questionList) {

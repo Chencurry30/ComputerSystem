@@ -31,4 +31,24 @@ public interface OssService {
      * Date:  2022/11/24 15:43
      */
     ServerResponse<Map<String, String>> getQuestionPolicy(String fileName, String dir);
+
+    /**
+     * description: 获取视频图片
+     *
+     * @param fileName:
+     * @return ServerResponse<Map<String,String>>
+     * @author 胡建华
+     * Date:  2022/11/29 14:54
+     */
+    ServerResponse<Map<String, String>> getVideoPolicy(String fileName);
+
+    /**
+     * description: 上传动态图片
+     *
+     * @param fileName:
+     * @return ServerResponse<Map<String,String>>
+     * @author 胡建华
+     * Date:  2022/11/29 15:06
+     */
+    ServerResponse<Map<String, String>> getDynamicPolicy(String fileName);
 }

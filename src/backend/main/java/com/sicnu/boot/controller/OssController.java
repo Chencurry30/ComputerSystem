@@ -56,4 +56,36 @@ public class OssController {
             @Length(min = 5,max = 9,message = "dir的范围必须为5-9") @PathVariable String dir){
         return ossService.getQuestionPolicy(fileName,dir);
     }
+
+    /**
+     * description: 视频图片上传的代理
+     *
+     * @param fileName:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/19 21:48
+     */
+    @CrossOrigin
+    @GetMapping("/policy/video/{fileName}")
+    public ServerResponse<Map<String, String>> getVideoPolicy(
+            @Pattern(regexp = "^(\\s|\\S)+(jpg|png|JPG|PNG)+$",
+                    message = "图片格式必须为jpg或者png类型") @PathVariable String fileName){
+        return ossService.getVideoPolicy(fileName);
+    }
+
+    /**
+     * description: 动态图片上传的代理
+     *
+     * @param fileName:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/19 21:48
+     */
+    @CrossOrigin
+    @GetMapping("/policy/dynamic/{fileName}")
+    public ServerResponse<Map<String, String>> getDynamicPolicy(
+            @Pattern(regexp = "^(\\s|\\S)+(jpg|png|JPG|PNG)+$",
+                    message = "图片格式必须为jpg或者png类型") @PathVariable String fileName){
+        return ossService.getDynamicPolicy(fileName);
+    }
 }
