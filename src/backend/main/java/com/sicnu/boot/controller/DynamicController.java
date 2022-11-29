@@ -3,6 +3,7 @@ package com.sicnu.boot.controller;
 import com.sicnu.boot.pojo.Dynamic;
 import com.sicnu.boot.service.DynamicService;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.DynamicVo;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,12 +36,12 @@ public class DynamicController {
     }
 
     @GetMapping("/{userId}")
-    ServerResponse<List<Dynamic>> getDynamicByUserId(@Min(value = 1,message = "id最小值为1")@PathVariable Integer userId){
+    ServerResponse<List<DynamicVo>> getDynamicByUserId(@Min(value = 1,message = "id最小值为1")@PathVariable Integer userId){
         return dynamicService.getDynamicByUserId(userId);
     }
 
     @GetMapping("")
-    ServerResponse<List<Dynamic>> getAllDynamic(){
+    ServerResponse<List<DynamicVo>> getAllDynamic(){
         return dynamicService.getAllDynamic();
     }
 }
