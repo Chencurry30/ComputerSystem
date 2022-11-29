@@ -173,7 +173,7 @@ public class QuestionServiceImpl implements QuestionService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Integer userId = loginUser.getUser().getUserId();
-        PageHelper.startPage(pageNum,6);
+        PageHelper.startPage(pageNum,8);
         List<Question> questionList = questionMapper.getCollectQuestionList(userId);
         for (Question question : questionList) {
             if (question.getQuestionType() <= 2){

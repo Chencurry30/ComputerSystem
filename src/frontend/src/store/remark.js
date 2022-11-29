@@ -41,7 +41,6 @@ const remark = {
 
     //返回点击回复时存储的用户的信息 
     getOtherInfo(state) {
-      console.log(state.backOtherInfo,'我是这个点击回服的相关信息');
       return state.backOtherInfo || {};
     },
 

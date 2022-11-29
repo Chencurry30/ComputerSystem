@@ -8,14 +8,14 @@
         <div class="banner-middle">
           <div class="middleBox">
             <div class="middle-header">
-              <div class="middle-left">{{ teacherMsg.name }}</div>
+              <div class="middle-left">{{teacherMsg.name}}</div>
               <div class="middle-right">与他留言</div>
               <questionPopup ref="questionPopup"></questionPopup>
             </div>
             <div class="middle-main">
-              <p>学位:{{ teacherMsg.background }}</p>
-              <p>教师科目:{{ teacherMsg.directionName }}</p>
-              <p>关注人数:{{ teacherMsg.attentPeople }}</p>
+              <p>学位:{{teacherMsg.background}}</p>
+              <p>教师科目:{{teacherMsg.directionName}}</p>
+              <p>关注人数:{{teacherMsg.attentPeople}}</p>
             </div>
           </div>
         </div>
@@ -109,9 +109,9 @@
 <script>
 import QuestionPopup from "../../components/popUp/questionPopup.vue";
 // import replyItem from "../../components/remark/replyItem.vue";
-import { getTeacherInfo } from "../../service/teacherService";
+import { getTeacher } from "../../service/teacherService";
 export default {
-  components: { QuestionPopup },
+  components: {  QuestionPopup },
   name: "teacherPerson",
   data() {
     return {
@@ -135,7 +135,7 @@ export default {
         },
       ],
       teacherMsg: {
-        attentPeople: '',
+        attentPeople:'',
         name: "",
         background: "",
         directionName: "",
@@ -145,41 +145,30 @@ export default {
     };
   },
   mounted() {
-    //使用钩子函数处理老师信息
-     this.getTeacher()
-  },  
-  methods: {
-    //获取老师的信息 
-    getTeacher() {
-      this.teacherId = this.$route.query.teacherId;
-      getTeacherInfo(this.teacherId).then((res) => {
-        this.teacherMsg = res.data.data;
-        console.log(this.teacherMsg);
-      });
-    }
-
+    this.teacherId = this.$route.query.teacherId;
+    getTeacher(this.teacherId).then((res) => {
+      this.teacherMsg = res.data.data;
+      console.log(this.teacherMsg);
+    });
   },
+  methods: {},
 };
 </script>
 
 <style lang="less" scoped>
 .Main {
   margin-top: 10px;
-
   .banner {
     display: flex;
     height: 260px;
     background: url("../../assets/Img/teacherImg/banner.png.png");
-
     .banner-left {
       flex: 1;
       margin-top: 45px;
       margin-left: 50px;
     }
-
     .banner-middle {
       flex: 2;
-
       .middleBox {
         margin-top: 35px;
         margin-left: 130px;
@@ -188,18 +177,15 @@ export default {
         height: 180px;
         background-color: #ffffff;
         border-radius: 10px;
-
         .middle-header {
           margin-bottom: 6px;
           display: flex;
           justify-content: space-between;
-
           .middle-left {
             font-size: 30px;
             color: #ff9d00;
             font-weight: bold;
           }
-
           .middle-right {
             margin-top: 5px;
             width: 113px;
@@ -214,35 +200,27 @@ export default {
         }
       }
     }
-
     .banner-right {
       flex: 1;
-
       .ImgBox {
         margin-top: 10px;
         width: 190px;
-
         img {
           width: 100%;
         }
       }
     }
   }
-
   .main-connect {
     margin-top: 15px;
     display: flex;
-
     .connect-left {
       flex: 3;
-
       .left-MainBox {
         padding: 30px 58px 30px 30px;
-
         .left-Item {
           display: flex;
           margin-bottom: 25px;
-
           .Item-title {
             line-height: 30px;
             font-size: 18px;
@@ -250,7 +228,6 @@ export default {
             margin-right: 30px;
             width: 75px;
           }
-
           .Item-Info {
             line-height: 30px;
             width: 694px;
@@ -259,14 +236,11 @@ export default {
           }
         }
       }
-
       .left-Resources {
         margin-top: 10px;
         display: flex;
-
         .ResourcesTitle {
           flex: 1;
-
           div {
             width: 100%;
             height: 30px;
@@ -276,40 +250,33 @@ export default {
             text-align: center;
           }
         }
-
         .ResourcesBox {
           flex: 5;
-
           .BoxItem {
             overflow: hidden;
-
             .Item {
               float: left;
               margin: 0 5px;
               width: 226px;
               // height: 180px;
               overflow: hidden;
-
               .ImgBox {
                 margin: 5px auto;
                 width: 100%;
                 height: 124px;
                 background: blue;
               }
-
               .ItemInfo {
                 display: flex;
                 width: 100%;
                 height: 20px;
                 line-height: 20px;
                 justify-content: space-between;
-
                 .ItemInfo-left {
                   margin-left: 10px;
                   font-size: 12px;
                   color: #333333;
                 }
-
                 .ItemInfo-right {
                   margin-right: 10px;
                   font-size: 12px;
@@ -321,13 +288,10 @@ export default {
         }
       }
     }
-
     .connect-right {
       flex: 1;
-
       .comTeacher {
         padding: 10px 0px 26px 5px;
-
         .title {
           position: relative;
           margin-left: -20px;
@@ -341,7 +305,6 @@ export default {
           text-align: center;
           color: #ffffff;
           background: #ff9d00;
-
           .styleT {
             position: absolute;
             top: -25px;
@@ -355,7 +318,6 @@ export default {
             border-right: 0px solid #ff9d00;
           }
         }
-
         .label_Name,
         .label_email,
         .label_comMessage {
@@ -365,13 +327,11 @@ export default {
           margin: 16px auto 0;
           text-indent: 0.5em;
           background: #ffffff;
-
           input {
             margin-top: 9px;
             background: #ffffff;
           }
         }
-
         .sub {
           width: 207px;
           height: 40px;
@@ -387,16 +347,13 @@ export default {
       }
     }
   }
-
   .main-fotter {
     width: 860px;
     margin-top: 10px;
-
     .fotter-header {
       padding: 10px 0 10px 5px;
       font-weight: 700;
     }
-
     .fotter-connect {
       width: 100%;
     }

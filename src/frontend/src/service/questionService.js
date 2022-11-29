@@ -11,9 +11,26 @@ export const getQuestionDataList = ({typeId,difficultId,classifyId,sourceId,year
   return service.get(url)
 }
 
-
 //随机组卷的接口
-export const setVolume = data =>{
+export const getVolume = data =>{
   const url = `/question/paper`
   return service.post(url,data)
 }
+
+//获取具体题目的接口
+export const getQuestion = (questionId) =>{
+  const url =`question/${questionId}`
+  return service.get(url)
+}
+
+export const uploadQuestionPicture = ({fileName,location}) =>{
+  const url = `oss/policy/question/${fileName}-${location}`
+  return service.get(url)
+}
+
+export const addQuestion = (QuestionData) =>{
+  const url = 'admin/question'
+  return service.post(url,QuestionData)
+}
+
+//添加题目的相关接口

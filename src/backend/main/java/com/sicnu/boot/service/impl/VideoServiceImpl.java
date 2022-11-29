@@ -123,7 +123,7 @@ public class VideoServiceImpl implements VideoService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Integer userId = loginUser.getUser().getUserId();
-        PageHelper.startPage(pageNum,6);
+        PageHelper.startPage(pageNum,8);
         List<Video> videoList = videoMapper.getCollectVideoList(userId);
         for (Video video : videoList) {
             String nickname = userMapper.getNicknameByUserId(video.getAuthorId());

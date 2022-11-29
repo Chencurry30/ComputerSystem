@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas'
 import JsPDF from 'jspdf'
 export default {
   install(Vue,) {
-    Vue.prototype.printOutDPF = function () {
+    Vue.prototype.printOutPDF = function () {
       let title = '将页面导出为PDF'
       let shareContent = document.getElementById('main-content'),//需要截图的包裹的（原生的）DOM 对象
         width = shareContent.clientWidth, //获取dom 宽度
