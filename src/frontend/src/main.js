@@ -23,14 +23,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
+
 Vue.use(VideoPlayer) 
 
-//引入导出为pdf的函数 
+//引入导出为pdf的函数(方法为printOutPDF) 
 import htmlToPdf from '@/utils/htmlToPdf';
 Vue.use(htmlToPdf);
-
-
-
 
 //全局注册qs序列化object对象(this.$qs运用) 
 import qs from 'qs';

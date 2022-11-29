@@ -1,96 +1,116 @@
-<!--试卷对应的相关信息-->
+<!--组卷时题目对应的组件-->
 <template>
-  <div class="paper-modular">
-    <div class="current">
-      <a href="javascript:;" class="pic pic-deft">试卷</a>
-      <div class="contInfo">
-        <a href="javascript:;">2022-2023学年广东省广州大学附中教育集团九年级（上）自主招生数学试卷</a>
+  <li class="questionItem" @click="gotoPage">
+    <div class="questionTitle">
+      <div class="titleHeader">
+        <span>({{ questioHead }})&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span v-if="questionData.questionTitle === '无'">题目如下图所示</span>
+        <span v-else>{{ questionData.questionTitle }}</span>
       </div>
-      <div class="contBottom">
-        <div class="contBottom-Header">
-          <i class="p-icon p-icon-formal"></i>
-          <span class="title">考研真题</span>
-        </div>
-        <div class="contBottom-Bottom"></div>
+      <div v-if="questionData.titleImage !== ''" class="titleImg">
+        <img :src="[publicUrl + questionData.titleImage]" alt="">
       </div>
     </div>
-  </div>
+    <div class="questionSelect" v-if="questionData.questionType === 1 || questionData.questionType === 2">
+      <div class="item" v-for="(questionChildItem) in questionData.questionChoiceList"
+        :key="questionChildItem.choiceId">
+        <span v-if="questionChildItem.choiceTitle !== '无'">
+          {{ questionChildItem.choiceName }}. {{ questionChildItem.choiceTitle }}
+        </span>
+        <span v-else class="selectOption">
+          {{ questionChildItem.choiceName }}.&nbsp;&nbsp;&nbsp;
+          <div class="titleImg" v-if="questionChildItem !== ''">
+            <img :src="[publicUrl + questionChildItem.titleImage]" alt="">
+          </div>
+        </span>
+
+      </div>
+    </div>
+  </li>
 </template>
 
 <script>
+import { createPublicUrl } from '../../utils/index'
 export default {
-  name: 'examItem'
+  props: ['questionData'],
+  name: 'questionItem',
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    select(questionChildItem) {
+      console.log(questionChildItem);
+    },
+    gotoPage() {
+      console.log(this.questionData);
+      let location = { name: 'questionPage' }
+      location.query = { questionId: this.questionData.questionId }
+      this.$router.push(location)
+    }
+  },
+  computed: {
+    questioHead() {
+      if (this.questionData.questionType === 1) {
+        return '单选题'
+      } else if (this.questionData.questionType === 2) {
+        return '多选题'
+      } else if (this.questionData.questionType === 3) {
+        return '填空题'
+      } else {
+        return '解答题'
+      }
+    },
+    //提供公共的URL 
+    publicUrl() {
+      return createPublicUrl();
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
-.paper-modular {
-  color: #5f5d5d;
+.questionItem {
 
-  .current {
+  border-radius: 10px;
+  // border: 1px solid red;
+  position: relative;
+
+  .questionTitle {
+    overflow: hidden;
+    zoom: 1;
+    clear: both;
+    line-height: 25px;
+    font-size: 16px;
+    padding: 10px;
     position: relative;
-    padding-left: 85px;
-    margin-bottom: 20px;
+    cursor: pointer;
 
-    .pic {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 76px;
-      height: 94px;
-      padding-top: 5px;
-      font-weight: bold;
-      text-align: center;
-      background: url(../../assets/Img/questionImg/icon.png) no-repeat;
-    }
-
-    .pic-deft {
-      background-position: -74px -135px;
-      color: #54cb51;
-    }
-  }
-
-  .contInfo {
-    width: 300px;
-
-    a {
-      margin-right: 0;
+    //用来限制题目照片过大 
+    .titleImg {
       width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      white-space: normal;
-      height: 39px;
-      color: #5f5d5d;
+
+      img {
+        width: 70%;
+      }
+    }
+
+  }
+
+  .questionSelect {
+    padding: 10px 20px;
+
+    .item {
+      padding: 10px 0px;
+
+      .selectOption {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 
-  .contBottom {
-    .contBottom-Header {
-      margin-top: 10px;
-      display: flex;
-      align-content: center;
 
-      .p-icon {
-        display: inline-block;
-        vertical-align: middle;
-        width: 14px;
-        height: 16px;
-        background: url(../../assets/Img/questionImg/icon.png) no-repeat;
-      }
-
-      .p-icon-formal {
-        background-position: -42px 0;
-        margin-right: 5px;
-      }
-
-      .title {
-        height: 16px;
-        line-height: 16px;
-        font-size: 14px;
-      }
-    }
-  }
 }
 </style>

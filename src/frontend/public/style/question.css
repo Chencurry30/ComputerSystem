@@ -1,0 +1,39 @@
+/*题目相关的公共样式*/
+.questionItem {
+  margin: 10px 15px;
+}
+
+/*随机组卷的标题*/
+.questionHeader {
+  padding-top: 20px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 50px;
+}
+/*组卷页面的头部导航栏*/
+.questionBread {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+  text-align: left;
+  font-size: 14px;
+}
+.routerCurrent {
+  color: #008afb;
+}
+
+.sky {
+  padding: 0 5px;
+}
+
+.routerBack {
+  cursor: pointer;
+}
+.questionBreadLeft{
+  margin-left: 30px;
+}
+
+.questionBreadRight{
+  margin-right: 100px;
+}

@@ -1,6 +1,6 @@
 /*用于存储页面弹窗的公共CSS*/
 /*用户提供阴影部分的遮光布*/
-.userDialog{
+.userDialog,.questionDialog{
   position: fixed;
   top: 0;
   right: 0;

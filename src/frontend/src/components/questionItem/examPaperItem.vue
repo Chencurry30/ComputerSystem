@@ -1,130 +1,96 @@
-<!--点击组卷时对应的试题的每一项-->
+<!--pdf试卷对应的相关信息-->
 <template>
-
-    <li class="questionBox" @click="gotoPage">
-      <div class="questionTitle">
-        <span>({{ questioHead }})</span>
-        有理数a,b在数轴上表示如下，下列判断错误的是()
+  <div class="paper-modular">
+    <div class="current">
+      <a href="javascript:;" class="pic pic-deft">试卷</a>
+      <div class="contInfo">
+        <a href="javascript:;">2022-2023学年广东省广州大学附中教育集团九年级（上）自主招生数学试卷</a>
       </div>
-      <div class="questionBottom" v-if="questionItem.questionType === 1 || questionItem.questionType === 2">
-        <div class="item" v-for="(questionChildItem) in questionItem.questionChoiceList"
-          :key="questionChildItem.choiceId">
-          <span @click="select(questionChildItem)">{{ questionChildItem.choiceName }}. {{ questionChildItem.choiceTitle
-          }}</span>
+      <div class="contBottom">
+        <div class="contBottom-Header">
+          <i class="p-icon p-icon-formal"></i>
+          <span class="title">考研真题</span>
         </div>
+        <div class="contBottom-Bottom"></div>
       </div>
-      <div class="questionBottom" v-else-if="questionItem.questionType === 3">
-        <div class="item">
-          <div class="selectOption" v-for="(item) in judgeList" :key="item.id">
-            <span class="span1">{{ item.option }}&nbsp;:&nbsp;</span>
-            <span class="span2">{{ item.name }}</span>
-          </div>
-        </div>
-
-      </div>
-      <div class="questionBottom" v-else>
-        <div class="item">
-          <span>答：</span>
-          <input type="text" class="line">
-          <button>提交</button>
-        </div>
-      </div>
-    </li>
-
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['questionItem'],
-  name: 'questionItem',
-  data() {
-    return {
-      judgeList: [
-        {
-          id: 65656,
-          name: '对',
-          option: 'A'
-        },
-        {
-          id: 65658,
-          name: '错',
-          option: 'B'
-        }
-      ]
-    }
-  },
-  methods: {
-    select(questionChildItem) {
-      console.log(questionChildItem);
-    },
-    gotoPage() {
-      console.log(this.questionItem);
-    }
-  },
-  computed: {
-    questioHead() {
-      if (this.questionItem.questionType === 1) {
-        return '单选题'
-      } else if (this.questionItem.questionType === 2) {
-        return '多选题'
-      } else if (this.questionItem.questionType === 3) {
-        return '判断题'
-      } else {
-        return '简答题'
-      }
-    }
-  }
+  name: 'examPaperItem'
 }
 </script>
 
 <style lang="less" scoped>
+.paper-modular {
+  color: #5f5d5d;
 
-  .questionBox {
-
-    margin-bottom: 15px;
-    // border: 1px solid #dadada;
-    border-radius: 10px;
+  .current {
     position: relative;
+    padding-left: 85px;
+    margin-bottom: 20px;
 
-    .questionTitle {
-      overflow: hidden;
-      zoom: 1;
-      clear: both;
-      line-height: 25px;
-      font-size: 14px;
-      padding: 20px 20px 20px 20px;
-      position: relative;
-      cursor: pointer;
-
+    .pic {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 76px;
+      height: 94px;
+      padding-top: 5px;
+      font-weight: bold;
+      text-align: center;
+      background: url(../../assets/Img/questionImg/icon.png) no-repeat;
     }
 
-    .questionBottom {
-      padding: 0px 20px 20px 20px;
-      display: flex;
-
-      .item {
-        flex: 10%;
-
-        .selectOption {
-          height: 24px;
-          line-height: 24px;
-        }
-
-        .span1 {
-          margin-left: 6px;
-        }
-
-        .span2 {
-          margin-left: 10px;
-        }
-
-        .line {
-          width: 200px;
-          height: 20px;
-          border-bottom: 1px solid #666666;
-        }
-      }
+    .pic-deft {
+      background-position: -74px -135px;
+      color: #54cb51;
     }
   }
 
+  .contInfo {
+    width: 300px;
+
+    a {
+      margin-right: 0;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      white-space: normal;
+      height: 39px;
+      color: #5f5d5d;
+    }
+  }
+
+  .contBottom {
+    .contBottom-Header {
+      margin-top: 10px;
+      display: flex;
+      align-content: center;
+
+      .p-icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 14px;
+        height: 16px;
+        background: url(../../assets/Img/questionImg/icon.png) no-repeat;
+      }
+
+      .p-icon-formal {
+        background-position: -42px 0;
+        margin-right: 5px;
+      }
+
+      .title {
+        height: 16px;
+        line-height: 16px;
+        font-size: 14px;
+      }
+    }
+  }
+}
 </style>

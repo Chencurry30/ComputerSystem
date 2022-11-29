@@ -22,10 +22,6 @@ a {
   color: #666;
   text-decoration: none;
 }
-a:hover{
-  color: #007bff !important;
-  text-decoration: none !important;
-}
 
 input {
   border: 0;
@@ -56,7 +52,7 @@ button {
 }
 
 .showBox {
-  display: block !important;
+  display: block;
 }
 
 /*隐藏多余的文字*/

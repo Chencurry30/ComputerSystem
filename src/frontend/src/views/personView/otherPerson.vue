@@ -54,7 +54,7 @@
                         <div class="right">2022-10-9</div>
                     </div>
                 </div>
-                <div class="Main-item">
+                                <div class="Main-item">
                     <div class="item-img"></div>
                     <div class="item-title">123213213</div>
                     <div class="item-others">
@@ -64,64 +64,32 @@
                 </div>
             </div>
         </div>
+        <div class="col-right">
+            <div class="personBox">
+                <div class="person-info-title centerLocation">个人资料</div>
+                <div class="person-info-connect">
+                    <div class="info-person">
+                        <span class="laber">用户ID:</span>
+                        <span class="laber-info">123</span>
+                    </div>
+                    <div class="info-person">
+                        <span class="laber">性别:</span>
+                        <span class="laber-info">保密</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <el-table
-        :data="content"
-        stripe
-        style="width: 100%">
-      <el-table-column
-          prop="createDate"
-          label="日期"
-          width="180">
-      </el-table-column>
-      <el-table-column
-          prop="content"
-          label="内容"
-          width="180">
-      </el-table-column>
-      <el-table-column
-          prop="userId"
-          label="用户">
-      </el-table-column>
-    </el-table>
   </div>
 </template>
 
 <script>
-import {getDynamics} from '../../service/userServers'
 export default {
-    name:'otherPerson',
-  data(){
-      return{
-        userId:'',
-        content:{}
-      }
-  },
-  mounted() {
-    this.userId = this.$route.query.userId
-    console.log(this.userId)
-    getDynamics(this.userId).then((res=>{
-      console.log(res)
-      this.content = res.data.data
-      console.log(this.content)
-    }))
-  },
-  methods(){
-
-  }
+    name:'ohterPerson'
 }
 </script>
 
 <style lang="less" scoped>
-
-    .el-table{
-      padding: 15px;
-      width: 100%;
-      background: #fff;
-      border: 1px solid #eee;
-      border-radius: 4px;
-      margin-top: 15px;
-    }
     .wrapper{
         width: 1100px;
         margin: 0 auto;
@@ -131,7 +99,7 @@ export default {
             height: 200px;
             background: url(../../assets/Img/banner/person.png) no-repeat;
             background-size: 100%;
-            .wrapper-user{
+            .wrapper-user{    
                 display: flex;
                 position: absolute;
                 bottom: 0;
@@ -183,7 +151,7 @@ export default {
         justify-content: space-between;
         .col-left{
             padding: 15px;
-            width: 100%;
+            width: 712px;
             background: #fff;
             border: 1px solid #eee;
             border-radius: 4px;
@@ -228,6 +196,35 @@ export default {
                       font-size: 12px;
                     }
                 }
+            }
+        }
+        .col-right{
+            padding: 0 10px;
+            width: 388px;
+            .personBox{
+                margin-left: 10px;
+                padding: 15px 20px 18px;
+                margin-bottom: 10px;
+                background: #fff;
+                border: 1px solid #eee;
+                border-radius: 4px;
+                .person-info-title{
+                    padding-bottom: 18px;
+                    border-bottom: 1px solid #e5e9ef;
+                    margin-bottom: 10px;
+
+                }
+                .person-info-connect{
+                  width: 100%;
+                  .info-person{
+                    margin: 5px auto;
+                    width: 80%;
+                    display: flex;
+                    .laber{
+                      margin-right: 10px;
+                  }
+                }
+              }
             }
         }
     }
