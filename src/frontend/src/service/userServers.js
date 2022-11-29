@@ -16,8 +16,8 @@ export const uploadUserPicture = (picture) =>{
 }
 
 //返回用户的收藏视屏的列表 
-export const userVideoCollect = (userId) =>{
-  const url = `videos/collect/${userId}`
+export const userVideoCollect = (pageNum,userId) =>{
+  const url = `videos/collect/${pageNum}-${userId}`
   return service.get(url)
 }
 

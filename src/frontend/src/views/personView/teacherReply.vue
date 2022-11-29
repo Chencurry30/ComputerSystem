@@ -59,6 +59,10 @@ export default {
   },
   components: { replyItem ,personAside,personHeader},
   name: "teacherReply",
+  //避免页面刷新导致vuex中的数据丢失
+  mounted() {
+    this.$store.dispatch('userInfo/getUserInfo')
+  },
   methods: {
     backHome() {
       let location = {

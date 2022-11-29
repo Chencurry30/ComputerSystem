@@ -15,7 +15,7 @@
                     <textarea class="form-control" v-model="contents.content"></textarea>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary" @click="postDynamics">发表动态</button>
+                    <button class="btn btn-primary" @click="AddDynamics">发表动态</button>
                   </div>
                   <el-table
                       :data="Dynamics"
@@ -54,8 +54,7 @@
 import { mapGetters } from 'vuex'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
-import replyItem from '../../components/remark/replyItem.vue';
-import {getDynamics, getallDynamics,setDynamics, deleteDynamics} from '../../service/userServers'
+import {getDynamics, getallDynamics,setDynamics, deleteDynamics} from '@/service/userServers'
 export default {
   data() {
     return {
@@ -66,9 +65,11 @@ export default {
       }
     }
   },
-  components: { replyItem ,personAside,personHeader},
+  components: { personAside,personHeader},
   name: "teacherReply",
   mounted() {
+    //获取用户的相关信息,避免刷新到时头像丢失
+    this.$store.dispatch('userInfo/getUserInfo')
     this.GetDynamics()
   },
   methods: {
@@ -78,11 +79,8 @@ export default {
       }
       this.$router.push(location)
     },
-    changeEditor() {
-      this.$refs.InfoPopup.showPopup(this.getUserInfo);
-    },
-    //发请求
-    postDynamics(){
+    //添加用户动态
+    AddDynamics(){
       // console.log(this.contents)
       setDynamics(this.contents).then((res)=>{
         if (res.data.code === 406){
@@ -93,7 +91,7 @@ export default {
         console.log(res)
       })
     },
-    //获取动态
+    //获取所有动态
     GetDynamics(){
       getallDynamics().then((res)=>{
         this.Dynamics = res.data.data
@@ -117,12 +115,9 @@ export default {
 <style lang='less' scoped>
 .MainBox {
   margin-top: 15px;
-
   .containBox {
     margin-top: 5px;
     display: flex;
-
-
     .contain-right {
       flex: 3;
     }
@@ -134,7 +129,6 @@ export default {
     color: #666;
     border: 2px solid #eee;
   }
-
   .second {
     margin-top: 15px;
   }

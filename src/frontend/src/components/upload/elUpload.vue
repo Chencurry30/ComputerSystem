@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {uploadQuestionPicture} from '../../service/questionService'
+import {uploadQuestionPicture} from '@/service/questionService'
 export default {
   data() {
     return {

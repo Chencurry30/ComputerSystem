@@ -67,7 +67,11 @@ export default {
   name: "thumbVideo",
   components:{
     personAside,personHeader
-  }
+  },
+  //避免页面刷新导致vuex中的数据丢失
+  mounted() {
+    this.$store.dispatch('userInfo/getUserInfo')
+  },
 };
 </script>
 

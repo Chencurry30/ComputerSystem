@@ -61,7 +61,7 @@ export default {
   name: "questionPopup",
   data() {
     return {
-      dialogVisible: true,
+      dialogVisible: false,
       showId1: true,
       showId2: true,
       showId3: true,
@@ -101,7 +101,6 @@ export default {
   },
   methods: {
     showPopup() {
-      console.log('123密码');
       this.dialogVisible = true;
     },
     closePopup() {
@@ -270,7 +269,7 @@ export default {
     height: 40px;
     line-height: 40px;
     border-radius: 8px;
-    text-align: cente;
+    text-align: center;
     cursor: pointer;
     color: #ffffff;
     background-color: #4a9efa;

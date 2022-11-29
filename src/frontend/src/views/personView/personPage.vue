@@ -82,6 +82,7 @@
 
                 </ul>
               </div>
+              <pagerView :pageInfo="collectPage"  @giveFatherPageNo="getSonPageNo"></pagerView>
             </div>
           </div>
 
@@ -98,37 +99,58 @@ import InfoPopup from '../../components/popUp/InfoPopup'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
 import { userVideoCollect } from '../../service/userServers'
+import PagerView from "@/components/remark/PagerView";
 export default {
   name: "personPage",
   data() {
     return {
-      collectVideo: []
+      collectVideo: [],
+      //关于收藏视屏的分页信息
+      collectPage:{
+
+      }
     }
   },
-  components: { InfoPopup, personAside, personHeader },
+  components: {PagerView, InfoPopup, personAside, personHeader },
   mounted() {
     //获取用户的相关信息 
     this.$store.dispatch('userInfo/getUserInfo')
-    //获取本用户收藏的视屏
-    this.getUserCollect()
+    //获取本用户收藏的视屏的列表
+    this.getUserCollect(1)
 
   },
   methods: {
-    getUserCollect() {
+    //获取用户收藏的视屏
+    getUserCollect(pageNum) {
       let userId = sessionStorage.getItem('userId')
-      console.log(userId);
-      userVideoCollect(userId).then((res) => {
+      userVideoCollect(pageNum,userId).then((res) => {
         if (res.data.code === 200) {
-          console.log(res);
+          let data = {}
+          data.pageNo = res.data.data.pageNum     //当前的页码数
+          data.pagesize = res.data.data.pageSize  //每一页的大小
+          data.total = res.data.data.total        //总共的个数
+          data.pageTotal = res.data.data.pages    //总共有几页
+
+          //将获取的分页数据转化给分页器中
+          this.collectPage = data
+
+
+          //将获取的数据传递给收藏列表
           this.collectVideo = res.data.data
         }
       })
     },
 
-
+    //修改用户的个人信息
     changeEditor() {
       this.$refs.InfoPopup.showPopup(this.getUserInfo);
     },
+
+    //获取分页器中传递的数据
+    getSonPageNo(pageNum){
+      this.getUserCollect(pageNum)
+
+    }
   },
   computed: {
     ...mapGetters('userInfo', {
