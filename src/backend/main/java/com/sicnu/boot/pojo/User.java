@@ -36,7 +36,6 @@ public class User {
   private Integer age;
   private String sex;
   private String image;
-  private Integer isHide;
   /**
    * description: 个人留言
    */
@@ -64,7 +63,6 @@ public class User {
     this.email = userDetail.getEmail();
     this.image = userDetail.getImage();
     this.sex = userDetail.getSex();
-    this.isHide = userDetail.getIsHide();
     this.message = userDetail.getMessage();
   }
 }

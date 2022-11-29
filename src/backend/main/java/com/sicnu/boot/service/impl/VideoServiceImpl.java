@@ -9,9 +9,12 @@ import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.service.VideoService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.VideoUtils;
+import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.VideoSelective;
 import com.sicnu.boot.vo.VideoType;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.*;
@@ -89,6 +92,44 @@ public class VideoServiceImpl implements VideoService {
             nickname = "";
         }
         video.setNickname(nickname);
+        //查看该视频是否被用户收藏
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userId = loginUser.getUser().getUserId();
+        int checkCollectVideo = videoMapper.checkCollectVideo(userId, videoId);
+        video.setIsCollected(checkCollectVideo > 0);
         return ServerResponse.createBySuccess("获取成功",video);
+    }
+
+    @Override
+    public ServerResponse<String> collectVideo(Integer videoId) {
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userId = loginUser.getUser().getUserId();
+        int checkCollectVideo = videoMapper.checkCollectVideo(userId, videoId);
+        if (checkCollectVideo > 0){
+            videoMapper.deleteCollectVideo(userId,videoId);
+            return ServerResponse.createBySuccessMessage("取消收藏成功");
+        }
+        videoMapper.collectVideo(userId,videoId);
+        return ServerResponse.createBySuccessMessage("收藏成功");
+    }
+
+    @Override
+    public ServerResponse<PageInfo<Video>> getCollectVideoList(Integer pageNum, Integer userId) {
+        PageHelper.startPage(pageNum,8);
+        List<Video> videoList = videoMapper.getCollectVideoList(userId);
+        for (Video video : videoList) {
+            String nickname = userMapper.getNicknameByUserId(video.getAuthorId());
+            //未查询到作者，返回空字符串
+            if (StringUtils.isBlank(nickname)){
+                nickname = "";
+            }
+            video.setNickname(nickname);
+        }
+        PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+        return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 }

@@ -4,6 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sicnu.boot.mapper.VideoMapper">
+    <insert id="collectVideo">
+        insert into video_collection values (#{videoId},#{userId})
+    </insert>
+    <delete id="deleteCollectVideo">
+        delete from video_collection where user_id = #{userId} and video_id = #{videoId}
+    </delete>
     <select id="getVideoListBySelective" resultType="Video" parameterType="com.sicnu.boot.vo.VideoSelective">
         select video_id,name,time,image,view_num,duration,comment_num,author_id from video
         <where>
@@ -28,5 +34,12 @@
 
     <select id="getVideoType" resultType="com.sicnu.boot.vo.VideoType">
         select * from video_type
+    </select>
+    <select id="checkCollectVideo" resultType="java.lang.Integer">
+        select count(*) from video_collection where user_id = #{userId} and video_id = #{videoId}
+    </select>
+    <select id="getCollectVideoList" resultType="com.sicnu.boot.pojo.Video">
+        select video_id,name,time,image,view_num,duration,comment_num,author_id from video
+        where video_id in (select video_id from video_collection where user_id = #{userId})
     </select>
 </mapper>

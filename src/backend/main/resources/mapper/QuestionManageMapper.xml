@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.QuestionManageMapper">
+
+    <insert id="insertQuestion" parameterType="Question" useGeneratedKeys="true" keyProperty="questionId">
+        insert into question values(null,#{questionTitle},#{titleImage},#{enclosureImage},
+                                    #{answer},#{answerImage},#{questionType},#{solution},
+                                    #{solutionImage},#{sites},#{classifyId},#{classifyName},#{difficult},
+                                    #{source},Year(#{year}))
+    </insert>
+    <insert id="insertQuestionChoice" parameterType="QuestionChoice">
+        insert into question_choice values(null,#{questionId},#{choiceName},#{choiceTitle},#{titleImage})
+    </insert>
+    <update id="updateQuestion" parameterType="Question">
+        update question set question_title = #{questionTitle},title_image = #{titleImage},
+                            enclosure_image = #{enclosureImage}
+                          ,answer = #{answer},answer_image = #{answerImage},solution = #{solution},
+                            solution_image = #{solutionImage} where question_id = #{questionId}
+    </update>
+    <update id="updateQuestionChoice" parameterType="QuestionChoice">
+        update question_choice set choice_title = #{choiceTitle},title_image = #{titleImage}
+        where choice_id = #{choiceId} and question_id = #{questionId}
+    </update>
+    <delete id="deleteQuestionChoice">
+        delete from question_choice where question_id = #{questionId}
+    </delete>
+    <delete id="deleteQuestionById">
+        delete from question where question_id = #{questionId}
+    </delete>
+    <select id="getQuestionClassify" resultType="java.lang.String">
+        select classify_name from question_classify where classify_id = #{classifyId}
+    </select>
+    <select id="getQuestionInfoById" resultType="com.sicnu.boot.pojo.Question">
+        select * from question where question_id = #{questionId}
+    </select>
+    <select id="checkQuestionType" resultType="java.lang.Integer">
+        select question_type from question where question_id = #{questionId}
+    </select>
+    <select id="getQuestionList" resultType="com.sicnu.boot.pojo.Question" parameterType="com.sicnu.boot.vo.QuestionSelective">
+        select * from question
+        <where>
+            <if test="classifyId != null and classifyId != 0">
+                classify_id = #{classifyId}
+            </if>
+            <if test="sourceName != null and sourceName != ''">
+                and `source` = #{sourceName}
+            </if>
+            <if test="questionName != null and questionName != ''">
+                and question_title like "%" #{questionName} "%"
+            </if>
+        </where>
+    </select>
+    <select id="getQuestionChoiceByQuestionId" resultType="com.sicnu.boot.pojo.QuestionChoice">
+        select * from question_choice where question_id = #{questionId}
+    </select>
+</mapper>

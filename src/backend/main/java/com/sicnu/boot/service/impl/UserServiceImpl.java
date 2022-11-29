@@ -78,14 +78,14 @@ public class UserServiceImpl implements UserService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getUserId().toString();
         String jwt = JwtUtil.createJWT(userId);
-        //authenticate存入redis,失效时间为30分钟
-        redisUtils.setCacheObject("login:"+userId,loginUser,30, TimeUnit.MINUTES);
+        //authenticate存入redis,失效时间为180分钟,3个小时
+        redisUtils.setCacheObject("login:"+userId,loginUser,180, TimeUnit.MINUTES);
         //把token响应给前端
         HashMap<String,Object> map = new HashMap<>(5);
         map.put("token",jwt);
         //返回用户部分信息
         UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname()
-                ,loginUser.getUser().getImage());
+                ,loginUser.getUser().getImage(),loginUser.getUser().getUserId());
         map.put("user",userDetail);
         //返回用户权限树
         List<Menu> menus = userMapper.getUserMenu(loginUser.getUser().getUserId());
@@ -330,11 +330,6 @@ public class UserServiceImpl implements UserService {
         Map<String,String> map = new HashMap<>(10);
         map.put("nickname",user.getNickname());
         map.put("image",user.getImage());
-        //判断该用户信息是否可见
-        if (user.getIsHide() != 0){
-            map.put("isHide","用户信息隐藏，不可见");
-            return ServerResponse.createBySuccess("获取成功",map);
-        }
         map.put("message",user.getMessage());
         map.put("sex",user.getSex());
         map.put("age",user.getAge().toString());

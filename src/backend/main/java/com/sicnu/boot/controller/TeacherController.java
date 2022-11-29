@@ -2,8 +2,6 @@ package com.sicnu.boot.controller;
 
 
 import com.github.pagehelper.PageInfo;
-import com.sicnu.boot.group.Insert;
-import com.sicnu.boot.group.Update;
 import com.sicnu.boot.pojo.Teacher;
 import com.sicnu.boot.service.TeacherService;
 import com.sicnu.boot.utils.ServerResponse;
@@ -46,15 +44,15 @@ public class TeacherController {
         return teacherService.getAllTeacher();
     }
 
-    @PostMapping("/one")
-    ServerResponse<String> insertTeacher(@Validated(Insert.class)
+    @PostMapping()
+    ServerResponse<String> insertTeacher(@Validated
                                          @RequestBody Teacher teacher){
         return teacherService.insertTeacher(teacher);
     }
 
 
     @PutMapping
-    ServerResponse<String> updateTeacher(@Validated(Update.class)
+    ServerResponse<String> updateTeacher(@Validated
                                       @RequestBody Teacher teacher){
         return teacherService.updateTeacher(teacher);
     }

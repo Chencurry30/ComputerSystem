@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.DynamicMapper">
+    <insert id="addDynamic" parameterType="Dynamic">
+        insert into user_dynamic values(null,#{userId},#{content},#{picture},#{createDate})
+    </insert>
+    <delete id="deleteDynamic" parameterType="Dynamic">
+        delete from user_dynamic where user_id = #{userId} and dynamic_id = #{dynamicId}
+    </delete>
+    <select id="getDynamicByUserId" resultType="Dynamic">
+        select *from user_dynamic where user_id = #{userId}
+    </select>
+    <select id="getAllDynamic" resultType="Dynamic">
+        select *from user_dynamic
+    </select>
+</mapper>

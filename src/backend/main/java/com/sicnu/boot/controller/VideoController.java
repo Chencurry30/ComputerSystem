@@ -54,4 +54,33 @@ public class VideoController {
         return videoService.getVideoByVideoId(videoId);
     }
 
+    /**
+     * description: 收藏视频，或取消收藏视频
+     *
+     * @param videoId:
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/11/23 18:56
+     */
+    @PostMapping("/collect/{videoId}")
+    ServerResponse<String> collectVideo(@Min (value = 1,message = "视频id最小值为1")
+                                @PathVariable("videoId")Integer videoId){
+        return videoService.collectVideo(videoId);
+    }
+
+    /**
+     * description: 获取用户的收藏列表
+     *
+     * @param pageNum:
+     * @return ServerResponse<PageInfo<Video>>
+     * @author 胡建华
+     * Date:  2022/11/23 19:39
+     */
+    @GetMapping("/collect/{pageNum}-{userId}")
+    ServerResponse<PageInfo<Video>> getCollectVideoList(@Min(value = 1,message = "pageNum的最小值为1")
+                                       @PathVariable Integer pageNum,@Min(value = 1,message = "pageNum的最小值为1")
+                                        @PathVariable Integer userId){
+        return videoService.getCollectVideoList(pageNum,userId);
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.sicnu.boot.controller;
 
-import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.group.Phone;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.utils.ResponseCode;
@@ -10,10 +9,9 @@ import com.sicnu.boot.service.UserService;
 import com.sicnu.boot.vo.UpdateUser;
 import com.sicnu.boot.vo.UserDetail;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.core.env.Environment;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -38,6 +36,9 @@ public class UserController {
     @Resource
     private ISmsService smsService;
 
+    @Resource
+    private Environment environment;
+
     private static final Pattern PHONE_PATTERN = Pattern.compile("^1[3-9]\\d{9}$");
 
     /**
@@ -48,9 +49,8 @@ public class UserController {
      * Date:  2022/9/28 22:08
      */
     @GetMapping("/hello")
-    @PreAuthorize("hasAuthority('system:user:add')")
     public String hello(){
-        return "hello";
+        return "hello" + environment.getProperty("local.server.port");
     }
 
     /**

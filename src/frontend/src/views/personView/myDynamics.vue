@@ -54,6 +54,7 @@
 import { mapGetters } from 'vuex'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
+import replyItem from '../../components/remark/replyItem.vue';
 import {getDynamics, getallDynamics,setDynamics, deleteDynamics} from '../../service/userServers'
 export default {
   data() {
@@ -65,13 +66,10 @@ export default {
       }
     }
   },
-  components: {personAside,personHeader},
+  components: { replyItem ,personAside,personHeader},
   name: "teacherReply",
   mounted() {
     this.GetDynamics()
-    //避免页面刷新导致vuex中的数据丢失
-    this.$store.dispatch('userInfo/getUserInfo')
-
   },
   methods: {
     backHome() {

@@ -53,14 +53,13 @@ public class UserDetail {
     @NotBlank(message = "验证码不能为空",groups = {Phone.class})
     @Length(min = 4,max = 4,message = "验证码的长度只能为4")
     private String smsCode;
-    @Range(min = 0,max = 1,message = "isHide必须为0-1")
-    private Integer isHide;
     private String message;
     private List<Role> roles;
     private Role roleOne;
-    public UserDetail(String nickname,String image){
+    public UserDetail(String nickname,String image,Integer userId){
         this.nickname = nickname;
         this.image = image;
+        this.userId = userId;
     }
 
     public UserDetail(User user){
@@ -71,7 +70,6 @@ public class UserDetail {
         this.email = user.getEmail();
         this.image = user.getImage();
         this.sex = user.getSex();
-        this.isHide = user.getIsHide();
         this.message = user.getMessage();
     }
 
@@ -85,7 +83,6 @@ public class UserDetail {
                 ", email='" + email + '\'' +
                 ", image='" + image + '\'' +
                 ", sex='" + sex + '\'' +
-                ", isHide=" + isHide +
                 ", message='" + message + '\'' +
                 '}';
     }

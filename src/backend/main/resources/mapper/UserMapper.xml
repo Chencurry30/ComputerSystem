@@ -64,9 +64,6 @@
             <if test="image != null and image != ''">
                 image = #{image},
             </if>
-            <if test="isHide != null and isHide != ''">
-                is_hide = #{isHide},
-            </if>
             <if test="message != null and message != ''">
                 message = #{message}
             </if>

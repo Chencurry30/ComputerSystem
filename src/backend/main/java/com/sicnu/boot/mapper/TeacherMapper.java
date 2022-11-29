@@ -41,6 +41,6 @@ public interface TeacherMapper {
       * 删除老师信息
       * @param teacherId:老师Id
       */
-     void deleteRoleTeacherByTeacherId(Integer teacherId);
+     void deleteTeacherByTeacherId(Integer teacherId);
 
 }

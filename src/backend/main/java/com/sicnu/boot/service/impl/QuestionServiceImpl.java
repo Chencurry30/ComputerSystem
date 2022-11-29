@@ -8,10 +8,12 @@ import com.sicnu.boot.pojo.QuestionChoice;
 import com.sicnu.boot.service.QuestionService;
 import com.sicnu.boot.utils.QuestionUtils;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.QuestionClassify;
 import com.sicnu.boot.vo.QuestionSelective;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.*;
 
@@ -76,13 +78,19 @@ public class QuestionServiceImpl implements QuestionService {
         questionSelective.setDifficultMinValue(questionUtils.getDifficultMinById(questionSelective.getDifficultId()));
         questionSelective.setSourceName(questionUtils.getSourceById(questionSelective.getSourceId()));
         questionSelective.setYearName(questionUtils.getYearById(questionSelective.getYearId()));
-        PageHelper.startPage(questionSelective.getPageNum(),8);
+        PageHelper.startPage(questionSelective.getPageNum(),6);
         List<Question> list = questionMapper.getQuestionList(questionSelective);
         for (Question question : list) {
             if (question.getQuestionType() <= 2){
                 List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
                 question.setQuestionChoiceList(choiceList);
             }
+            //查看该题库是否被用户收藏
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            Integer userId = loginUser.getUser().getUserId();
+            int checkCollectVideo = questionMapper.checkCollectQuestion(userId, question.getQuestionId());
+            question.setIsCollected(checkCollectVideo > 0);
         }
         PageInfo<Question> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
@@ -91,12 +99,21 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public ServerResponse<Question> getQuestionById(Integer questionId) {
         Question question = questionMapper.getQuestionById(questionId);
+        if (Objects.isNull(question)){
+            return ServerResponse.createByErrorMessage("不存在该题目");
+        }
         //判断是否为选择题
         Integer choiceValue = 2;
         if (question.getQuestionType() <= choiceValue){
             List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
             question.setQuestionChoiceList(choiceList);
         }
+        //查看该题库是否被用户收藏
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userId = loginUser.getUser().getUserId();
+        int checkCollectVideo = questionMapper.checkCollectQuestion(userId, questionId);
+        question.setIsCollected(checkCollectVideo > 0);
         return ServerResponse.createBySuccess("获取成功",question);
     }
 
@@ -121,9 +138,9 @@ public class QuestionServiceImpl implements QuestionService {
             }
             list.addAll(generatingPaper);
         }
-        if (questionSelective.getJudgeNum() > 0){
+        if (questionSelective.getCompletionNum() > 0){
             List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
-                    3, questionSelective.getJudgeNum());
+                    3, questionSelective.getCompletionNum());
             list.addAll(generatingPaper);
         }
         if (questionSelective.getAnswerNum() > 0){
@@ -132,5 +149,34 @@ public class QuestionServiceImpl implements QuestionService {
             list.addAll(generatingPaper);
         }
         return ServerResponse.createBySuccess("获取成功",list);
+    }
+
+    @Override
+    public ServerResponse<String> collectQuestion(Integer questionId) {
+        //获取SecurityContextHolder中的用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer userId = loginUser.getUser().getUserId();
+        int checkCollectQuestion = questionMapper.checkCollectQuestion(userId, questionId);
+        if (checkCollectQuestion > 0){
+            questionMapper.deleteCollectQuestion(userId,questionId);
+            return ServerResponse.createBySuccessMessage("取消收藏成功");
+        }
+        questionMapper.collectQuestion(userId,questionId);
+        return ServerResponse.createBySuccessMessage("收藏成功");
+    }
+
+    @Override
+    public ServerResponse<PageInfo<Question>> getCollectQuestionList(Integer pageNum,Integer userId) {
+        PageHelper.startPage(pageNum,8);
+        List<Question> questionList = questionMapper.getCollectQuestionList(userId);
+        for (Question question : questionList) {
+            if (question.getQuestionType() <= 2){
+                List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
+                question.setQuestionChoiceList(choiceList);
+            }
+        }
+        PageInfo<Question> pageInfo = new PageInfo<>(questionList);
+        return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 }

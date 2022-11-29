@@ -62,7 +62,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public ServerResponse<String> deleteTeacherByTeacherId(Integer teacherId) {
         //删除权限对应的角色
-        teacherMapper.deleteRoleTeacherByTeacherId(teacherId);
+        teacherMapper.deleteTeacherByTeacherId(teacherId);
         //删除权限
         return ServerResponse.createBySuccessMessage("删除成功");
     }
