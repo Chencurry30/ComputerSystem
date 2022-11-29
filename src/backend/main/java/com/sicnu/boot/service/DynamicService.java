@@ -2,6 +2,7 @@ package com.sicnu.boot.service;
 
 import com.sicnu.boot.pojo.Dynamic;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.DynamicVo;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public interface DynamicService {
      * @author 蔡名展
      * Date 2022/11/26 16:00
      */
-    ServerResponse<List<Dynamic>> getDynamicByUserId(Integer userId);
+    ServerResponse<List<DynamicVo>> getDynamicByUserId(Integer userId);
 
     /**
      * description:
@@ -50,5 +51,5 @@ public interface DynamicService {
      * @author 蔡名展
      * Date 2022/11/28 14:19
      */
-    ServerResponse<List<Dynamic>> getAllDynamic();
+    ServerResponse<List<DynamicVo>> getAllDynamic();
 }

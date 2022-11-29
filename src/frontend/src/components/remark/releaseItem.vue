@@ -4,14 +4,15 @@
     <div class="ItemInfo">
       <div class="userImg">
         <div class="active-img">
-          <img src="" alt="" />
+          <img v-if="judgeUserImg" src="../../assets/Img/defaultUserImg.png" alt="" />
+          <img v-else :src="[publicUrl + userImg]" alt="" />
         </div>
       </div>
       <div class="userInput">
         <textarea class="InputBox" :placeholder="showplacehodler" v-model="content"></textarea>
       </div>
       <div class="userBtn">
-        <div class="Btn-text" @click="sendIndo">发送</div>
+        <div class="Btn-text" @click="sendComments">发送</div>
       </div>
     </div>
   </div>
@@ -19,36 +20,50 @@
 <script>
 import { mapState } from 'vuex'
 import { sendVideoRemark } from '../../service/videoService'
+import { createPublicUrl } from '../../utils/index'
+import _ from 'lodash'
 export default {
   name: "releaseItem",
+  //父组件传入的参数(1.回复或者是评论 2.父组件的信息) 
   props: ['typeSelect', 'fatherInfo'],
   data() {
     return {
-      content: ''
+      content: '',
+      userImg: sessionStorage.getItem('userImg')
     }
   },
-  // 该视频对我的相关学习起到了很好的作用
   methods: {
-    sendIndo() {
+    //发送相关评论(60秒发送一次) 
+    sendComments: _.throttle(function () {
       let data = {}
       data.content = this.content
       data.resourceId = parseInt(this.$route.query.videoId)
-      console.log(data);
       if (this.fatherInfo === undefined) {
         data.level = 1    //表示的是用户发表的评论
         data.parentId = 0
         data.toUid = 0
       } else {
         //表示的是用户回复其他人的评论
-        data.toUid = this.backOtherInfo.toUser 
+        data.toUid = this.backOtherInfo.toUser
         data.parentId = this.fatherInfo.commentId
         data.level = 2
       }
-      sendVideoRemark(data).then((res)=>{
-        console.log(res);
+      //发送评论(得在父组件内在请求获取一次所有评论的接口,顺便评论刷新) 
+      sendVideoRemark(data).then((res) => {
+        if (res.data.code === 200) {
+          this.$message.success('评论成功')
+          this.$parent.getPageRemark()
+          this.content = ''
+        }
       })
-    }
+
+    }, 60000)
+
+
+
+
   },
+  // user/userImage/32757fc1-9511-4cde-85bf-7ba8cb6ad916.jpg
   computed: {
     ...mapState('remark', {
       backOtherInfo: 'backOtherInfo',
@@ -59,7 +74,16 @@ export default {
       } else {
         return '发送一条相关的评论'
       }
+    },
+    //判断用户是否有头像(有则展示用户头像,无则不展示)     
+    judgeUserImg() {
+      return sessionStorage.getItem('userImg') === ""
+    },
+    //获取公共的url 
+    publicUrl() {
+      return createPublicUrl()
     }
+
   },
 
 };
@@ -70,20 +94,23 @@ export default {
 
   .ItemInfo {
     display: flex;
-    height: 50px;
+    height: 48px;
 
     .userImg {
       display: flex;
       justify-content: center;
       align-content: center;
       width: 80px;
-      height: 50px;
 
       .active-img {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background: red;
+        width: 50px;
+        height: 50px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
       }
     }
 

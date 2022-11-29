@@ -1,6 +1,5 @@
 <template>
   <div class="allBox">
-    <breadCrumb></breadCrumb>
     <div class="header">
       <div class="headerBox clearfix w">
         <div class="school-type">
@@ -26,6 +25,7 @@
       </div>
 
     </div>
+    <breadCrumb></breadCrumb>
     <div class="connect w">
       <div class="column-title">
         <h3>院校概况</h3>

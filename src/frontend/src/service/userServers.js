@@ -21,6 +21,18 @@ export const userVideoCollect = (userId) =>{
   return service.get(url)
 }
 
+
+//获取其他用户信息
+export const getuserMsg = (userId) =>{
+  const url = `/users/${userId}`
+  return service.get(url)
+}
+
+
+
+
+
+
 //发送我的动态
 export const setDynamics = (data) =>{
   const url = `/dynamics`

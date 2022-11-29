@@ -9,9 +9,8 @@
               <li class="item centerLocation" v-for="(childItem) in fatherItem.list" :key="childItem.id" :class="{
                 activeOn1: selectId.first === childItem.typeId, activeOn2:
                   selectId.second === childItem.durationId, activeOn3: selectId.thild === childItem.sortId
-              }"
-                :data-typeId="childItem.typeId" :data-durationId="childItem.durationId" :data-sortId="childItem.sortId"
-                @click="selectVideo">{{ childItem.name }}</li>
+              }" :data-typeId="childItem.typeId" :data-durationId="childItem.durationId"
+                :data-sortId="childItem.sortId" @click="selectVideo">{{ childItem.name }}</li>
             </ul>
           </div>
         </div>
@@ -20,11 +19,11 @@
     <div class="MainContent">
       <div class="video-list">
         <div class="list-item" v-for="(videoItem) in getDataList" :key="videoItem.videoId"
-          @click="getoVideoPage(videoItem.videoId)">
+          @click="getoVideoPage(videoItem.videoId)" @mouseenter="moveVideo(videoItem.videoId)">
           <div class="video-card">
             <div class="cardImg">
               <img :src='[publicUrl + videoItem.image]' alt="">
-              <div class="cardMask">
+              <div class="cardMask" :class="{ showBox: countIndex === videoItem.videoId }">
                 <div class="MaskInfo">
                   <div class="Mask-left">
                     <svg t="1667739121708" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -50,6 +49,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
             <div class="cardInfo">{{ videoItem.name }}</div>
             <div class="cardBottom">
@@ -91,6 +91,8 @@ export default {
         thild: 0,
         pageNum: 1
       },
+      //用来判断鼠标移入的时候显示的是哪一个遮罩层 
+      countIndex: 0,
     }
   },
   components: {
@@ -144,6 +146,10 @@ export default {
       location.query = { videoId: videoId }
       this.$router.push(location)
     },
+    //鼠标移入时修改下标切换遮罩层
+    moveVideo(videoId) {
+      this.countIndex = videoId
+    }
   },
   computed: {
     ...mapGetters('videoData', {
@@ -222,7 +228,7 @@ export default {
     .list-item {
       margin: 0 10px;
       width: 300px;
-
+      cursor: pointer;
       .cardImg {
         position: relative;
         width: 100%;
@@ -235,12 +241,12 @@ export default {
         }
 
         .cardMask {
+          display: none;
           position: absolute;
           width: 100%;
           height: 100%;
           top: 0px;
           left: 0px;
-          // background: blue;
           border-radius: 10px;
 
           .MaskInfo {
@@ -270,6 +276,10 @@ export default {
               font-size: 14px;
             }
           }
+        }
+
+        .showBox {
+          display: block;
         }
       }
 
