@@ -18,7 +18,7 @@ export default {
   name: "upfile",
   props: ['userImage'],
   inject: ['reload'],
-  //从App中传递的一个方法用来刷新页面
+  //从App中传递的一个方法用来刷新页面 
   data() {
     return {
       objectData: {
@@ -53,9 +53,9 @@ export default {
             this.objectData.dir = res.data.data.dir;//前缀
             this.objectData.host = res.data.data.host;// "https://" + bucketname + '.' + endpoint;  (前端请求oss服务路径)
             this.objectData.key = res.data.data.key;//dir + fileName (上传Object的名称。)
-            //将获取的oss的存储路径存放到个人信息中，准备提交到数据库
+            //将获取的oss的存储路径存放到个人信息中，准备提交到数据库 
             this.getUserInfo.image = this.objectData.key
-            //将修改后的图片路径放入session,实现数据的持久化
+            //将修改后的图片路径放入session,实现数据的持久化 
             sessionStorage.setItem('userImg',this.getUserInfo.image)
             this.$store.dispatch('userInfo/changeUserInfo', this.getUserInfo)
             this.reload()

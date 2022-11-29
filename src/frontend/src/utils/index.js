@@ -14,6 +14,7 @@ export const createUUID = () =>{
   return uuidv4();
 }
 
+//提供公共的存储路径 
 export const createPublicUrl = () =>{
   return 'https://system-1234.oss-cn-chengdu.aliyuncs.com/'
 }

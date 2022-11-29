@@ -330,11 +330,6 @@ public class UserServiceImpl implements UserService {
         Map<String,String> map = new HashMap<>(10);
         map.put("nickname",user.getNickname());
         map.put("image",user.getImage());
-        //判断该用户信息是否可见
-        if (user.getIsHide() != 0){
-            map.put("isHide","用户信息隐藏，不可见");
-            return ServerResponse.createBySuccess("获取成功",map);
-        }
         map.put("message",user.getMessage());
         map.put("sex",user.getSex());
         map.put("age",user.getAge().toString());

@@ -30,7 +30,8 @@
     <div class="container-xl" v-if="hiddenTopComponent">
       <div class="select-box">
         <ul class="select-list">
-          <li class="list-item" v-for="(item, index) in liList" :key="index">
+          <li class="list-item" v-for="(item, index) in liList" v-on:click="addClass(index)"
+            v-bind:class="{ action: index == current }" :key="index">
             <div class="item-info">
               <router-link :to="item.link">{{ item.name }}</router-link>
             </div>
@@ -52,7 +53,7 @@
 import { createPublicUrl } from '../../utils/index'
 export default {
   name: "webHeader",
-  //App中传入的一个相关的方法,用于帮助进行页面刷新
+  //App中传入的一个相关的方法,用于帮助进行页面刷新 
   inject: ['reload'],
 
   data() {
@@ -63,22 +64,27 @@ export default {
         { name: '院校选择', link: 'schoolSelect' },
         { name: '题库学习', link: 'questionSelect' },
         { name: '考研政策', link: '' },
-        { name: '更多信息', link: '' },
+        { name: '更多信息', link: 'questionQS' },
       ],
+      current: 0,
       showBox: false
     }
   },
   methods: {
-    //前往登录页面
+    //前往登录页面 
     gotologin() {
       let location = { name: "loginView" };
       sessionStorage.removeItem('token')
       this.$router.push(location);
     },
-    //退出登录
+    addClass(index) {
+      this.current = index
+    },
+    //退出登录 
     backLogin() {
       sessionStorage.removeItem('token')
       sessionStorage.removeItem('userImg')
+      sessionStorage.removeItem('userId') 
       let location = {
         name: 'loginView'
       }
@@ -103,10 +109,10 @@ export default {
     publicUrl() {
       const userImg = sessionStorage.getItem('userImg')
       return createPublicUrl() + userImg
-
+      
     },
-    //判断用户是否有头像
-    hidddenDefaultImg() {
+    //判断用户是否有头像 
+    hidddenDefaultImg(){
       return sessionStorage.getItem('userImg')
     }
   },

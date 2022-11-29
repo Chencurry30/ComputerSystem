@@ -14,7 +14,7 @@
                 <span class="headerP3">INFORMATION</span>
               </div>
               <div class="containMain">
-                <ul class="InfoBox">
+                <ul class="userInfoBox">
                   <li class="Info-item">
                     <div class="item-title">
                       <span class="laber">用户名：</span>
@@ -72,23 +72,14 @@
                 <span class="headerP2">VIDEOS</span>
               </div>
               <div class="containMain">
-                <ul class="InfoBox">
-                  <li class="video-item">
-                    <div class="videoImg"></div>
-                    <div class="videoName">计算机组成原理</div>
+                <ul class="videoBox">
+                  <li class="video-item" v-for="(videoItem) in collectVideo.list" :key="videoItem.videoId">
+                    <div class="videoImg">
+                      <img :src="[publicUrl + videoItem.image]" alt="">
+                    </div>
+                    <div class="videoName">{{ videoItem.name }}</div>
                   </li>
-                  <li class="video-item">
-                    <div class="videoImg"></div>
-                    <div class="videoName">计算机组成原理</div>
-                  </li>
-                  <li class="video-item">
-                    <div class="videoImg"></div>
-                    <div class="videoName">计算机组成原理</div>
-                  </li>
-                  <li class="video-item">
-                    <div class="videoImg"></div>
-                    <div class="videoName">计算机组成原理</div>
-                  </li>
+
                 </ul>
               </div>
             </div>
@@ -102,16 +93,39 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { createPublicUrl } from '../../utils/index'
 import InfoPopup from '../../components/popUp/InfoPopup'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
+import { userVideoCollect } from '../../service/userServers'
 export default {
   name: "personPage",
+  data() {
+    return {
+      collectVideo: []
+    }
+  },
   components: { InfoPopup, personAside, personHeader },
   mounted() {
+    //获取用户的相关信息 
     this.$store.dispatch('userInfo/getUserInfo')
+    //获取本用户收藏的视屏
+    this.getUserCollect()
+
   },
   methods: {
+    getUserCollect() {
+      let userId = sessionStorage.getItem('userId')
+      console.log(userId);
+      userVideoCollect(userId).then((res) => {
+        if (res.data.code === 200) {
+          console.log(res);
+          this.collectVideo = res.data.data
+        }
+      })
+    },
+
+
     changeEditor() {
       this.$refs.InfoPopup.showPopup(this.getUserInfo);
     },
@@ -120,6 +134,10 @@ export default {
     ...mapGetters('userInfo', {
       getUserInfo: 'getUserInfo'
     }),
+    //返回图片存储的公共路径 
+    publicUrl() {
+      return createPublicUrl()
+    }
   }
 };
 </script>
@@ -165,12 +183,7 @@ export default {
             margin-left: 10px;
           }
 
-          .headerP4 {
-            float: right;
-            margin-right: 40px;
-            font-weight: 700;
-            cursor: pointer;
-          }
+
         }
 
         .containMain {
@@ -178,31 +191,10 @@ export default {
           padding: 0px 20px;
           display: flex;
 
-          .userImg {
-            margin-left: 40px;
-            width: 100px;
-            height: 100px;
-            border-radius: 50px;
-            border: 1px solid #eee;
-          }
 
-          .userInfo {
-            margin-top: 22px;
-            margin-left: 26px;
 
-            .nickname,
-            .personintroduce {
-              font-weight: 700;
-              font-size: 16px;
-              color: #4e5358;
-            }
 
-            .personintroduce {
-              margin-top: 4px;
-            }
-          }
-
-          .InfoBox {
+          .userInfoBox {
             margin-bottom: 0;
             padding: 20px 10px 10px 10px;
             width: 100%;
@@ -217,26 +209,13 @@ export default {
                 width: 80px;
                 font-weight: 700;
               }
-
-              .inputInfo {
-                padding: 0px 10px;
-                width: 260px;
-                border-radius: 10px;
-                font-size: 16px;
-                font-family: 楷体;
-                border: 1px solid #eee;
-              }
-
-              .group {
-                padding: 5px 10px;
-                width: 260px;
-                border-radius: 10px;
-                font-size: 16px;
-                font-family: 楷体;
-                border: 1px solid #eee;
-              }
             }
+          }
 
+
+
+
+          .videoBox {
             .video-item {
               float: left;
               margin: 0 2px;
@@ -246,16 +225,29 @@ export default {
                 margin-top: 10px;
                 width: 100%;
                 height: 120px;
-                background: blue;
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                }
               }
 
               .videoName {
                 font-size: 14px;
                 padding: 5px 0px;
                 text-align: center;
+                padding: 2px 20px;
+                width: 180px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
               }
             }
           }
+
+
+
 
           .btn {
             float: right;

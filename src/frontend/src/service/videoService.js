@@ -35,3 +35,10 @@ export const sendVideoRemark = (remarkData) =>{
   const url = `comments`
   return service.post(url,remarkData)
 } 
+
+//收藏视屏 
+export const collectVideo = (videoId) =>{
+  const url = `videos/collect/${videoId}`
+  return service.post(url)
+}
+
