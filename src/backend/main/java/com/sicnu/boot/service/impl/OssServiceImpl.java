@@ -6,17 +6,24 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.exceptions.ServerException;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.sts.model.v20150401.AssumeRoleRequest;
+import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.sicnu.boot.config.OssProperties;
 import com.sicnu.boot.service.OssService;
 import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.StsTokenVo;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 /**
  * description:
  *
@@ -77,6 +84,38 @@ public class OssServiceImpl implements OssService {
         String host = "https://" + bucket + "." + endpoint;
         String dir = "dynamic/image/";
         return getMapServerResponse(fileName, accessId, accessKey, endpoint, host, dir);
+    }
+
+    @Override
+    public ServerResponse<StsTokenVo> getStsToken() {
+        //构建一个阿里云客户端，用于发起请求。
+        //设置调用者（RAM用户或RAM角色）的AccessKey ID和AccessKey Secret。
+        DefaultProfile profile = DefaultProfile.getProfile("cn-chengdu", ossProperties.getAccessId(), ossProperties.getAccessKey());
+        IAcsClient client = new DefaultAcsClient(profile);
+
+        //构造请求，设置参数。
+        AssumeRoleRequest request = new AssumeRoleRequest();
+        request.setRoleArn("acs:ram::1482268519483610:role/uploader");
+        request.setRoleSessionName("uploader");
+        //发起请求，并得到响应。
+        try {
+            AssumeRoleResponse response = client.getAcsResponse(request);
+            StsTokenVo stsTokenVo = new StsTokenVo();
+            stsTokenVo.setStsToken(response.getCredentials().getSecurityToken());
+            stsTokenVo.setAccessKeyId(response.getCredentials().getAccessKeyId());
+            stsTokenVo.setAccessKeySecret(response.getCredentials().getAccessKeySecret());
+            stsTokenVo.setExpiration(response.getCredentials().getExpiration());
+            stsTokenVo.setRegion("oss-cn-chengdu");
+            stsTokenVo.setBucket(ossProperties.getBucket());
+            return ServerResponse.createBySuccess("获取成功",stsTokenVo);
+        } catch (ServerException e) {
+            e.printStackTrace();
+        } catch (ClientException e) {
+            System.out.println("ErrCode:" + e.getErrCode());
+            System.out.println("ErrMsg:" + e.getErrMsg());
+            System.out.println("RequestId:" + e.getRequestId());
+        }
+        return ServerResponse.createBySuccessMessage("获取失败");
     }
 
     /**

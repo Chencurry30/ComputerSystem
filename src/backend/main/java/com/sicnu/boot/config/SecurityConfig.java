@@ -65,7 +65,7 @@ public class SecurityConfig {
                 // 配置路径是否需要认证
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/users/login", "/users/register", "/users/sms","/users/forget/**","/users/public","/admin/users/login").permitAll()
+                .antMatchers("/users/login", "/users/register", "/users/sms","/users/forget/**","/users/public","/admin/users/login","/oss/sts").permitAll()
                 // 配置权限
                 .antMatchers("/hello2").hasAuthority("/hello2")
                 // 除上面外的所有请求全部需要鉴权认证

@@ -1,6 +1,8 @@
 package com.sicnu.boot.service;
 
+import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.StsTokenVo;
 
 import java.util.Map;
 
@@ -51,4 +53,13 @@ public interface OssService {
      * Date:  2022/11/29 15:06
      */
     ServerResponse<Map<String, String>> getDynamicPolicy(String fileName);
+
+    /**
+     * description: 获取sts认证
+     *
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/29 16:36
+     */
+    ServerResponse<StsTokenVo> getStsToken();
 }

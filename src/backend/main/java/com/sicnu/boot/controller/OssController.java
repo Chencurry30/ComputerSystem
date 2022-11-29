@@ -1,7 +1,9 @@
 package com.sicnu.boot.controller;
 
+import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.sicnu.boot.service.OssService;
 import com.sicnu.boot.utils.ServerResponse;
+import com.sicnu.boot.vo.StsTokenVo;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -87,5 +89,10 @@ public class OssController {
             @Pattern(regexp = "^(\\s|\\S)+(jpg|png|JPG|PNG)+$",
                     message = "图片格式必须为jpg或者png类型") @PathVariable String fileName){
         return ossService.getDynamicPolicy(fileName);
+    }
+
+    @GetMapping("/sts")
+    public ServerResponse<StsTokenVo> getStsToken(){
+        return ossService.getStsToken();
     }
 }
