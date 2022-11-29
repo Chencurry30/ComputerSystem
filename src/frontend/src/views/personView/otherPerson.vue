@@ -6,12 +6,14 @@
             <div class="wrapper-user">
                 <div class="user-info">
                     <div class="user-img">
-                        <!-- <img src="" alt=""> -->
+                         <img :src="[publicUrl + userMsg.image]" alt="">
                     </div>
                     <div class="user-basic">
-                        <div class="nickName">高山</div>
+                        <div class="nickName">{{userMsg.nickname}}</div>
+                        <div>性别：{{userMsg.sex}}</div>
+                        <div>年龄：{{userMsg.age}}</div>
                         <div class="personalProfile">
-                            这个人很无聊，什么都没有留下
+                          个性签名：{{userMsg.message}}
                         </div>
                     </div>
                 </div>
@@ -27,39 +29,16 @@
                 <div class="person-title">收藏的视屏</div>
             </div>
             <div class="personMain">
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
+                <div class="Main-item"
+                v-for="item in Collections"
+                :key="item.videoId">
+                    <div class="item-img">
+                      <img :src="[publicUrl + item.image]">
                     </div>
-
-
-
-                </div>
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
+                    <div class="item-title">{{item.name}}</div>
                     <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
-                    </div>
-                </div>
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
-                    </div>
-                </div>
-                <div class="Main-item">
-                    <div class="item-img"></div>
-                    <div class="item-title">123213213</div>
-                    <div class="item-others">
-                        <div class="left">坚持到底</div>
-                        <div class="right">2022-10-9</div>
+                        <div class="left">{{item.nickname}}</div>
+                        <div class="right">{{item.time}}</div>
                     </div>
                 </div>
             </div>
@@ -88,26 +67,47 @@
 </template>
 
 <script>
-import {getDynamics} from '../../service/userServers'
+import {getDynamics,getuserMsg,getCollect} from '../../service/userServers'
+import {createPublicUrl} from "@/utils";
+
 export default {
     name:'otherPerson',
   data(){
       return{
         userId:'',
-        content:{}
+        content:{},//动态信息
+        userMsg:{},//其他用户信息
+        Collections:{}//收藏信息
       }
   },
   mounted() {
     this.userId = this.$route.query.userId
-    console.log(this.userId)
     getDynamics(this.userId).then((res=>{
-      console.log(res)
       this.content = res.data.data
       console.log(this.content)
     }))
+    this.getothersMsg(),
+    this.getotherCollect()
   },
-  methods(){
-
+  computed:{
+    publicUrl(){
+      return createPublicUrl()
+    }
+  },
+  methods:{
+    getothersMsg() {
+      getuserMsg(this.userId).then((res=>{
+        this.userMsg = res.data.data
+        console.log(this.userMsg)
+      }))
+    },
+    getotherCollect(){
+      getCollect(this.userId).then((res)=>{
+        console.log(res)
+        this.Collections = res.data.data.list
+        console.log(this.Collections)
+      })
+    }
   }
 }
 </script>
@@ -144,8 +144,11 @@ export default {
                     .user-img{
                         width: 72px;
                         height: 72px;
-                        border-radius: 50%;
-                        background: red;
+                        img{
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 50%;
+                        }
                     }
                     .user-basic{
                         margin-left: 20px;
@@ -206,9 +209,13 @@ export default {
                     width: 226px;
                     .item-img{
                       width: 216px;
-                      height: 110px;
+                      height: 130px;
                       border-radius: 4px;
                       background: red;
+                      img{
+                        width: 100%;
+                        height: 100%;
+                      }
                     }
                     .item-title{
                       line-height: 20px;

@@ -63,7 +63,7 @@ import rules from '../../utils/rules'
 
 export default {
   name: "loginView",
-  //App中传入的一个相关的方法,用于帮助进行页面刷新 
+  //App中传入的一个相关的方法,用于帮助进行页面刷新
   inject:['reload'],
   data() {
     return {
@@ -136,14 +136,16 @@ export default {
             if (res.data.code === 200) {
               const token = res.data.data.token
               const userImg = res.data.data.user.image
+              Cookies.set('name', res.data.data.user.nickname);
               sessionStorage.setItem('userImg',userImg)
               sessionStorage.setItem('token', token)  //保存token到本地浏览器
+              const name = Cookies.get('name')
               this.$message({
                 message: "恭喜你，登录成功！欢迎用户: " + name,
                 type: "success",
               })
               this.$router.push({ name: 'Home' })
-              //刷新页面 
+              //刷新页面
               this.reload()
             } else if (res.data.code === 400) {
               this.$message.error("用户名或密码错误，请重新输入！")

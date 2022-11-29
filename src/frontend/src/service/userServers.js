@@ -38,3 +38,15 @@ export const getallDynamics = () =>{
   const url = `/dynamics`
   return service.get(url)
 }
+
+//获取其他用户信息
+export const getuserMsg = (userId) =>{
+  const url = `/users/${userId}`
+  return service.get(url)
+}
+
+//获取收藏信息
+export const getCollect = (userId) =>{
+  const url = `/videos/collect/${userId}`
+  return service.get(url)
+}
