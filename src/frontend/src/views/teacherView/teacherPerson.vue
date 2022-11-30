@@ -31,20 +31,20 @@
             <div class="left-Item">
               <div class="Item-title">辅导资历</div>
               <div class="Item-Info">
-                从事高等数学教育多年，在多篇核心期刊发表过相关论文,从事辅导长达5年。
+                从事高等数学教育多年，{{teacherMsg.information}}。
               </div>
             </div>
             <div class="left-Item">
               <div class="Item-title">辅导记录</div>
               <div class="Item-Info">
-                帮助无数考研的人在数学方面解决他们的疑难为题,至今辅导人数超50W人。
+                帮助无数考研的人在数学方面解决他们的疑难为题,至今辅导人数超{{teacherMsg.qualification}}人。
               </div>
             </div>
           </div>
 
           <div class="left-Resources">
             <div class="ResourcesTitle">
-              <div>推荐视屏</div>
+              <div>推荐视频</div>
             </div>
             <div class="ResourcesBox">
               <ul class="BoxItem">
@@ -109,7 +109,7 @@
 <script>
 import QuestionPopup from "../../components/popUp/questionPopup.vue";
 // import replyItem from "../../components/remark/replyItem.vue";
-import { getTeacher } from "../../service/teacherService";
+import { getTeacherInfo } from "../../service/teacherService";
 export default {
   components: {  QuestionPopup },
   name: "teacherPerson",
@@ -146,7 +146,7 @@ export default {
   },
   mounted() {
     this.teacherId = this.$route.query.teacherId;
-    getTeacher(this.teacherId).then((res) => {
+    getTeacherInfo(this.teacherId).then((res) => {
       this.teacherMsg = res.data.data;
       console.log(this.teacherMsg);
     });

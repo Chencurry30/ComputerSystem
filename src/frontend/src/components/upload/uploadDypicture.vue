@@ -10,7 +10,7 @@
         :file-list="fileList"
         :data="objectData"
         :show-file-list="true">
-      <el-button size="small" type="primary">点击上传</el-button>
+      <el-button size="small" type="primary">上传照片</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
       <img :src='imageUrl' v-if="objectData.key">
     </el-upload>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {uploadUserPicture} from "@/service/userServers";
+import {uploaddynamicPicture} from "@/service/userServers";
 import {createPublicUrl} from "@/utils";
 
 export default {
@@ -33,14 +33,14 @@ export default {
         dir: ''
       },
       fileList: [],
-      imageUrl: `${createPublicUrl()}${this.$parent.contents.picture}`
+      imageUrl: ''
     };
   },
   methods: {
     getPolicy(file) {
       console.log(file)
       return new Promise(((resolve, reject) => {
-        uploadUserPicture(file.name)
+        uploaddynamicPicture(file.name)
             .then(res => {
               console.log(res)
               this.objectData.OSSAccessKeyId = res.data.data.accessid; // Bucket拥有者的AccessKey ID。
@@ -67,9 +67,7 @@ export default {
       // console.log(file);
     },
     handleAvatarSuccess(response, file, fileList){
-      console.log(response)
-      console.log(fileList)
-
+      this.imageUrl = URL.createObjectURL(file.raw);
     }
   }
 }
@@ -81,5 +79,8 @@ export default {
     width: 200px;
     height: 200px;
   }
+}
+.upload-demo{
+  margin: 10px 0 0 10px;
 }
 </style>

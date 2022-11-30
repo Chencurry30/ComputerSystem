@@ -1,10 +1,10 @@
-//个人用户的相关接口 
+//个人用户的相关接口
 import service from './services'
 export const getUserInfo = (token) =>{
   const url = '/users'
   return service.get(url,token);
 }
-//改变用户的个人信息 
+//改变用户的个人信息
 export const changeUserInfo = (userinfo) =>{
   const url = '/users'
   return service.put(url,userinfo);
@@ -14,8 +14,13 @@ export const uploadUserPicture = (picture) =>{
   const url =`/oss/policy/user/${picture}`
   return service.get(url)
 }
+//上传动态图片
+export const uploaddynamicPicture = (picture) =>{
+  const url =`/oss/policy/dynamic/${picture}`
+  return service.get(url)
+}
 
-//返回用户的收藏视屏的列表 
+//返回用户的收藏视屏的列表
 export const userVideoCollect = (pageNum,userId) =>{
   const url = `videos/collect/${pageNum}-${userId}`
   return service.get(url)

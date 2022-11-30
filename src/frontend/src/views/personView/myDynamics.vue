@@ -13,6 +13,8 @@
                   <div class="form-group">
                     <label class="contents">发表我的动态</label>
                     <textarea class="form-control" v-model="contents.content" placeholder="说说你的心情......"></textarea>
+                    <el-button type="text" size="large" @click="showDialog = !showDialog">😃</el-button>
+                    <VEmojiPicker v-show="showDialog" @select="selectEmoji"></VEmojiPicker>
                     <uploadDypicture></uploadDypicture>
                   </div>
                   <div class="form-group">
@@ -44,10 +46,19 @@
                   </div>
                 </div>
               </div>
+              <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="pageNo"
+                  :page-size="pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="Dynamics.length"
+              >
+              </el-pagination>
             </div>
 
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -58,6 +69,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import {VEmojiPicker} from 'v-emoji-picker';
 import {createPublicUrl} from '../../utils/index'
 import uploadDypicture from '../../components/upload/uploadDypicture'
 import personAside from '../../components/personCenter/personAside'
@@ -66,7 +78,10 @@ import {getDynamics, getallDynamics,setDynamics, deleteDynamics} from '@/service
 export default {
   data() {
     return {
-      Dynamics:{},
+      showDialog: false,
+      Dynamics:[],
+      pageNo:1,
+      pageSize:10,
       contents:{
         content:'',
         picture:''
@@ -77,7 +92,7 @@ export default {
       }],
     }
   },
-  components: { personAside,personHeader,uploadDypicture},
+  components: { personAside,personHeader,uploadDypicture,VEmojiPicker},
   name: "teacherReply",
   mounted() {
     //获取用户的相关信息,避免刷新到时头像丢失
@@ -85,6 +100,10 @@ export default {
     this.GetDynamics()
   },
   methods: {
+    selectEmoji(emoji) {
+      console.log(typeof  emoji.data)
+      this.contents.content = this.contents.content + emoji.data
+    },
     backHome() {
       let location = {
         name: 'Home'
@@ -114,9 +133,21 @@ export default {
     handleChange(file, fileList) {
       this.fileList = fileList.slice(-3);
     },
-
+    //分页大小改变
+    handleSizeChange(val) {
+      this.pageSize = val;
+    },
+    //当前页数改变
+    handleCurrentChange(val) {
+      this.pageNo = val;
+    }
   },
   computed: {
+    afterChangeData(){
+      let start = (this.pageNo - 1) * this.pageSize
+      let end = this.pageNo * this.pageSize
+      return this.Dynamics.slice(start,end)
+    },
     ...mapGetters('userInfo',
         {
           getUserImg: 'getUserImg'
@@ -216,7 +247,6 @@ export default {
   margin-top: 10px;
   img{
     width: 200px;
-    height: 200px;
   }
 }
 </style>

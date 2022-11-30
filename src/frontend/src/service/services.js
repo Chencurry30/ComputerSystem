@@ -7,7 +7,7 @@ import router from '../router';
 const baseurl = '/api'
 const service = axios.create({
     baseURL: baseurl,
-    timeout: 3000,
+    timeout: 10000,
     headers: {  //请求头
       'Content-Type': 'application/json;charset=UTF-8',
     }
@@ -16,7 +16,7 @@ const service = axios.create({
 service.interceptors.request.use((config) => {
   const token = sessionStorage.getItem('token')
     if(token !== null){
-      config.headers['token'] = token;  
+      config.headers['token'] = token;
     }
     nProgress.start();
     return config
@@ -28,7 +28,7 @@ service.interceptors.request.use((config) => {
 service.interceptors.response.use((response) => {
     nProgress.done();
     if(response.data.code === 401){
-      //如果token验证失败，跳转到登录页面 
+      //如果token验证失败，跳转到登录页面
       Vue.prototype.$message.error(response.data.message)
       sessionStorage.removeItem('token')
       router.push('/loginView')
