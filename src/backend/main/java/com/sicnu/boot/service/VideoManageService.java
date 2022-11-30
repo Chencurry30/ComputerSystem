@@ -7,7 +7,7 @@ import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.ExamineVideo;
 
 /**
- * description:  
+ * description:
  *
  * @author :  胡建华
  * Data:    2022/11/30 16:13
