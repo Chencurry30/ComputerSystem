@@ -1,6 +1,8 @@
 package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.Video;
+import com.sicnu.boot.pojo.VideoExamine;
+import com.sicnu.boot.vo.ExamineVideo;
 import com.sicnu.boot.vo.VideoSelective;
 import com.sicnu.boot.vo.VideoType;
 import org.apache.ibatis.annotations.Mapper;
@@ -84,4 +86,88 @@ public interface VideoMapper {
      * Date:  2022/11/23 19:32
      */
     List<Video> getCollectVideoList(Integer userId);
+
+    /**
+     * description: 获取视频类型的名字
+     *
+     * @param typeId:
+     * @return String
+     * @author 胡建华
+     * Date:  2022/11/30 15:55
+     */
+    String getVideoTypeName(Integer typeId);
+
+    /**
+     * description: 上传视频
+     *
+     * @param videoExamine:
+     * @author 胡建华
+     * Date:  2022/11/30 16:03
+     */
+    void insertVideoExamine(VideoExamine videoExamine);
+
+    /**
+     * description: 删除指定视频
+     *
+     * @param videoId:
+     * @author 胡建华
+     * Date:  2022/11/30 16:34
+     */
+    void deleteVideoById(Integer videoId);
+
+    /**
+     * description: 获取审核列表
+     *
+     * @param examineStatus:
+     * @return List<VideoExamine>
+     * @author 胡建华
+     * Date:  2022/11/30 17:08
+     */
+    List<VideoExamine> getVideoExamineList(Integer examineStatus);
+
+    /**
+     * description: 插入视频
+     *
+     * @param videoExamine:
+     * @author 胡建华
+     * Date:  2022/11/30 18:12
+     */
+    void insertVideo(VideoExamine videoExamine);
+
+    /**
+     * description: 插入资源
+     *
+     * @param videoExamine:
+     * @author 胡建华
+     * Date:  2022/11/30 18:16
+     */
+    void insertResource(VideoExamine videoExamine);
+
+    /**
+     * description: 审核视频
+     *
+     * @param examineVideo:
+     * @author 胡建华
+     * Date:  2022/11/30 18:23
+     */
+    void examineVideo(ExamineVideo examineVideo);
+
+    /**
+     * description: 获取审核信息
+     *
+     * @param examineId:
+     * @return VideoExamine
+     * @author 胡建华
+     * Date:  2022/11/30 18:26
+     */
+    VideoExamine getVideoExamineById(Integer examineId);
+
+    /**
+     * description: 删除视频对应的资源
+     *
+     * @param resourceId:
+     * @author 胡建华
+     * Date:  2022/11/30 19:22
+     */
+    void deleteResource(Integer resourceId);
 }

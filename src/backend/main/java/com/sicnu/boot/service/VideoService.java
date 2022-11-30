@@ -2,6 +2,7 @@ package com.sicnu.boot.service;
 
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Video;
+import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.VideoSelective;
 
@@ -66,4 +67,16 @@ public interface VideoService {
      * Date:  2022/11/23 19:29
      */
     ServerResponse<PageInfo<Video>> getCollectVideoList(Integer pageNum,Integer userId);
+
+    /**
+     * description: 审核视频
+     *
+     * @param videoExamine:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/11/30 15:49
+     */
+    ServerResponse<String> uploadVideo(VideoExamine videoExamine);
+
+
 }

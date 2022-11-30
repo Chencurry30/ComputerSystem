@@ -2,6 +2,7 @@ package com.sicnu.boot.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Video;
+import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.service.VideoService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.VideoSelective;
@@ -81,6 +82,19 @@ public class VideoController {
                                        @PathVariable Integer pageNum,@Min(value = 1,message = "pageNum的最小值为1")
                                         @PathVariable Integer userId){
         return videoService.getCollectVideoList(pageNum,userId);
+    }
+
+    /**
+     * description: 上传视频
+     *
+     * @param videoExamine:
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2022/11/30 18:34
+     */
+    @PostMapping
+    ServerResponse<String> uploadVideo(@Validated @RequestBody VideoExamine videoExamine){
+        return videoService.uploadVideo(videoExamine);
     }
 
 }
