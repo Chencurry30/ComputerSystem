@@ -56,8 +56,8 @@ export const deleteDynamics = (id) => {
   return service.delete(url)
 }
 
-//查询所有我的动态
-export const getallDynamics = () =>{
-  const url = `/dynamics`
+//查询所有动态
+export const getallDynamics = (page) =>{
+  const url = `/dynamics/pages/${page}`
   return service.get(url)
 }

@@ -79,8 +79,8 @@ export default {
   }
 
   .containMain {
-    margin: 10px 0px;
-    padding: 0px 20px;
+    margin: 10px 0;
+    padding: 0 20px;
     display: flex;
 
     .userImg {
@@ -124,7 +124,7 @@ export default {
         }
 
         .inputInfo {
-          padding: 0px 10px;
+          padding: 0 10px;
           width: 260px;
           border-radius: 10px;
           font-size: 16px;
@@ -156,7 +156,7 @@ export default {
 
         .videoName {
           font-size: 14px;
-          padding: 5px 0px;
+          padding: 5px 0;
           text-align: center;
         }
       }

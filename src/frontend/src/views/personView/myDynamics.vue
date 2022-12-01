@@ -46,13 +46,16 @@
                   </div>
                 </div>
               </div>
+              <!--分页表单-->
               <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="pageNo"
+                  background
+                  layout="prev, pager, next"
+                  :total=100
                   :page-size="pageSize"
-                  layout="total, sizes, prev, pager, next, jumper"
-                  :total="Dynamics.length"
+                  @current-change="handleCurrentChange"
+                  @prev-click="prevPage"
+                  @next-click="nextPage"
+                  class="page"
               >
               </el-pagination>
             </div>
@@ -80,8 +83,8 @@ export default {
     return {
       showDialog: false,
       Dynamics:[],
-      pageNo:1,
-      pageSize:10,
+      page: 1, //请求第一次的params
+      pageSize: 5,
       contents:{
         content:'',
         picture:''
@@ -121,12 +124,14 @@ export default {
           this.$message.success("发布动态成功！")
         }
         console.log(res)
+        this.GetDynamics()
       })
     },
     //获取所有动态
     GetDynamics(){
-      getallDynamics().then((res)=>{
-        this.Dynamics = res.data.data
+      getallDynamics(this.page).then((res)=>{
+        console.log(res)
+        this.Dynamics = res.data.data.list
         console.log(this.Dynamics)
       })
     },
@@ -138,9 +143,18 @@ export default {
       this.pageSize = val;
     },
     //当前页数改变
-    handleCurrentChange(val) {
-      this.pageNo = val;
-    }
+    handleCurrentChange(page) {
+      this.page = page;
+      this.GetDynamics();
+    },
+    //上一页
+    prevPage(page){
+      this.page = page - 1
+    },
+    //下一页
+    nextPage(page){
+      this.page = page + 1
+    },
   },
   computed: {
     afterChangeData(){
@@ -245,8 +259,10 @@ export default {
 }
 .picture{
   margin-top: 10px;
+  margin-bottom: 10px;
   img{
     width: 200px;
+    margin-top: 10px;
   }
 }
 </style>
