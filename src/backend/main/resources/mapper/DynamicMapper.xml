@@ -10,10 +10,10 @@
     <delete id="deleteDynamic" parameterType="Dynamic">
         delete from user_dynamic where user_id = #{userId} and dynamic_id = #{dynamicId}
     </delete>
-    <select id="getDynamicByUserId" resultType="Dynamic">
+    <select id="getDynamicByUserId" resultType="com.sicnu.boot.vo.DynamicVo">
         select *from user_dynamic where user_id = #{userId}
     </select>
-    <select id="getAllDynamic" resultType="Dynamic">
+    <select id="getAllDynamic" resultType="com.sicnu.boot.vo.DynamicVo">
         select *from user_dynamic
     </select>
 </mapper>

@@ -50,7 +50,7 @@
               <el-pagination
                   background
                   layout="prev, pager, next"
-                  :total=100
+                  :total="totals"
                   :page-size="pageSize"
                   @current-change="handleCurrentChange"
                   @prev-click="prevPage"
@@ -85,6 +85,7 @@ export default {
       Dynamics:[],
       page: 1, //请求第一次的params
       pageSize: 5,
+      totals:'',//页面总条数
       contents:{
         content:'',
         picture:''
@@ -131,6 +132,8 @@ export default {
     GetDynamics(){
       getallDynamics(this.page).then((res)=>{
         console.log(res)
+        this.totals = res.data.data.total
+        console.log(this.totals)
         this.Dynamics = res.data.data.list
         console.log(this.Dynamics)
       })
