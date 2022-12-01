@@ -106,10 +106,10 @@ export default {
   },
   mounted() {
     //获取一个题目的具体信息 
-    this.getQuestinInfo()
+    this.getQuestionInfo()
   },
   methods: {
-    getQuestinInfo() {
+    getQuestionInfo() {
       let questionId = this.$route.query.questionId
       getQuestion(questionId).then((res) => {
         console.log(res);
@@ -159,7 +159,6 @@ export default {
     line-height: 25px;
     letter-spacing: 1px;
     word-break: break-all;
-    border-radius: 10px 10px 0 0;
     border: 1px solid #dadada;
     border-radius: 10px;
 
@@ -183,14 +182,14 @@ export default {
     }
 
     .questionSelect {
-      padding: 0px 20px 20px 20px;
+      padding: 0 20px 20px 20px;
 
       .selectItem {
-        padding: 10px 0px;
+        padding: 10px 0;
       }
 
       .selectOption {
-        padding: 10px 0px;
+        padding: 10px 0;
         display: flex;
         align-items: center;
       }
@@ -202,7 +201,7 @@ export default {
     .questionSolution {
       display: flex;
       align-items: center;
-      padding: 0px 20px 20px 20px;
+      padding: 0 20px 20px 20px;
 
       em {
         margin-right: 10px;

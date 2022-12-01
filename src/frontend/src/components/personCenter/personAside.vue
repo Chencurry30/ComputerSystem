@@ -73,7 +73,7 @@
               <img src="../../assets/Img/Icon/record.png" alt="" />
             </div>
             <div class="list-info">
-              <router-link :to="{ name: 'thumbVideo' }" style="text-decoration: none">点赞视屏</router-link>
+              <router-link :to="{ name: 'collectionVideo' }" style="text-decoration: none">上传视屏</router-link>
             </div>
           </li>
           <li class="list-item">
@@ -101,7 +101,7 @@ export default {
   flex: 1;
 
   .Item {
-    margin: 0px 10px;
+    margin: 0 10px;
     width: 280px;
     border-radius: 10px;
     border: 3px solid #eee;

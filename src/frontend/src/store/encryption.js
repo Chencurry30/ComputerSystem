@@ -17,7 +17,6 @@ const encryption = {
           uuId:createUUID()
         }
         await getPublicKey(UUID).then((res)=>{
-          console.log(res);
           if(res.data.code === 200){
             UUID.encryPtion = res.data.data
             context.commit('GETPUBKEY',UUID)
