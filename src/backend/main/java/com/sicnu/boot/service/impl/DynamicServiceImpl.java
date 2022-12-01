@@ -1,5 +1,7 @@
 package com.sicnu.boot.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.DynamicMapper;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.Dynamic;
@@ -57,7 +59,9 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    public ServerResponse<List<DynamicVo>> getDynamicByUserId(Integer userId) {
+    public ServerResponse<PageInfo<DynamicVo>> getDynamicByUserId(Integer userId,Integer pageNum) {
+        //获取分页信息
+        PageHelper.startPage(pageNum,5);
         List<Dynamic> dynamicList = dynamicMapper.getDynamicByUserId(userId);
         //补充动态作者信息
         List<DynamicVo> dynamicVos = new ArrayList<>();
@@ -68,11 +72,14 @@ public class DynamicServiceImpl implements DynamicService {
             dynamicVo.setAuthor(author);
             dynamicVos.add(dynamicVo);
         }
-        return ServerResponse.createBySuccess("查询成功",dynamicVos);
+        PageInfo<DynamicVo> pageInfo = new PageInfo<>(dynamicVos);
+        return ServerResponse.createBySuccess("查询成功",pageInfo);
     }
 
     @Override
-    public ServerResponse<List<DynamicVo>> getAllDynamic() {
+    public ServerResponse<PageInfo<DynamicVo>> getAllDynamic(Integer pageNum) {
+        //获取分页信息
+        PageHelper.startPage(pageNum,5);
         List<Dynamic> allDynamic = dynamicMapper.getAllDynamic();
         List<DynamicVo> dynamicVos = new ArrayList<>();
         for(Dynamic dynamic : allDynamic){
@@ -81,6 +88,7 @@ public class DynamicServiceImpl implements DynamicService {
             dynamicVo.setAuthor(author);
             dynamicVos.add(dynamicVo);
         }
-        return ServerResponse.createBySuccess("查询成功",dynamicVos);
+        PageInfo<DynamicVo> pageInfo = new PageInfo<>(dynamicVos);
+        return ServerResponse.createBySuccess("查询成功",pageInfo);
     }
 }

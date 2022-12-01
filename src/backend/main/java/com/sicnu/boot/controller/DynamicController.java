@@ -1,5 +1,7 @@
 package com.sicnu.boot.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Dynamic;
 import com.sicnu.boot.service.DynamicService;
 import com.sicnu.boot.utils.ServerResponse;
@@ -35,13 +37,15 @@ public class DynamicController {
         return dynamicService.deleteDynamic(dynamicId);
     }
 
-    @GetMapping("/{userId}")
-    ServerResponse<List<DynamicVo>> getDynamicByUserId(@Min(value = 1,message = "id最小值为1")@PathVariable Integer userId){
-        return dynamicService.getDynamicByUserId(userId);
+    @GetMapping("/users/{userId}/{pageNum}")
+    ServerResponse<PageInfo<DynamicVo>> getDynamicByUserId(
+            @Min(value = 1,message = "id最小值为1")@PathVariable Integer userId,
+            @Min(value = 1,message = "id最小值为1")@PathVariable Integer pageNum){
+        return dynamicService.getDynamicByUserId(userId,pageNum);
     }
 
-    @GetMapping("")
-    ServerResponse<List<DynamicVo>> getAllDynamic(){
-        return dynamicService.getAllDynamic();
+    @GetMapping("/pages/{pageNum}")
+    ServerResponse<PageInfo<DynamicVo>> getAllDynamic(@Min(value = 1,message = "id最小值为1")@PathVariable Integer pageNum){
+        return dynamicService.getAllDynamic(pageNum);
     }
 }
