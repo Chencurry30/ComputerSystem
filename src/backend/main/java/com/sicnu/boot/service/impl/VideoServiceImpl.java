@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Video;
+import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.service.VideoService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.VideoUtils;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -131,5 +133,21 @@ public class VideoServiceImpl implements VideoService {
         }
         PageInfo<Video> pageInfo = new PageInfo<>(videoList);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
+    }
+
+    @Override
+    public ServerResponse<String> uploadVideo(VideoExamine videoExamine) {
+        String videoTypeName = videoMapper.getVideoTypeName(videoExamine.getTypeId());
+        if (StringUtils.isBlank(videoTypeName)){
+            return ServerResponse.createByErrorMessage("不存在该视频类型");
+        }
+        videoExamine.setTypeName(videoTypeName);
+        //设置上传时间
+        videoExamine.setTime(LocalDateTime.now());
+        //设置作者
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        videoExamine.setAuthorId(((LoginUser)authentication.getPrincipal()).getUser().getUserId());
+        videoMapper.insertVideoExamine(videoExamine);
+        return ServerResponse.createBySuccessMessage("申请上传视频成功");
     }
 }

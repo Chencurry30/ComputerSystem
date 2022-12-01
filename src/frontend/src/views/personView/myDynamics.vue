@@ -11,8 +11,11 @@
               <div class="UserBox second">
                 <div>
                   <div class="form-group">
-                    <label>发表动态</label>
-                    <textarea class="form-control" v-model="contents.content"></textarea>
+                    <label class="contents">发表我的动态</label>
+                    <textarea class="form-control" v-model="contents.content" placeholder="说说你的心情......"></textarea>
+                    <el-button type="text" size="large" @click="showDialog = !showDialog">😃</el-button>
+                    <VEmojiPicker v-show="showDialog" @select="selectEmoji"></VEmojiPicker>
+                    <uploadDypicture></uploadDypicture>
                   </div>
                   <div class="form-group">
                     <button class="btn btn-primary" @click="AddDynamics">发表动态</button>
@@ -20,7 +23,7 @@
 
                   <div class="bili-dyn-item"
                   v-for="item in Dynamics"
-                  key="item.dynamicId">
+                  :key="item.dynamicId">
                     <div class="bili-dyn-item__main">
                       <div class="bili-dyn-item__avatar" >
                         <div class="bili-dyn-avatar" style="width: 48px; height: 48px;">
@@ -35,37 +38,30 @@
                         </div>
                         <div class="bili-dyn-time">{{item.createDate}}</div>
                       </div>
-                      <div>
-                        <span style="color: #222;">{{item.content}}</span>
+                      <div class="picture">
+                        <div style="color: #222;">{{item.content}}</div>
+                        <img :src="[getpicture+item.picture]" v-if="item.picture">
                       </div>
                     </div>
                   </div>
-
-<!--                  <el-table-->
-<!--                      :data="Dynamics"-->
-<!--                      stripe-->
-<!--                      style="width: 100%">-->
-<!--                    <el-table-column-->
-<!--                        prop="createDate"-->
-<!--                        label="日期"-->
-<!--                        width="180">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="content"-->
-<!--                        label="内容"-->
-<!--                        width="180">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="author.nickname"-->
-<!--                        label="用户">-->
-<!--                    </el-table-column>-->
-<!--                  </el-table>-->
                 </div>
               </div>
+              <!--分页表单-->
+              <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :total=100
+                  :page-size="pageSize"
+                  @current-change="handleCurrentChange"
+                  @prev-click="prevPage"
+                  @next-click="nextPage"
+                  class="page"
+              >
+              </el-pagination>
             </div>
 
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -76,24 +72,30 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import {VEmojiPicker} from 'v-emoji-picker';
+import {createPublicUrl} from '../../utils/index'
+import uploadDypicture from '../../components/upload/uploadDypicture'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
 import {getDynamics, getallDynamics,setDynamics, deleteDynamics} from '@/service/userServers'
 export default {
   data() {
     return {
-      Dynamics:{
-        author:{
-          nickname:''
-        }
-      },
+      showDialog: false,
+      Dynamics:[],
+      page: 1, //请求第一次的params
+      pageSize: 5,
       contents:{
         content:'',
         picture:''
-      }
+      },
+      fileList:[{
+        name:'',
+        url:''
+      }],
     }
   },
-  components: { personAside,personHeader},
+  components: { personAside,personHeader,uploadDypicture,VEmojiPicker},
   name: "teacherReply",
   mounted() {
     //获取用户的相关信息,避免刷新到时头像丢失
@@ -101,6 +103,10 @@ export default {
     this.GetDynamics()
   },
   methods: {
+    selectEmoji(emoji) {
+      console.log(typeof  emoji.data)
+      this.contents.content = this.contents.content + emoji.data
+    },
     backHome() {
       let location = {
         name: 'Home'
@@ -111,24 +117,51 @@ export default {
     AddDynamics(){
       // console.log(this.contents)
       setDynamics(this.contents).then((res)=>{
+        console.log(this.contents)
         if (res.data.code === 406){
           this.$message.error("内容不能为空")
         }else if(res.data.code === 200){
           this.$message.success("发布动态成功！")
         }
         console.log(res)
+        this.GetDynamics()
       })
     },
     //获取所有动态
     GetDynamics(){
-      getallDynamics().then((res)=>{
-        this.Dynamics = res.data.data
+      getallDynamics(this.page).then((res)=>{
+        console.log(res)
+        this.Dynamics = res.data.data.list
         console.log(this.Dynamics)
       })
-    }
-
+    },
+    handleChange(file, fileList) {
+      this.fileList = fileList.slice(-3);
+    },
+    //分页大小改变
+    handleSizeChange(val) {
+      this.pageSize = val;
+    },
+    //当前页数改变
+    handleCurrentChange(page) {
+      this.page = page;
+      this.GetDynamics();
+    },
+    //上一页
+    prevPage(page){
+      this.page = page - 1
+    },
+    //下一页
+    nextPage(page){
+      this.page = page + 1
+    },
   },
   computed: {
+    afterChangeData(){
+      let start = (this.pageNo - 1) * this.pageSize
+      let end = this.pageNo * this.pageSize
+      return this.Dynamics.slice(start,end)
+    },
     ...mapGetters('userInfo',
         {
           getUserImg: 'getUserImg'
@@ -136,6 +169,9 @@ export default {
     ...mapGetters('userInfo', {
       getUserInfo: 'getUserInfo'
     }),
+    getpicture(){
+      return createPublicUrl()
+    }
   }
 };
 </script>
@@ -159,6 +195,13 @@ export default {
   }
   .second {
     margin-top: 15px;
+    .contents{
+      font-size: 18px;
+      font-weight: bold;
+      width: 100%;
+      Text-align:center;
+
+    }
   }
 }
 .bili-dyn-item{
@@ -209,6 +252,17 @@ export default {
         }
       }
     }
+  }
+}
+.btn-primary{
+  margin-left: 800px;
+}
+.picture{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  img{
+    width: 200px;
+    margin-top: 10px;
   }
 }
 </style>

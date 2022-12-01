@@ -7,8 +7,32 @@
     <insert id="collectVideo">
         insert into video_collection values (#{videoId},#{userId})
     </insert>
+    <insert id="insertVideoExamine" parameterType="VideoExamine">
+        insert into video_examine(examine_id, name, time, introduction, author_id,
+                                  image, type_id, type_name, duration, link)
+            values (null,#{name},#{time},#{introduction},#{authorId},#{image},
+                    #{typeId},#{typeName},#{duration},#{link})
+    </insert>
+    <insert id="insertVideo" parameterType="VideoExamine">
+        insert into video values(null,#{name},#{time},0,#{introduction},#{resourceId},
+                   #{authorId},#{image},0,0,#{typeId},#{typeName},#{duration},#{link},0)
+    </insert>
+    <insert id="insertResource" useGeneratedKeys="true" keyProperty="resourceId">
+        insert into resource values (null,#{name},0,#{introduction})
+    </insert>
+    <update id="examineVideo">
+        update video_examine set pass_date = #{passDate},examine_status = #{examineResult},
+                                 apply_id = #{applyId},review_comment = #{reviewComment}
+        where examine_id = #{examineId}
+    </update>
     <delete id="deleteCollectVideo">
         delete from video_collection where user_id = #{userId} and video_id = #{videoId}
+    </delete>
+    <delete id="deleteVideoById">
+        delete from video where video_id = #{videoId}
+    </delete>
+    <delete id="deleteResource">
+        delete from resource where resource_id = #{resourceId}
     </delete>
     <select id="getVideoListBySelective" resultType="Video" parameterType="com.sicnu.boot.vo.VideoSelective">
         select video_id,name,time,image,view_num,duration,comment_num,author_id from video
@@ -41,5 +65,19 @@
     <select id="getCollectVideoList" resultType="com.sicnu.boot.pojo.Video">
         select video_id,name,time,image,view_num,duration,comment_num,author_id from video
         where video_id in (select video_id from video_collection where user_id = #{userId})
+    </select>
+    <select id="getVideoTypeName" resultType="java.lang.String">
+        select type_name from video_type where type_id = #{typeId}
+    </select>
+    <select id="getVideoExamineList" resultType="com.sicnu.boot.pojo.VideoExamine">
+        select * from video_examine
+        <where>
+            <if test="examineStatus != null and examineStatus != -1">
+                examine_status = #{examineStatus}
+            </if>
+        </where>
+    </select>
+    <select id="getVideoExamineById" resultType="com.sicnu.boot.pojo.VideoExamine">
+        select * from video_examine where examine_id = #{examineId}
     </select>
 </mapper>

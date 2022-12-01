@@ -1,5 +1,6 @@
 package com.sicnu.boot.service;
 
+import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Dynamic;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.DynamicVo;
@@ -17,7 +18,7 @@ public interface DynamicService {
     /**
      * description: 添加一条动态
      *
-     * @param dynamic:
+     * @param dynamic 动态
      * @return com.sicnu.boot.utils.ServerResponse<java.lang.String>
      * @author 蔡名展
      * Date 2022/11/26 14:27
@@ -27,7 +28,7 @@ public interface DynamicService {
     /**
      * description: 删除一条动态
      *
-     * @param dynamicId:
+     * @param dynamicId 动态id
      * @return com.sicnu.boot.utils.ServerResponse<java.lang.String>
      * @author 蔡名展
      * Date 2022/11/26 14:52
@@ -37,19 +38,21 @@ public interface DynamicService {
     /**
      * description: 查找用户所有动态
      *
-     * @param userId:
-     * @return com.sicnu.boot.utils.ServerResponse<java.util.List<com.sicnu.boot.pojo.Dynamic>>
+     * @param userId 用户id
+     * @param pageNum 页数
+     * @return com.sicnu.boot.utils.ServerResponse<com.github.pagehelper.PageInfo<com.sicnu.boot.vo.DynamicVo>>
      * @author 蔡名展
-     * Date 2022/11/26 16:00
+     * Date 2022/11/30 21:24
      */
-    ServerResponse<List<DynamicVo>> getDynamicByUserId(Integer userId);
+    ServerResponse<PageInfo<DynamicVo>> getDynamicByUserId(Integer userId,Integer pageNum);
 
     /**
-     * description:
+     * description: 查找所有动态
      *
-     * @return com.sicnu.boot.utils.ServerResponse<java.util.List<com.sicnu.boot.pojo.Dynamic>>
+     * @param pageNum 页数
+     * @return com.sicnu.boot.utils.ServerResponse<com.github.pagehelper.PageInfo<com.sicnu.boot.vo.DynamicVo>>
      * @author 蔡名展
-     * Date 2022/11/28 14:19
+     * Date 2022/11/30 20:05
      */
-    ServerResponse<List<DynamicVo>> getAllDynamic();
+    ServerResponse<PageInfo<DynamicVo>> getAllDynamic(Integer pageNum);
 }

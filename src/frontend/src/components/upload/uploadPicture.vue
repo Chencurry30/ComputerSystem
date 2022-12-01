@@ -1,7 +1,13 @@
 <template>
   <div id="upload">
-    <el-upload class="upload-demo" :action="objectData.host" :before-upload="getPolicy" :data="objectData"
-      :on-preview="handlePreview"  :on-success="handleAvatarSuccess" :show-file-list="false"
+    <el-upload
+        class="upload-demo"
+        :action="objectData.host"
+        :before-upload="getPolicy"
+        :data="objectData"
+        :on-preview="handlePreview"
+        :on-success="handleAvatarSuccess"
+        :show-file-list="false"
       list-type="picture">
       <img v-if="hiddemDeafult" :src='imageUrl' class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -18,7 +24,7 @@ export default {
   name: "upfile",
   props: ['userImage'],
   inject: ['reload'],
-  //从App中传递的一个方法用来刷新页面 
+  //从App中传递的一个方法用来刷新页面
   data() {
     return {
       objectData: {
@@ -47,15 +53,16 @@ export default {
       return new Promise(((resolve, reject) => {
         uploadUserPicture(file.name)
           .then(res => {
+            console.log(res)
             this.objectData.OSSAccessKeyId = res.data.data.accessid; // Bucket拥有者的AccessKey ID。
             this.objectData.policy = res.data.data.policy; //Policy规定了请求表单域的合法性。
             this.objectData.Signature = res.data.data.signature;//根据AccessKey Secret和Policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性。
             this.objectData.dir = res.data.data.dir;//前缀
             this.objectData.host = res.data.data.host;// "https://" + bucketname + '.' + endpoint;  (前端请求oss服务路径)
             this.objectData.key = res.data.data.key;//dir + fileName (上传Object的名称。)
-            //将获取的oss的存储路径存放到个人信息中，准备提交到数据库 
+            //将获取的oss的存储路径存放到个人信息中，准备提交到数据库
             this.getUserInfo.image = this.objectData.key
-            //将修改后的图片路径放入session,实现数据的持久化 
+            //将修改后的图片路径放入session,实现数据的持久化
             sessionStorage.setItem('userImg',this.getUserInfo.image)
             this.$store.dispatch('userInfo/changeUserInfo', this.getUserInfo)
             this.reload()

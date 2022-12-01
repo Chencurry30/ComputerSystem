@@ -13,7 +13,7 @@ Vue.use(ElementUI);
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)    //引用插件
 
-//引入bootstrap库 
+//引入bootstrap库
 import BootstrapVue from 'bootstrap-vue';
 Vue.use(BootstrapVue)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -24,18 +24,21 @@ import VideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
 
-Vue.use(VideoPlayer) 
+Vue.use(VideoPlayer)
 
-//引入导出为pdf的函数(方法为printOutPDF) 
+//引入导出为pdf的函数(方法为printOutPDF)
 import htmlToPdf from '@/utils/htmlToPdf';
 Vue.use(htmlToPdf);
 
-//全局注册qs序列化object对象(this.$qs运用) 
+//全局注册qs序列化object对象(this.$qs运用)
 import qs from 'qs';
 Vue.prototype.$qs = qs
 
  // 导入swiper样式
  import "swiper/css/swiper.css"
+//导入表情
+import VEmojiPicker from 'v-emoji-picker';
+Vue.use(VEmojiPicker);
 
 Vue.config.productionTip = false
 new Vue({
