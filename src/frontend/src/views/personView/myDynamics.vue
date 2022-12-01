@@ -28,7 +28,10 @@
                       <div class="bili-dyn-item__avatar" >
                         <div class="bili-dyn-avatar" style="width: 48px; height: 48px;">
                           <div class="bili-avatar" style="width: 48px;height:48px;transform: translate(0px, 0px);">
-                            <img src="https://system-1234.oss-cn-chengdu.aliyuncs.com/user/userImage/8b670200-fb7c-41cc-8cad-3703a3311bf0.png">
+                            <img v-if="item.author.image === '无'" src="../../assets/Img/defaultUserImg.png" alt="">
+                            <img v-else :src="[getpicture + item.author.image]" alt="">
+
+
                           </div>
                         </div>
                       </div>
@@ -40,7 +43,7 @@
                       </div>
                       <div class="picture">
                         <div style="color: #222;">{{item.content}}</div>
-                        <img :src="[getpicture+item.picture]" v-if="item.picture">
+                        <img :src="[getpicture+item.picture]" v-if="item.picture" alt="">
                       </div>
                     </div>
                   </div>
@@ -77,7 +80,7 @@ import {createPublicUrl} from '../../utils/index'
 import uploadDypicture from '../../components/upload/uploadDypicture'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
-import {getDynamics, getallDynamics,setDynamics, deleteDynamics} from '@/service/userServers'
+import {getallDynamics,setDynamics} from '@/service/userServers'
 export default {
   data() {
     return {
@@ -85,7 +88,7 @@ export default {
       Dynamics:[],
       page: 1, //请求第一次的params
       pageSize: 5,
-      totals:'',//页面总条数
+      totals:0,//页面总条数
       contents:{
         content:'',
         picture:''
@@ -138,6 +141,7 @@ export default {
         console.log(this.Dynamics)
       })
     },
+
     handleChange(file, fileList) {
       this.fileList = fileList.slice(-3);
     },
