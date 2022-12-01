@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.DynamicMapper;
@@ -61,34 +62,28 @@ public class DynamicServiceImpl implements DynamicService {
     @Override
     public ServerResponse<PageInfo<DynamicVo>> getDynamicByUserId(Integer userId,Integer pageNum) {
         //获取分页信息
-        PageHelper.startPage(pageNum,5);
-        List<Dynamic> dynamicList = dynamicMapper.getDynamicByUserId(userId);
+        PageHelper.startPage(pageNum, 5);
+        List<DynamicVo> dynamicList = dynamicMapper.getDynamicByUserId(userId);
         //补充动态作者信息
-        List<DynamicVo> dynamicVos = new ArrayList<>();
-        for(Dynamic dynamic : dynamicList){
-            DynamicVo dynamicVo = new DynamicVo(dynamic);
+        for(DynamicVo dynamicVo : dynamicList){
             //查询作者信息
-            CommentUserVo author = userMapper.getCommentUserById(dynamic.getUserId());
+            CommentUserVo author = userMapper.getCommentUserById(dynamicVo.getUserId());
             dynamicVo.setAuthor(author);
-            dynamicVos.add(dynamicVo);
         }
-        PageInfo<DynamicVo> pageInfo = new PageInfo<>(dynamicVos);
+        PageInfo<DynamicVo> pageInfo = new PageInfo<>(dynamicList);
         return ServerResponse.createBySuccess("查询成功",pageInfo);
     }
 
     @Override
     public ServerResponse<PageInfo<DynamicVo>> getAllDynamic(Integer pageNum) {
         //获取分页信息
-        PageHelper.startPage(pageNum,5);
-        List<Dynamic> allDynamic = dynamicMapper.getAllDynamic();
-        List<DynamicVo> dynamicVos = new ArrayList<>();
-        for(Dynamic dynamic : allDynamic){
-            DynamicVo dynamicVo = new DynamicVo(dynamic);
-            CommentUserVo author = userMapper.getCommentUserById(dynamic.getUserId());
+        PageHelper.startPage(pageNum, 5);
+        List<DynamicVo> allDynamic = dynamicMapper.getAllDynamic();
+        for(DynamicVo dynamicVo : allDynamic){
+            CommentUserVo author = userMapper.getCommentUserById(dynamicVo.getUserId());
             dynamicVo.setAuthor(author);
-            dynamicVos.add(dynamicVo);
         }
-        PageInfo<DynamicVo> pageInfo = new PageInfo<>(dynamicVos);
+        PageInfo<DynamicVo> pageInfo = new PageInfo<>(allDynamic);
         return ServerResponse.createBySuccess("查询成功",pageInfo);
     }
 }
