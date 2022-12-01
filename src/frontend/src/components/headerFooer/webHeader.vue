@@ -14,7 +14,7 @@
             <img src="../../assets/Img/Icon/message.png" alt="" />
           </div>
           <div class="userimg">
-            <img v-if="hidddenDefaultImg" :src='publicUrl' alt="用户头像" />
+            <img v-if="hidddenDefaultImg" :src='publicUrl' alt="" />
             <img v-else src="../../assets/Img/defaultUserImg.png" alt="默认头像" />
             <div class="user-select">
               <div class="select-item" @click="gotoPerson()">个人中心</div>
@@ -49,7 +49,7 @@
 </template>
 <script>
 
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import { createPublicUrl } from '../../utils/index'
 export default {
   name: "webHeader",
@@ -67,7 +67,9 @@ export default {
         { name: '更多信息', link: 'questionQS' },
       ],
       current: 0,
-      showBox: false
+      showBox: false,
+      //用户头像
+      userImg:sessionStorage.getItem('userImg')
     }
   },
   methods: {
@@ -95,6 +97,7 @@ export default {
       }
       this.$router.push(location)
     },
+    //获取图片路径
   },
   computed: {
     showLoginBtn() {
@@ -104,15 +107,43 @@ export default {
       return this.$route.meta.showTop;
     },
     publicUrl() {
-      const userImg = sessionStorage.getItem('userImg')
-      return createPublicUrl() + userImg
-      
+
+      return createPublicUrl() + this.userImg
     },
     //判断用户是否有头像 
     hidddenDefaultImg(){
       return sessionStorage.getItem('userImg')
-    }
+    },
+    //获取用户信息
+    ...mapGetters('userInfo', {
+      getUserInfo: 'getUserInfo'
+    }),
   },
+
+
+  watch:{
+    'getUserInfo':{
+      handler: function(newval){
+        //先从session中获取图片
+        let localImg = sessionStorage.getItem(('userImg'))
+        if(localImg !== newval.image){
+          this.userImg = newval.image
+          //将新图片存储到session,供首页使用
+          sessionStorage.setItem('userImg',newval.image)
+        }
+        setTimeout( ()=>{
+          this.reload()},100)
+      }
+    },
+    deep: true,
+    immediate: true,
+  }
+
+
+
+
+
+
 };
 </script>
 
@@ -171,7 +202,7 @@ export default {
       .message-icon:after {
         display: block;
         position: absolute;
-        top: 0px;
+        top: 0;
         left: 10px;
         content: "";
         width: 10px;
@@ -239,14 +270,14 @@ export default {
   .select-box {
     display: flex;
     justify-content: space-between;
-    margin: 8px 0px;
+    margin: 8px 0;
     border-top: 1px solid #f3f6f9;
     border-bottom: 1px solid #f3f6f9;
 
     .select-list {
       display: flex;
       margin-left: 130px;
-      margin-bottom: 0px;
+      margin-bottom: 0;
 
       .list-item {
         display: flex;
