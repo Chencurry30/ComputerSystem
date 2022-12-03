@@ -6,7 +6,7 @@ import com.sicnu.boot.vo.UserDetail;
 import java.util.List;
 
 /**
- * description:  
+ * description:
  *
  * @author :  胡建华
  * Data:    2022/12/03 16:22
