@@ -10,9 +10,7 @@ const schoolData = {
       //获取视屏的选择相关信息
       getNavType(context){
         getSchoolNavType().then((res)=>{
-          console.log(res);
           if(res.data.code === 200){
-            console.log('我是院校获取的相关模块');
             let data = res.data.data;
             context.commit('GETNAVTYPE',data);
           }
@@ -21,7 +19,6 @@ const schoolData = {
       //获取院校数据的列表
       getschoolData(context,{first,second,thild,pageNum}){
         getschoolList({first,second,thild,pageNum}).then((res)=>{
-          console.log(res);
           if(res.data.code === 200){
             let data = res.data.data
             context.commit('GETSCHOOLDATA',data)

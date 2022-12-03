@@ -14,7 +14,7 @@
                 这里是针对老师提问的相关记录
                 <div class="messageHeraer">
                   <!--这里是评论信息中的一个组件，这里利用父组件向子组件传入参数即可-->
-                  <replyItem v-for="(item) in DataList" :key="item.id" :replyInfo="item"></replyItem>
+<!--                  <replyItem v-for="(item) in DataList" :key="item.id" :replyInfo="item"></replyItem>-->
                 </div>
               </div>
             </div>
@@ -33,7 +33,6 @@
 import { mapGetters } from 'vuex'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
-import replyItem from '../../components/remark/replyItem.vue';
 export default {
   data() {
     return {
@@ -57,7 +56,7 @@ export default {
       ]
     }
   },
-  components: { replyItem ,personAside,personHeader},
+  components: {personAside,personHeader},
   name: "myComment",
   mounted() {
     this.$store.dispatch('userInfo/getUserInfo')

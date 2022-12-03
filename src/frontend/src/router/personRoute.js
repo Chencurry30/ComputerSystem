@@ -39,9 +39,9 @@ export default [
   },
 
   {
-    path: '/thumbVideo',
-    name: 'thumbVideo',
-    component: () => import('@/views/personView/thumbVideo'),   //点赞视屏,
+    path: '/collectionVideo',
+    name: 'collectionVideo',
+    component: () => import('@/views/personView/collectionVideo'),   //点赞视屏,
     meta: {                          //配置相关的参数，保证页面是否展示头部和底部
       showTop: false,
       showFotter: true

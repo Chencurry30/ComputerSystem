@@ -28,7 +28,10 @@
                       <div class="bili-dyn-item__avatar" >
                         <div class="bili-dyn-avatar" style="width: 48px; height: 48px;">
                           <div class="bili-avatar" style="width: 48px;height:48px;transform: translate(0px, 0px);">
-                            <img src="https://system-1234.oss-cn-chengdu.aliyuncs.com/user/userImage/8b670200-fb7c-41cc-8cad-3703a3311bf0.png">
+                            <img v-if="item.author.image === '无'" src="../../assets/Img/defaultUserImg.png" alt="">
+                            <img v-else :src="[getpicture + item.author.image]" alt="">
+
+
                           </div>
                         </div>
                       </div>
@@ -40,19 +43,22 @@
                       </div>
                       <div class="picture">
                         <div style="color: #222;">{{item.content}}</div>
-                        <img :src="[getpicture+item.picture]" v-if="item.picture">
+                        <img :src="[getpicture+item.picture]" v-if="item.picture" alt="">
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <!--分页表单-->
               <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="pageNo"
+                  background
+                  layout="prev, pager, next"
+                  :total="totals"
                   :page-size="pageSize"
-                  layout="total, sizes, prev, pager, next, jumper"
-                  :total="Dynamics.length"
+                  @current-change="handleCurrentChange"
+                  @prev-click="prevPage"
+                  @next-click="nextPage"
+                  class="page"
               >
               </el-pagination>
             </div>
@@ -74,14 +80,15 @@ import {createPublicUrl} from '../../utils/index'
 import uploadDypicture from '../../components/upload/uploadDypicture'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
-import {getDynamics, getallDynamics,setDynamics, deleteDynamics} from '@/service/userServers'
+import {getallDynamics,setDynamics} from '@/service/userServers'
 export default {
   data() {
     return {
       showDialog: false,
       Dynamics:[],
-      pageNo:1,
-      pageSize:10,
+      page: 1, //请求第一次的params
+      pageSize: 5,
+      totals:0,//页面总条数
       contents:{
         content:'',
         picture:''
@@ -121,15 +128,20 @@ export default {
           this.$message.success("发布动态成功！")
         }
         console.log(res)
+        this.GetDynamics()
       })
     },
     //获取所有动态
     GetDynamics(){
-      getallDynamics().then((res)=>{
-        this.Dynamics = res.data.data
+      getallDynamics(this.page).then((res)=>{
+        console.log(res)
+        this.totals = res.data.data.total
+        console.log(this.totals)
+        this.Dynamics = res.data.data.list
         console.log(this.Dynamics)
       })
     },
+
     handleChange(file, fileList) {
       this.fileList = fileList.slice(-3);
     },
@@ -138,9 +150,18 @@ export default {
       this.pageSize = val;
     },
     //当前页数改变
-    handleCurrentChange(val) {
-      this.pageNo = val;
-    }
+    handleCurrentChange(page) {
+      this.page = page;
+      this.GetDynamics();
+    },
+    //上一页
+    prevPage(page){
+      this.page = page - 1
+    },
+    //下一页
+    nextPage(page){
+      this.page = page + 1
+    },
   },
   computed: {
     afterChangeData(){
@@ -245,8 +266,10 @@ export default {
 }
 .picture{
   margin-top: 10px;
+  margin-bottom: 10px;
   img{
     width: 200px;
+    margin-top: 10px;
   }
 }
 </style>

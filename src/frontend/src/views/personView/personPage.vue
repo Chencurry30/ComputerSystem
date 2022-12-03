@@ -101,14 +101,13 @@ import personHeader from '../../components/personCenter/personHeader'
 import { userVideoCollect } from '../../service/userServers'
 import PagerView from "@/components/remark/PagerView";
 export default {
+  inject: ['reload'],
   name: "personPage",
   data() {
     return {
       collectVideo: [],
       //关于收藏视屏的分页信息
-      collectPage:{
-
-      }
+      collectPage:{}
     }
   },
   components: {PagerView, InfoPopup, personAside, personHeader },
@@ -160,7 +159,7 @@ export default {
     publicUrl() {
       return createPublicUrl()
     }
-  }
+  },
 };
 </script>
 
@@ -209,8 +208,8 @@ export default {
         }
 
         .containMain {
-          margin: 10px 0px;
-          padding: 0px 20px;
+          margin: 10px 0;
+          padding: 0 20px;
           display: flex;
 
 
@@ -256,7 +255,6 @@ export default {
 
               .videoName {
                 font-size: 14px;
-                padding: 5px 0px;
                 text-align: center;
                 padding: 2px 20px;
                 width: 180px;

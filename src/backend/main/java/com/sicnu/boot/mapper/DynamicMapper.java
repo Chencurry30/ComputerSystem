@@ -1,6 +1,7 @@
 package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.Dynamic;
+import com.sicnu.boot.vo.DynamicVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public interface DynamicMapper {
      * @author 蔡名展
      * Date 2022/11/26 15:57
      */
-    List<Dynamic> getDynamicByUserId(Integer userId);
+    List<DynamicVo> getDynamicByUserId(Integer userId);
 
     /**
      * description: 查询所有动态
@@ -50,5 +51,5 @@ public interface DynamicMapper {
      * @author 蔡名展
      * Date 2022/11/28 14:16
      */
-    List<Dynamic> getAllDynamic();
+    List<DynamicVo> getAllDynamic();
 }

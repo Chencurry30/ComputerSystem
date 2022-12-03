@@ -16,7 +16,7 @@ import {uploadQuestionPicture} from '@/service/questionService'
 export default {
   data() {
     return {
-      totleUrl: '',
+      // totleUrl: '',
       objectData: {
         OSSAccessKeyId: "",
         policy: "",

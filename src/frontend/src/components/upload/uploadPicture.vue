@@ -2,14 +2,14 @@
   <div id="upload">
     <el-upload
         class="upload-demo"
-        :action="objectData.host"
+        action="https://system-1234.oss-cn-chengdu.aliyuncs.com"
         :before-upload="getPolicy"
         :data="objectData"
         :on-preview="handlePreview"
         :on-success="handleAvatarSuccess"
         :show-file-list="false"
       list-type="picture">
-      <img v-if="hiddemDeafult" :src='imageUrl' class="avatar">
+      <img v-if="getUserInfo.image" :src='imageUrl' class="avatar" alt="">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
   </div>
@@ -21,7 +21,7 @@ import { uploadUserPicture } from '../../service/userServers';
 import { mapGetters } from 'vuex'
 import {createPublicUrl} from '../../utils/index'
 export default {
-  name: "upfile",
+  name: "uploadPicture",
   props: ['userImage'],
   inject: ['reload'],
   //从App中传递的一个方法用来刷新页面
@@ -63,9 +63,8 @@ export default {
             //将获取的oss的存储路径存放到个人信息中，准备提交到数据库
             this.getUserInfo.image = this.objectData.key
             //将修改后的图片路径放入session,实现数据的持久化
-            sessionStorage.setItem('userImg',this.getUserInfo.image)
+            // sessionStorage.setItem('userImg',this.objectData.key)
             this.$store.dispatch('userInfo/changeUserInfo', this.getUserInfo)
-            this.reload()
             resolve(true);
           })
           .catch(err => {
@@ -80,9 +79,6 @@ export default {
     ...mapGetters('userInfo', {
       getUserInfo: 'getUserInfo'
     }),
-    hiddemDeafult(){
-      return this.getUserInfo.image !== ""
-    }
   },
   watch:{
     userImage(newvalue){

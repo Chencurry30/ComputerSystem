@@ -1,6 +1,7 @@
 package com.sicnu.boot.mapper;
 
 import com.sicnu.boot.pojo.Dynamic;
+import com.sicnu.boot.vo.DynamicVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,7 @@ public class DynamicMapperTest {
 
     @Test
     public void testGetDynamicByUserId(){
-        List<Dynamic> dynamicList = dynamicMapper.getDynamicByUserId(2);
+        List<DynamicVo> dynamicList = dynamicMapper.getDynamicByUserId(2);
         System.out.println(dynamicList);
     }
 }
