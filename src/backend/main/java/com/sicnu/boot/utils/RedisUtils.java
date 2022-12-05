@@ -144,6 +144,20 @@ public final class RedisUtils {
     }
 
     /**
+     * description: 向正在发送信息的任意两人的信箱中中添加信息
+     *
+     * @param key:
+     * @param value:
+     * @return void
+     * @author 胡建华
+     * Date:  2022/12/3 15:32
+     */
+    public <T> void pushCacheList(String key, T value) {
+        // 向正在发送信息的任意两人的信箱中中添加信息
+        redisTemplate.opsForList().rightPush(key, value);
+    }
+
+    /**
      * 缓存Set
      *
      * @param key 缓存键值
