@@ -1,50 +1,49 @@
 <!--网站头部-->
 <template>
   <div class="header">
-    <div class="container-xl">
-      <div class="main-box">
-        <div class="main-left">
-          <div class="loge">
-            <img src="../../assets/Img/webloge.png" alt="" />
-          </div>
-          <div class="title">旭升网</div>
-        </div>
-        <div class="main-right centerLocation" v-if="showLoginBtn">
-          <div class="message-icon">
-            <img src="../../assets/Img/Icon/message.png" alt="" />
-          </div>
-          <div class="userimg">
-            <img v-if="hidddenDefaultImg" :src='publicUrl' alt="" />
-            <img v-else src="../../assets/Img/defaultUserImg.png" alt="默认头像" />
-            <div class="user-select">
-              <div class="select-item" @click="gotoPerson()">个人中心</div>
-              <div class="select-item" @click="backLogin()">退出登录</div>
+
+          <div class="main-box">
+            <div class="main-left">
+              <div class="loge">
+                <img src="../../assets/Img/webloge.png" alt="" />
+              </div>
+              <div class="title">旭升网</div>
+            </div>
+            <div class="main-middle">
+              <div class="middle-box">
+                <ul class="middle-list">
+                  <li class="list-item" v-for="(item, index) in liList"
+                      :key="index">
+                    <div class="item-info">
+                      <router-link :to="item.link">{{ item.name }}</router-link>
+                    </div>
+                  </li>
+                </ul>
+                <div class="search">
+                  <div class="search-loge">
+                    <img src="../../assets/Img/Icon/search.png" alt="">
+                  </div>
+                  <input type="text" placeholder="Search...">
+                </div>
+              </div>
+            </div>
+            <div class="main-right centerLocation" v-if="showLoginBtn">
+              <div class="message-icon">
+                <img src="../../assets/Img/Icon/message.png" alt="" />
+              </div>
+              <div class="userimg">
+                <img v-if="hidddenDefaultImg" :src='publicUrl' alt="" />
+                <img v-else src="../../assets/Img/defaultUserImg.png" alt="默认头像" />
+                <div class="user-select">
+                  <div class="select-item" @click="gotoPerson()">个人中心</div>
+                  <div class="select-item" @click="backLogin()">退出登录</div>
+                </div>
+              </div>
+            </div>
+            <div class="main-right" v-else>
+              <button class="gotologin" @click="gotologin">用户注册</button>
             </div>
           </div>
-        </div>
-        <div class="main-right" v-else>
-          <button class="gotologin" @click="gotologin">用户注册</button>
-        </div>
-      </div>
-    </div>
-    <div class="container-xl" v-if="hiddenTopComponent">
-      <div class="select-box">
-        <ul class="select-list">
-          <li class="list-item" v-for="(item, index) in liList"
-            :key="index">
-            <div class="item-info">
-              <router-link :to="item.link">{{ item.name }}</router-link>
-            </div>
-          </li>
-        </ul>
-        <div class="search">
-          <div class="search-loge">
-            <img src="../../assets/Img/Icon/search.png" alt="">
-          </div>
-          <input type="text" placeholder="Search...">
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -138,12 +137,6 @@ export default {
     deep: true,
     immediate: true,
   }
-
-
-
-
-
-
 };
 </script>
 
@@ -151,18 +144,19 @@ export default {
 .header {
   .main-box {
     display: flex;
-    height: 50px;
+    margin:15px auto;
+    width: 1320px;
+    min-width: 1320px;
     justify-content: space-between;
-    align-content: center;
-    margin-bottom: 10px;
 
     .main-left {
+      margin-left: 64px;
       display: flex;
       align-items: center;
 
       .loge {
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
 
         img {
           width: 100%;
@@ -176,16 +170,68 @@ export default {
         font-size: 20px;
       }
 
-      .welcome {
-        color: #666;
-        font-family: '楷体';
-        font-size: 17px;
-        margin-left: 15px;
+    }
+    .main-middle{
+      .middle-box {
+        display: flex;
+        align-items: center;
+
+        .middle-list{
+          display: flex;
+          margin-bottom: 0;
+
+          .list-item {
+            display: flex;
+            padding:  5px;
+            align-content: center;
+          }
+
+          .item-info {
+            margin: 14px;
+            font-weight: 500;
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.8);
+
+            a {
+              text-decoration: none;
+              color: #666;
+            }
+          }
+
+          .action {
+            border-bottom: blue 3px solid;
+          }
+        }
+
+        .search {
+          margin: 10px 13px;
+          display: flex;
+
+          padding: 1px 5px;
+
+          border: 1px solid #dadcde;
+          border-radius: 10px;
+
+          .search-loge {
+            width: 20px;
+            height: 20px;
+
+            img {
+              margin-top: 5px;
+              vertical-align: top;
+              width: 100%;
+            }
+          }
+
+          input {
+            padding: 0 12px 0 5px;
+            width: 200px;
+          }
+        }
       }
     }
-
     .main-right {
-      display: flex;
+      margin-right: 64px;
 
       .message-icon {
         margin-right: 20px;
@@ -213,8 +259,8 @@ export default {
 
       .userimg {
         position: relative;
-        width: 36px;
-        height: 36px;
+        width: 48px;
+        height: 48px;
         img {
           display: block;
           width: 100%;
@@ -267,68 +313,7 @@ export default {
     }
   }
 
-  .select-box {
-    display: flex;
-    justify-content: space-between;
-    margin: 8px 0;
-    border-top: 1px solid #f3f6f9;
-    border-bottom: 1px solid #f3f6f9;
 
-    .select-list {
-      display: flex;
-      margin-left: 130px;
-      margin-bottom: 0;
-
-      .list-item {
-        display: flex;
-        margin-right: 30px;
-        padding: 10px 5px;
-        align-content: center;
-      }
-
-      .item-info {
-        margin-top: 2px;
-        margin-left: 5px;
-        font-size: 16px;
-        color: #232e3c;
-
-        a {
-          text-decoration: none;
-          color: #666;
-        }
-      }
-
-      .action {
-        border-bottom: blue 3px solid;
-      }
-    }
-
-    .search {
-      display: flex;
-      margin-top: 8px;
-      padding: 1px 5px;
-      height: 30px;
-      line-height: 30px;
-      border: 1px solid #dadcde;
-      border-radius: 10px;
-
-      .search-loge {
-        width: 20px;
-        height: 20px;
-
-        img {
-          margin-top: 5px;
-          vertical-align: top;
-          width: 100%;
-        }
-      }
-
-      input {
-        padding: 0 12px 0 5px;
-        width: 200px;
-      }
-    }
-  }
 
   .userimg:hover .user-select {
     height: 70px !important;

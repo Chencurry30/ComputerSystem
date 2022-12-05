@@ -9,7 +9,9 @@ export default [
     component: videoPage,
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   },
   {
@@ -18,7 +20,9 @@ export default [
     component: videoSelect,
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   },
 

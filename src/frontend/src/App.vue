@@ -1,9 +1,9 @@
 <template>
   <div id="app">
 
-    <webHeader v-if="isRouterAlive"></webHeader>
+    <webHeader v-if="isRouterAlive && showHeader"></webHeader>
     <router-view></router-view>
-    <webFotter></webFotter>
+    <webFotter v-if="showFotter"></webFotter>
 
   </div>
 </template>
@@ -36,6 +36,14 @@ export default {
       this.$nextTick(function() {
         this.isRouterAlive = true
       })
+    }
+  },
+  computed:{
+    showHeader(){
+      return this.$route.meta.showNotFound
+    },
+    showFotter(){
+      return this.$route.meta.showNotFound
     }
   }
 }

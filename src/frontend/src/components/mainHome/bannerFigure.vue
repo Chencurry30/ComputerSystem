@@ -2,7 +2,7 @@
     <el-carousel :interval="4000" type="card" height="300px">
       <el-carousel-item v-for="(item,value) in imglist" :key="value">
             <h3 class="medium">
-                <img :src="item.imgurl">
+                <img :src="item.imgurl" alt="">
             </h3>
       </el-carousel-item>
   </el-carousel>
@@ -26,7 +26,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+
   .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;

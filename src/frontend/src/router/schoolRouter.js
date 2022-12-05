@@ -8,7 +8,9 @@ export default [
         component:schoolSelect,
         meta: {                          
             showTop: true,
-            showFotter:true
+            showFotter:true,
+            //跳转到404页面后是出现头部
+            showNotFound:true,
           },
     },
     {
@@ -17,7 +19,9 @@ export default [
         component:schoolPage,
         meta: {                          
             showTop: false,
-            showFotter:false
+            showFotter:false,
+            //跳转到404页面后是出现头部
+            showNotFound:true,
           },  
     }
 ]

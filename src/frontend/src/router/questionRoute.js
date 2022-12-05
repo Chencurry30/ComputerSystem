@@ -10,7 +10,9 @@ export default [
     component: questionPage,
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   },
   {
@@ -19,7 +21,9 @@ export default [
     component: questionSelect,
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   },
   {
@@ -28,7 +32,9 @@ export default [
     component:()=>import('@/views/questionViews/questionVolume'),  
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   }, 
   {
@@ -37,7 +43,9 @@ export default [
     component: ()=>import('@/views/questionViews/questionQS'),
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   },
 ]
