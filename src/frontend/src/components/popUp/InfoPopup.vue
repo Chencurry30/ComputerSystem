@@ -63,10 +63,13 @@ import { mapGetters } from 'vuex'
 import rules from '../../utils/rules'
 export default {
   name: "InfoPopup",
+  //App中传入的一个相关的方法,用于帮助进行页面刷新 
+  inject: ['reload'],
   data() {
     return {
       showDialog: false,
       showPopupInfo: {},
+
       checkForm: {
         //邮箱验证
         email: [
@@ -105,15 +108,18 @@ export default {
           console.log('数据符合要求');
           this.$store.dispatch('userInfo/changeUserInfo', this.showPopupInfo)
           this.$message({
-                message: "修改个人信息成功",
-                type: "success",
-              })
+            message: "修改个人信息成功",
+            type: "success",
+          })
+          sessionStorage.setItem('nickname',this.showPopupInfo.nickname)
+          this.reload()
           this.closePopup()
+
         } else {
-          this.showPopupInfo.email = ""
-          this.showPopupInfo.nickname = ""
-          this.showPopupInfo.age = ""
-          this.showPopupInfo.message = ""
+          this.$message({
+            message: "请按照相关提示修改后再提交",
+            type: "error",
+          })
         }
       })
 
@@ -145,7 +151,6 @@ export default {
 
     .DialogHeader {
       .closeImg {
-
         img {
           width: 100%;
         }
@@ -195,11 +200,11 @@ export default {
 
 :deep .el-form-item__error {
   position: absolute;
-  padding: 3px 0px;
-  top: 70%;
-  left: 0px;
+  padding: 3px 0;
+  top: 75%;
+  left: 0;
   color: #F56C6C;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 :deep .el-form-item__label {

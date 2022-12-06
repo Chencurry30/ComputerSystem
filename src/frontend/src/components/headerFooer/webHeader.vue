@@ -1,53 +1,55 @@
 <!--网站头部-->
 <template>
   <div class="header">
-
-          <div class="main-box">
-            <div class="main-left">
-              <div class="loge">
-                <img src="../../assets/Img/webloge.png" alt="" />
-              </div>
-              <div class="title">旭升网</div>
+    <div class="headerMain">
+      <div class="main-left">
+        <div class="loge">
+          <img src="../../assets/Img/webloge.png" alt="" />
+        </div>
+        <div class="title">旭升网</div>
+      </div>
+      <div class="main-middle">
+        <div class="middle-box">
+          <div class="list-item" v-for="(item, index) in liList" :key="index">
+            <router-link :to="item.link">{{ item.name }}</router-link>
+          </div>
+          <div class="search">
+            <div class="searchImg">
+              <img src="../../assets/Img/Icon/search.png" alt="">
             </div>
-            <div class="main-middle">
-              <div class="middle-box">
-                <ul class="middle-list">
-                  <li class="list-item" v-for="(item, index) in liList"
-                      :key="index">
-                    <div class="item-info">
-                      <router-link :to="item.link">{{ item.name }}</router-link>
-                    </div>
-                  </li>
-                </ul>
-                <div class="search">
-                  <div class="search-loge">
-                    <img src="../../assets/Img/Icon/search.png" alt="">
-                  </div>
-                  <input type="text" placeholder="Search...">
-                </div>
+            <div class="searchBox">
+              <div class="searchMain">
+                <input type="text" placeholder="请输入搜索内容" class="inputType">
               </div>
-            </div>
-            <div class="main-right centerLocation" v-if="showLoginBtn">
-              <div class="message-icon">
-                <img src="../../assets/Img/Icon/message.png" alt="" />
-              </div>
-              <div class="userimg">
-                <img v-if="hidddenDefaultImg" :src='publicUrl' alt="" />
-                <img v-else src="../../assets/Img/defaultUserImg.png" alt="默认头像" />
-                <div class="user-select">
-                  <div class="select-item" @click="gotoPerson()">个人中心</div>
-                  <div class="select-item" @click="backLogin()">退出登录</div>
-                </div>
-              </div>
-            </div>
-            <div class="main-right" v-else>
-              <button class="gotologin" @click="gotologin">用户注册</button>
             </div>
           </div>
+          <div class="list-item" v-if="judgeUserLogin">
+            <router-link :to="{ name: 'personPage' }">个人中心 </router-link>
+          </div>
+          <div class="login-or-register centerLocation" v-else>
+            <span class="login">登录</span>
+            <span class="register">注册</span>
+          </div>
+        </div>
+      </div>
+      <div class="main-right centerLocation" v-if="judgeUserLogin">
+        <div class="userimg">
+          <img v-if="hidddenDefaultImg" :src='publicUrl' alt="" @mouseenter="showSelect()"
+            @mouseleave="hiddenSelect()" />
+          <img v-else src="../../assets/Img/defaultUserImg.png" alt="默认头像" />
+
+          <div class="user-select" :class="{ showBox: show }" @mouseenter="showSelect()">
+            <div class="select-item">{{ userNickName }}</div>
+            <div class="select-item" @click="backLogin()">退出登录</div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-
 import { mapGetters } from 'vuex'
 import { createPublicUrl } from '../../utils/index'
 export default {
@@ -65,10 +67,12 @@ export default {
         { name: '考研政策', link: '' },
         { name: '更多信息', link: 'questionQS' },
       ],
-      current: 0,
-      showBox: false,
+      //动态显示选择框 
+      show: false,
       //用户头像
-      userImg:sessionStorage.getItem('userImg')
+      userImg: sessionStorage.getItem('userImg'),
+      //用户昵称 
+      userNickName: sessionStorage.getItem('nickname')
     }
   },
   methods: {
@@ -82,7 +86,7 @@ export default {
     backLogin() {
       sessionStorage.removeItem('token')
       sessionStorage.removeItem('userImg')
-      sessionStorage.removeItem('userId') 
+      sessionStorage.removeItem('userId')
       let location = {
         name: 'loginView'
       }
@@ -96,22 +100,28 @@ export default {
       }
       this.$router.push(location)
     },
-    //获取图片路径
+    //展示下选框 
+    showSelect() {
+      this.show = true
+    },
+    //隐藏下选框 
+    hiddenSelect() {
+      this.show = false
+    }
+
   },
   computed: {
-    showLoginBtn() {
+    //判断用户是否登录 
+    judgeUserLogin() {
       return sessionStorage.getItem('token') !== null
     },
-    hiddenTopComponent() {
-      return this.$route.meta.showTop;
-    },
+    //拼接公共的url 
     publicUrl() {
-
       return createPublicUrl() + this.userImg
     },
     //判断用户是否有头像 
-    hidddenDefaultImg(){
-      return sessionStorage.getItem('userImg')
+    hidddenDefaultImg() {
+      return sessionStorage.getItem('userImg') !== '无'
     },
     //获取用户信息
     ...mapGetters('userInfo', {
@@ -119,19 +129,23 @@ export default {
     }),
   },
 
-
-  watch:{
-    'getUserInfo':{
-      handler: function(newval){
+  watch: {
+    'getUserInfo': {
+      handler: function (newval) {
+        console.log(newval);
         //先从session中获取图片
         let localImg = sessionStorage.getItem(('userImg'))
-        if(localImg !== newval.image){
+        if (localImg !== newval.image) {
           this.userImg = newval.image
+          this.userNickName = newval.nickname
           //将新图片存储到session,供首页使用
-          sessionStorage.setItem('userImg',newval.image)
+          sessionStorage.setItem('userImg', newval.image)
+          //将新昵称存储到session,供首页使用
+          sessionStorage.setItem('nickname', newval.nickname)
         }
-        setTimeout( ()=>{
-          this.reload()},100)
+        setTimeout(() => {
+          this.reload()
+        }, 100)
       }
     },
     deep: true,
@@ -142,17 +156,22 @@ export default {
 
 <style lang="less" scoped>
 .header {
-  .main-box {
+  display: flex;
+  justify-content: center;
+  min-width: 1300px;
+  height: 60px;
+  box-shadow: 0 0 5px #d7d7d7;
+  z-index: 1000;
+
+  .headerMain {
     display: flex;
-    margin:15px auto;
-    width: 1320px;
-    min-width: 1320px;
-    justify-content: space-between;
+    flex-basis: 1200px;
+    line-height: 60px;
 
     .main-left {
-      margin-left: 64px;
       display: flex;
       align-items: center;
+      width: 138px;
 
       .loge {
         width: 40px;
@@ -169,98 +188,98 @@ export default {
         font-weight: 700;
         font-size: 20px;
       }
-
     }
-    .main-middle{
+
+    .main-middle {
+      align-items: center;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
       .middle-box {
         display: flex;
-        align-items: center;
 
-        .middle-list{
-          display: flex;
-          margin-bottom: 0;
-
-          .list-item {
-            display: flex;
-            padding:  5px;
-            align-content: center;
-          }
-
-          .item-info {
-            margin: 14px;
-            font-weight: 500;
-            font-size: 18px;
-            color: rgba(0, 0, 0, 0.8);
-
-            a {
-              text-decoration: none;
-              color: #666;
-            }
-          }
-
-          .action {
-            border-bottom: blue 3px solid;
-          }
+        .list-item {
+          align-items: center;
+          padding: 0 20px;
         }
 
         .search {
-          margin: 10px 13px;
           display: flex;
+          position: relative;
+          align-items: center;
+          width: 220px;
 
-          padding: 1px 5px;
-
-          border: 1px solid #dadcde;
-          border-radius: 10px;
-
-          .search-loge {
-            width: 20px;
-            height: 20px;
-
-            img {
-              margin-top: 5px;
-              vertical-align: top;
-              width: 100%;
-            }
+          .searchImg {
+            position: absolute;
+            top: 20px;
+            right: 11px;
+            z-index: 999;
           }
 
-          input {
-            padding: 0 12px 0 5px;
-            width: 200px;
+          .searchBox {
+            width: 100%;
+            font-feature-settings: "tnum";
+            box-sizing: border-box;
+            color: #000000d9;
+            font-size: 14px;
+            font-variant: tabular-nums;
+            line-height: 1.5715;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+          }
+
+          .searchMain {
+            padding: 5px 0;
+            border-radius: 119px;
+            background-color: #fff;
+            border: 1px solid #d9d9d9;
+            position: relative;
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+          }
+
+          .inputType {
+            margin-left: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 167px;
+          }
+        }
+
+
+
+        .login-or-register {
+          margin-left: 50px;
+          cursor: pointer;
+
+          .login {
+            margin-right: 2rem;
+          }
+
+          .register {
+            background-color: #4d555d;
+            color: #fff;
+            height: 30px;
+            line-height: 26px;
+            padding: 2px;
+            text-align: center;
+            width: 60px;
+
+
           }
         }
       }
+
     }
+
     .main-right {
-      margin-right: 64px;
-
-      .message-icon {
-        margin-right: 20px;
-        margin-top: 6px;
-        position: relative;
-        width: 20px;
-        height: 20px;
-
-        img {
-          width: 100%;
-        }
-      }
-
-      .message-icon:after {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 10px;
-        content: "";
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background-color: red;
-      }
-
       .userimg {
         position: relative;
         width: 48px;
         height: 48px;
+
         img {
           display: block;
           width: 100%;
@@ -268,15 +287,19 @@ export default {
           border-radius: 50%;
         }
 
+        .showBox {
+          display: block !important;
+        }
+
         .user-select {
-          overflow: hidden;
-          width: 120px;
+          display: none;
+          width: 100px;
           height: 0;
           position: absolute;
           top: 40px;
-          left: -45px;
-          border-radius: 10px;
+          left: -30px;
           transition: 1s;
+          z-index: 999;
 
           .select-item {
             margin-top: 8px;
@@ -286,39 +309,16 @@ export default {
             height: 24px;
             line-height: 24px;
             cursor: pointer;
+            overflow: hidden;
+          }
+
+          .select-item:hover {
+            background-color: #9a9c9d;
           }
         }
       }
 
-      .userimg:hover .itemVBox {
-        display: block;
-        transition: 1s;
-      }
-
-      .gotologin {
-        margin-top: 14px;
-        padding: 2px 16px;
-        height: 35px;
-        line-height: 30px;
-        border-radius: 10px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #4e71f2;
-        opacity: 0.7;
-      }
-
-      .gotologin:active {
-        opacity: 1;
-      }
     }
   }
-
-
-
-  .userimg:hover .user-select {
-    height: 70px !important;
-    background: rgb(11, 171, 234) !important;
-  }
-
 }
 </style>

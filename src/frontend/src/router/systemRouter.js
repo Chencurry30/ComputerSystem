@@ -1,7 +1,4 @@
 import Home from '@/views/baseViews/Home'
-
-const loginView = () => import('@/views/baseViews/loginView')       //登录页面
-const registerView = () => import('@/views/baseViews/registerView')  //注册页面
 export default [{
   path: '/',
   redirect: Home,
@@ -20,7 +17,7 @@ export default [{
 {
   path: '/loginView',
   name: 'loginView',
-  component: loginView,
+  component: () => import('@/views/baseViews/loginView') ,
   meta: {
     showTop: false,
     showFotter:false,
@@ -31,7 +28,7 @@ export default [{
 {
   path: '/registerView',
   name: 'registerView',
-  component: registerView,
+  component: () => import('@/views/baseViews/registerView') ,
   meta: {
     showTop: true,
     showFotter:true,

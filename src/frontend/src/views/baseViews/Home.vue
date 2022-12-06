@@ -35,6 +35,6 @@
 
 <style scoped lang="less">
 .HomeBox{
-  padding-top: 15px;
+  padding-top: 55px;
 }
   </style>

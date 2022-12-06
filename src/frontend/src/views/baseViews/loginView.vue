@@ -138,10 +138,12 @@ export default {
               const token = res.data.data.token
               const userImg = res.data.data.user.image
               const userId = res.data.data.user.userId
+              const nickname = res.data.data.user.nickname
               sessionStorage.setItem('userImg',userImg)
               sessionStorage.setItem('userId',userId)   //保存正在登录用户的userId
               sessionStorage.setItem('token', token)    //保存token到本地浏览器
-              const name = Cookies.get('name')
+              sessionStorage.setItem('nickname',nickname)
+              const name = Cookies.get('nickname')
               this.$message({
                 message: "恭喜你，登录成功！欢迎用户: " + name,
                 type: "success",

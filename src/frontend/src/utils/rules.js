@@ -20,10 +20,11 @@ let ageReg = /^120$|^[1-9]$|^(1[0-1]|[1-9])\d$/
 let emailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
 
 //验证昵称
-let nicknameReg =  /^[\u4e00-\u9fa5]{2,6}$ |(?![0-9]*$)(?![a-zA-Z]*$)[a-zA-Z0-9]{2,12}$/
+let nicknameReg =  /^[\u4e00-\u9fa5]{2,12}$|[a-zA-Z0-9]{2,12}$/
 
 //验证个人留言 
-let personalMessageReg = /^[\u4e00-\u9fa5]{5,20}$/
+let personalMessageReg = /^[\u4e00-\u9fa5]{1,20}$/
+
 
 let FormValidate = (function () {
   function FormValidate () {}
@@ -92,7 +93,7 @@ let FormValidate = (function () {
       validateNickName(rule,value,callback){
         if (value !== '') {
           if ( !nicknameReg.test(value)) {
-            callback(new Error('昵称格式不对(2-12位要包含数字,字母,中文)'))
+            callback(new Error('格式不对(2-12位(数字,字母,中文))'))
           } else {
             callback()
           }
@@ -104,15 +105,14 @@ let FormValidate = (function () {
       validatePersonalMessage(rule,value,callback){
         if (value !== '') {
           if ( !personalMessageReg.test(value)) {
-            callback(new Error('留言格式不对(5~20)只能是中文'))
+            callback(new Error('留言格式不对(2~20)只能是中文'))
           } else {
             callback()
           }
         } else {
           callback(new Error('请输入个人留言'))
         }
-      } 
-      
+      },
 
     }
   }

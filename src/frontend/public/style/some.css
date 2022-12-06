@@ -18,10 +18,6 @@ dl {
 li{
   list-style: none;
 }
-a {
-  color: #666;
-  text-decoration: none;
-}
 
 input {
   border: 0;
@@ -80,7 +76,13 @@ img {
 }
 
 .first {
-  margin-left: 0px !important;
+  margin-left: 0 !important;
+}
+
+/*取消router-link的样式*/
+a {
+  text-decoration:none !important; 
+  color: #4f555d !important;
 }
 
 

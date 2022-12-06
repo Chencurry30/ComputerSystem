@@ -10,7 +10,7 @@
           </a>
         </li>
         <li v-for="(page, index) in pageNumber" :key="index" :class="{ 'active': page === pageData.pageNo }"
-          @click="gotoPage(page), giveFatherPageNo(page)">
+          @click="gotoPage(page)">
           <a>
             {{ page }}
           </a>
@@ -40,19 +40,21 @@ export default {
     prePage: _.throttle(function () {
       if (this.pageData.pageNo === 1) {
         this.pageData.pageNo = 1;
+        this.$message.success('这已经是第一页了')
       } else {
         this.pageData.pageNo -= 1;
         this.giveFatherPageNo(this.pageData.pageNo)
       }
-    }, 2500),
+    }, 1000),
     nextPage:_.throttle(function(){
       if (this.pageData.pageNo === this.pageData.pageTotal) {
         this.pageData.pageNo = this.pageData.pageTotal;
+        this.$message.success('这已经是最后一页了')
       } else {
         this.pageData.pageNo += 1;
         this.giveFatherPageNo(this.pageData.pageNo)
       }
-    },2500),
+    },1000),
     //计算从后端返回的分页器的相关数据的页面标明 
     calculatePage() {
       let totalPage = this.pageData.pageTotal  //获取总的页码数
@@ -69,14 +71,11 @@ export default {
 
     //利用lodash来防止抖动 
     gotoPage(page) {
-      if (page === '...') {
-        return;
-      } else {
+      if (page !== '...' && this.pageData.pageNo !== page) {
         this.giveFatherPageNo(page)
         this.calculatePage();
       }
     },
-
 
     //利用下面的点击选项，从子组件向父组件进行相关参数的传递 
     giveFatherPageNo(page) {
@@ -115,14 +114,14 @@ export default {
 
 <style lang="less" scoped>
 .pagerview {
-  margin: 25px 0px 20px 0;
+  margin: 25px 0 20px 0;
 
   .pagerBox {
-    margin: 5px 0px;
+    margin: 5px 0;
     text-align: center;
 
     .pagination {
-      margin-bottom: 0px;
+      margin-bottom: 0;
 
       li {
         margin: 0 5px;

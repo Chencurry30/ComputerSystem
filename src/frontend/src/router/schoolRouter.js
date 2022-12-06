@@ -1,11 +1,8 @@
-const schoolSelect = () => import('@/views/schoolView/schoolSelect')
-const schoolPage = () => import('@/views/schoolView/schoolPage')
-
 export default [
     {
         path:'/schoolSelect',
         name:'schoolSelect',
-        component:schoolSelect,
+        component:() => import('@/views/schoolView/schoolSelect'),
         meta: {                          
             showTop: true,
             showFotter:true,
@@ -16,7 +13,7 @@ export default [
     {
         path:'/schoolPage/:collegeId?',
         name:'schoolPage',
-        component:schoolPage,
+        component: () => import('@/views/schoolView/schoolPage'),
         meta: {                          
             showTop: false,
             showFotter:false,
