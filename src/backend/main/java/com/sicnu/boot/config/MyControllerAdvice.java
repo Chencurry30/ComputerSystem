@@ -5,6 +5,7 @@ import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -116,6 +117,22 @@ public class MyControllerAdvice {
     }
 
     /**
+     * description: 捕获登录失败的异常
+     *
+     * @param e:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 16:01
+     */
+    @ExceptionHandler(value = BadCredentialsException.class)
+    @ResponseBody
+    public ServerResponse<String> loginExceptionHandler(BadCredentialsException e){
+        log.error("登录失败！原因是:" + e.getMessage());
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode(),
+                "用户名或密码错误，登录失败");
+    }
+
+    /**
      * description: 拦截所有异常
      *     可以定制
      *
@@ -127,6 +144,7 @@ public class MyControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ServerResponse<String> handleException(Exception e){
         e.printStackTrace();
-        return ServerResponse.createByErrorMessage("服务器异常");
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.INTERNAL_SERVER_ERROR.getCode(),
+                "服务器异常,请联系工作人员");
     }
 }

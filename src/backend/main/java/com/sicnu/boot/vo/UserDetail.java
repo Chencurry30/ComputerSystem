@@ -54,6 +54,7 @@ public class UserDetail {
     @Length(min = 4,max = 4,message = "验证码的长度只能为4")
     private String smsCode;
     private String message;
+    private Integer isFriend;
     private List<Role> roles;
     private Role roleOne;
     public UserDetail(String nickname,String image,Integer userId){

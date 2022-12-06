@@ -4,9 +4,58 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sicnu.boot.mapper.UserFriendMapper">
+    <insert id="addFriend" parameterType="FriendExamine">
+        insert into friend_examine(examine_id, user_id, friend_id, time, reason)
+            values(null,#{userId},#{friendId},#{time},#{reason})
+    </insert>
+    <insert id="insertFriend">
+        insert into user_friend values (#{userId},#{friendId})
+    </insert>
+    <update id="examineFriend" parameterType="FriendExamine">
+        update friend_examine set status = #{status}  where user_id = #{friendId} and friend_id = #{userId}
+    </update>
 
     <select id="getFriendsByUserId" resultType="com.sicnu.boot.vo.UserDetail">
         select user_id,nickname,image from user where user_id in
                            (select friend_id from user_friend where user_id = #{userId})
     </select>
+    <select id="getUserListByNickname" resultType="com.sicnu.boot.vo.UserDetail">
+        select user_id,username,nickname,image from user
+        <where>
+            <trim>
+                nickname like "%" #{nickname} "%"
+            </trim>
+        </where>
+    </select>
+    <select id="checkAddFriend" resultType="java.lang.Integer">
+        select count(*) from friend_examine where user_id = #{userId} and friend_id = #{friendId} and status = 0
+    </select>
+    <select id="checkFriend" resultType="java.lang.Integer">
+        select count(*) from user_friend where friend_id = #{friendId} and user_id = #{userId}
+    </select>
+    <select id="getUserExamineList" resultType="com.sicnu.boot.pojo.FriendExamine">
+        select * from friend_examine
+        <where>
+            <trim>
+                user_Id = #{userId}
+            </trim>
+            <if test="status != null and status != -1">
+                and status = #{status}
+            </if>
+
+        </where>
+    </select>
+    <select id="getFriendExamineList" resultType="com.sicnu.boot.pojo.FriendExamine">
+        select * from friend_examine
+        <where>
+            <trim>
+                friend_id = #{userId}
+            </trim>
+            <if test="status != null and status != -1">
+                and status = #{status}
+            </if>
+
+        </where>
+    </select>
+
 </mapper>

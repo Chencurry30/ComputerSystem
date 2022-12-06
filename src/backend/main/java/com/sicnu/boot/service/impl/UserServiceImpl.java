@@ -83,6 +83,8 @@ public class UserServiceImpl implements UserService {
         //把token响应给前端
         HashMap<String,Object> map = new HashMap<>(5);
         map.put("token",jwt);
+        map.put("createTime",System.currentTimeMillis());
+        map.put("expire",180 * 60 * 1000);
         //返回用户部分信息
         UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname()
                 ,loginUser.getUser().getImage(),loginUser.getUser().getUserId());
