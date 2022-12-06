@@ -183,6 +183,7 @@ export default {
 
 <style scoped lang="less">
 .login-wrap-bg {
+  margin-top: 60px;
   position: relative;
   height: 440px;
   width: 100%;
