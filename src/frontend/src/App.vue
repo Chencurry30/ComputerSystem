@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-
-    <webHeader v-if="isRouterAlive"></webHeader>
+    <div v-if="showHeader">
+      <webHeader v-if="isRouterAlive"></webHeader>
+    </div>
     <router-view></router-view>
-    <webFotter></webFotter>
+    <webFotter v-if="showFotter"></webFotter>
 
   </div>
 </template>
@@ -33,16 +34,24 @@ export default {
   methods: {
     reload() {
       this.isRouterAlive = false
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.isRouterAlive = true
       })
+    }
+  },
+  computed: {
+    showHeader() {
+      return this.$route.meta.showNotFound
+    },
+    showFotter() {
+      return this.$route.meta.showNotFound
     }
   }
 }
 </script>
 
 <style lang="less">
-#app{
+#app {
   height: 100%;
   margin: 0;
   padding: 0;

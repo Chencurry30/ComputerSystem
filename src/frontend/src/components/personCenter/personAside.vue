@@ -82,6 +82,15 @@
             </div>
             <div class="list-info">
               <router-link :to="{ name: 'myDynamics' }" style="text-decoration: none">我的动态</router-link>
+
+            </div>
+          </li>
+          <li class="list-item">
+            <div class="list-icon">
+              <img src="../../assets/Img/Icon/notice.png" alt="" />
+            </div>
+            <div class="list-info">
+              <router-link :to="{ name: 'userChat' }" style="text-decoration: none">好友聊天</router-link>
             </div>
           </li>
         </ul>

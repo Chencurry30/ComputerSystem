@@ -77,9 +77,7 @@
     </div>
     <div class="fotter-auto">
       <div class="auto">
-        <a href="https://yz.chsi.com.cn/" target="_blank"
-          >中国研究生招生信息网</a
-        >
+        <a href="https://yz.chsi.com.cn/" target="_blank">中国研究生招生信息网</a>
         <a href="https://www.chsi.com.cn/" target="_blank">学信网</a>
         <a href="https://zkaoy.com/" target="_blank">青研帮</a>
         <a href="https://kaoyan.eol.cn/" target="_blank">中国教育在线</a>
@@ -102,26 +100,29 @@ export default {
 .fotter {
   margin-top: 10px;
   width: 100%;
-  // border-top: 1px solid #dedede;
-  // background: #eaeaea;
+
   .fotter-info {
     display: flex;
     margin: 10px auto;
-    width: 990px;
+    width: 1100px;
     color: #666;
-    font-family: "microsoft yahei";
+
     .fotter-left {
       display: flex;
+
       .list-link {
         width: 158px;
+
         h3 {
           margin: 10px 0 0 8px;
           font-size: 18px;
           font-weight: normal;
           color: #666;
         }
+
         ul {
           margin-left: 12px;
+
           li {
             padding: 2px 0;
             font-size: 14px;
@@ -130,12 +131,14 @@ export default {
             white-space: nowrap;
             overflow: hidden;
           }
+
           li:hover {
             color: black;
           }
         }
       }
     }
+
     .fotter-right {
       h5 {
         margin-top: 10px;
@@ -143,23 +146,27 @@ export default {
         font-size: 14px;
         text-align: center;
       }
+
       .showinfo {
         font-size: 13px;
       }
+
       .goto-link {
         margin-top: -7px;
         margin-right: 2px;
         text-align: right;
+
         a {
           font-size: 12px;
         }
       }
     }
   }
+
   .fotter-copy {
     margin: 0 auto;
     margin-top: 20px;
-    width: 990px;
+    width: 1020px;
     border-top: 1px solid #dedede;
 
     .copy-select {
@@ -168,10 +175,12 @@ export default {
       margin: 10px 0;
       height: 24px;
       line-height: 24px;
+
       a {
         font-size: 12px;
         color: #666;
       }
+
       .mod_copy {
         padding: 0 6px;
         text-align: center;
@@ -180,14 +189,17 @@ export default {
       }
     }
   }
+
   .fotter-auto {
     margin: 0 auto;
     padding-bottom: 3px;
     width: 990px;
+
     .auto {
       display: flex;
       justify-content: center;
       margin: 5px 0 10px 0;
+
       a {
         margin: 0 10px;
         font-size: 12px;

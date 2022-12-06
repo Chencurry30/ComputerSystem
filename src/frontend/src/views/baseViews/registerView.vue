@@ -137,6 +137,7 @@ export default {
 
 <style scoped lang="less">
 .register-wrap-bg {
+  margin-top: 60px;
   position: relative;
   height: 500px;
   width: 100%;

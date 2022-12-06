@@ -260,9 +260,9 @@ export default {
     videoPlay,
   },
   mounted() {
-    //获取对应视屏的相关信息 
+    //获取对应视屏的相关信息
     this.getPageData()
-    //获取相应资源的评论信息 
+    //获取相应资源的评论信息
     this.getPageRemark()
   },
   methods: {
@@ -271,7 +271,7 @@ export default {
       let videoId = this.$route.query.videoId
       this.$store.dispatch('videoData/getInfo', videoId)
     },
-    //获取对应的评论信息 
+    //获取对应的评论信息
     getPageRemark() {
       let videoId = this.$route.query.videoId
       this.$store.dispatch('remark/getVideoRemark', videoId)
@@ -285,7 +285,7 @@ export default {
       }
 
     },
-    //判断用户是否收藏了这视频(10秒钟执行一次) 
+    //判断用户是否收藏了这视频(10秒钟执行一次)
     collectVideo:_.throttle(function(){
       let videoId = this.$route.query.videoId
       collectVideo(videoId).then((res) => {
@@ -294,13 +294,13 @@ export default {
         }
       })
     },10000)
-    
+
 
   },
   computed: {
 
 
-    //从vuex中获取视屏的基本信息 
+    //从vuex中获取视屏的基本信息
     ...mapGetters('videoData', {
       videoInfo: 'getVideoInfo'
     }),
@@ -309,7 +309,7 @@ export default {
     //从vuex中获取基本的评论列表
     ...mapGetters('remark', {
       getRemarkList: 'getRemarkList',
-      //获取的是点击回复评论时被回复人的相关信息 
+      //获取的是点击回复评论时被回复人的相关信息
       getOtherInfo: 'getOtherInfo'
     }),
 
@@ -320,7 +320,7 @@ export default {
 <style lang='less' scoped>
 .MainBox {
   display: flex;
-  margin-top: 15px;
+  margin-top: 70px;
 
   .MainBox-left {
     width: 800px;
@@ -494,19 +494,19 @@ export default {
           }
         }
 
-        //显示子评论的宽度 
+        //显示子评论的宽度
         .hidden {
           height: 90px;
           overflow: hidden;
         }
 
-        //将没有子评论的相关信息隐藏 
+        //将没有子评论的相关信息隐藏
         .hiddenBox {
           height: 0px;
           overflow: hidden;
         }
 
-        //显示相关信息 
+        //显示相关信息
         .showBox {
           height: 100%;
           // overflow: auto;

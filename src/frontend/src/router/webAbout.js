@@ -11,7 +11,9 @@ export default  [
     component: webAboutIndex,
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   },
   {
@@ -20,7 +22,9 @@ export default  [
     component: webAboutService,
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   },
   {
@@ -29,7 +33,9 @@ export default  [
     component: webAboutContact,
     meta: {                          
       showTop: true,
-      showFotter:true
+      showFotter:true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
     },
   }
 ]

@@ -71,18 +71,25 @@
                 <span class="headerP2">RECOMMEND</span>
                 <span class="headerP2">VIDEOS</span>
               </div>
-              <div class="containMain">
+              <div class="containMain" v-if="collectVideo.length !== 0">
                 <ul class="videoBox">
-                  <li class="video-item" v-for="(videoItem) in collectVideo.list" :key="videoItem.videoId">
+                  <li class="video-item" v-for="(videoItem) in collectVideo" :key="videoItem.videoId"
+                    @click="gotoVideoPage(videoItem.videoId)">
                     <div class="videoImg">
                       <img :src="[publicUrl + videoItem.image]" alt="">
                     </div>
                     <div class="videoName">{{ videoItem.name }}</div>
                   </li>
-
                 </ul>
               </div>
-              <pagerView :pageInfo="collectPage"  @giveFatherPageNo="getSonPageNo"></pagerView>
+              <div class="nodataFound" v-else>
+                <div class="noFoundBox">
+                  <img src="../../assets/Img/defaultListImg.png" alt="" class="nodataFoundImg">
+                </div>
+                <span class="noFoundInfomation">暂无收藏视屏</span>
+              </div>
+              <pagerView :pageInfo="collectPage" @giveFatherPageNo="getSonPageNo" v-if="collectVideo.length !== 0">
+              </pagerView>
             </div>
           </div>
 
@@ -107,12 +114,12 @@ export default {
     return {
       collectVideo: [],
       //关于收藏视屏的分页信息
-      collectPage:{}
+      collectPage: {}
     }
   },
-  components: {PagerView, InfoPopup, personAside, personHeader },
+  components: { PagerView, InfoPopup, personAside, personHeader },
   mounted() {
-    //获取用户的相关信息 
+    //获取用户的相关信息
     this.$store.dispatch('userInfo/getUserInfo')
     //获取本用户收藏的视屏的列表
     this.getUserCollect(1)
@@ -122,7 +129,7 @@ export default {
     //获取用户收藏的视屏
     getUserCollect(pageNum) {
       let userId = sessionStorage.getItem('userId')
-      userVideoCollect(pageNum,userId).then((res) => {
+      userVideoCollect(pageNum, userId).then((res) => {
         if (res.data.code === 200) {
           let data = {}
           data.pageNo = res.data.data.pageNum     //当前的页码数
@@ -133,29 +140,37 @@ export default {
           //将获取的分页数据转化给分页器中
           this.collectPage = data
 
-
           //将获取的数据传递给收藏列表
-          this.collectVideo = res.data.data
+          this.collectVideo = res.data.data.list
+          console.log(this.collectVideo);
         }
       })
     },
-
     //修改用户的个人信息
     changeEditor() {
       this.$refs.InfoPopup.showPopup(this.getUserInfo);
     },
-
     //获取分页器中传递的数据
-    getSonPageNo(pageNum){
+    getSonPageNo(pageNum) {
       this.getUserCollect(pageNum)
 
+    },
+    //点击对应的收藏视屏跳转到对应的页面
+    gotoVideoPage(videoId) {
+      console.log(videoId);
+      let location = {
+        name: 'videoPage'
+      }
+      location.query = { videoId: videoId }
+      this.$router.push(location)
     }
+
   },
   computed: {
     ...mapGetters('userInfo', {
       getUserInfo: 'getUserInfo'
     }),
-    //返回图片存储的公共路径 
+    //返回图片存储的公共路径
     publicUrl() {
       return createPublicUrl()
     }
@@ -165,7 +180,7 @@ export default {
 
 <style lang="less" scoped>
 .MainBox {
-  margin-top: 15px;
+  margin-top: 70px;
 
   .containBox {
     margin-top: 5px;
@@ -241,6 +256,7 @@ export default {
               float: left;
               margin: 0 2px;
               width: 180px;
+              cursor: pointer;
 
               .videoImg {
                 margin-top: 10px;

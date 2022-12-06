@@ -91,7 +91,7 @@ export default {
         thild: 0,
         pageNum: 1
       },
-      //用来判断鼠标移入的时候显示的是哪一个遮罩层 
+      //用来判断鼠标移入的时候显示的是哪一个遮罩层
       countIndex: 0,
     }
   },
@@ -99,14 +99,14 @@ export default {
     PagerView
   },
   mounted() {
-    //获取最初始化的相关数据 
+    //获取最初始化的相关数据
     this.getvideos()
-    //获取视屏的选择列表 
+    //获取视屏的选择列表
     this.getVideoNavType()
 
   },
   methods: {
-    //获取视屏的选择列表 
+    //获取视屏的选择列表
     getVideoNavType() {
       this.$store.dispatch('videoData/getNavType')
     },
@@ -118,13 +118,13 @@ export default {
       let pageNum = 1
       this.$store.dispatch('videoData/getVideoData', { first, second, thild, pageNum })
     },
-    //获取子组件返回的pageNo 
+    //获取子组件返回的pageNo
     getSonPageNo(pageNum) {
       let { first, second, thild } = this.selectId
       this.$store.dispatch('videoData/getVideoData', { first, second, thild, pageNum })
     },
 
-    //根据列表中的选项，返回相关的数据 
+    //根据列表中的选项，返回相关的数据
     selectVideo: _.throttle(function (event) {
       let element = event.target
       let { typeid, durationid, sortid } = element.dataset
@@ -139,7 +139,7 @@ export default {
       this.$store.dispatch('videoData/getVideoData', { first, second, thild, pageNum })
     }, 1500)
     ,
-    //去往具体的视屏页面 
+    //去往具体的视屏页面
     getoVideoPage(videoId) {
       let location = {}
       location.name = 'videoPage'
@@ -167,6 +167,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.videoPage{
+  margin-top: 70px;
+}
 .MainHeader {
   background: #f2f4f6;
 

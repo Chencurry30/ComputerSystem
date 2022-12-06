@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <bannerFigure></bannerFigure>
-    <selectModule></selectModule>
-    <VideoModule></VideoModule>
-    <teacherModuleVue></teacherModuleVue>
-    <appendixModule></appendixModule>
-  </div>
+    <div class="HomeBox">
+      <bannerFigure></bannerFigure>
+      <selectModule></selectModule>
+      <VideoModule></VideoModule>
+      <teacherModuleVue></teacherModuleVue>
+      <appendixModule></appendixModule>
+    </div>
 </template>
 
 
@@ -34,11 +34,7 @@
 </script>
 
 <style scoped lang="less">
-  .contain {
-    position: relative;
-    .mainbox {
-      display: flex;
-
-    }
-  }
+.HomeBox{
+  padding-top: 55px;
+}
   </style>

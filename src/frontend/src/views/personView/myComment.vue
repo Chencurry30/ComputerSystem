@@ -86,10 +86,10 @@ export default {
 
 <style lang='less' scoped>
 .MainBox {
-  margin-top: 15px;
+  margin-top: 70px;
 
   .containBox {
-    margin-top: 5px;
+    margin-top: 70px;
     display: flex;
 
 

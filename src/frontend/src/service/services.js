@@ -4,10 +4,10 @@ import Vue from 'vue'
 import nProgress from 'nprogress';
 import "nprogress/nprogress.css"
 import router from '../router';
-const baseurl = '/api'
+const baseurl = 'http://127.0.0.1:8989/api'
 const service = axios.create({
     baseURL: baseurl,
-    timeout: 10000,
+    timeout: 5000,
     headers: {  //请求头
       'Content-Type': 'application/json;charset=UTF-8',
     }
