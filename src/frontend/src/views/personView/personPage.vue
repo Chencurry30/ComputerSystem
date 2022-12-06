@@ -119,7 +119,7 @@ export default {
   },
   components: { PagerView, InfoPopup, personAside, personHeader },
   mounted() {
-    //获取用户的相关信息 
+    //获取用户的相关信息
     this.$store.dispatch('userInfo/getUserInfo')
     //获取本用户收藏的视屏的列表
     this.getUserCollect(1)
@@ -170,7 +170,7 @@ export default {
     ...mapGetters('userInfo', {
       getUserInfo: 'getUserInfo'
     }),
-    //返回图片存储的公共路径 
+    //返回图片存储的公共路径
     publicUrl() {
       return createPublicUrl()
     }
@@ -180,7 +180,7 @@ export default {
 
 <style lang="less" scoped>
 .MainBox {
-  margin-top: 15px;
+  margin-top: 70px;
 
   .containBox {
     margin-top: 5px;

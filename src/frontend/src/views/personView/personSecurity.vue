@@ -1,4 +1,4 @@
-//用户安全  
+//用户安全
 <template>
   <div class="allBox">
     <div class="MainBox w">
@@ -60,7 +60,7 @@ export default {
   margin-top: 15px;
 
   .containBox {
-    margin-top: 5px;
+    margin-top: 70px;
     display: flex;
 
 

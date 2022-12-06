@@ -105,7 +105,7 @@ export default {
     }
   },
   mounted() {
-    //获取一个题目的具体信息 
+    //获取一个题目的具体信息
     this.getQuestionInfo()
   },
   methods: {
@@ -138,7 +138,7 @@ export default {
         return '解答题'
       }
     },
-    //提供公共的URL 
+    //提供公共的URL
     publicUrl() {
       return createPublicUrl();
     }
@@ -150,7 +150,7 @@ export default {
 .wrapper {
   width: 1200px;
   margin: 0 auto;
-
+  margin-top: 70px;
 
 
   .titleConnect {
@@ -210,7 +210,7 @@ export default {
       }
     }
 
-    //由于有图片，就只能使其不为flex布局 
+    //由于有图片，就只能使其不为flex布局
     .questionSolution {
       display: block;
 
