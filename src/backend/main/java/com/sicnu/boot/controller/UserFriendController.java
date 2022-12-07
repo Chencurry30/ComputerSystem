@@ -7,6 +7,7 @@ import com.sicnu.boot.pojo.FriendExamine;
 import com.sicnu.boot.service.UserFriendService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.UserDetail;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,7 @@ public class UserFriendController {
      * Date:  2022/12/6 15:15
      */
     @GetMapping("/search")
-    public ServerResponse<List<UserDetail>> getUserListByNickname(@Range(min = 0,max = 10,message = "搜索长度范围为0-10")
+    public ServerResponse<List<UserDetail>> getUserListByNickname(@Length(max = 10,message = "搜索长度范围为0-10")
             @RequestParam("nickname") String nickname){
         return userFriendService.getUserListByNickname(nickname);
     }
