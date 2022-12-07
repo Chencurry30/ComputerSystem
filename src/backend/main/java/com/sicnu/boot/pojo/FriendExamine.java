@@ -3,6 +3,7 @@ package com.sicnu.boot.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sicnu.boot.group.Insert;
 import com.sicnu.boot.group.Update;
+import com.sicnu.boot.vo.UserDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,11 @@ import java.time.LocalDateTime;
 public class FriendExamine {
     private Integer examineId;
     private Integer userId;
+    private UserDetail user;
     @NotNull(message = "请求的好友id不能为null")
     @Min(value = 1,message = "请求的好友id最小为1")
     private Integer friendId;
+    private UserDetail friend;
     @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
     @NotNull(message = "好友状态不能为空",groups = {Update.class})

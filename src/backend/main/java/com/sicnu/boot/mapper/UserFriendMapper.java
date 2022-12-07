@@ -106,4 +106,14 @@ public interface UserFriendMapper {
      * Date:  2022/12/6 20:48
      */
     List<FriendExamine> getFriendExamineList(Integer status,Integer userId);
+
+    /**
+     * description: 获取好友信息
+     *
+     * @param userId:
+     * @return UserDetail
+     * @author 胡建华
+     * Date:  2022/12/7 21:02
+     */
+    UserDetail getFriendByKey(Integer userId);
 }

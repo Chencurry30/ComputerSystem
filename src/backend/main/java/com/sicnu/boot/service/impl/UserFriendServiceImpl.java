@@ -102,6 +102,12 @@ public class UserFriendServiceImpl implements UserFriendService {
         }else {
             list = userFriendMapper.getFriendExamineList(status,userId);
         }
+        for (FriendExamine friendExamine : list) {
+            UserDetail friendByKey = userFriendMapper.getFriendByKey(friendExamine.getFriendId());
+            friendExamine.setFriend(friendByKey);
+            UserDetail friendByKey1 = userFriendMapper.getFriendByKey(friendExamine.getUserId());
+            friendExamine.setUser(friendByKey1);
+        }
         PageInfo<FriendExamine> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }

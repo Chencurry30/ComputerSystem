@@ -57,5 +57,8 @@
 
         </where>
     </select>
+    <select id="getFriendByKey" resultType="com.sicnu.boot.vo.UserDetail">
+        select user_id,username,nickname,image from user where user_id = #{userId}
+    </select>
 
 </mapper>
