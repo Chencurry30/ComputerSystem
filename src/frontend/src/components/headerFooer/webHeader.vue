@@ -54,7 +54,7 @@ import { mapGetters } from 'vuex'
 import { createPublicUrl } from '../../utils/index'
 export default {
   name: "webHeader",
-  //App中传入的一个相关的方法,用于帮助进行页面刷新 
+  //App中传入的一个相关的方法,用于帮助进行页面刷新
   inject: ['reload'],
 
   data() {
@@ -67,22 +67,22 @@ export default {
         { name: '考研政策', link: '' },
         { name: '更多信息', link: 'questionQS' },
       ],
-      //动态显示选择框 
+      //动态显示选择框
       show: false,
       //用户头像
       userImg: sessionStorage.getItem('userImg'),
-      //用户昵称 
+      //用户昵称
       userNickName: sessionStorage.getItem('nickname')
     }
   },
   methods: {
-    //前往登录页面 
+    //前往登录页面
     gotologin() {
       let location = { name: "loginView" };
       sessionStorage.removeItem('token')
       this.$router.push(location);
     },
-    //退出登录 
+    //退出登录
     backLogin() {
       sessionStorage.removeItem('token')
       sessionStorage.removeItem('userImg')
@@ -100,26 +100,26 @@ export default {
       }
       this.$router.push(location)
     },
-    //展示下选框 
+    //展示下选框
     showSelect() {
       this.show = true
     },
-    //隐藏下选框 
+    //隐藏下选框
     hiddenSelect() {
       this.show = false
     }
 
   },
   computed: {
-    //判断用户是否登录 
+    //判断用户是否登录
     judgeUserLogin() {
       return sessionStorage.getItem('token') !== null
     },
-    //拼接公共的url 
+    //拼接公共的url
     publicUrl() {
       return createPublicUrl() + this.userImg
     },
-    //判断用户是否有头像 
+    //判断用户是否有头像
     hidddenDefaultImg() {
       return sessionStorage.getItem('userImg') !== '无'
     },
@@ -154,15 +154,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .header {
+  top:0;
+  position: fixed;
   display: flex;
   justify-content: center;
-  min-width: 1300px;
+  background: white;
+  min-width: 100%;
   height: 60px;
   box-shadow: 0 0 5px #d7d7d7;
   z-index: 1000;
-
   .headerMain {
+    position: fixed;
+    top:0;
     display: flex;
     flex-basis: 1200px;
     line-height: 60px;

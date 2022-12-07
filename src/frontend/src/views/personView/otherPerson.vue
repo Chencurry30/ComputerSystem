@@ -136,7 +136,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.MainBox{
+  margin-top: 70px;
+}
     .el-table{
       padding: 15px;
       width: 100%;

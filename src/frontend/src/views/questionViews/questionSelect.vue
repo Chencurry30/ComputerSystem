@@ -68,13 +68,13 @@ export default {
     questionPopup
   },
   mounted() {
-    //获取题目的选择列表 
+    //获取题目的选择列表
     this.getQuestionNav()
     //获取题库的数据列表
     this.getQuestionData()
   },
   methods: {
-    //获取题库的选择列表 
+    //获取题库的选择列表
     getQuestionNav() {
       this.$store.dispatch('questionData/getQuestionNavSelect')
     },
@@ -94,7 +94,7 @@ export default {
     selectQuestion: _.throttle(function (event) {
       let element = event.target
       let { typeid, difficultid, classifyid, sourceid, yearid } = element.dataset
-      //利用v-bind绑定对应的属性 
+      //利用v-bind绑定对应的属性
       if (typeid !== undefined) {
         this.selectItem.typeId = parseInt(typeid)
       } else if (difficultid !== undefined) {
@@ -140,6 +140,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.questionConnect{
+  margin-top: 70px;
+}
 .headerConnect {
   background: #f2f4f6;
   .wrapper {

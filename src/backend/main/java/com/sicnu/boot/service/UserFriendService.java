@@ -1,5 +1,7 @@
 package com.sicnu.boot.service;
 
+import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.pojo.FriendExamine;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.UserDetail;
 
@@ -15,10 +17,51 @@ public interface UserFriendService {
     /**
      * description: 获取用户的好友列表
      *
-     * @param userId:
      * @return ServerResponse
      * @author 胡建华
      * Date:  2022/12/3 16:31
      */
-    ServerResponse<List<UserDetail>> getFriends(Integer userId);
+    ServerResponse<List<UserDetail>> getFriends();
+
+    /**
+     * description: 通过昵称搜索好友
+     *
+     * @param nickname:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 15:08
+     */
+    ServerResponse<List<UserDetail>> getUserListByNickname(String nickname);
+
+    /**
+     * description: 添加好友
+     *
+     * @param friendExamine:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 15:18
+     */
+    ServerResponse<String> addFriend(FriendExamine friendExamine);
+
+    /**
+     * description: 审核好友
+     *
+     * @param friendExamine:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 16:22
+     */
+    ServerResponse<String> examineFriend(FriendExamine friendExamine);
+
+    /**
+     * description: 获取审核列表
+     *
+     * @param status:
+     * @param type:
+     * @param pageNum:
+     * @return ServerResponse<List<FriendExamine>>
+     * @author 胡建华
+     * Date:  2022/12/6 20:43
+     */
+    ServerResponse<PageInfo<FriendExamine>> getExamineList(Integer status, Integer type, Integer pageNum);
 }
