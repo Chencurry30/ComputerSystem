@@ -91,4 +91,15 @@ export default [
       showNotFound:true,
     },
   },
+  {
+    path: '/userAddFriend',
+    name: 'userAddFriend',
+    component: () => import('@/views/personView/userAddFriend'),
+    meta: {                          //配置相关的参数，保证页面是否展示头部和底部
+      showTop: false,
+      showFotter: true,
+      //跳转到404页面后是出现头部
+      showNotFound:true,
+    },
+  },
 ]

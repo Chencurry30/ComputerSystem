@@ -132,7 +132,6 @@ export default {
   watch: {
     'getUserInfo': {
       handler: function (newval) {
-        console.log(newval);
         //先从session中获取图片
         let localImg = sessionStorage.getItem(('userImg'))
         if (localImg !== newval.image) {
