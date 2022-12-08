@@ -116,4 +116,14 @@ public interface UserFriendMapper {
      * Date:  2022/12/7 21:02
      */
     UserDetail getFriendByKey(Integer userId);
+
+    /**
+     * description: 取消申请
+     *
+     * @param userId:
+     * @param friendId:
+     * @author 胡建华
+     * Date:  2022/12/8 15:09
+     */
+    void cancelExamine(Integer userId, Integer friendId);
 }

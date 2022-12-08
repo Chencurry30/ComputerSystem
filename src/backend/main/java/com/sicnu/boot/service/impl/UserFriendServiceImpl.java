@@ -131,4 +131,12 @@ public class UserFriendServiceImpl implements UserFriendService {
         List<Integer> cacheList = redisUtils.getCacheList("redSpot" + userId);
         return ServerResponse.createBySuccess("获取成功",cacheList.isEmpty());
     }
+
+    @Override
+    public ServerResponse<String> cancelExamine(Integer friendId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Integer userId = ((LoginUser) authentication.getPrincipal()).getUser().getUserId();
+        userFriendMapper.cancelExamine(userId,friendId);
+        return ServerResponse.createBySuccessMessage("取消申请成功");
+    }
 }

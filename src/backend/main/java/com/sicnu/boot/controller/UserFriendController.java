@@ -109,4 +109,9 @@ public class UserFriendController {
             @Min(value = 1,message = "pageNum最小为1") @PathVariable Integer pageNum){
         return userFriendService.getExamineList(status,type,pageNum);
     }
+
+    @DeleteMapping("/{friendId}")
+    public ServerResponse<String> cancelExamine(@Min(value = 1,message = "friendId最小为1") @PathVariable Integer friendId){
+        return userFriendService.cancelExamine(friendId);
+    }
 }
