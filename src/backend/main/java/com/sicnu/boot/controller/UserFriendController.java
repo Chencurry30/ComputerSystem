@@ -1,15 +1,19 @@
 package com.sicnu.boot.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.group.Insert;
+import com.sicnu.boot.group.Update;
+import com.sicnu.boot.pojo.FriendExamine;
 import com.sicnu.boot.service.UserFriendService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.UserDetail;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -28,13 +32,69 @@ public class UserFriendController {
     /**
      * description: 获取用户的好友列表
      *
-     * @param userId:
      * @return ServerResponse
      * @author 胡建华
      * Date:  2022/12/3 16:31
      */
-    @GetMapping("/{userId}")
-    public ServerResponse<List<UserDetail>> getFriends(@PathVariable Integer userId){
-        return userFriendService.getFriends(userId);
+    @GetMapping
+    public ServerResponse<List<UserDetail>> getFriends(){
+        return userFriendService.getFriends();
+    }
+
+    /**
+     * description: 搜索好友
+     *
+     * @param nickname:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 15:15
+     */
+    @GetMapping("/search")
+    public ServerResponse<List<UserDetail>> getUserListByNickname(@Length(max = 10,message = "搜索长度范围为0-10")
+            @RequestParam("nickname") String nickname){
+        return userFriendService.getUserListByNickname(nickname);
+    }
+
+    /**
+     * description: 添加好友
+     *
+     * @param friendExamine:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 16:05
+     */
+    @PostMapping
+    public ServerResponse<String> addFriend(@Validated(Insert.class) @RequestBody FriendExamine friendExamine){
+        return userFriendService.addFriend(friendExamine);
+    }
+
+    /**
+     * description: 审核好友
+     *
+     * @param friendExamine:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 16:56
+     */
+    @PutMapping
+    public ServerResponse<String> examineFriend(@Validated(Update.class) @RequestBody FriendExamine friendExamine){
+        return userFriendService.examineFriend(friendExamine);
+    }
+
+    /**
+     * description: 查看好友申请列表
+     *
+     * @param type:0为查看该用户的申请列表，1为查看申请该用户的列表
+     * @param status:申请状态，-1为全部，0为等待验证，1为通过验证，2为拒绝
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/6 20:09
+     */
+    @GetMapping("/examine/{status}-{type}-{pageNum}")
+    public ServerResponse<PageInfo<FriendExamine>> getExamineList(
+            @Range(min = -1,max = 2,message = "status必须为-1到2") @PathVariable Integer status,
+            @Range(min = 0,max = 1,message = "type必须为1或2") @PathVariable Integer type,
+            @Min(value = 1,message = "pageNum最小为1") @PathVariable Integer pageNum){
+        return userFriendService.getExamineList(status,type,pageNum);
     }
 }
