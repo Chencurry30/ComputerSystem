@@ -47,26 +47,47 @@
         </div>
         <pagerView :pageInfo="collectPage"  @giveFatherPageNo="getSonPageNo"></pagerView>
       </div>
+      <div class="collect-Main-header">
+        <div class="person-title">他的动态</div>
+      </div>
+      <div class="bili-dyn-item"
+           v-for="item in Dynamics"
+           :key="item.dynamicId">
+        <div class="bili-dyn-item__main">
+          <div class="bili-dyn-item__avatar" >
+            <div class="bili-dyn-avatar" style="width: 48px; height: 48px;">
+              <div class="bili-avatar" style="width: 48px;height:48px;transform: translate(0px, 0px);">
+                <img v-if="item.author.image === '无'" src="../../assets/Img/defaultUserImg.png" alt="">
+                <img v-else :src="[getpicture + item.author.image]" alt="">
+
+              </div>
+            </div>
+          </div>
+          <div class="bili-dyn-item__header">
+            <div class="bili-dyn-title">
+              <span class="bili-dyn-title__text" style="color: rgb(251, 114, 153);">{{item.author.nickname}}</span>
+            </div>
+            <div class="bili-dyn-time">{{item.createDate}}</div>
+          </div>
+          <div class="picture">
+            <div style="color: #222;">{{item.content}}</div>
+            <img :src="[getpicture+item.picture]" v-if="item.picture" alt="">
+          </div>
+        </div>
+      </div>
+      <!--分页表单-->
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="totals"
+          :page-size="pageSize"
+          @current-change="handleCurrentChange"
+          @prev-click="prevPage"
+          @next-click="nextPage"
+          class="page"
+      >
+      </el-pagination>
     </div>
-    <!-- <el-table
-        :data="content"
-        stripe
-        style="width: 100%">
-      <el-table-column
-          prop="createDate"
-          label="日期"
-          width="180">
-      </el-table-column>
-      <el-table-column
-          prop="content"
-          label="内容"
-          width="180">
-      </el-table-column>
-      <el-table-column
-          prop="userId"
-          label="用户">
-      </el-table-column>
-    </el-table> -->
   </div>
 </template>
 
@@ -80,8 +101,11 @@ export default {
   components: {PagerView},
   data(){
       return{
+        page: 1, //请求第一次的params
+        pageSize: 5,
+        totals:0,//页面总条数
         userId:'',
-        content:{},//动态信息
+        Dynamics:{},//动态信息
         userMsg:{},//其他用户信息
         Collections:{},//收藏信息
         collectPage:{} //分页器中存储的信息
@@ -89,10 +113,8 @@ export default {
   },
   mounted() {
     this.userId = this.$route.query.userId
-    getDynamics(this.userId).then((res=>{
-      this.content = res.data.data
-    }))
-    this.getothersMsg(),
+    this.getotherDynamic()
+    this.getothersMsg()
     this.getotherCollect(1)
   },
   methods:{
@@ -102,12 +124,32 @@ export default {
         this.userMsg = res.data.data
       }))
     },
+    getotherDynamic(){
+      getDynamics(this.userId,this.page).then((res=>{
+        this.Dynamics = res.data.data.list
+        this.totals = res.data.data.total
+      }))
+    },
+    //当前页数改变
+    handleCurrentChange(page) {
+      this.page = page;
+      console.log(this.page)
+      this.getotherDynamic();
+    },
+    //上一页
+    prevPage(page){
+      this.page = page - 1
+    },
+    //下一页
+    nextPage(page){
+      this.page = page + 1
+    },
 
     //获取用户收藏视屏列表
     getotherCollect(pageNum){
       console.log(this.userId)
       userVideoCollect(pageNum,this.userId).then((res)=>{
-        console.log(res)
+        // console.log(res)
         if(res.data.code === 200){
           let data = {}
           data.pageNo = res.data.data.pageNum     //当前的页码数
@@ -124,13 +166,16 @@ export default {
     //获取分页器中传递的数据
     getSonPageNo(pageNum){
       this.getotherCollect(pageNum)
+    },
 
-    }
   },
   computed:{
     publicUrl(){
       return createPublicUrl()
-    }
+    },
+    getpicture(){
+      return createPublicUrl()
+    },
   },
 }
 </script>
@@ -258,6 +303,67 @@ export default {
          }
 
         }
-
-
+.bili-dyn-item{
+  margin-left: 5%;
+  background-color: #fff;
+  border-radius: 4px;
+  font-family: Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;
+  letter-spacing: 0;
+  min-width: 632px;
+  position: relative;
+  .bili-dyn-item__main{
+    padding: 0 12px 0 88px;
+    position: relative;
+    .bili-dyn-item__avatar{
+      height: 48px;
+      left: 24px;
+      position: absolute;
+      top: 24px;
+      width: 48px;
+      .bili-avatar{
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .bili-dyn-item__header{
+      height: 73px;
+      padding-top: 27px;
+      .bili-dyn-title{
+        align-items: center;
+        display: flex;
+        height: 24px;
+        width: max-content;
+        .bili-dyn-title__text{
+          cursor: pointer;
+          font-size: 16px;
+        }
+        .bili-dyn-time{
+          color: #99a2aa;
+          cursor: pointer;
+          font-size: 8px;
+          height: 22px;
+          line-height: 18px;
+          padding-top: 4px;
+          transition: color .3s ease;
+          user-select: none;
+          width: fit-content;
+        }
+      }
+    }
+  }
+}
+.picture{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  img{
+    width: 200px;
+    margin-top: 10px;
+  }
+}
+.el-pagination{
+  margin-left: 5%;
+  margin-top: 60px;
+}
 </style>

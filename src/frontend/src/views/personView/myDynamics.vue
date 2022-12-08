@@ -49,6 +49,7 @@
                   </div>
                 </div>
               </div>
+
               <!--分页表单-->
               <el-pagination
                   background
@@ -140,14 +141,6 @@ export default {
         this.Dynamics = res.data.data.list
         console.log(this.Dynamics)
       })
-    },
-
-    handleChange(file, fileList) {
-      this.fileList = fileList.slice(-3);
-    },
-    //分页大小改变
-    handleSizeChange(val) {
-      this.pageSize = val;
     },
     //当前页数改变
     handleCurrentChange(page) {

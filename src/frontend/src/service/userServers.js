@@ -45,8 +45,8 @@ export const setDynamics = (data) =>{
 }
 
 //查询我的动态
-export const getDynamics = (id) =>{
-  const url = `/dynamics/${id}`
+export const getDynamics = (id,page) =>{
+  const url = `/dynamics/users/${id}/${page}`
   return service.get(url)
 }
 
@@ -61,3 +61,32 @@ export const getallDynamics = (page) =>{
   const url = `/dynamics/pages/${page}`
   return service.get(url)
 }
+
+
+//获取用户好友列表的
+export const getFriend = () =>{
+  const url = `friends`
+  return service.get(url)
+}  
+//获取相互交流的数据
+export const getmessage = (userId,firendId) => {
+  const url = `/pull/msg?from=${userId}&to=${firendId}`
+  return service.post(url)
+}
+//搜索好友
+export const getSearchFriend = (friendName) => {
+  const url = `friends/search?nickname=${friendName}`
+  return service.get(url)
+}
+//申请添加好友 
+export const addUserFriendAction = (addFriendData) =>{
+  const url = `friends`
+  return service.post(url,addFriendData)
+}
+//获取用户所有的相关申请(从左到右依次为申请的情况，谁的申请，分页数)
+export const getUserFriendAction = ({userStates,actionStates,pageNum}) =>{
+  const url = `friends/examine/${actionStates}-${userStates}-${pageNum}`
+  console.log(url);
+  return service.get(url)
+}
+

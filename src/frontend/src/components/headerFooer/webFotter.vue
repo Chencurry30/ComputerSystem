@@ -164,6 +164,7 @@ export default {
   }
 
   .fotter-copy {
+    
     margin: 0 auto;
     margin-top: 20px;
     width: 1020px;
