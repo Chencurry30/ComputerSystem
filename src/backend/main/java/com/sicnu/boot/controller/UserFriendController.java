@@ -42,6 +42,18 @@ public class UserFriendController {
     }
 
     /**
+     * description: 获取小红点
+     *
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/8 10:52
+     */
+    @GetMapping("/redSpot")
+    public ServerResponse<Boolean> getRedSpot(){
+        return userFriendService.getRedSpot();
+    }
+
+    /**
      * description: 搜索好友
      *
      * @param nickname:

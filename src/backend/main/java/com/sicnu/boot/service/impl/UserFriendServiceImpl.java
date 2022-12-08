@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.UserFriendMapper;
 import com.sicnu.boot.pojo.FriendExamine;
 import com.sicnu.boot.service.UserFriendService;
+import com.sicnu.boot.utils.RedisUtils;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.UserDetail;
@@ -29,11 +30,22 @@ public class UserFriendServiceImpl implements UserFriendService {
     @Resource
     private UserFriendMapper userFriendMapper;
 
+    @Resource
+    private RedisUtils redisUtils;
+
     @Override
     public ServerResponse<List<UserDetail>> getFriends() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Integer userId = ((LoginUser) authentication.getPrincipal()).getUser().getUserId();
         List<UserDetail> friends = userFriendMapper.getFriendsByUserId(userId);
+        List<Integer> cacheList = redisUtils.getCacheList("redSpot:" + userId);
+        for (UserDetail friend : friends) {
+            if (cacheList.contains(friend.getUserId())){
+                friend.setIsRedSpot(1);
+            }else {
+                friend.setIsRedSpot(0);
+            }
+        }
         return ServerResponse.createBySuccess("获取成功",friends);
     }
 
@@ -110,5 +122,13 @@ public class UserFriendServiceImpl implements UserFriendService {
         }
         PageInfo<FriendExamine> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
+    }
+
+    @Override
+    public ServerResponse<Boolean> getRedSpot() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Integer userId = ((LoginUser) authentication.getPrincipal()).getUser().getUserId();
+        List<Integer> cacheList = redisUtils.getCacheList("redSpot" + userId);
+        return ServerResponse.createBySuccess("获取成功",cacheList.isEmpty());
     }
 }

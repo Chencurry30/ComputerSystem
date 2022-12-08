@@ -64,4 +64,13 @@ public interface UserFriendService {
      * Date:  2022/12/6 20:43
      */
     ServerResponse<PageInfo<FriendExamine>> getExamineList(Integer status, Integer type, Integer pageNum);
+
+    /**
+     * description: 获取小红点
+     *
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/8 10:52
+     */
+    ServerResponse<Boolean> getRedSpot();
 }

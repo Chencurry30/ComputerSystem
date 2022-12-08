@@ -158,6 +158,34 @@ public final class RedisUtils {
     }
 
     /**
+     * description: 从列表中移除指定value
+     *
+     * @param key:
+     * @param value:
+     * @return void
+     * @author 胡建华
+     * Date:  2022/12/8 10:24
+     */
+    public <T> void removeCacheList(String key, T value){
+        //将该value从redis列表中移除
+        redisTemplate.opsForList().remove(key,1,value);
+    }
+
+    /**
+     * description: 获取redis列表中指定value的下标，不存在返回-1
+     * 不能用，需要redis 6
+     *
+     * @param key:
+     * @param value:
+     * @return Long
+     * @author 胡建华
+     * Date:  2022/12/8 10:25
+     */
+    public <T> Long getIndexOfValueInList(String key,T value){
+        return redisTemplate.opsForList().indexOf(key,value);
+    }
+
+    /**
      * 缓存Set
      *
      * @param key 缓存键值
