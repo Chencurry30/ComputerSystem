@@ -45,8 +45,8 @@ export const setDynamics = (data) =>{
 }
 
 //查询我的动态
-export const getDynamics = (id) =>{
-  const url = `/dynamics/${id}`
+export const getDynamics = (id,page) =>{
+  const url = `/dynamics/users/${id}/${page}`
   return service.get(url)
 }
 

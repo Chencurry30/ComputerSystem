@@ -143,9 +143,8 @@ export default {
               sessionStorage.setItem('userId',userId)   //保存正在登录用户的userId
               sessionStorage.setItem('token', token)    //保存token到本地浏览器
               sessionStorage.setItem('nickname',nickname)
-              const name = Cookies.get('nickname')
               this.$message({
-                message: "恭喜你，登录成功！欢迎用户: " + name,
+                message: "恭喜你，登录成功！欢迎用户: " + nickname,
                 type: "success",
               })
               this.$router.push({ name: 'Home' })

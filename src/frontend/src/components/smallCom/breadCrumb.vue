@@ -16,8 +16,8 @@ export default {
 </script>
 
 <style scoped>
-.el-breadcrumb{
+el-breadcrumb{
   font-size: large;
-  margin: 30px 20px;
+  margin: 35px 150px;
 }
 </style>
