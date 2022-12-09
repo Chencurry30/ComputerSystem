@@ -1,5 +1,5 @@
 <template>
-  <div class="questionView w">
+  <div class="questionView w MainPageHeader">
     <div class="questionBread">
       <div class="questionBreadLeft">
         <span class="routerCurrent">试题详情</span>

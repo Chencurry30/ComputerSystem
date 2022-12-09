@@ -1,6 +1,6 @@
 <!--题目的具体详情页面-->
 <template>
-  <div class="wrapper">
+  <div class="MainBox">
     <div class="questionBread">
       <span class="routerCurrent">试题详情</span>
       <span class="sky">/</span>
@@ -147,12 +147,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.wrapper {
+.MainBox {
   width: 1200px;
   margin: 0 auto;
   margin-top: 70px;
-
-
   .titleConnect {
     display: block;
     padding: 0;

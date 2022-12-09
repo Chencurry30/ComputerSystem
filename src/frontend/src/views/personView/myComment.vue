@@ -1,7 +1,7 @@
 //我的提问(针对老师)
 
 <template>
-  <div class="MainBox w">
+  <div class="MainBox w MainPageHeader">
     <div class="containBox">
       <personAside></personAside>
       <div class="contain-right">
@@ -86,7 +86,7 @@ export default {
 
 <style lang='less' scoped>
 .MainBox {
-  margin-top: 70px;
+
 
   .containBox {
     margin-top: 70px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="videoPage">
+  <div class="MainBox MainPageHeader">
     <div class="MainHeader">
       <div class="fittle">
         <div class="fittle-box">
@@ -134,9 +134,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.videoPage{
-  margin-top: 70px;
-}
 .MainHeader {
   background: #f2f4f6;
 
@@ -186,7 +183,6 @@ export default {
     }
   }
 }
-
 .MainContent {
   margin: 0 auto;
   padding-top: 20px;

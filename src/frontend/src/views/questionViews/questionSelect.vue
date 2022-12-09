@@ -1,6 +1,6 @@
 <!--题库选择页面-->
 <template>
-  <div class="questionConnect">
+  <div class="MainBox MainPageHeader">
     <div class="headerConnect">
       <div class="wrapper">
         <div class="selectItem" v-for="(fatherItem) in questionNavSelect" :key="fatherItem.id">
@@ -140,9 +140,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.questionConnect{
-  margin-top: 70px;
-}
 .headerConnect {
   background: #f2f4f6;
   .wrapper {

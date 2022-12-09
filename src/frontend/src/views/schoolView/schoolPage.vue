@@ -1,5 +1,5 @@
 <template>
-  <div class="allBox">
+  <div class="MainBox MainPageHeader">
     <div class="header">
       <div class="headerBox clearfix w">
         <div class="school-type">
@@ -140,8 +140,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.allBox {
-  margin-top: 70px;
   .header {
     width: 100%;
     background: #add9fc url(../../assets/Img/schoolImg/zx-bg.jpg) 50% 0 no-repeat;
@@ -395,5 +393,4 @@ export default {
 
     }
   }
-}
 </style>
