@@ -3,12 +3,14 @@ package com.sicnu.boot.config;
 import com.google.gson.Gson;
 import com.sicnu.boot.pojo.UserMessage;
 import com.sicnu.boot.utils.RedisUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -23,11 +25,12 @@ import java.util.stream.IntStream;
  */
 @Component
 @ServerEndpoint(
-        value = "/websocket/{id}",
+        value = "/websocket/{ip}",
         decoders = { MessageDecode.class },
         encoders = { MessageEncode.class },
         configurator = CustomSpringConfigurator.class
 )
+@Slf4j
 public class WebSocketServer {
 
     private Session session;
@@ -45,10 +48,15 @@ public class WebSocketServer {
     }
 
     @OnOpen
-    public void onOpen(@PathParam("id") Integer id, Session session) {
+    public void onOpen(@PathParam("ip") String ip, Session session) {
         this.session = session;
+        String[] split = ip.split("-");
+        Integer id = Integer.parseInt(split[0]);
+        Integer friendId = Integer.parseInt(split[1]);
         // 根据 /websocket/{id} 中传入的用户 id 作为键，存储每个用户的 session
         WEBSOCKET_MAP.put(id, session);
+        redis.removeCacheList("redSpot:" + id, friendId);
+        log.info("用户{}已于用户{}建立连接",id,friendId);
     }
 
     @OnMessage
@@ -64,6 +72,13 @@ public class WebSocketServer {
         // 如果用户在线就将信息发送给指定用户
         if (WEBSOCKET_MAP.get(message.getTo()) != null) {
             WEBSOCKET_MAP.get(message.getTo()).getBasicRemote().sendText(gson.toJson(message));
+        }else {
+            String keyHead = "redSpot:";
+            //如果该值已经在好友列表中有了，就不在存储了
+            List<Integer> cacheList = redis.getCacheList(keyHead + message.getTo());
+            if (!cacheList.contains(message.getFrom())){
+                redis.pushCacheList(keyHead + message.getTo(),message.getFrom());
+            }
         }
     }
 

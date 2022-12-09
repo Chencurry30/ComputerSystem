@@ -42,6 +42,18 @@ public class UserFriendController {
     }
 
     /**
+     * description: 获取小红点
+     *
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/8 10:52
+     */
+    @GetMapping("/redSpot")
+    public ServerResponse<Boolean> getRedSpot(){
+        return userFriendService.getRedSpot();
+    }
+
+    /**
      * description: 搜索好友
      *
      * @param nickname:
@@ -96,5 +108,10 @@ public class UserFriendController {
             @Range(min = 0,max = 1,message = "type必须为1或2") @PathVariable Integer type,
             @Min(value = 1,message = "pageNum最小为1") @PathVariable Integer pageNum){
         return userFriendService.getExamineList(status,type,pageNum);
+    }
+
+    @DeleteMapping("/{friendId}")
+    public ServerResponse<String> cancelExamine(@Min(value = 1,message = "friendId最小为1") @PathVariable Integer friendId){
+        return userFriendService.cancelExamine(friendId);
     }
 }

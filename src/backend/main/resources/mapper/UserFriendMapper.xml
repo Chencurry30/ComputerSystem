@@ -14,6 +14,9 @@
     <update id="examineFriend" parameterType="FriendExamine">
         update friend_examine set status = #{status}  where user_id = #{friendId} and friend_id = #{userId}
     </update>
+    <delete id="cancelExamine">
+        delete from friend_examine where user_id = #{userId} and friend_id = #{friendId}
+    </delete>
 
     <select id="getFriendsByUserId" resultType="com.sicnu.boot.vo.UserDetail">
         select user_id,nickname,image from user where user_id in

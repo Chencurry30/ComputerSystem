@@ -55,6 +55,7 @@ public class UserDetail {
     private String smsCode;
     private String message;
     private Integer isFriend;
+    private Integer isRedSpot;
     private List<Role> roles;
     private Role roleOne;
     public UserDetail(String nickname,String image,Integer userId){
