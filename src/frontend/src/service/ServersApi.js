@@ -14,3 +14,15 @@ export const retrievePassword = (phone) =>{
     const url = '/users/sms'
     return service.post(url,phone);
 }
+
+//忘记密码
+export const forgetPassword = (data) =>{
+  const url = `users/forget/password`
+  return service.put(url,data)
+}
+
+//修改
+export const modifyPassword = (data) =>{
+  const url = `users/password`
+  return service.put(url,data)
+} 

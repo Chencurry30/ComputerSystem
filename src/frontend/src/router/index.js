@@ -14,6 +14,8 @@ import videoRouter from './videoRouter'
 import schoolRouter from './schoolRouter'
 //题库页面的相关路由
 import questionRoute from './questionRoute'
+//帮助中心的相关路由
+import helpRoute from './helpRoute' 
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
@@ -38,7 +40,8 @@ const router = new VueRouter({
       ...personRoute,
       ...videoRouter,
       ...schoolRouter,
-      ...questionRoute
+      ...questionRoute,
+      ...helpRoute
     ],
   })
 

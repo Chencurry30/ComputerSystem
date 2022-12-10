@@ -121,9 +121,9 @@ export default {
   mounted() {
     this.getRedSpot()
     console.log('页面加载');
-    this.interval = setInterval(() => {
-      this.getRedSpot()
-    }, 500)
+    // this.interval = setInterval(() => {
+    //   this.getRedSpot()
+    // }, 500)
   },
   //vue2中的这个在vue3中已经被抛弃 
   //eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle 

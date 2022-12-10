@@ -11,7 +11,7 @@ export default {
   name:'sendCodeBtn',
   data(){
     return{
-      sendTimeCode:5,      //再次发送的时间
+      sendTimeCode:60,      //再次发送的时间
       bVerification:false,   //节流阀，控制点击获取验证码
       verificationCodeInfo:"发送验证码",
     }
@@ -65,7 +65,7 @@ export default {
         position: absolute;
         width: 100px;
         height: 40px;
-        top: 0px;
+        top: 0;
         right: 20px;
         border-radius: 4px;
         text-align: center;

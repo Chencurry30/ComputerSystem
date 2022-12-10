@@ -27,8 +27,8 @@
             <router-link :to="{ name: 'personPage' }">个人中心 </router-link>
           </div>
           <div class="login-or-register centerLocation" v-else>
-            <span class="login">登录</span>
-            <span class="register">注册</span>
+            <span class="login" @click="gotologin">登录</span>
+            <span class="register" @click="gotoRegister">注册</span>
           </div>
         </div>
       </div>
@@ -64,8 +64,7 @@ export default {
         { name: '资源学习', link: 'videoSelect' },
         { name: '院校选择', link: 'schoolSelect' },
         { name: '题库学习', link: 'questionSelect' },
-        { name: '考研政策', link: '' },
-        { name: '更多信息', link: 'questionQS' },
+        { name: '帮助中心', link: 'helpCenter' },
       ],
       //动态显示选择框
       show: false,
@@ -79,6 +78,12 @@ export default {
     //前往登录页面
     gotologin() {
       let location = { name: "loginView" };
+      sessionStorage.removeItem('token')
+      this.$router.push(location);
+    },
+    //前往注册页面
+    gotoRegister(){
+      let location = { name: "registerView" };
       sessionStorage.removeItem('token')
       this.$router.push(location);
     },

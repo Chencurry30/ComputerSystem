@@ -1,8 +1,9 @@
 <template>
-  <div class="register-wrap-bg">
-    <div class="register_box">
-      <el-form label-width="0px" class="register_in" ref="dataForm" :model="dataForm" :rules="checkForm">
-        <div class="form-info">
+  <div class="SystemUserBox">
+    <div class="registerBox">
+      <div class="registerFormTitle">用户注册</div>
+      <el-form class="registerForm" label-width="0px" ref="dataForm" :model="dataForm" :rules="checkForm">
+        <div class="formData">
           <el-form-item prop="username">
             <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入账号" v-model.trim="dataForm.username">
             </el-input>
@@ -25,16 +26,16 @@
 
           </el-form-item>
         </div>
-        <el-form-item class="btns">
+        <el-form-item class="reterieveBtn">
           <el-button type="primary" @click="goToRegister" :disabled="!canRegister">注&nbsp;&nbsp;&nbsp;&nbsp;册
           </el-button>
         </el-form-item>
 
-        <div class="stytem">
-          <div class="stytem-left font-text">
+        <div class="userBack">
+          <div class="userBack-left font-text">
             <router-link :to="{ name: 'Home' }">返回首页</router-link>
           </div>
-          <div class="stytem-right font-text">
+          <div class="userBack-right font-text">
             <router-link :to="{ name: 'loginView' }">用户登录</router-link>
           </div>
         </div>
@@ -136,109 +137,118 @@ export default {
 
 
 <style scoped lang="less">
-.register-wrap-bg {
+.SystemUserBox {
   margin-top: 60px;
   position: relative;
   height: 500px;
   width: 100%;
   background: url(../../assets/Img/LoginImg/login_img.png) no-repeat 20% 50px #ddd;
-}
 
-.register_box {
-  width: 450px;
-  height: 400px;
-  border-radius: 3px;
-  position: absolute;
-  right: 14%;
-  top: 10%;
-  background: #fff;
-
-  .register_in {
-    z-index: 999;
+  .registerBox {
+    width: 450px;
+    height: 400px;
+    border-radius: 3px;
     position: absolute;
-    top: 15%;
-    width: 100%;
-    padding: 0 20px;
+    right: 14%;
+    top: 10%;
+    background: #fff;
 
-    .verification {
-
-      //验证码登录的输入框
-      .el-input {
-        width: 240px;
-      }
-
-    }
-
-    //选择链接
-    .stytem {
+    .registerFormTitle {
+      margin-top: 10px;
       display: flex;
-      justify-content: space-between;
-      align-content: center;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
 
-      .stytem-left {
+    .registerForm {
+      z-index: 999;
+      position: absolute;
+      top: 15%;
+      width: 100%;
+      padding: 0 20px;
 
-        margin-left: 35px;
+      .clickImg {
+        display: flex;
+        position: absolute;
+        right: 60px;
+        top: 50%;
+        transform: translate(-50%, -50%);
 
-        a {
-          color: #666;
+        .hiddenImg {
+          width: 24px;
+          height: 24px;
+          background: url(../../assets/Img/Icon/hidden1.png) no-repeat center center;
+        }
+
+        .showImg {
+          width: 24px;
+          height: 24px;
+          background: url(../../assets/Img/Icon/show1.png) no-repeat center center;
         }
       }
 
-      .stytem-right {
 
-        margin-right: 35px;
+      .verification {
 
-        a {
-          color: #666;
+        //验证码登录的输入框
+        .el-input {
+          width: 240px;
         }
       }
-    }
 
-    //修改了button的形式
-    .el-button {
-      padding: 12px 110px;
-    }
+      //选择链接
+      .userBack {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
 
-    //修改输入框大小
-    .el-input {
-      left: 7%;
-      width: 360px;
+        .userBack-left {
+
+          margin-left: 35px;
+
+          a {
+            color: #666;
+          }
+        }
+
+        .userBack-right {
+
+          margin-right: 35px;
+
+          a {
+            color: #666;
+          }
+        }
+      }
+
+      //修改了button的形式
+      .el-button {
+        padding: 12px 110px;
+      }
+
+      //修改输入框大小
+      .el-input {
+        left: 7%;
+        width: 360px;
+      }
+
+      .reterieveBtn {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+
     }
   }
-}
 
-.btns {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.clickImg {
-  display: flex;
-  position: absolute;
-  right: 60px;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  .hiddenImg {
-    width: 24px;
-    height: 24px;
-    background: url(../../assets/Img/Icon/hidden1.png) no-repeat center center;
+  :deep.el-form-item__error {
+    color: #F56C6C;
+    font-size: 14px;
+    padding: 3px 0;
+    position: absolute;
+    top: 100%;
+    left: 35px;
   }
-
-  .showImg {
-    width: 24px;
-    height: 24px;
-    background: url(../../assets/Img/Icon/show1.png) no-repeat center center;
-  }
-}
-
-:deep.el-form-item__error {
-  color: #F56C6C;
-  font-size: 14px;
-  padding: 3px 0px;
-  position: absolute;
-  top: 100%;
-  left: 35px;
 }
 </style>
