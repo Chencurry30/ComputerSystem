@@ -34,10 +34,6 @@ export const getuserMsg = (userId) =>{
 }
 
 
-
-
-
-
 //发送我的动态
 export const setDynamics = (data) =>{
   const url = `/dynamics`
@@ -73,6 +69,7 @@ export const getmessage = (userId,firendId) => {
   const url = `/pull/msg?from=${userId}&to=${firendId}`
   return service.post(url)
 }
+
 //搜索好友
 export const getSearchFriend = (friendName) => {
   const url = `friends/search?nickname=${friendName}`
@@ -86,7 +83,18 @@ export const addUserFriendAction = (addFriendData) =>{
 //获取用户所有的相关申请(从左到右依次为申请的情况，谁的申请，分页数)
 export const getUserFriendAction = ({userStates,actionStates,pageNum}) =>{
   const url = `friends/examine/${actionStates}-${userStates}-${pageNum}`
-  console.log(url);
   return service.get(url)
 }
+//同意申请成为好友
+export const agreenFriendAction = (actionData) => {
+  const url = 'friends'
+  return service.put(url,actionData)
+}
+
+//获取小红点,即(好友聊天中是否出现小红点，出现就是有人发的消息未查看) 
+export const notAccepted = () =>{
+  const url = `friends/redSpot`
+  return service.get(url)
+}
+
 

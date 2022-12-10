@@ -1,6 +1,6 @@
 //添加好友
 <template>
-  <div class="MainBox w">
+  <div class="MainBox w MainPageHeader">
     <div class="containBox">
       <personAside></personAside>
       <div class="contain-right">
@@ -18,14 +18,14 @@
                 <div class="agreenSelectLeft">
                   <div class="selectItem">
                     <el-select v-model="userValue" placeholder="请选择">
-                      <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value">
+                      <el-option v-for="item in userStatesList" :key="item.value" :label="item.label" :value="item.value">
                         <span>{{ item.label }}</span>
                       </el-option>
                     </el-select>
                   </div>
                   <div class="selectItem">
                     <el-select v-model="actionValue" placeholder="请选择">
-                      <el-option v-for="item in agreeStates" :key="item.value" :label="item.label" :value="item.value">
+                      <el-option v-for="item in actionStatesList" :key="item.value" :label="item.label" :value="item.value">
                         <span>{{ item.label }}</span>
                       </el-option>
                     </el-select>
@@ -35,21 +35,42 @@
                   <el-button type="primary">刷新列表</el-button>
                   <el-button type="primary" @click="getAgreenList">获取列表</el-button>
                 </div>
-
-
               </div>
+
+
               <div class="agreenfriendBottom">
                 <div class="agreenItem" v-for="(item) in getFriendList" :key="item.examineId">
-                  <div class="agreenImage">
-                    <img src="../../assets/Img/defaultUserImg.png" alt="" v-if="item.user.image === '无'">
-                    <img :src="[publicUrl + item.user.image ]" alt="">
+
+                    <div class="agreenImage" v-if="(userStates === 0)">
+                      <img src="../../assets/Img/defaultUserImg.png" alt=""
+                        v-if="item === {} || item.friend.image === '无'">
+                      <img :src="[publicUrl + item.friend.image]" alt="">
+                    </div>
+
+                    <div class="agreenImage" v-else>
+                      <img src="../../assets/Img/defaultUserImg.png" alt="" v-if="item.user.image === '无'">
+                      <img :src="[publicUrl + item.user.image]" alt="">
+                    </div>
+                    
+                    
+                     <div class="agreeNickName" v-if="(userStates === 0)">{{ item.friend.nickname }}</div>
+                     <div class="agreeNickName" v-else>{{ item.user.nickname }}</div>
+
+
+                    <div class="agreenIntroduce">{{ item.reason }}</div>
+                    <div class="agreenTime">{{ item.time }}</div>
+                    <span v-if="(item.status === 0 && userStates === 0)" class="agreenAction">等待验证</span>
+                    <span v-else-if="(item.status === 1 && userStates === 0)" class="agreenAction">申请通过</span>
+                    <span v-else-if="(item.status === 2 && userStates === 0)" class="agreenAction">申请未通过</span>
+
+                    <span v-else-if="(item.status === 1 && userStates === 1)" class="agreenAction">已同意</span>
+                    <span v-else-if="(item.status === 2 && userStates === 1)" class="agreenAction">已拒绝</span>
+
+                    <el-button size="mini" round v-if="(item.status === 0 && userStates === 1)"  @click="userAgreenBtn(item.userId)">同意</el-button>
+                    <el-button size="mini" round v-if="(item.status === 0 && userStates === 1)" @click="userRefusedBtn(item.userId)">拒绝</el-button>                    
+                    <el-button size="mini" round v-if="(userStates === 0)">删除</el-button>
                   </div>
-                  <div class="agreeNickName">{{item.user.nickname}}</div>
-                  <div class="agreenIntroduce">{{ item.reason }}</div>
-                  <div class="agreenTime">{{ item.time }}</div>
-                  <el-button type="success" icon="el-icon-check" circle size="mini" v-if="(userStates !== 0)"></el-button>
-                  <el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                </div>
+
               </div>
             </div>
           </div>
@@ -66,20 +87,20 @@
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
 import { createPublicUrl } from '../../utils/index'
-import { getUserFriendAction } from '../../service/userServers'
+import { getUserFriendAction, agreenFriendAction } from '../../service/userServers'
 export default {
   data() {
     return {
       userCurrent: 0,
       firendNickName: '',
-      cities: [{
+      userStatesList: [{
         value: 0,
         label: '我的申请'
       }, {
         value: 1,
         label: '申请我的'
       },],
-      agreeStates: [{
+      actionStatesList: [{
         value: -1,
         label: '全部申请'
       }, {
@@ -100,8 +121,8 @@ export default {
       actionValue: '',
 
       //三个筛选条件 
-      actionStates: 0,
       userStates: 0,
+      actionStates: 0,
       pageNum: 1,        //分页器的页码数
       //获取后端数据的集合 
       getFriendList: [],
@@ -113,23 +134,21 @@ export default {
     //获取用户的相关信息,避免刷新到时头像丢失
     this.$store.dispatch('userInfo/getUserInfo')
     //加载页面时默认获取相关的请求
-    this.getUserFriendList({ actionStates: -1, userStates: 0, pageNum: 1 })
   },
   methods: {
-
     //获取对应的筛选列表
     getAgreenList() {
-      if(this.userValue === ''){
+      if (this.userValue === '') {
         this.userStates = 0;
-      }else{
+      } else {
         this.userStates = this.userValue
       }
-      if(this.actionValue === ''){
+      if (this.actionValue === '') {
         this.actionStates = -1
-      }else{
+      } else {
         this.actionStates = this.actionValue
       }
-      this.getUserFriendList({userStates:this.userStates,actionStates:this.actionStates,pageNum:this.pageNum})
+      this.getUserFriendList({ userStates: this.userStates, actionStates: this.actionStates, pageNum: this.pageNum })
     },
 
     //页面加载时获取相关数据
@@ -139,7 +158,37 @@ export default {
         console.log(res);
         this.getFriendList = res.data.data.list
       })
+    },
+
+    //是否同意申请成为好友 
+    userAgreenBtn(userId) {
+      let data = {}
+      data.friendId = userId
+      data.status = 1;
+      agreenFriendAction(data).then((res) => {
+        console.log(res);
+        if(res.data.code === 200){
+          this.$message.success(res.data.message)
+          //同意生气后刷新页面 
+          this.getAgreenList()
+        }
+      })
+    },
+    //是否拒绝申请
+    userRefusedBtn(userId) {
+      let data = {}
+      data.friendId = userId
+      data.status = 2;
+      agreenFriendAction(data).then((res) => {
+        console.log(res);
+        if(res.data.code === 200){
+          this.$message.success(res.data.message)
+          //同意生气后刷新页面 
+          this.getAgreenList()
+        }
+      })
     }
+
   },
   computed: {
     // 获取公共的url 
@@ -152,8 +201,6 @@ export default {
 
 <style lang='less' scoped>
 .MainBox {
-  margin-top: 15px;
-
   .containBox {
     margin-top: 5px;
     display: flex;
@@ -163,12 +210,6 @@ export default {
     }
   }
 }
-
-.userAction {
-  display: flex;
-}
-
-
 
 .agreenfriendBox {
   margin-top: 10px;
@@ -227,20 +268,26 @@ export default {
           border-radius: 50%;
         }
       }
-      .agreeNickName{
+
+      .agreeNickName {
         margin-left: 10px;
         width: 120px;
 
       }
+
       .agreenIntroduce {
         margin-left: 5px;
         font-size: 18px;
-        width: 500px;
+        width: 290px;
       }
 
       .agreenTime {
-        width: 260px;
+        width: 190px;
         font-size: 14px;
+      }
+      .agreenAction{
+        display: inline-block;
+        width: 100px;
       }
     }
   }

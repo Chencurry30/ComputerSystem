@@ -84,5 +84,8 @@ a {
   text-decoration:none !important; 
   color: #4f555d !important;
 }
-
+/*每个页面的盒子*/
+.MainPageHeader{
+  margin-top: 70px;
+}
 

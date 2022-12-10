@@ -20,7 +20,7 @@ public interface TeacherMapper {
      Teacher getTeacherById(Integer teacherId);
 
      /**
-      * 通过id查询老师基本信息
+      * 查询所有老师基本信息
       * @return Teacher
       */
      List<Teacher> getAllTeacher();

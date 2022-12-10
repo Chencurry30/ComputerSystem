@@ -21,49 +21,43 @@
                     <button class="btn btn-primary" @click="AddDynamics">发表动态</button>
                   </div>
 
-                  <div class="bili-dyn-item"
-                  v-for="item in Dynamics"
-                  :key="item.dynamicId">
-                    <div class="bili-dyn-item__main">
-                      <div class="bili-dyn-item__avatar" >
-                        <div class="bili-dyn-avatar" style="width: 48px; height: 48px;">
-                          <div class="bili-avatar" style="width: 48px;height:48px;transform: translate(0px, 0px);">
-                            <img v-if="item.author.image === '无'" src="../../assets/Img/defaultUserImg.png" alt="">
-                            <img v-else :src="[getpicture + item.author.image]" alt="">
+                  <div class="dynamicsItem" v-for="item in Dynamics" :key="item.dynamicId">
+                    <div class="dynamicsItemMain">
 
 
-                          </div>
+                      <div class="dynamicsItemHeader">
+                        <div class="dynamiscItemUserImage">
+                          <img v-if="item.author.image === '无'" src="../../assets/Img/defaultUserImg.png" alt="">
+                          <img v-else :src="[getpicture + item.author.image]" alt="">
+                        </div>
+                        <div class="dynamiscItemUserInformation">
+                          <div class="nickName">{{ item.author.nickname }}</div>
+                          <div class="createDate">{{ item.createDate }}</div>
+
+
                         </div>
                       </div>
-                      <div class="bili-dyn-item__header">
-                        <div class="bili-dyn-title">
-                          <span class="bili-dyn-title__text" style="color: rgb(251, 114, 153);">{{item.author.nickname}}</span>
-                        </div>
-                        <div class="bili-dyn-time">{{item.createDate}}</div>
+                      <div class="dynamicsItemMiddle">
+                        <div class="middleContent">{{ item.content }}</div>
                       </div>
-                      <div class="picture">
-                        <div style="color: #222;">{{item.content}}</div>
-                        <img :src="[getpicture+item.picture]" v-if="item.picture" alt="">
+                      <div class="dynamicsItemBottom">
+                        <img :src="[getpicture + item.picture]" v-if="item.picture" alt="">
                       </div>
+
                     </div>
                   </div>
+
+                  <!--分页表单-->
+                  <div class="dynamicsPaging">
+                    <el-pagination background layout="prev, pager, next" :total="totals" :page-size="pageSize"
+                      @current-change="handleCurrentChange" @prev-click="prevPage" @next-click="nextPage" class="page">
+                    </el-pagination>
+                  </div>
+
+
                 </div>
               </div>
-
-              <!--分页表单-->
-              <el-pagination
-                  background
-                  layout="prev, pager, next"
-                  :total="totals"
-                  :page-size="pageSize"
-                  @current-change="handleCurrentChange"
-                  @prev-click="prevPage"
-                  @next-click="nextPage"
-                  class="page"
-              >
-              </el-pagination>
             </div>
-
 
           </div>
         </div>
@@ -76,31 +70,31 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import {VEmojiPicker} from 'v-emoji-picker';
-import {createPublicUrl} from '../../utils/index'
+import { VEmojiPicker } from 'v-emoji-picker';
+import { createPublicUrl } from '../../utils/index'
 import uploadDypicture from '../../components/upload/uploadDypicture'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
-import {getallDynamics,setDynamics} from '@/service/userServers'
+import { getallDynamics, setDynamics } from '@/service/userServers'
 export default {
   data() {
     return {
       showDialog: false,
-      Dynamics:[],
+      Dynamics: [],
       page: 1, //请求第一次的params
       pageSize: 5,
-      totals:0,//页面总条数
-      contents:{
-        content:'',
-        picture:''
+      totals: 0,//页面总条数
+      contents: {
+        content: '',
+        picture: ''
       },
-      fileList:[{
-        name:'',
-        url:''
+      fileList: [{
+        name: '',
+        url: ''
       }],
     }
   },
-  components: { personAside,personHeader,uploadDypicture,VEmojiPicker},
+  components: { personAside, personHeader, uploadDypicture, VEmojiPicker },
   name: "teacherReply",
   mounted() {
     //获取用户的相关信息,避免刷新到时头像丢失
@@ -109,7 +103,7 @@ export default {
   },
   methods: {
     selectEmoji(emoji) {
-      console.log(typeof  emoji.data)
+      console.log(typeof emoji.data)
       this.contents.content = this.contents.content + emoji.data
     },
     backHome() {
@@ -119,13 +113,13 @@ export default {
       this.$router.push(location)
     },
     //添加用户动态
-    AddDynamics(){
+    AddDynamics() {
       // console.log(this.contents)
-      setDynamics(this.contents).then((res)=>{
+      setDynamics(this.contents).then((res) => {
         console.log(this.contents)
-        if (res.data.code === 406){
+        if (res.data.code === 406) {
           this.$message.error("内容不能为空")
-        }else if(res.data.code === 200){
+        } else if (res.data.code === 200) {
           this.$message.success("发布动态成功！")
         }
         console.log(res)
@@ -133,8 +127,8 @@ export default {
       })
     },
     //获取所有动态
-    GetDynamics(){
-      getallDynamics(this.page).then((res)=>{
+    GetDynamics() {
+      getallDynamics(this.page).then((res) => {
         console.log(res)
         this.totals = res.data.data.total
         console.log(this.totals)
@@ -148,28 +142,28 @@ export default {
       this.GetDynamics();
     },
     //上一页
-    prevPage(page){
+    prevPage(page) {
       this.page = page - 1
     },
     //下一页
-    nextPage(page){
+    nextPage(page) {
       this.page = page + 1
     },
   },
   computed: {
-    afterChangeData(){
+    afterChangeData() {
       let start = (this.pageNo - 1) * this.pageSize
       let end = this.pageNo * this.pageSize
-      return this.Dynamics.slice(start,end)
+      return this.Dynamics.slice(start, end)
     },
     ...mapGetters('userInfo',
-        {
-          getUserImg: 'getUserImg'
-        }),
+      {
+        getUserImg: 'getUserImg'
+      }),
     ...mapGetters('userInfo', {
       getUserInfo: 'getUserInfo'
     }),
-    getpicture(){
+    getpicture() {
       return createPublicUrl()
     }
   }
@@ -178,91 +172,96 @@ export default {
 
 <style lang='less' scoped>
 .MainBox {
-  margin-top: 70px;
+
+
   .containBox {
     margin-top: 5px;
     display: flex;
+
     .contain-right {
       flex: 3;
     }
   }
 }
+
 .allBox {
   .UserBox {
     border-radius: 10px;
-    color: #666;
     border: 2px solid #eee;
   }
+
   .second {
     margin-top: 15px;
-    .contents{
+
+    .contents {
       font-size: 18px;
       font-weight: bold;
       width: 100%;
-      Text-align:center;
+      Text-align: center;
 
     }
   }
 }
-.bili-dyn-item{
+
+.dynamicsItem {
+  margin: 10px;
   background-color: #fff;
   border-radius: 4px;
-  font-family: Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;
-  letter-spacing: 0;
   min-width: 632px;
   position: relative;
-  .bili-dyn-item__main{
-    padding: 0 12px 0 88px;
-    position: relative;
-    .bili-dyn-item__avatar{
-      height: 48px;
-      left: 24px;
-      position: absolute;
-      top: 24px;
-      width: 48px;
-      .bili-avatar{
-        img{
+
+  .dynamicsItemMain {
+    display: flex;
+    flex-direction: column;
+
+    .dynamicsItemHeader {
+      display: flex;
+      align-items: center;
+
+      .dynamiscItemUserImage {
+        margin-left: 10px;
+        width: 48px;
+        height: 48px;
+
+        img {
           width: 100%;
           height: 100%;
+          border-radius: 50%;
         }
       }
-    }
-    .bili-dyn-item__header{
-      height: 73px;
-      padding-top: 27px;
-      .bili-dyn-title{
-        align-items: center;
-        display: flex;
-        height: 24px;
-        width: max-content;
-        .bili-dyn-title__text{
-          cursor: pointer;
-          font-size: 16px;
+
+      .dynamiscItemUserInformation {
+        margin-left: 10px;
+        flex-direction: column;
+
+        .nickName {
+          color: rgb(251, 114, 153);
         }
-        .bili-dyn-time{
-          color: #99a2aa;
-          cursor: pointer;
-          font-size: 8px;
-          height: 22px;
-          line-height: 18px;
-          padding-top: 4px;
-          transition: color .3s ease;
-          user-select: none;
-          width: fit-content;
-        }
+
       }
     }
+
+    .dynamicsItemMiddle {
+      .middleContent {
+        margin-top: 8px;
+        margin-left: 10px;
+      }
+    }
+
+    .dynamicsItemBottom {
+      margin-top: 8px;
+      margin-left: 10px;
+
+      img {
+        width: 220px;
+      }
+    }
+
+
   }
 }
-.btn-primary{
+
+.btn-primary {
   margin-left: 800px;
-}
-.picture{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  img{
-    width: 200px;
-    margin-top: 10px;
-  }
 }
 </style>

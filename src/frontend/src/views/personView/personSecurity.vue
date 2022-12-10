@@ -1,35 +1,34 @@
 //用户安全
 <template>
-  <div class="allBox">
-    <div class="MainBox w">
-      <div class="containBox">
-        <personAside></personAside>
-        <div class="contain-right">
-          <personHeader></personHeader>
-          <div class="UserBox">
-            <div class="boxbody">
-              <div class="title-h">
-                <span>修改绑定手机号</span>
-              </div>
-              <div class="muted-color">修改绑定的手机号，避免手机号不能使用</div>
-              <div class="btn" @click="changePhone">修改手机号</div>
-              <phonePopup ref="phonePopup"></phonePopup>
+  <div class="MainBox w MainPageHeader">
+    <div class="containBox">
+      <personAside></personAside>
+      <div class="contain-right">
+        <personHeader></personHeader>
+        <div class="UserBox">
+          <div class="boxbody">
+            <div class="title-h">
+              <span>修改绑定手机号</span>
             </div>
+            <div class="muted-color">修改绑定的手机号，避免手机号不能使用</div>
+            <div class="btn" @click="changePhone">修改手机号</div>
+            <phonePopup ref="phonePopup"></phonePopup>
           </div>
-          <div class="UserBox">
-            <div class="boxbody">
-              <div class="title-h">
-                <span>修改密码</span>
-              </div>
-              <div class="muted-color">定期修改账号密码，提高账号的安全性</div>
-              <div class="btn" @click="changePassword">修改密码</div>
-              <passwordPopup ref="passwordPopup"></passwordPopup>
+        </div>
+        <div class="UserBox">
+          <div class="boxbody">
+            <div class="title-h">
+              <span>修改密码</span>
             </div>
+            <div class="muted-color">定期修改账号密码，提高账号的安全性</div>
+            <div class="btn" @click="changePassword">修改密码</div>
+            <passwordPopup ref="passwordPopup"></passwordPopup>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -57,10 +56,9 @@ export default {
 
 <style lang='less' scoped>
 .MainBox {
-  margin-top: 15px;
 
   .containBox {
-    margin-top: 70px;
+
     display: flex;
 
 

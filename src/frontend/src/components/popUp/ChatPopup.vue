@@ -58,7 +58,7 @@ export default {
   methods: {
     showPopup(friendUserId, friendImg, friendNickName) {
       let userId = sessionStorage.getItem("userId");
-      this.socket = new WebSocket(`ws://localhost:8989/api/websocket/${userId}`)
+      this.socket = new WebSocket(`ws://localhost:8989/api/websocket/${userId}-${friendUserId}`)
       this.socket.onmessage = event => {
         this.msgList.push(JSON.parse(event.data))
       }
