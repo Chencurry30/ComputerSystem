@@ -56,17 +56,15 @@ public class UserServiceImpl implements UserService {
     @Override
     @SysLogAnnotation(operModel = "用户模块",operType = "登录",operDesc = "用户前台登录")
     public ServerResponse<Map<String,Object>> login(User user) {
-        //TODO 为了测试方便，暂时前后端不对密码进行加密，项目交付或项目答辩或最终测试时会还原。
-        if(false){
-            //从redis中获取私钥
-            String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
-            if (StringUtils.isBlank(privateKey)){
-                log.error("用户登录时，登录失败，失败原因：密码加密的密钥已经失效");
-                return ServerResponse.createByErrorMessage("密钥已经失效");
-            }
-            //解密密码
-            user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
+        //从redis中获取私钥
+        String privateKey = redisUtils.getCacheObject(user.getUuId() + ":privateKey");
+        if (StringUtils.isBlank(privateKey)){
+            log.error("用户登录时，登录失败，失败原因：密码加密的密钥已经失效");
+            return ServerResponse.createByErrorMessage("密钥已经失效");
         }
+        //解密密码
+        user.setPassword(RSAUtils.decryptDataOnJava(user.getPassword(),privateKey));
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         //认证失败，抛出异常
