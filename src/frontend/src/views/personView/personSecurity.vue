@@ -5,7 +5,7 @@
       <personAside></personAside>
       <div class="contain-right">
         <personHeader></personHeader>
-        <div class="UserBox">
+        <div class="UserBox" v-if="judgePhone">
           <div class="boxbody">
             <div class="title-h">
               <span>修改绑定手机号</span>
@@ -13,6 +13,16 @@
             <div class="muted-color">修改绑定的手机号，避免手机号不能使用</div>
             <div class="btn" @click="changePhone(1)">修改手机号</div>
             <phonePopup ref="phonePopup"></phonePopup>
+          </div>
+        </div>
+        <div class="UserBox" v-else>
+          <div class="boxbody">
+            <div class="title-h">
+              <span>绑定手机号</span>
+            </div>
+            <div class="muted-color">绑定手机号,增加账号的安全性</div>
+            <div class="btn" @click="bindUserPhone">绑定手机号</div>
+            <bindPhone ref="bindPhone"></bindPhone>
           </div>
         </div>
         <div class="UserBox">
@@ -34,23 +44,35 @@
 <script>
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
-import phonePopup from "../../components/popUp/phonePopup.vue";
-import passwordPopup from "../../components/popUp/passwordPopup.vue";
+import phonePopup from "../../components/popUp/phonePopup";
+import passwordPopup from "../../components/popUp/passwordPopup";
+import bindPhone from "../../components/popUp/bindPhone";
 export default {
-  components: { phonePopup, passwordPopup, personAside, personHeader },
+  components: { phonePopup, bindPhone,passwordPopup, personAside, personHeader },
   name: "personSecurity",
   //避免页面刷新导致vuex中的数据丢失
   mounted() {
     this.$store.dispatch('userInfo/getUserInfo')
   },
   methods: {
+    //修改绑定的手机号 
     changePhone(activeId) {
       this.$refs.phonePopup.showPopup(activeId);
     },
+    //修改密码 
     changePassword() {
       this.$refs.passwordPopup.showPopup();
     },
+    //绑定手机号 
+    bindUserPhone(){
+      this.$refs.bindPhone.showPopup();
+    }
   },
+  computed:{
+    judgePhone(){
+      return sessionStorage.getItem('userPhone') === undefined
+    }
+  }
 };
 </script>
 

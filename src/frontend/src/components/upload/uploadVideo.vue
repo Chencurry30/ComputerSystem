@@ -1,45 +1,35 @@
 <template>
   <div class="uploadBox">
     <div class="upload">
-      <el-upload
-          class="upload-video"
-          drag
-          :auto-upload="false"
-          :limit="1"
-          action=""
-          :file-list="fileList"
-          :on-change="ChangeFile"
-          :on-exceed="beyondFileNumber"
-          multiple>
+      <el-upload class="upload-video" drag :auto-upload="false" :limit="1" action="" :file-list="fileList"
+        :on-change="ChangeFile" :on-exceed="beyondFileNumber" multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将视屏或视屏图片拖到此处，或<em>点击上传</em></div>
       </el-upload>
-      <el-button @click="doUpload">上传视屏</el-button>
     </div>
-    <div class="uploadProcess"></div>
-    <el-progress :text-inside="true" :stroke-width="18"
-
-                 :percentage="progress" v-if="progress !== 0" >
+    <el-progress :text-inside="true" :stroke-width="18" :percentage="progress" v-if="progress !== 0">
     </el-progress>
-
+    <div class="uploadBtn">
+      <el-button @click="doUpload" class="uploadVideoBtn">上传视屏</el-button>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 const OSS = require('ali-oss')
-let  ossClient
+let ossClient
 
 export default {
   name: "uploadVideo",
   data() {
     return {
       //当videoType为0表示上传的视屏,为1表示上传的是视屏图片
-      videoType:-1,
-      fileList:[],
+      videoType: -1,
+      fileList: [],
       ossConfig: {},
-      urlLink:'',
-      progress:0
+      urlLink: '',
+      progress: 0
     }
   },
   methods: {
@@ -51,7 +41,7 @@ export default {
         return
       }
 
-      if (ossClient === undefined){
+      if (ossClient === undefined) {
         let ossConfig
         await this.getStsToken().then(res => {
           console.log(res);
@@ -79,7 +69,7 @@ export default {
       this.fileList[0] = file
     },
     //限制文件上传时的个数(只能为1个)
-    beyondFileNumber(){
+    beyondFileNumber() {
       this.$message.error('一次只能上传一个文件,请先把文件上传或者在文件列表中删除后再添加')
     },
     getStsToken() {
@@ -92,21 +82,18 @@ export default {
     async doMultipartUpload() {
       let that = this
       let key
-      try{
+      try {
         let file = this.fileList[0].raw
-        console.log(123,file)
-        if(file.type === 'image/png' || file.type === 'image/jpg'){
+        console.log(123, file)
+        if (file.type === 'image/png' || file.type === 'image/jpg') {
           this.videoType = 0
           key = '/test/userUploadVideoImg/' + file.name
         }
-          key = '/test/userUploadVideoData/' + file.name
-
-
+        key = '/test/userUploadVideoData/' + file.name
         let result = await ossClient.multipartUpload(key, file, {
           progress: function (p) {
-
-           //打印上传百分比(其中的p表示分片上传的百分比)
-            that.progress = p*100
+            //打印上传百分比(其中的p表示分片上传的百分比)
+            that.progress = p * 100
           },
           partsSize: 1000 * 1024 * 1024
         })
@@ -116,6 +103,11 @@ export default {
         this.$message.error('上传成功')
         this.fileList = []
         this.progress = 0
+        if (file.type === 'image/png' || file.type === 'image/jpg') {
+          this.$parent.videoData.image = result.name
+        } else {
+          this.$parent.videoData.link = result.name
+        }
         console.log(this.$parent)
       } catch (e) {
         console.log(e)
@@ -126,15 +118,32 @@ export default {
 </script>
 
 <style scoped lang="less">
-.upload{
-  margin: 5px auto;
-  //display: flex;
-  //width: 400px;
-  // height: 300px;
-  .upload-video{
+.upload {
+  margin: 5px 10px;
+
+  .upload-video {
     display: flex;
     flex-direction: column;
   }
+}
+
+.uploadBtn {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  .uploadVideoBtn {
+    margin-top: 10px;
+    width: 160px;
+  }
+}
+
+:deep .el-upload-dragger {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 240px;
+  height: 320px;
 }
 </style>
 
