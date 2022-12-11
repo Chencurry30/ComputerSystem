@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sicnu.boot.mapper.TeacherExamineMapper">
+
+    <select id="getAllExamine" resultType="TeacherExamine">
+        select name,background,direction_id,direction_name from teacher_examine;
+    </select>
+
+    <insert id="insertExamine" parameterType="TeacherExamine">
+        insert into teacher_examine values (null,#{name},#{background},#{directionId},#{directionName},null,4,#{information},null,#{qualification},user_id=#{userId},#{applyReason},null,null,0,1,#{reviewComment})
+    </insert>
+
+
+    <update id="updateAgrExamine" parameterType="TeacherExamine">
+        update teacher_examine  set examine_status = 1
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateDisAgrExamine" parameterType="TeacherExamine">
+        update teacher_examine set examine_status = 2,review_comment=#{reviewComment}
+        where user_id = #{userId}
+    </update>
+</mapper>

@@ -128,8 +128,8 @@ public class UserFriendServiceImpl implements UserFriendService {
     public ServerResponse<Boolean> getRedSpot() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Integer userId = ((LoginUser) authentication.getPrincipal()).getUser().getUserId();
-        List<Integer> cacheList = redisUtils.getCacheList("redSpot" + userId);
-        return ServerResponse.createBySuccess("获取成功",cacheList.isEmpty());
+        List<Integer> cacheList = redisUtils.getCacheList("redSpot:" + userId);
+        return ServerResponse.createBySuccess("获取成功",!cacheList.isEmpty());
     }
 
     @Override

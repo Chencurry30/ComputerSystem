@@ -1,36 +1,41 @@
+<!--修改密码的弹窗-->
 <template>
-  <div class="tab-content" v-show="showDialog">
-    <div class="contentBox">
-      <div class="header">
-        <div class="tst-center">
-          <div class="phoneImg">
-            <img src="../../assets/Img/Icon/phone.png" alt="" />
-          </div>
-          <div class="p4">修改密码</div>
-        </div>
+  <div class="userDialog" v-show="showDialog">
+    <div class="DialogBox">
+      <div class="DialogHeader">
+
+        <div class="Dialogtitle">修改密码</div>
+
         <div class="closeImg" @click="closePopup">
           <img src="../../assets/Img/Icon/close.png" alt="" />
         </div>
       </div>
-      <div class="content-body">
+      <div class="DialogBody">
         <div class="content-main">
-          <div class="body-item">
-            <div class="laber">手机号</div>
-            <input type="text" class="laber-info" />
-            <i class="laber-line"></i>
-          </div>
-          <div class="body-item">
-            <div class="laber">新密码</div>
-            <input type="text" class="laber-info" />
-            <i class="laber-line"></i>
-          </div>
-          <div class="body-item">
-            <div class="laber">验证码</div>
-            <input type="text" class="laber-info" />
-            <i class="laber-line"></i>
-            <div class="getVode btn">获取验证码</div>
-          </div>
-          <div class="sendInfo btn" @click="closePopup">修改密码</div>
+          <el-form label-width="80px" class="userInfoBox" ref="showPopupInfo" :model="showPopupInfo" :rules="checkForm">
+            <div class="formBox">
+              <div class="formLeft">
+                <el-form-item label="手机号" prop="phone">
+                  <el-input type="text" placeholder="请输入手机号" v-model.trim="showPopupInfo.phone" class="nick-info">
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="旧密码" prop="oldPassword">
+                  <el-input type="text" placeholder="请输入旧密码" v-model.trim="showPopupInfo.oldPassword" class="nick-info">
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="新密码" prop="password">
+                  <el-input type="text" placeholder="请输入新密码" v-model.trim="showPopupInfo.password" class="nick-info">
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="验证码" prop="smsCode" class="smsCode">
+                  <el-input type="text" placeholder="验证码" v-model.trim="showPopupInfo.smsCode">
+                  </el-input>
+                  <sendCodeBtn :phone="showPopupInfo.phone"></sendCodeBtn>
+                </el-form-item>
+              </div>
+            </div>
+          </el-form>
+          <div class="saveBtn" @click="modifyPassWordAction()">提交</div>
         </div>
       </div>
     </div>
@@ -38,133 +43,144 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import rules from '../../utils/rules'
+import sendCodeBtn from '../sendCode/sendCodeBtn';
+import { CryAlgorithm } from '../../utils/index'
+import { modifyPassword } from '../../service/ServersApi'
 export default {
   name: "passwordPopup",
+  components: { sendCodeBtn },
   data() {
     return {
       showDialog: false,
+      showPopupInfo: {
+        oldPassword: '',
+        password: '',
+        phone: '',
+        smsCode: '',
+      },
+      checkForm: {
+        //密码验证
+        password: [
+          { validator: rules.FormValidate.Form().validatePassWord, trigger: 'blur' }
+        ],
+        oldPassword: [
+          { validator: rules.FormValidate.Form().validatePassWord, trigger: 'blur' }
+        ],
+        phone: [
+          { validator: rules.FormValidate.Form().validatePhone, trigger: 'blur' }
+        ],
+      },
+
     };
   },
+
   methods: {
     showPopup() {
-      console.log(8888);
       this.showDialog = true;
     },
     closePopup() {
       this.showDialog = false;
     },
+    getPublicKey() {
+      this.$store.dispatch('encryption/getPubKey');
+    },
+    //修改密码
+    modifyPassWordAction() {
+      this.getPublicKey()
+      setTimeout(() => {
+        let data = {}
+        data.oldPassword = CryAlgorithm(this.getkeyInfo.encryPtion, this.showPopupInfo.oldPassword)
+        data.password = CryAlgorithm(this.getkeyInfo.encryPtion, this.showPopupInfo.password)
+        data.phone = this.showPopupInfo.phone
+        data.smsCode = this.showPopupInfo.smsCode
+        data.uuId = this.getkeyInfo.uuId
+        modifyPassword(data).then((res) => {
+          if(res.data.code === 200){
+            this.$message.success('修改密码成功')
+            this.showDialog = true;
+          }else if(res.data.code === 406){
+            this.$message.error('原密码错误')
+          }else if(res.data.code === 407){
+            this.$message.error('手机验证码错误')
+          }
+          console.log(res);
+        })
+      }, 1500)
+    }
   },
+  computed: {
+    ...mapGetters('encryption', {
+      getkeyInfo: 'getkeyInfo'
+    })
+  }
 };
 </script>
 
 <style lang="less" scoped>
-  .tab-content {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow: auto;
-    margin: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    .contentBox {
-      position: relative;
-      top: 50%;
-      left: 50%;
-      width: 400px;
-      height: 380px;
-      border-radius: 16px;
-      transform: translateX(-50%) translateY(-50%);
-      background: #ffffff;
-      .header {
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-        height: 100px;
-        background: #59c3fb;
-        .closeImg {
-          position: absolute;
-          top: 16px;
-          right: 14px;
-          width: 24px;
-          height: 24px;
-          cursor: pointer;
-          img {
-            width: 100%;
-          }
-        }
-        .tst-center {
-          margin: 0 auto;
-          padding-top: 25px;
-          width: 76px;
-          .p4{
-            text-align: center;
-          }
-          .phoneImg {
-            margin: 0 auto;
-            width: 48px;
-            height: 48px;
-            img {
-              width: 100%;
-            }
-          }
-        }
-      }
-      .content-body {
-        width: 100%;
-        .content-main {
-          padding: 10px 20px;
-          .body-item {
-            margin: 10px 0px;
-            display: flex;
-            position: relative;
-            .laber {
-              position: absolute;
-              top: 2px;
-              left: 0px;
-              width: 50px;
-              font-size: 14px;
-              transition: 0.8s;
-            }
-            .laber-info {
-              outline: 0;
-              border: none;
-              display: block;
-              width: 100%;
-              padding: 2em 2em 0.4em 0.3em;
-              opacity: 0.8;
-              transition: 0.3s;
-              background: 0 0;
-            }
-            .laber-line {
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              height: 1px;
-              width: 100%;
-              transition: 0.8s;
-              background: rgba(50, 50, 50, 0.06);
-            }
-            .getVode {
-              position: absolute;
-              padding: 2px 5px;
-              top: 20px;
-              right: 0;
-              color: #2997f7;
-              opacity: 0.8;
-              background: rgba(41, 151, 247, 0.1);
-            }
-          }
-          .sendInfo {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            padding: 0.4em 5em;
-            background: #59c3fb;
-            color: #fff;
-          }
+.userDialog {
+  .DialogBox {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    height: 380px;
+    border-radius: 16px;
+    transform: translateX(-50%) translateY(-50%);
+    background: #ffffff;
+
+    .DialogHeader {
+      .closeImg {
+        img {
+          width: 100%;
         }
       }
     }
+
+    .DialogBody {
+      width: 100%;
+
+      .content-main {
+        padding: 10px 20px;
+
+        .smsCode {
+          .el-input {
+            width: 60%;
+          }
+        }
+
+      }
+    }
   }
+}
+
+:deep .el-input__inner {
+  border: 0;
+  outline: 0;
+}
+
+.el-form-item {
+  margin-bottom: 10px;
+}
+
+.el-select {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+:deep .el-form-item__error {
+  position: absolute;
+  padding: 3px 0;
+  top: 75%;
+  left: 0;
+  color: #F56C6C;
+  font-size: 12px;
+}
+
+:deep .el-form-item__label {
+  padding: 0;
+}
 </style>
+  

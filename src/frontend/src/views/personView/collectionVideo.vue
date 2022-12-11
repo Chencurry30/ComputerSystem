@@ -1,6 +1,6 @@
 <!--收藏视屏的页面 -->
 <template>
-  <div class="MainBox w">
+  <div class="MainBox w MainPageHeader">
     <div class="containBox">
       <personAside></personAside>
       <div class="contain-right">
@@ -93,13 +93,9 @@ export default {
 
 <style lang='less' scoped>
 .MainBox {
-  margin-top: 70px;
-
   .containBox {
     margin-top: 5px;
     display: flex;
-
-
     .contain-right {
       flex: 3;
     }
@@ -117,6 +113,5 @@ export default {
     }
   }
 }
-
 
 </style>

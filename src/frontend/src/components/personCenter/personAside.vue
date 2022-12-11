@@ -85,13 +85,14 @@
 
             </div>
           </li>
-          <li class="list-item">
+          <li class="list-item redPort">
             <div class="list-icon">
               <img src="../../assets/Img/Icon/notice.png" alt="" />
             </div>
             <div class="list-info">
               <router-link :to="{ name: 'userChat' }" style="text-decoration: none">好友聊天</router-link>
             </div>
+            <span class="Port" :class="{hiddenRedPord:redSpot}"></span>
           </li>
           <li class="list-item">
             <div class="list-icon">
@@ -108,8 +109,38 @@
 </template>
 
 <script>
+import { notAccepted } from '../../service/userServers'
 export default {
-  name: 'personAside'
+  name: 'personAside',
+  data() {
+    return {
+      interval: null,
+      redSpot: true,
+    }
+  },
+  mounted() {
+    this.getRedSpot()
+    console.log('页面加载');
+    // this.interval = setInterval(() => {
+    //   this.getRedSpot()
+    // }, 500)
+  },
+  //vue2中的这个在vue3中已经被抛弃 
+  //eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle 
+  beforeDestroy() {
+    clearInterval(this.interval)
+    console.log('页面被销毁');
+  },
+  methods: {
+    getRedSpot() {
+      notAccepted().then((res) => {
+        if (res.data.code === 200) {
+          this.redSpot = res.data.data
+        }
+        console.log(1, res);
+      });
+    }
+  },
 }
 </script>
 
@@ -177,7 +208,25 @@ export default {
             font-size: 14px;
           }
         }
+
+        .redPort {
+          position: relative;
+
+          .Port {
+            position: absolute;
+            top: 14px;
+            right: 10px;
+            width: 12px;
+            height: 12px;
+            background: red;
+            border-radius: 50%;
+          }
+        }
+        .hiddenRedPord{
+          display: none;
+        }
       }
+
     }
   }
 

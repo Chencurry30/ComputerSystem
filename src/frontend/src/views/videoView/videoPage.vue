@@ -1,6 +1,6 @@
 //视屏资源的首页
 <template>
-  <div class="MainBox w">
+  <div class="MainBox w MainPageHeader">
     <div class="MainBox-left">
       <div class="videotitle">
         <h1 class="title">{{ videoInfo.name }}</h1>
@@ -320,8 +320,6 @@ export default {
 <style lang='less' scoped>
 .MainBox {
   display: flex;
-  margin-top: 70px;
-
   .MainBox-left {
     width: 800px;
     padding: 10px 20px 10px 70px;
@@ -514,7 +512,6 @@ export default {
       }
     }
   }
-
   .MainBox-right {
     padding: 0 25px;
     width: 400px;

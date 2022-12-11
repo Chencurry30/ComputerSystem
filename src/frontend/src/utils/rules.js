@@ -5,13 +5,13 @@
  * @Description: 校验数据的公共方法
 */
 // 账号{要求2-12位}
-let usernameReg = /^(?![0-9]*$)(?![a-zA-Z]*$)[a-zA-Z0-9]{2,12}$/
+let usernameReg = /^[a-zA-Z0-9]{2,12}$/
 
 // 电话{要求11位}
 let phoneReg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/
 
 // 密码{6-12位}
-let passwordReg = /^(?![0-9]*$)(?![a-zA-Z]*$)[a-zA-Z0-9]{6,12}$/
+let passwordReg = /^(?=.*[a-zA-Z])(?=.*\d).{6,12}$/
 
 //验证年龄
 let ageReg = /^120$|^[1-9]$|^(1[0-1]|[1-9])\d$/
@@ -20,7 +20,7 @@ let ageReg = /^120$|^[1-9]$|^(1[0-1]|[1-9])\d$/
 let emailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
 
 //验证昵称
-let nicknameReg =  /^[\u4e00-\u9fa5]{2,12}$|[a-zA-Z0-9]{2,12}$/
+let nicknameReg =  /^[\u4e00-\u9fa5a-zA-Z0-9]{2,12}$/
 
 //验证个人留言 
 let personalMessageReg = /^[\u4e00-\u9fa5]{1,20}$/
