@@ -11,7 +11,7 @@
               <span>修改绑定手机号</span>
             </div>
             <div class="muted-color">修改绑定的手机号，避免手机号不能使用</div>
-            <div class="btn" @click="changePhone">修改手机号</div>
+            <div class="btn" @click="changePhone(1)">修改手机号</div>
             <phonePopup ref="phonePopup"></phonePopup>
           </div>
         </div>
@@ -44,8 +44,8 @@ export default {
     this.$store.dispatch('userInfo/getUserInfo')
   },
   methods: {
-    changePhone() {
-      this.$refs.phonePopup.showPopup();
+    changePhone(activeId) {
+      this.$refs.phonePopup.showPopup(activeId);
     },
     changePassword() {
       this.$refs.passwordPopup.showPopup();
@@ -94,7 +94,7 @@ export default {
         width: 80px;
         height: 4px;
         top: 20px;
-        left: 0px;
+        left: 0;
         bottom: 3px;
         transition: 0.4s;
         background: black;

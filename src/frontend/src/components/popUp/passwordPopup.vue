@@ -78,7 +78,6 @@ export default {
 
   methods: {
     showPopup() {
-      console.log(8888);
       this.showDialog = true;
     },
     closePopup() {
@@ -100,6 +99,7 @@ export default {
         modifyPassword(data).then((res) => {
           if(res.data.code === 200){
             this.$message.success('修改密码成功')
+            this.showDialog = true;
           }else if(res.data.code === 406){
             this.$message.error('原密码错误')
           }else if(res.data.code === 407){

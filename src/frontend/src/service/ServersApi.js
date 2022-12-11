@@ -21,8 +21,14 @@ export const forgetPassword = (data) =>{
   return service.put(url,data)
 }
 
-//修改
+//修改密码
 export const modifyPassword = (data) =>{
   const url = `users/password`
+  return service.put(url,data)
+} 
+
+//修改手机号
+export const modifyPhone = (data) =>{
+  const url = `users/phone`
   return service.put(url,data)
 } 
