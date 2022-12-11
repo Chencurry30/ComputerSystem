@@ -260,7 +260,7 @@ public class UserController {
      * @author 胡建华
      * Date:  2022/12/11 15:08
      */
-    @PutMapping("/bing")
+    @PutMapping("/bind")
     public ServerResponse<String> bindPhone(@Validated @RequestBody UpdateUser updateUser){
         return userService.bindPhone(updateUser);
     }
