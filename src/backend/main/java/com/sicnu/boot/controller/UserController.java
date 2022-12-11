@@ -252,5 +252,18 @@ public class UserController {
         return userService.getPublicKey(uuId);
     }
 
+    /**
+     * description: 绑定手机号
+     *
+     * @param updateUser:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/11 15:08
+     */
+    @PutMapping("/bind")
+    public ServerResponse<String> bindPhone(@Validated @RequestBody UpdateUser updateUser){
+        return userService.bindPhone(updateUser);
+    }
+
 
 }

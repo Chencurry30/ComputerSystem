@@ -123,4 +123,14 @@ public interface UserService {
      * Date:  2022/10/18 21:45
      */
     ServerResponse<String> getPublicKey(String uuId);
+
+    /**
+     * description: 绑定手机号
+     *
+     * @param updateUser:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2022/12/11 15:09
+     */
+    ServerResponse<String> bindPhone(UpdateUser updateUser);
 }

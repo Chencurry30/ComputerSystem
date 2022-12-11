@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
         map.put("expire",180 * 60 * 1000);
         //返回用户部分信息
         UserDetail userDetail = new UserDetail(loginUser.getUser().getNickname()
-                ,loginUser.getUser().getImage(),loginUser.getUser().getUserId());
+                ,loginUser.getUser().getImage(),loginUser.getUser().getUserId(),loginUser.getUser().getPhone());
         map.put("user",userDetail);
         //返回用户权限树
         List<Menu> menus = userMapper.getUserMenu(loginUser.getUser().getUserId());
@@ -248,6 +248,15 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Integer userid = loginUser.getUser().getUserId();
+        //判断原手机号是否存在
+        if (StringUtils.isBlank(loginUser.getUser().getPhone())){
+            return ServerResponse.createByErrorMessage("操作错误，该用户没有手机号！！");
+        }else {
+            if (loginUser.getUser().getPhone().equals(updateUser.getOldPhone())){
+                return ServerResponse.createByErrorMessage("旧手机号错误");
+            }
+        }
+
         //检查手机号是否已经存在
         Integer integer = userMapper.checkPhone(updateUser.getPhone());
         if (integer != 0){
@@ -353,6 +362,24 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return ServerResponse.createByErrorCodeMessage(ResponseCode.INTERNAL_SERVER_ERROR.getCode(), "服务器异常");
+    }
+
+    @Override
+    public ServerResponse<String> bindPhone(UpdateUser updateUser) {
+        //获取用户信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = ((LoginUser) authentication.getPrincipal()).getUser();
+        if (!StringUtils.isBlank(user.getPhone())){
+            return ServerResponse.createByErrorMessage("该用户已经绑定了手机号");
+        }
+        //验证手机验证码
+        ServerResponse<String> verifySmsCode = verifySmsCode(updateUser.getPhone(), updateUser.getSmsCode());
+        if (verifySmsCode.getCode() == ResponseCode.SMS_CODE_ERROR.getCode()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.SMS_CODE_ERROR.getCode(),
+                    "手机号验证码错误");
+        }
+        userMapper.updatePhoneByUserId(updateUser.getPhone(), user.getUserId());
+        return ServerResponse.createBySuccessMessage("修改成功");
     }
 
     /**
