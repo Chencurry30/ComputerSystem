@@ -75,6 +75,13 @@ public class UserDetail {
         this.message = user.getMessage();
     }
 
+    public UserDetail(String nickname, String image, Integer userId, String phone) {
+        this.nickname = nickname;
+        this.image = image;
+        this.userId = userId;
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "UserDetail{" +
