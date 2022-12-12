@@ -153,8 +153,10 @@ export default {
                   this.$router.push({ name: 'Home' })
                   //刷新页面
                   this.reload()
-                } else if (res.data.code === 400) {
-                  this.$message.error("用户名或密码错误，请重新输入！")
+                } else if (res.data.code === 409) {
+                  this.$message.error(res.data.message)
+                } else if (res.data.code === 500) {
+                  this.$message.error(res.data.message)
                 }
               })
             }
