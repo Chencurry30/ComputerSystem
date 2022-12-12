@@ -10,11 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Service
-public class TeacherExamineImpl implements TeacherExamineService {
+public class TeacherExamineServiceImpl implements TeacherExamineService {
     @Resource
     private TeacherExamineMapper examineMapper;
     @Override
@@ -29,19 +30,23 @@ public class TeacherExamineImpl implements TeacherExamineService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Integer userId = loginUser.getUser().getUserId();
         examine.setUserId(userId);
+        examine.setApplyDate(LocalDateTime.now());
         examineMapper.insertExamine(examine);
         return ServerResponse.createBySuccessMessage("添加成功");
     }
 
     @Override
-    public ServerResponse<String> updateAgrExamine(Integer userId) {
-        examineMapper.updateAgrExamine(userId);
+    public ServerResponse<String> updateAgrExamine(Integer examineId) {
+        examineMapper.updateAgrExamine(examineId);
+        TeacherExamine teacherExamine = examineMapper.getExamine(examineId);
+        teacherExamine.setPassDate(LocalDateTime.now());
+        examineMapper.passExamine(teacherExamine);
         return ServerResponse.createBySuccessMessage("更新成功");
     }
 
     @Override
-    public ServerResponse<String> updateDisAgrExamine(Integer userId){
-        examineMapper.updateDisAgrExamine(userId);
+    public ServerResponse<String> updateDisAgrExamine(Integer examineId,String reviewComment){
+        examineMapper.updateDisAgrExamine(examineId,reviewComment);
         return ServerResponse.createBySuccessMessage("更新成功");
     }
 }

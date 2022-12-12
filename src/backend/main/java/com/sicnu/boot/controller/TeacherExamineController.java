@@ -25,17 +25,18 @@ public class TeacherExamineController {
 
     @PostMapping()
     ServerResponse<String> insertExamine(@Validated @RequestBody TeacherExamine examine){
+
         return teacherExamineService.insertExamine(examine);
     }
-    @PutMapping("/agree/{userId}")
+    @PutMapping("/agree/{examineId}")
     ServerResponse<String> updateExamine(@Validated
-                                         @PathVariable Integer userId){
-        return teacherExamineService.updateAgrExamine(userId);
+                                         @PathVariable Integer examineId){
+        return teacherExamineService.updateAgrExamine(examineId);
     }
 
-    @PutMapping("/disagree/{userId}")
+    @PutMapping("/disagree/{examineId}/{reviewComment}")
     ServerResponse<String> updateDisAgrExamine(@Validated
-                                               @PathVariable Integer userId){
-        return teacherExamineService.updateDisAgrExamine(userId);
+                                               @PathVariable Integer examineId,@PathVariable String reviewComment){
+        return teacherExamineService.updateDisAgrExamine(examineId,reviewComment);
     }
 }

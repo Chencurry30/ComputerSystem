@@ -19,9 +19,13 @@ public interface TeacherExamineMapper {
 
     /**
      * 管理员审核
-     * @param userId:用户Id
+     * @param examineId:评论Id
      */
-    void updateAgrExamine(Integer userId);
+    void updateAgrExamine(Integer examineId);
 
-    void updateDisAgrExamine(Integer userId);
+    void updateDisAgrExamine(Integer examineId,String reviewComment);
+
+    void passExamine(TeacherExamine examine);
+
+    TeacherExamine getExamine(Integer examineId);
 }

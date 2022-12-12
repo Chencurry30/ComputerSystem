@@ -2,7 +2,6 @@ package com.sicnu.boot.service;
 
 import com.sicnu.boot.pojo.TeacherExamine;
 import com.sicnu.boot.utils.ServerResponse;
-
 import java.util.List;
 
 public interface TeacherExamineService {
@@ -17,10 +16,10 @@ public interface TeacherExamineService {
 
     /**
      * 修改审核状态
-     * @param userId:用户Id
+     * @param examineId:评论Id
      * @return null
      */
-    ServerResponse<String> updateAgrExamine(Integer userId);
+    ServerResponse<String> updateAgrExamine(Integer examineId);
 
-    ServerResponse<String> updateDisAgrExamine(Integer UserId);
+    ServerResponse<String> updateDisAgrExamine(Integer examineId,String reviewComment);
 }
