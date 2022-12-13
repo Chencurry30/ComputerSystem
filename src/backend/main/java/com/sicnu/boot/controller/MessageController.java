@@ -38,13 +38,13 @@ public class MessageController {
     /**
      * 获得所有评论信息
      */
-    @GetMapping
+    @GetMapping("/AllMessages")
     public ServerResponse<List<Message>> getAllMessage(){
         return messageService.getAllMessage();
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/teacherId/{id}")
     public ServerResponse<List<Message>> getMassegeById(@PathVariable("id") Integer id){
         return messageService.getMessageById(id);
     }

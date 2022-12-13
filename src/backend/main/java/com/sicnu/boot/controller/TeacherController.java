@@ -32,10 +32,10 @@ public class TeacherController {
         return teacherService.getTeacherById(id);
     }
 
-    @GetMapping("/pages/{pageNum}")
-    ServerResponse<PageInfo<Teacher>> getTeacherPage(
+    @GetMapping("/pages/{directionId}-{pageNum}")
+    ServerResponse<PageInfo<Teacher>> getTeacherPage(@PathVariable Integer directionId,
             @Min(value = 1,message = "pageNum的最小值为1") @PathVariable Integer pageNum){
-        return teacherService.getTeacherPage(pageNum);
+        return teacherService.getTeacherPage(directionId,pageNum);
     }
 
 
@@ -62,5 +62,6 @@ public class TeacherController {
                                               @PathVariable Integer teacherId){
         return teacherService.deleteTeacherByTeacherId(teacherId);
     }
+
 
 }

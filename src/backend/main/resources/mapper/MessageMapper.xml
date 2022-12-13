@@ -13,6 +13,7 @@
         insert into message values(null,#{userId},#{nickName},
                                    #{content},#{messageTime},#{teacherId})
     </insert>
+
     <select id="getAllMessage" resultType="Message">
         select * from message
     </select>
