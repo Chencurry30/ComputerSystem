@@ -39,9 +39,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ServerResponse<PageInfo<Teacher>> getTeacherPage(Integer pageNum) {
+    public ServerResponse<PageInfo<Teacher>> getTeacherPage(Integer directionId,Integer pageNum) {
         PageHelper.startPage(pageNum,6);
-        List<Teacher> list = teacherMapper.getAllTeacher();
+        List<Teacher> list = teacherMapper.getTeacherPage(directionId);
         PageInfo<Teacher> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("查询成功",pageInfo);
     }
@@ -66,4 +66,5 @@ public class TeacherServiceImpl implements TeacherService {
         //删除权限
         return ServerResponse.createBySuccessMessage("删除成功");
     }
+
 }

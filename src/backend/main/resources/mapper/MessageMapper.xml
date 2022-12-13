@@ -10,7 +10,11 @@
     </select>
 
     <insert id="insertMessage" parameterType="Message">
-        insert into message values(null,#{userId},#{nickname},
+        insert into message values(null,#{userId},#{nickName},
                                    #{content},#{messageTime},#{teacherId})
     </insert>
+
+    <select id="getAllMessage" resultType="Message">
+        select * from message
+    </select>
 </mapper>

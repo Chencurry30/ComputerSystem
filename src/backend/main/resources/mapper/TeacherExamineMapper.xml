@@ -6,7 +6,7 @@
 <mapper namespace="com.sicnu.boot.mapper.TeacherExamineMapper">
 
     <select id="getAllExamine" resultType="TeacherExamine">
-        select name,background,direction_id,direction_name from teacher_examine;
+        select * from teacher_examine;
     </select>
 
     <insert id="insertExamine" parameterType="TeacherExamine">

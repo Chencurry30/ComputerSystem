@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * description:
@@ -123,19 +124,19 @@ public class QuestionServiceImpl implements QuestionService {
         if (questionSelective.getSingleChoiceNum() > 0){
             List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
                     1, questionSelective.getSingleChoiceNum());
-            for (Question question : generatingPaper) {
-                List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
-                question.setQuestionChoiceList(choiceList);
-            }
+            generatingPaper = generatingPaper.stream().peek(question ->
+                    question.setQuestionChoiceList(
+                            questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId())))
+                    .collect(Collectors.toList());
             list.addAll(generatingPaper);
         }
         if (questionSelective.getMultipleChoiceNum() > 0){
             List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
                     2, questionSelective.getMultipleChoiceNum());
-            for (Question question : generatingPaper) {
-                List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
-                question.setQuestionChoiceList(choiceList);
-            }
+            generatingPaper = generatingPaper.stream().peek(question ->
+                            question.setQuestionChoiceList(
+                                    questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId())))
+                    .collect(Collectors.toList());
             list.addAll(generatingPaper);
         }
         if (questionSelective.getCompletionNum() > 0){

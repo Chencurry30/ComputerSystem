@@ -25,6 +25,8 @@ public interface TeacherMapper {
       */
      List<Teacher> getAllTeacher();
 
+     List<Teacher> getTeacherPage(Integer directionId);
+
      /**
       * 新增老师信息
       * @param teacher：老师
