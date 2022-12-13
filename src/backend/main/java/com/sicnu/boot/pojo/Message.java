@@ -27,5 +27,5 @@ public class Message {
     private String content;
     private LocalDateTime messageTime;
     private Integer teacherId;
-
+    private String image;
 }
