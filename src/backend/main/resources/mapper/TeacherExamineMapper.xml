@@ -10,17 +10,26 @@
     </select>
 
     <insert id="insertExamine" parameterType="TeacherExamine">
-        insert into teacher_examine values (null,#{name},#{background},#{directionId},#{directionName},null,4,#{information},null,#{qualification},user_id=#{userId},#{applyReason},null,null,0,1,#{reviewComment})
+        insert into teacher_examine values (null,#{name},#{background},#{directionId},#{directionName},null,#{teachTime},#{information},null,#{qualification},#{userId},#{applyReason},#{applyDate},null,0,1,#{reviewComment})
     </insert>
 
 
     <update id="updateAgrExamine" parameterType="TeacherExamine">
         update teacher_examine  set examine_status = 1
-        where user_id = #{userId}
+        where examine_id = #{examineId};
     </update>
+
+    <insert id="passExamine" parameterType="TeacherExamine">
+        insert into teacher values (null,#{name},#{background},#{directionId},#{directionName},null,#{teachTime},#{information},null,#{qualification},#{userId})
+    </insert>
+
+    <select id="getExamine" resultType="TeacherExamine">
+        select * from teacher_examine where examine_id=#{examineId}
+    </select>
 
     <update id="updateDisAgrExamine" parameterType="TeacherExamine">
         update teacher_examine set examine_status = 2,review_comment=#{reviewComment}
-        where user_id = #{userId}
+        where examine_id = #{examineId}
     </update>
+
 </mapper>
