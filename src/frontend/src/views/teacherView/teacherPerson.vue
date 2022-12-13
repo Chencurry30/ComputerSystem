@@ -8,14 +8,14 @@
         <div class="banner-middle">
           <div class="middleBox">
             <div class="middle-header">
-              <div class="middle-left">{{teacherMsg.name}}</div>
+              <div class="middle-left">{{ teacherMsg.name }}</div>
               <div class="middle-right">与他留言</div>
               <questionPopup ref="questionPopup"></questionPopup>
             </div>
             <div class="middle-main">
-              <p>学位:{{teacherMsg.background}}</p>
-              <p>教师科目:{{teacherMsg.directionName}}</p>
-              <p>关注人数:{{teacherMsg.attentPeople}}</p>
+              <p>学位:{{ teacherMsg.background }}</p>
+              <p>教师科目:{{ teacherMsg.directionName }}</p>
+              <p>关注人数:{{ teacherMsg.attentPeople }}</p>
             </div>
           </div>
         </div>
@@ -31,13 +31,13 @@
             <div class="left-Item">
               <div class="Item-title">辅导资历</div>
               <div class="Item-Info">
-                从事高等数学教育多年，{{teacherMsg.information}}。
+                从事高等数学教育多年，{{ teacherMsg.information }}。
               </div>
             </div>
             <div class="left-Item">
               <div class="Item-title">辅导记录</div>
               <div class="Item-Info">
-                帮助无数考研的人在数学方面解决他们的疑难为题,至今辅导人数超{{teacherMsg.qualification}}人。
+                帮助无数考研的人在数学方面解决他们的疑难为题,至今辅导人数超{{ teacherMsg.qualification }}人。
               </div>
             </div>
           </div>
@@ -80,15 +80,15 @@
               <div class="styleT"></div>
             </div>
             <div class="label_Name">
-              <input type="text" placeholder="请输入你的用户名" />
+              <input type="text" placeholder="请输入你的昵称" v-model="sendTeacherData.username" />
             </div>
             <div class="label_email">
-              <input type="text" placeholder="请输入你的邮箱" />
+              <input type="text" placeholder="请输入你的邮箱" v-model="sendTeacherData.email" />
             </div>
             <div class="label_comMessage">
-              <input type="text" placeholder="请输入你的评论" />
+              <input type="text" placeholder="请输入你的评论" v-model="sendTeacherData.addMessage" />
             </div>
-            <div class="sub">发送评论</div>
+            <div class="subminBtn" @click="sendMessData">发送评论</div>
           </div>
         </div>
       </div>
@@ -109,9 +109,9 @@
 <script>
 import QuestionPopup from "../../components/popUp/questionPopup.vue";
 // import replyItem from "../../components/remark/replyItem.vue";
-import { getTeacherInfo } from "../../service/teacherService";
+import { getTeacherInfo,evaluationTeacher,getTeacherRemark } from "../../service/teacherService";
 export default {
-  components: {  QuestionPopup },
+  components: { QuestionPopup },
   name: "teacherPerson",
   data() {
     return {
@@ -135,13 +135,22 @@ export default {
         },
       ],
       teacherMsg: {
-        attentPeople:'',
+        attentPeople: '',
         name: "",
         background: "",
         directionName: "",
         information: "",
         Id: "",
       },
+      sendTeacherData: {
+        username: sessionStorage.getItem('nickname'),
+        email: '',
+        addMessage: '',
+        // eslint-disable-next-line camelcase
+        teacher_id:this.$route.query.teacherId,
+        // eslint-disable-next-line camelcase
+        answer_id: sessionStorage.getItem('userId')
+      }
     };
   },
   mounted() {
@@ -150,25 +159,60 @@ export default {
       this.teacherMsg = res.data.data;
       console.log(this.teacherMsg);
     });
+    
+    //获取对老师的相关评价 
+    this.teacherRemark()
   },
-  methods: {},
+  methods: {
+    sendMessData(){
+      let emailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+      if(emailReg.test(this.sendTeacherData.email) === false){
+        this.$message.error('输入的邮箱格式错误,请重新输入!')
+      }else if(this.sendTeacherData.addMessage === ''){
+        this.$message.error('评论的内容不能为空')
+      }else{
+        evaluationTeacher(this.sendTeacherData).then((res)=>{
+          console.log(res);
+        })
+      }
+    },
+    teacherRemark(){
+      getTeacherRemark(this.teacherId).then((res)=>{
+        console.log(res);
+      })
+    }
+  },
+  watch: {
+    'sendTeacherData.username': {
+      handler() {
+        this.sendTeacherData.username = sessionStorage.getItem('nickname')
+        this.$message.error('昵称不能随意修改,只能在个人中心中修改')
+      },
+      deep: true
+
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
 .Main {
   margin-top: 70px;
+
   .banner {
     display: flex;
     height: 260px;
     background: url("../../assets/Img/teacherImg/banner.png.png");
+
     .banner-left {
       flex: 1;
       margin-top: 45px;
       margin-left: 50px;
     }
+
     .banner-middle {
       flex: 2;
+
       .middleBox {
         margin-top: 35px;
         margin-left: 130px;
@@ -177,15 +221,18 @@ export default {
         height: 180px;
         background-color: #ffffff;
         border-radius: 10px;
+
         .middle-header {
           margin-bottom: 6px;
           display: flex;
           justify-content: space-between;
+
           .middle-left {
             font-size: 30px;
             color: #ff9d00;
             font-weight: bold;
           }
+
           .middle-right {
             margin-top: 5px;
             width: 113px;
@@ -200,27 +247,35 @@ export default {
         }
       }
     }
+
     .banner-right {
       flex: 1;
+
       .ImgBox {
         margin-top: 10px;
         width: 190px;
+
         img {
           width: 100%;
         }
       }
     }
   }
+
   .main-connect {
     margin-top: 15px;
     display: flex;
+
     .connect-left {
       flex: 3;
+
       .left-MainBox {
         padding: 30px 58px 30px 30px;
+
         .left-Item {
           display: flex;
           margin-bottom: 25px;
+
           .Item-title {
             line-height: 30px;
             font-size: 18px;
@@ -228,6 +283,7 @@ export default {
             margin-right: 30px;
             width: 75px;
           }
+
           .Item-Info {
             line-height: 30px;
             width: 694px;
@@ -236,11 +292,14 @@ export default {
           }
         }
       }
+
       .left-Resources {
         margin-top: 10px;
         display: flex;
+
         .ResourcesTitle {
           flex: 1;
+
           div {
             width: 100%;
             height: 30px;
@@ -250,33 +309,40 @@ export default {
             text-align: center;
           }
         }
+
         .ResourcesBox {
           flex: 5;
+
           .BoxItem {
             overflow: hidden;
+
             .Item {
               float: left;
               margin: 0 5px;
               width: 226px;
               // height: 180px;
               overflow: hidden;
+
               .ImgBox {
                 margin: 5px auto;
                 width: 100%;
                 height: 124px;
                 background: blue;
               }
+
               .ItemInfo {
                 display: flex;
                 width: 100%;
                 height: 20px;
                 line-height: 20px;
                 justify-content: space-between;
+
                 .ItemInfo-left {
                   margin-left: 10px;
                   font-size: 12px;
                   color: #333333;
                 }
+
                 .ItemInfo-right {
                   margin-right: 10px;
                   font-size: 12px;
@@ -288,10 +354,13 @@ export default {
         }
       }
     }
+
     .connect-right {
       flex: 1;
+
       .comTeacher {
         padding: 10px 0 26px 5px;
+
         .title {
           position: relative;
           margin-left: -20px;
@@ -305,6 +374,7 @@ export default {
           text-align: center;
           color: #ffffff;
           background: #ff9d00;
+
           .styleT {
             position: absolute;
             top: -25px;
@@ -318,6 +388,7 @@ export default {
             border-right: 0 solid #ff9d00;
           }
         }
+
         .label_Name,
         .label_email,
         .label_comMessage {
@@ -327,12 +398,14 @@ export default {
           margin: 16px auto 0;
           text-indent: 0.5em;
           background: #ffffff;
+
           input {
             margin-top: 9px;
             background: #ffffff;
           }
         }
-        .sub {
+
+        .subminBtn {
           width: 207px;
           height: 40px;
           border-radius: 5px;
@@ -347,13 +420,16 @@ export default {
       }
     }
   }
+
   .main-fotter {
     width: 860px;
     margin-top: 10px;
+
     .fotter-header {
       padding: 10px 0 10px 5px;
       font-weight: 700;
     }
+
     .fotter-connect {
       width: 100%;
     }

@@ -12,3 +12,16 @@ export const getTeacherInfo = (teacherId) => {
   const url = `/teachers/${teacherId}`
   return service.get(url)
 } 
+
+
+//发送个人对老师的评价
+export const evaluationTeacher = (evaluationData) =>{
+  const url = `comments/teachers`
+  return service.post(url,evaluationData)
+}
+
+//获取老师的评论信息
+export const getTeacherRemark = (teacherId) =>{
+  const url = `teachers/remark/${teacherId}`
+  return service.get(url)
+}
