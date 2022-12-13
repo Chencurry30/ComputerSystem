@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * description:
@@ -41,19 +41,18 @@ public class CommentServiceImpl implements CommentService {
         //查询文章所有的评论
         List<Comment> comments = commentMapper.getCommentsById(resourceId);
         //补充评论用户信息
-        List<CommentVo> commentVos = new ArrayList<>();
-        for (Comment comment : comments) {
+        List<CommentVo> commentVos = comments.stream().map(comment -> {
             CommentVo commentVo = new CommentVo(comment);
             //查询作者信息
             CommentUserVo author = userMapper.getCommentUserById(comment.getAuthorId());
             commentVo.setAuthor(author);
             //toUser信息 level>1 说明有回复对象
-            if (comment.getLevel() > 1){
+            if (comment.getLevel() > 1) {
                 CommentUserVo toUser = userMapper.getCommentUserById(comment.getToUid());
                 commentVo.setToUser(toUser);
             }
-            commentVos.add(commentVo);
-        }
+            return commentVo;
+        }).collect(Collectors.toList());
         //构造生成树
         MyTreeNode myTree = treeUtils.buildTree(commentVos);
         //返回根节点的子节点（即level为1的评论 ）
