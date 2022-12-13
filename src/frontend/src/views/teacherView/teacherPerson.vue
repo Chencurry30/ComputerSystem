@@ -157,7 +157,7 @@ export default {
 
 <style lang="less" scoped>
 .Main {
-  margin-top: 10px;
+  margin-top: 70px;
   .banner {
     display: flex;
     height: 260px;
@@ -291,7 +291,7 @@ export default {
     .connect-right {
       flex: 1;
       .comTeacher {
-        padding: 10px 0px 26px 5px;
+        padding: 10px 0 26px 5px;
         .title {
           position: relative;
           margin-left: -20px;
@@ -310,12 +310,12 @@ export default {
             top: -25px;
             left: 0;
             border-width: 0;
-            width: 0px;
-            height: 0px;
-            border-top: 0px solid transparent;
+            width: 0;
+            height: 0;
+            border-top: 0 solid transparent;
             border-bottom: 25px solid #ff9d00;
             border-left: 15px solid transparent;
-            border-right: 0px solid #ff9d00;
+            border-right: 0 solid #ff9d00;
           }
         }
         .label_Name,

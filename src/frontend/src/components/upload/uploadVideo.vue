@@ -103,7 +103,7 @@ export default {
         this.$message.error('上传成功')
         this.fileList = []
         this.progress = 0
-        if (file.type === 'image/png' || file.type === 'image/jpg') {
+        if (file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg') {
           this.$parent.videoData.image = result.name
         } else {
           this.$parent.videoData.link = result.name
