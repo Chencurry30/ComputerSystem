@@ -80,13 +80,10 @@
               <div class="styleT"></div>
             </div>
             <div class="label_Name">
-              <input type="text" placeholder="请输入你的昵称" v-model="sendTeacherData.username" />
-            </div>
-            <div class="label_email">
-              <input type="text" placeholder="请输入你的邮箱" v-model="sendTeacherData.email" />
+              <input type="text" placeholder="请输入你的昵称" v-model="sendTeacherData.nickName" />
             </div>
             <div class="label_comMessage">
-              <input type="text" placeholder="请输入你的评论" v-model="sendTeacherData.addMessage" />
+              <input type="text" placeholder="请输入你的评论" v-model="sendTeacherData.content" />
             </div>
             <div class="subminBtn" @click="sendMessData">发送评论</div>
           </div>
@@ -109,7 +106,7 @@
 <script>
 import QuestionPopup from "../../components/popUp/questionPopup.vue";
 // import replyItem from "../../components/remark/replyItem.vue";
-import { getTeacherInfo,evaluationTeacher,getTeacherRemark } from "../../service/teacherService";
+import { getTeacherInfo, evaluationTeacher, getTeacherRemark } from "../../service/teacherService";
 export default {
   components: { QuestionPopup },
   name: "teacherPerson",
@@ -143,13 +140,12 @@ export default {
         Id: "",
       },
       sendTeacherData: {
-        username: sessionStorage.getItem('nickname'),
-        email: '',
-        addMessage: '',
+        nickName: sessionStorage.getItem('nickname'),
+        content: '',
         // eslint-disable-next-line camelcase
-        teacher_id:this.$route.query.teacherId,
+        teacherId: this.$route.query.teacherId,
         // eslint-disable-next-line camelcase
-        answer_id: sessionStorage.getItem('userId')
+        userId: sessionStorage.getItem('userId')
       }
     };
   },
@@ -159,31 +155,33 @@ export default {
       this.teacherMsg = res.data.data;
       console.log(this.teacherMsg);
     });
-    
+
     //获取对老师的相关评价 
     this.teacherRemark()
   },
   methods: {
-    sendMessData(){
-      let emailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
-      if(emailReg.test(this.sendTeacherData.email) === false){
-        this.$message.error('输入的邮箱格式错误,请重新输入!')
-      }else if(this.sendTeacherData.addMessage === ''){
+    sendMessData() {
+      console.log(this.sendTeacherData);
+      if (this.sendTeacherData.content === '') {
         this.$message.error('评论的内容不能为空')
-      }else{
-        evaluationTeacher(this.sendTeacherData).then((res)=>{
+      } else {
+        evaluationTeacher(this.sendTeacherData).then((res) => {
+          if(res.data.code === 200){
+            this.$message.success('评论成功')
+          }
           console.log(res);
         })
       }
     },
-    teacherRemark(){
-      getTeacherRemark(this.teacherId).then((res)=>{
+    //获取老师的评论 
+    teacherRemark() {
+      getTeacherRemark(this.teacherId).then((res) => {
         console.log(res);
       })
     }
   },
   watch: {
-    'sendTeacherData.username': {
+    'sendTeacherData.nickName': {
       handler() {
         this.sendTeacherData.username = sessionStorage.getItem('nickname')
         this.$message.error('昵称不能随意修改,只能在个人中心中修改')

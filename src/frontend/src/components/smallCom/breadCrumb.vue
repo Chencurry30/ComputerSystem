@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="breadMain w">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }" replace>首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/schoolSelect' }" replace>院校选择</el-breadcrumb-item>
@@ -11,12 +11,19 @@
 
 <script>
 export default {
-    name:'breadCrumb',
+  name: 'breadCrumb',
 }
 </script>
 
-<style scoped>
-el-breadcrumb{
+<style scoped lang="less">
+.breadMain{
+  margin-top: 25px;
+}
+
+.el-breadcrumb {
+  font-size: 16px;
+}
+el-breadcrumb {
   font-size: large;
   margin: 35px 150px;
 }
