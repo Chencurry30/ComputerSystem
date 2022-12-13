@@ -1,10 +1,12 @@
 package com.sicnu.boot.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -25,8 +27,10 @@ public class TeacherExamine {
     private String qualification;
     private Integer userId;
     private String applyReason;
-    private Integer applyDate;
-    private Integer passDate;
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime applyDate;
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime passDate;
     private Integer examineStatus;
     private Integer applyId;
     private String reviewComment;

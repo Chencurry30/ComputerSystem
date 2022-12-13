@@ -167,7 +167,7 @@ export default {
 
 <style lang="less" scoped>
 .MainBox {
-  margin-top: 20px;
+  margin-top: 70px;
   background: #f8f8f8;
   .Main {
     display: flex;

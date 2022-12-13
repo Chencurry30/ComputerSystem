@@ -20,6 +20,14 @@ export const uploaddynamicPicture = (picture) =>{
   return service.get(url)
 }
 
+//上传视屏
+export const uploadVideoData = (videoData) =>{
+  const url = '/videos'
+  return service.post(url,videoData)
+} 
+
+
+
 //返回用户的收藏视屏的列表
 export const userVideoCollect = (pageNum,userId) =>{
   const url = `videos/collect/${pageNum}-${userId}`

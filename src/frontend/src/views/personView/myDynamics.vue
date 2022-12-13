@@ -122,7 +122,8 @@ export default {
         } else if (res.data.code === 200) {
           this.$message.success("发布动态成功！")
         }
-        console.log(res)
+        this.contents = {}
+        // console.log(res)
         this.GetDynamics()
       })
     },

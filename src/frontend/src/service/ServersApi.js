@@ -32,3 +32,9 @@ export const modifyPhone = (data) =>{
   const url = `users/phone`
   return service.put(url,data)
 } 
+
+//绑定手机号 
+export const bindUserPhone = (data) =>{
+  const url = '/users/bind'
+  return service.put(url,data)
+}

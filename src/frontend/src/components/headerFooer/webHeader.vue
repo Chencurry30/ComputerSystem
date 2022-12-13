@@ -211,6 +211,7 @@ export default {
         .list-item {
           align-items: center;
           padding: 0 20px;
+          cursor: pointer;
         }
 
         .search {
