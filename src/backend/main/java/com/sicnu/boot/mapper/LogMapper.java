@@ -3,6 +3,8 @@ package com.sicnu.boot.mapper;
 import com.sicnu.boot.pojo.Log;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -48,4 +50,13 @@ public interface LogMapper {
      * Date:  2022/11/12 15:13
      */
     void deleteLogByLogIds(List<Integer> logIds);
+
+    /**
+     * description: 通过时间删除日志
+     *
+     * @param deleteDateTime:
+     * @author 胡建华
+     * Date:  2022/12/13 10:51
+     */
+    void deleteByData(LocalDateTime deleteDateTime);
 }

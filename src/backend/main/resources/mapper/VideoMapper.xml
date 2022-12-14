@@ -80,4 +80,10 @@
     <select id="getVideoExamineById" resultType="com.sicnu.boot.pojo.VideoExamine">
         select * from video_examine where examine_id = #{examineId}
     </select>
+    <select id="getVideoByName" resultType="com.sicnu.boot.pojo.Video">
+        select * from video
+        <where>
+            <trim>name like "%" #{name} "%"</trim>
+        </where>
+    </select>
 </mapper>

@@ -52,4 +52,10 @@
     <select id="getCollectQuestionList" resultType="com.sicnu.boot.pojo.Question">
         select * from question where question_id in (select question_id from question_collection where user_id = #{userId})
     </select>
+    <select id="getQuestionByName" resultType="com.sicnu.boot.pojo.Question">
+        select * from question
+        <where>
+            <trim>question_title like "%" #{name} "%"</trim>
+        </where>
+    </select>
 </mapper>

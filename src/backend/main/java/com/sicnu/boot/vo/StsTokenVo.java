@@ -1,10 +1,9 @@
 package com.sicnu.boot.vo;
 
-import lombok.Builder;
 import lombok.Data;
 
 /**
- * description:  TODO
+ * description:
  *
  * @author :  胡建华
  * Data:    2022/11/29 18:17

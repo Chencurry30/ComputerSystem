@@ -18,6 +18,9 @@
             #{logId}
         </foreach>
     </delete>
+    <delete id="deleteByData">
+        delete from log where create_date <![CDATA[ <= ]]> #{deleteDateTime}
+    </delete>
     <select id="getLogList" resultType="com.sicnu.boot.pojo.Log">
         select * from log order by create_date desc
     </select>

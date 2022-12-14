@@ -30,7 +30,7 @@ public class MessageController {
      * @author 汪杨
      * Date:  2022/11/15 10:47
      */
-    @PostMapping("")
+    @PostMapping
     ServerResponse<String> insertMessage(@Validated @RequestBody Message message){
         return messageService.insertMessage(message);
     }

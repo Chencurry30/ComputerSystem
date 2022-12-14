@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.mapper.VideoMapper;
-import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.service.VideoManageService;
@@ -17,10 +16,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * description:
@@ -69,12 +68,12 @@ public class VideoManageServiceImpl implements VideoManageService {
     public ServerResponse<PageInfo<VideoExamine>> getVideoExamineList(Integer pageNum, Integer examineStatus) {
         PageHelper.startPage(pageNum,8);
         List<VideoExamine> list = videoMapper.getVideoExamineList(examineStatus);
-        for (VideoExamine videoExamine : list) {
+        list = list.stream().peek(videoExamine -> {
             videoExamine.setAuthorNickname(
                     userMapper.getNicknameByUserId(videoExamine.getAuthorId()));
             videoExamine.setApplyNickname(
                     userMapper.getNicknameByUserId(videoExamine.getApplyId()));
-        }
+        }).collect(Collectors.toList());
         PageInfo<VideoExamine> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
@@ -87,10 +86,10 @@ public class VideoManageServiceImpl implements VideoManageService {
         //设置审核人
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         examineVideo.setApplyId(((LoginUser)authentication.getPrincipal()).getUser().getUserId());
+        //修改审核信息
+        videoMapper.examineVideo(examineVideo);
         if (examineVideo.getExamineResult() == 1){
             //审核通过
-            //修改审核信息
-            videoMapper.examineVideo(examineVideo);
             //获取审核信息
             VideoExamine videoExamine = videoMapper.getVideoExamineById(examineVideo.getExamineId());
             //插入资源
@@ -99,8 +98,6 @@ public class VideoManageServiceImpl implements VideoManageService {
             videoMapper.insertVideo(videoExamine);
             return ServerResponse.createBySuccessMessage("审核成功，插入视频");
         }else {
-            //审核未通过
-            videoMapper.examineVideo(examineVideo);
             return ServerResponse.createBySuccessMessage("审核未通过");
         }
     }

@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * description:
@@ -43,13 +42,13 @@ public class VideoServiceImpl implements VideoService {
         //获取分页信息
         PageHelper.startPage(videoSelective.getPageNum(), 12);
         List<Video> list = videoMapper.getVideoListBySelective(videoSelective);
-        list = list.stream().peek(video -> {
+        list.forEach(video -> {
             String nickname = userMapper.getNicknameByUserId(video.getAuthorId());
             if (StringUtils.isBlank(nickname)) {
                 nickname = "";
             }
             video.setNickname(nickname);
-        }).collect(Collectors.toList());
+        });
         PageInfo<Video> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("成功",pageInfo);
     }
