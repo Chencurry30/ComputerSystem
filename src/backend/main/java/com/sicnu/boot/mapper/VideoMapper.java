@@ -170,4 +170,14 @@ public interface VideoMapper {
      * Date:  2022/11/30 19:22
      */
     void deleteResource(Integer resourceId);
+
+    /**
+     * description: 通过名字模糊搜索视频
+     *
+     * @param name:
+     * @return List<Video>
+     * @author 胡建华
+     * Date:  2022/12/13 20:06
+     */
+    List<Video> getVideoByName(String name);
 }
