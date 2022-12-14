@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import { userRegister } from "../../service/ServersApi"
+import { userRegister } from "../../service/systemService"
 import SendCodeBtn from '../../components/sendCode/sendCodeBtn'
 import { CryAlgorithm } from '../../utils'  //公钥加密函数
 import { mapGetters } from 'vuex'  //获取公钥的相关配置

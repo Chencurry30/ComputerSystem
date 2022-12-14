@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="showHeader">
+    <div v-if="showHeader" class="minHeader">
       <webHeader v-if="isRouterAlive"></webHeader>
     </div>
     <router-view></router-view>
@@ -55,6 +55,8 @@ export default {
   height: 100%;
   margin: 0;
   padding: 0;
-  // background: #f7f7f7;
 }
+// .minHeader{
+//   min-width: 1080px;
+// }
 </style>

@@ -1,14 +1,9 @@
-
-const webAboutIndex = () => import('@/views/webAbout/webAboutIndex')      //关于我们的组件
-const webAboutContact = () => import('@/views/webAbout/webAboutContact')  //联系我们的组件
-const webAboutService = () => import('@/views/webAbout/webAboutService')  //联系客服
-
 export default  [
   {
     path: '/webAboutIndex',
     
     name: 'webAboutIndex',
-    component: webAboutIndex,
+    component: () => import('@/views/webAbout/webAboutIndex'),
     meta: {                          
       showTop: true,
       showFotter:true,
@@ -19,7 +14,7 @@ export default  [
   {
     path: '/webAboutService',
     name: 'webAboutService',
-    component: webAboutService,
+    component: () => import('@/views/webAbout/webAboutService'),
     meta: {                          
       showTop: true,
       showFotter:true,
@@ -30,7 +25,7 @@ export default  [
   {
     path: '/webAboutContact',
     name: 'webAboutContact',
-    component: webAboutContact,
+    component:() => import('@/views/webAbout/webAboutContact') ,
     meta: {                          
       showTop: true,
       showFotter:true,

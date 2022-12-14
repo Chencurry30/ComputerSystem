@@ -52,6 +52,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { createPublicUrl } from '../../utils/index'
+import { userLogout } from '../../service/systemService'
 export default {
   name: "webHeader",
   //App中传入的一个相关的方法,用于帮助进行页面刷新
@@ -82,21 +83,27 @@ export default {
       this.$router.push(location);
     },
     //前往注册页面
-    gotoRegister(){
+    gotoRegister() {
       let location = { name: "registerView" };
       sessionStorage.removeItem('token')
       this.$router.push(location);
     },
     //退出登录
     backLogin() {
-      sessionStorage.removeItem('token')
-      sessionStorage.removeItem('userImg')
-      sessionStorage.removeItem('userId')
-      let location = {
-        name: 'loginView'
-      }
-      this.$router.push(location)
-      this.reload()
+      userLogout().then((res) => {
+        if (res.data.code === 200) {
+          this.$message.success('退出登录成功')
+        }
+        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('userImg')
+        sessionStorage.removeItem('userId')
+        let location = {
+          name: 'loginView'
+        }
+        this.$router.push(location)
+        this.reload()
+      })
+
     },
     //前往个人中心
     gotoPerson() {
@@ -159,9 +166,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .header {
-  top:0;
+  top: 0;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -170,11 +176,11 @@ export default {
   height: 60px;
   box-shadow: 0 0 5px #d7d7d7;
   z-index: 1000;
+
   .headerMain {
     position: fixed;
-    top:0;
     display: flex;
-    flex-basis: 1200px;
+    min-width: 1080px;
     line-height: 60px;
 
     .main-left {

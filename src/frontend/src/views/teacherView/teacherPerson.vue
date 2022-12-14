@@ -1,7 +1,7 @@
 <template>
   <div class="MainBox w">
-    <div class="Main">
-      <div class="banner">
+    <div class="teacherPage">
+      <div class="pageHeader">
         <div class="banner-left">
           <img src="../../assets/Img/teacherImg/bannerInfo.png.png" alt="" />
         </div>
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <div class="main-connect">
+      <div class="pageMain">
         <div class="connect-left">
           <div class="left-MainBox">
             <div class="left-Item">
@@ -41,35 +41,21 @@
               </div>
             </div>
           </div>
-
           <div class="left-Resources">
-            <div class="ResourcesTitle">
-              <div>推荐视频</div>
-            </div>
+            <div class="ResourcesTitle">推荐视频</div>
             <div class="ResourcesBox">
-              <ul class="BoxItem">
-                <li class="Item">
-                  <div class="ImgBox"></div>
-                  <div class="ItemInfo">
-                    <div class="ItemInfo-left">快速理解积分</div>
-                    <div class="ItemInfo-right">2022/9/14</div>
-                  </div>
-                </li>
-                <li class="Item">
-                  <div class="ImgBox"></div>
-                  <div class="ItemInfo">
-                    <div class="ItemInfo-left">快速理解积分</div>
-                    <div class="ItemInfo-right">2022/9/14</div>
-                  </div>
-                </li>
-                <li class="Item">
-                  <div class="ImgBox"></div>
-                  <div class="ItemInfo">
-                    <div class="ItemInfo-left">快速理解积分</div>
-                    <div class="ItemInfo-right">2022/9/14</div>
-                  </div>
-                </li>
-              </ul>
+              <div class="ResourcesItem" v-for="(videoItem) in recommendVideo" :key="videoItem.videoId"
+                @click="gotoVideoPage(videoItem.videoId)">
+                <div class="ResourcesImg">
+                  <img :src="[publicUrl + videoItem.videoImage]" alt="">
+                </div>
+                <div class="ResourcesInfo">
+                  <div class="ResourcesInfo-left">{{ videoItem.videoName }}</div>
+                  <div class="ResourcesInfo-right">{{ videoItem.videoTime.substring(0, 10) }}</div>
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -89,48 +75,28 @@
           </div>
         </div>
       </div>
-      <!-- <div class="main-fotter">
+      <div class="pageRemark">
         <div class="fotter-header">用户评论</div>
         <div class="fotter-connect">
-          <replyItem
-            v-for="item in DataList"
-            :key="item.id"
-            :replyInfo="item"
-          ></replyItem>
+          <teacherReply v-for="userItem in DataList" :key="userItem.messageId" :replyInfo="userItem"></teacherReply>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import QuestionPopup from "../../components/popUp/questionPopup.vue";
-// import replyItem from "../../components/remark/replyItem.vue";
+import QuestionPopup from "../../components/popUp/questionPopup";
+import teacherReply from "../../components/remark/teacherReply";
+import { createPublicUrl } from '../../utils/index'
 import { getTeacherInfo, evaluationTeacher, getTeacherRemark } from "../../service/teacherService";
 export default {
-  components: { QuestionPopup },
+  components: { QuestionPopup, teacherReply },
   name: "teacherPerson",
   data() {
     return {
       teacherId: "",
-      DataList: [
-        {
-          id: 1232,
-          image: "1231231231232.123",
-          nickname: "高山",
-          time: "2022-6-30",
-          content: "你的评论对我很有帮助，感谢你的发言",
-          resourcename: "回复我的",
-        },
-        {
-          id: 1236,
-          image: "1231231231232.123",
-          nickname: "高山星空",
-          time: "2022-6-9",
-          content: "你的评论对我很有帮助，感谢",
-          resourcename: "回复我的",
-        },
-      ],
+      DataList: [],
       teacherMsg: {
         attentPeople: '',
         name: "",
@@ -142,34 +108,55 @@ export default {
       sendTeacherData: {
         nickName: sessionStorage.getItem('nickname'),
         content: '',
-        // eslint-disable-next-line camelcase
         teacherId: this.$route.query.teacherId,
-        // eslint-disable-next-line camelcase
         userId: sessionStorage.getItem('userId')
-      }
-    };
+      },
+      //这里目前暂时写死，后续会进行写活 
+      recommendVideo: [
+        {
+          videoId: 14,
+          videoImage: 'video/videoImg/8794027591208.jpg',
+          videoName: '考研数学历年真题全解析 2021年 数学二',
+          videoTime: '2022-10-15 16:12:31'
+        },
+        {
+          videoId: 2,
+          videoImage: 'video/videoImg/8794737791208.jpg',
+          videoName: '考研数学历年真题全解析 2022年 数学三',
+          videoTime: '2022-10-15 16:12:31'
+        },
+        {
+
+          videoId: 8,
+          videoImage: 'video/videoImg/8794027591208.jpg',
+          videoName: '考研数学历年真题全解析 2022年 数学二',
+          videoTime: '2022-10-15 16:12:31'
+        },
+      ],
+    }
   },
   mounted() {
     this.teacherId = this.$route.query.teacherId;
     getTeacherInfo(this.teacherId).then((res) => {
       this.teacherMsg = res.data.data;
       console.log(this.teacherMsg);
-    });
-
+    })
     //获取对老师的相关评价 
     this.teacherRemark()
   },
   methods: {
+    //发送相关评论 
     sendMessData() {
       console.log(this.sendTeacherData);
       if (this.sendTeacherData.content === '') {
         this.$message.error('评论的内容不能为空')
       } else {
         evaluationTeacher(this.sendTeacherData).then((res) => {
-          if(res.data.code === 200){
+          if (res.data.code === 200) {
             this.$message.success('评论成功')
+            //再一次获取新数据 
+            this.teacherRemark()
           }
-          console.log(res);
         })
       }
     },
@@ -177,7 +164,20 @@ export default {
     teacherRemark() {
       getTeacherRemark(this.teacherId).then((res) => {
         console.log(res);
+        this.DataList = res.data.data
       })
+    },
+    //前往具体的视屏页面
+    gotoVideoPage(videoId) {
+      let location = { name: 'videoPage' }
+      location.query = { videoId: videoId }
+      this.$router.push(location)
+    }
+  },
+  computed: {
+    //获取前置的公共的url 
+    publicUrl() {
+      return createPublicUrl()
     }
   },
   watch: {
@@ -194,10 +194,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.Main {
+.teacherPage {
   margin-top: 70px;
 
-  .banner {
+  .pageHeader {
     display: flex;
     height: 260px;
     background: url("../../assets/Img/teacherImg/banner.png.png");
@@ -243,6 +243,13 @@ export default {
             color: #ffffff;
           }
         }
+
+        .middle-main {
+          p {
+            line-height: 24px;
+            height: 24px;
+          }
+        }
       }
     }
 
@@ -260,7 +267,7 @@ export default {
     }
   }
 
-  .main-connect {
+  .pageMain {
     margin-top: 15px;
     display: flex;
 
@@ -268,7 +275,7 @@ export default {
       flex: 3;
 
       .left-MainBox {
-        padding: 30px 58px 30px 30px;
+        padding: 30px 30px 0 30px;
 
         .left-Item {
           display: flex;
@@ -293,62 +300,58 @@ export default {
 
       .left-Resources {
         margin-top: 10px;
-        display: flex;
 
         .ResourcesTitle {
-          flex: 1;
-
-          div {
-            width: 100%;
-            height: 30px;
-            line-height: 30px;
-            font-size: 16px;
-            font-weight: 700;
-            text-align: center;
-          }
+          height: 30px;
+          line-height: 30px;
+          font-weight: 700;
         }
 
         .ResourcesBox {
-          flex: 5;
+          margin-top: 15px;
 
-          .BoxItem {
-            overflow: hidden;
+          display: flex;
+          justify-content: center;
 
-            .Item {
-              float: left;
-              margin: 0 5px;
-              width: 226px;
-              // height: 180px;
-              overflow: hidden;
+          .ResourcesItem {
+            float: left;
+            margin: 0 5px;
+            width: 240px;
+            cursor: pointer;
 
-              .ImgBox {
-                margin: 5px auto;
+            .ResourcesImg {
+              margin: 5px auto;
+              height: 150px;
+
+              img {
                 width: 100%;
-                height: 124px;
-                background: blue;
+                height: 100%;
+                border-radius: 10px;
+              }
+            }
+
+            .ResourcesInfo {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              font-size: 12px;
+              color: #333333;
+
+              .ResourcesInfo-left {
+                margin-left: 5px;
+                width: 148px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
               }
 
-              .ItemInfo {
-                display: flex;
-                width: 100%;
-                height: 20px;
-                line-height: 20px;
-                justify-content: space-between;
-
-                .ItemInfo-left {
-                  margin-left: 10px;
-                  font-size: 12px;
-                  color: #333333;
-                }
-
-                .ItemInfo-right {
-                  margin-right: 10px;
-                  font-size: 12px;
-                  color: #333333;
-                }
+              .ResourcesInfo-right {
+                margin-right: 10px;
               }
             }
           }
+
         }
       }
     }
@@ -419,7 +422,7 @@ export default {
     }
   }
 
-  .main-fotter {
+  .pageRemark {
     width: 860px;
     margin-top: 10px;
 

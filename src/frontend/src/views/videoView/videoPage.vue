@@ -28,8 +28,6 @@
 
       <!--视屏的相关操作(如收藏，点赞等)-->
       <div class="video-toolbar">
-
-
         <div class="like">
           <img src="../../assets/Img/Icon/dianzan.png" title="点赞" alt="" class="icon" />
           <span class="test-info">{{ videoInfo.likeNumber }}</span>
@@ -41,18 +39,13 @@
       </div>
 
 
-
-
-
-
-
-
-
+      <!--视屏的介绍-->
       <div class="videoinfo">
         <span class="infoconnect">
           {{ videoInfo.introduction }}
         </span>
       </div>
+      <!--视屏的忠烈-->
       <div class="videotype">
         <div class="typewarp">
           <ul class="warpBox">
@@ -102,131 +95,31 @@
           <div class="totalNumber">
             <div class="getMore" @click="showMoreInfo(fatherItem.id)">查看全部</div>
           </div>
-
           <div class="children-Commit hiddenBox" :class="{ showBox: fatherItem.id === getOtherInfo.showId }">
             <!--将每个评论的父亲传入，是每次回复的时候都是回复到父亲管理-->
             <ReleaseItem :typeSelect="Type.first" :fatherInfo="fatherItem.comment"></ReleaseItem>
           </div>
-
         </div>
-
       </div>
     </div>
 
     <!--这里就是利用父组件循环的ID来控制展示的相关回复的信息-->
     <div class="MainBox-right">
       <div class="videoList">
-        <div class="video-list-item">
-          <div class="item-box">
-            <div class="item-img-box"></div>
-            <div class="item-info">
-              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
-              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
-              <div class="item-info-total">
-                <div class="total-left">
-                  <div class="left-img">
-                    <img src="../../assets/Img/Icon/video.png" alt="">
-                  </div>
-                  <div class="left-info">213213</div>
-                </div>
-                <div class="total-right">
-                  <div class="right-img">
-                    <img src="../../assets/Img/Icon/time.png" alt="">
-                  </div>
-                  <div class="right-info">2022-9-10</div>
-                </div>
-              </div>
+        <div class="listItem-Box" v-for="(videoItem) in videoList" :key="videoItem.videoId">
+          <div class="listItem" @click="gotoPage(videoItem.videoId)">
+            <div class="listItemImg">
+              <img :src="[publicUrl + videoItem.videoImage]" alt="">
             </div>
-          </div>
-        </div>
-        <div class="video-list-item">
-          <div class="item-box">
-            <div class="item-img-box"></div>
-            <div class="item-info">
-              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
+            <div class="listItemData">
+              <div class="item-info-title hiddenText">{{ videoItem.videoName }}</div>
               <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
-              <div class="item-info-total">
-                <div class="total-left">
-                  <div class="left-img">
-                    <img src="../../assets/Img/Icon/video.png" alt="">
-                  </div>
-                  <div class="left-info">213213</div>
+
+              <div class="listItemBottom">
+                <div class="BottomImg">
+                  <img src="../../assets/Img/Icon/time.png" alt="">
                 </div>
-                <div class="total-right">
-                  <div class="right-img">
-                    <img src="../../assets/Img/Icon/time.png" alt="">
-                  </div>
-                  <div class="right-info">2022-9-10</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="video-list-item">
-          <div class="item-box">
-            <div class="item-img-box"></div>
-            <div class="item-info">
-              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
-              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
-              <div class="item-info-total">
-                <div class="total-left">
-                  <div class="left-img">
-                    <img src="../../assets/Img/Icon/video.png" alt="">
-                  </div>
-                  <div class="left-info">213213</div>
-                </div>
-                <div class="total-right">
-                  <div class="right-img">
-                    <img src="../../assets/Img/Icon/time.png" alt="">
-                  </div>
-                  <div class="right-info">2022-9-10</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="video-list-item">
-          <div class="item-box">
-            <div class="item-img-box"></div>
-            <div class="item-info">
-              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
-              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
-              <div class="item-info-total">
-                <div class="total-left">
-                  <div class="left-img">
-                    <img src="../../assets/Img/Icon/video.png" alt="">
-                  </div>
-                  <div class="left-info">213213</div>
-                </div>
-                <div class="total-right">
-                  <div class="right-img">
-                    <img src="../../assets/Img/Icon/time.png" alt="">
-                  </div>
-                  <div class="right-info">2022-9-10</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="video-list-item">
-          <div class="item-box">
-            <div class="item-img-box"></div>
-            <div class="item-info">
-              <div class="item-info-title hiddenText">视屏的标题今天你学习了吗呵呵呵呵呵</div>
-              <div class="item-info-contest hiddenText">坚持这样练3个月,你也能听懂百分之九十的英语对话</div>
-              <div class="item-info-total">
-                <div class="total-left">
-                  <div class="left-img">
-                    <img src="../../assets/Img/Icon/video.png" alt="">
-                  </div>
-                  <div class="left-info">213213</div>
-                </div>
-                <div class="total-right">
-                  <div class="right-img">
-                    <img src="../../assets/Img/Icon/time.png" alt="">
-                  </div>
-                  <div class="right-info">2022-9-10</div>
-                </div>
+                <div class="BottomInfo">{{ videoItem.videoTime.substring(0, 10) }}</div>
               </div>
             </div>
           </div>
@@ -243,6 +136,7 @@ import ReplyItem from "../../components/remark/replyItem.vue";
 import videoPlay from "../../components/videoPlay/videoPlay"
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
+import { createPublicUrl } from '../../utils/index'
 export default {
   name: "videoPage",
   data() {
@@ -252,6 +146,34 @@ export default {
         first: '回复',
         second: '提问',
       },
+      videoList: [
+        {
+          videoId: 14,
+          videoImage: 'video/videoImg/8794027591208.jpg',
+          videoName: '考研数学历年真题全解析 2021年 数学二',
+          videoTime: '2022-10-15 16:12:31'
+        },
+        {
+          videoId: 2,
+          videoImage: 'video/videoImg/8794737791208.jpg',
+          videoName: '考研数学历年真题全解析 2022年 数学三',
+          videoTime: '2022-10-15 16:12:31'
+        },
+        {
+
+          videoId: 8,
+          videoImage: 'video/videoImg/8794027591208.jpg',
+          videoName: '考研数学历年真题全解析 2022年 数学二',
+          videoTime: '2022-10-15 16:12:31'
+        },
+        {
+
+          videoId: 20,
+          videoImage: 'video/videoImg/4389035031208.jpg',
+          videoName: '考研数学历年真题全解析 2021年 数学三',
+          videoTime: '2022-10-15 16:12:31'
+        }
+      ]
     };
   },
   components: {
@@ -266,6 +188,7 @@ export default {
     this.getPageRemark()
   },
   methods: {
+
     //获取视屏页面的具体信息
     getPageData() {
       let videoId = this.$route.query.videoId
@@ -278,22 +201,30 @@ export default {
     },
     //将隐藏的评论全部展示
     showMoreInfo(fatherId) {
-      if(this.showMoreID === fatherId){
+      if (this.showMoreID === fatherId) {
         this.showMoreID = 0
-      }else{
+      } else {
         this.showMoreID = fatherId
       }
 
     },
     //判断用户是否收藏了这视频(10秒钟执行一次)
-    collectVideo:_.throttle(function(){
+    collectVideo: _.throttle(function () {
       let videoId = this.$route.query.videoId
       collectVideo(videoId).then((res) => {
-        if(res.data.code === 200){
+        if (res.data.code === 200) {
           this.$message.success(res.data.message)
         }
       })
-    },10000)
+    }, 10000),
+
+    //点击视屏前往视屏页面
+    gotoPage(videoId){
+      let location = {name :'videoPage'}
+      location.query = {videoId:videoId}
+      this.$router.push(location)   //由于是本页面的跳转,因此还需要重新执行一次获取数据的函数
+      this.getPageData()
+    } 
 
 
   },
@@ -313,6 +244,10 @@ export default {
       getOtherInfo: 'getOtherInfo'
     }),
 
+
+    publicUrl() {
+      return createPublicUrl()
+    }
   },
 };
 </script>
@@ -320,6 +255,7 @@ export default {
 <style lang='less' scoped>
 .MainBox {
   display: flex;
+
   .MainBox-left {
     width: 800px;
     padding: 10px 20px 10px 70px;
@@ -376,7 +312,7 @@ export default {
     .video-toolbar {
       display: flex;
       align-items: center;
-      padding: 10px 0px 10px 5px;
+      padding: 10px 0 10px 5px;
       border-bottom: 1px solid #e3e5e7;
       color: #61666d;
 
@@ -500,7 +436,7 @@ export default {
 
         //将没有子评论的相关信息隐藏
         .hiddenBox {
-          height: 0px;
+          height: 0;
           overflow: hidden;
         }
 
@@ -512,32 +448,33 @@ export default {
       }
     }
   }
+
   .MainBox-right {
-    padding: 0 25px;
+    margin-top: 40px;
+    padding: 0 15px;
     width: 400px;
 
     .videoList {
-      .item-box {
+      .listItem {
         display: flex;
         margin-bottom: 10px;
+        cursor: pointer;
+        .listItemImg {
+          width: 200px;
+          height: 100px;
 
-        .item-img-box {
-          display: flex;
-          flex: 1;
-          justify-content: center;
-          align-content: center;
-          width: 160px;
-          height: 80px;
-          background: red;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
 
-        .item-info {
-          flex: 1;
-          max-width: 180px;
+        .listItemData {
+          margin-top: 10px;
           margin-left: 10px;
-
+          max-width: 180px;
+          font-size: 14px;
           .item-info-title {
-            font-size: 14px;
             height: 26px;
             line-height: 26px;
             font-weight: 700;
@@ -546,39 +483,30 @@ export default {
           .item-info-contest {
             height: 24px;
             line-height: 24px;
-            font-weight: 400;
-            font-size: 12px;
+
           }
 
-          .item-info-total {
-            display: flex;
-            justify-content: space-between;
-            align-content: center;
+          .listItemBottom {
             margin-top: 5px;
+            display: flex;
+            align-content: center;
 
-            .total-left,
-            .total-right {
-              display: flex;
-              margin: 0 5px;
-              // margin-left: 0px;
-              height: 16px;
 
-              .left-img,
-              .right-img {
-                margin-right: 4px;
-                width: 17px;
-                height: 17px;
+            .BottomImg {
+              margin-right: 8px;
+              width: 18px;
+              height: 18px;
 
-                img {
-                  width: 100%;
-                }
-              }
-
-              .left-info,
-              .right-info {
-                font-size: 12px;
+              img {
+                width: 100%;
               }
             }
+
+
+            .BottomInfo {
+              font-size: 12px;
+            }
+
           }
         }
       }

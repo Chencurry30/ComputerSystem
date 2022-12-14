@@ -35,7 +35,7 @@
 <script>
 import rules from '../../utils/rules'
 import sendCodeBtn from '../sendCode/sendCodeBtn';
-import { bindUserPhone } from '../../service/ServersApi'
+import { bindUserPhone } from '../../service/systemService'
 export default {
   name: "bindPhone",
   components: { sendCodeBtn },
