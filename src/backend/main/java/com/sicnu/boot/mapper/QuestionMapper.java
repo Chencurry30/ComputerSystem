@@ -107,4 +107,14 @@ public interface QuestionMapper {
      * Date:  2022/11/26 10:38
      */
     List<Question> getCollectQuestionList(Integer userId);
+
+    /**
+     * description: 通过名字模糊搜索题目
+     *
+     * @param name:
+     * @return null
+     * @author 胡建华
+     * Date:  2022/12/13 20:11
+     */
+    List<Question> getQuestionByName(String name);
 }

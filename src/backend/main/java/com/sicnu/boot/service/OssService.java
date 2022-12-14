@@ -1,13 +1,12 @@
 package com.sicnu.boot.service;
 
-import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.StsTokenVo;
 
 import java.util.Map;
 
 /**
- * description:  TODO
+ * description:
  *
  * @author :  胡建华
  * Data:    2022/11/19 14:45
