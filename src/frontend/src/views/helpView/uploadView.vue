@@ -44,7 +44,7 @@
 
           </div>
           <div class="Center-Main-right-Box" v-show="userSelectItem === 2">
-            <div class="right-title_area">研友中心</div>
+            <div class="right-title_area">上传问题</div>
             <div class="Center-Main-right-ul">
               <li class="right-ul" v-for="(item) in RFriendCenter" :key="item.id">
                 <div class="right-ulItem" @click="loolQuestionAnswer(item.id)">{{ item.question }}</div>
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="Center-Main-right-Box" v-show="userSelectItem === 3">
-            <div class="right-title_area">动态中心</div>
+            <div class="right-title_area">系统维护</div>
 
             <div class="Center-Main-right-ul">
               <li class="right-ul" v-for="(item) in dynamicCenter" :key="item.id">

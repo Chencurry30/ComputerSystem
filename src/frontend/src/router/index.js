@@ -15,7 +15,7 @@ import schoolRouter from './schoolRouter'
 //题库页面的相关路由
 import questionRoute from './questionRoute'
 //帮助中心的相关路由
-import helpRoute from './helpRoute' 
+import helpRoute from './helpRoute'
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
@@ -51,4 +51,15 @@ const router = new VueRouter({
 //   if(to.name !== 'loginView' && !token && to.name !== 'registerView') next({name:'loginView'})
 //   else next()
 // })
+
+router.afterEach(() => {
+    window.scrollTo(0,0);
+    // chrome
+    document.body.scrollTop = 0
+    // firefox
+    document.documentElement.scrollTop = 0
+    // safari
+    window.pageYOffset = 0
+});
+
 export default router
