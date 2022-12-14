@@ -37,7 +37,7 @@ public interface TeacherService {
      * @param pageNum：页码数
      * @return null
      */
-    ServerResponse<PageInfo<Teacher>> getTeacherPage(Integer pageNum);
+    ServerResponse<PageInfo<Teacher>> getTeacherPage(Integer directionId,Integer pageNum);
 
     /**
      * 新增老师信息
@@ -60,4 +60,6 @@ public interface TeacherService {
      * @return null
      */
     ServerResponse<String> deleteTeacherByTeacherId(Integer teacherId);
+
+
 }

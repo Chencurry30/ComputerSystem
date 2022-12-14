@@ -19,7 +19,6 @@
 
 <script>
 import {uploaddynamicPicture} from "@/service/userServers";
-import {createPublicUrl} from "@/utils";
 
 export default {
   data() {
@@ -61,12 +60,12 @@ export default {
       }))
     },
     handleRemove(file, fileList) {
-      // console.log(file, fileList);
+      console.log(file, fileList);
     },
     handlePreview(file) {
-      // console.log(file);
+      console.log(file);
     },
-    handleAvatarSuccess(response, file, fileList){
+    handleAvatarSuccess(response, file){
       this.imageUrl = URL.createObjectURL(file.raw);
     }
   }

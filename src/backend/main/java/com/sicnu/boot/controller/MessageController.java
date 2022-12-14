@@ -30,7 +30,7 @@ public class MessageController {
      * @author 汪杨
      * Date:  2022/11/15 10:47
      */
-    @PostMapping("")
+    @PostMapping
     ServerResponse<String> insertMessage(@Validated @RequestBody Message message){
         return messageService.insertMessage(message);
     }
@@ -38,13 +38,13 @@ public class MessageController {
     /**
      * 获得所有评论信息
      */
-    @GetMapping
+    @GetMapping("/AllMessages")
     public ServerResponse<List<Message>> getAllMessage(){
         return messageService.getAllMessage();
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/teacherId/{id}")
     public ServerResponse<List<Message>> getMassegeById(@PathVariable("id") Integer id){
         return messageService.getMessageById(id);
     }

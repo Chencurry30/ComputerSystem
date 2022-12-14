@@ -9,6 +9,10 @@
         select *from Teacher where teacher_id=#{teacherId}
     </select>
 
+    <select id="getTeacherPage" resultType="Teacher">
+        select * from Teacher where direction_id=#{directionId}
+    </select>
+
     <select id="getAllTeacher" resultType="Teacher">
         select * from teacher
     </select>
@@ -25,4 +29,8 @@
     <delete id="deleteTeacherByTeacherId">
         delete from teacher where teacher_id = #{teacherId}
     </delete>
+
+    <insert id="checkTeacher" parameterType="Teacher">
+        insert into teacher values (null,#{name},#{backgroud},#{directionId},#{directionName},null,1,#{information},1,#{qualification},1)
+    </insert>
 </mapper>
