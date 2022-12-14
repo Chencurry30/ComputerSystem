@@ -115,7 +115,6 @@ export default {
     ,
     //根据用户点击的不同，进行相应的跳转
     gotoSchoolPage(collegeId) {
-      console.log(12);
       let location = {}
       location.query = { collegeId: collegeId }
       location.name = 'schoolPage'
