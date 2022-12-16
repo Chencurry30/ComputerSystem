@@ -47,7 +47,7 @@ import { mapGetters } from 'vuex';
 import rules from '../../utils/rules'
 import sendCodeBtn from '../sendCode/sendCodeBtn';
 import { CryAlgorithm } from '../../utils/index'
-import { modifyPassword } from '../../service/ServersApi'
+import { modifyPassword } from '../../service/systemService'
 export default {
   name: "passwordPopup",
   components: { sendCodeBtn },

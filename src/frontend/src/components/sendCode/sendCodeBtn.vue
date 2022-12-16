@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { retrievePassword } from "../../service/ServersApi"
+import { retrievePassword } from "../../service/systemService"
 export default {
   props: ['phone'],
   name: 'sendCodeBtn',

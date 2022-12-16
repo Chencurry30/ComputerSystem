@@ -3,7 +3,7 @@ import Vue from 'vue'
 //引入进度条、样式
 import nProgress from 'nprogress';
 import "nprogress/nprogress.css"
-nProgress.inc(0.2)
+// nProgress.inc(0.2)  //减去这句
 nProgress.configure({ easing: 'ease', speed: 800, showSpinner: false })
 import router from '../router';
 const baseurl = 'http://127.0.0.1:8989/api'
@@ -20,16 +20,16 @@ service.interceptors.request.use((config) => {
   if (token !== null) {
     config.headers['token'] = token;
   }
-  if (config.url !== 'friends/redSpot') {
+  if (config.url !== 'friends/redSpot' && config.url !== 'friends') {
     nProgress.start();
   }
   return config
 }, error => {
   return Promise.reject(error);
-
 });
 //响应拦截器
 service.interceptors.response.use((response) => {
+  //监听是否有人发信息的时候就不需要导航条 
   if (response.url !== 'friends/redSpot') {
     nProgress.done();
   }
@@ -43,6 +43,9 @@ service.interceptors.response.use((response) => {
     return response
   }
 }, (error) => {
+  //同一将有错或数据无法捕获的跳转到404 
+  Vue.prototype.$message.error('网络超时或数据丢失')
+  router.push('/notfound')
   return Promise.reject(error);
 })
 

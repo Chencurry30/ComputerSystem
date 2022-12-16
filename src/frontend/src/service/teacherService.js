@@ -23,6 +23,6 @@ export const evaluationTeacher = (evaluationData) =>{
 
 //获取老师的评论信息
 export const getTeacherRemark = (teacherId) =>{
-  const url = `/messages`
+  const url = `/messages/teacherId/${teacherId}`
   return service.get(url)
 }

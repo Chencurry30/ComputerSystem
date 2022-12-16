@@ -77,7 +77,7 @@
 <script>
 import sendCodeBtn from '../sendCode/sendCodeBtn.vue'
 import rules from '../../utils/rules'
-import {modifyPhone} from '../../service/ServersApi'
+import {modifyPhone} from '../../service/systemService'
 export default {
   name: "PopupWindow",
   data() {

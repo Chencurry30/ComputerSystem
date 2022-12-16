@@ -1,6 +1,6 @@
 <!-- 视屏播放的相关插件 -->
 <template>
-  <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions">
+  <video-player v-if="videoLink" class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions">
   </video-player>
 </template>
 <script>
@@ -27,7 +27,7 @@ export default {
         }],
         poster: this.videoImg, //你的封面地址
         // width: document.documentElement.clientWidth,
-        notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+        notSupportedMessage: '此视频暂无法播放，请刷新后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
           timeDivider: true,
           durationDisplay: true,

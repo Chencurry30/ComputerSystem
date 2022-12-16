@@ -6,7 +6,7 @@ export default [{
 {
   path: '/Home',
   name: 'Home',
-  component: Home,
+  component: () => import('@/views/baseViews/Home'),
   meta: {                          //配置相关的参数，保证页面是否展示头部和底部
     showTop: true,
     showFotter: true,

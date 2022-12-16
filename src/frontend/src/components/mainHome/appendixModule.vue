@@ -6,12 +6,9 @@
       </div>
       <div class="title-middle">
         <ul class="middleBox">
-          <li class="BoxItem On">数学资源</li>
-          <li class="BoxItem">数学资源</li>
-          <li class="BoxItem">数学资源</li>
-          <li class="BoxItem">数学资源</li>
-          <li class="BoxItem">数学资源</li>
-          <li class="BoxItem">数学资源</li>
+          <li class="BoxItem On" v-for="(item, index) in selectList" :key="index">
+            {{ item.name }}
+          </li>
         </ul>
       </div>
       <div class="title-right">
@@ -23,9 +20,9 @@
 
 
         <div class="list-left">
-          <div class="title1">34所自主划线</div>
+          <div class="title1">推荐院校</div>
           <div class="itemBox clearfix">
-              <Swiper></Swiper>
+            <Swiper></Swiper>
           </div>
           <div class="title2">院校地区</div>
           <div class="itemBox">
@@ -140,15 +137,30 @@
 <script>
 import Swiper from './swiper.vue';
 export default {
-    name: "appendixModule",
-    components: { Swiper }
+  name: "appendixModule",
+  components: { Swiper },
+  data() {
+    return {
+      selectList: [
+        { name: '数学' },
+        { name: '英语' },
+        { name: '政治' },
+        { name: '数据结构' },
+        { name: '计算机网络' },
+        { name: '计算机组成原理' },
+      ],
+      //表示当前的下标 
+      current: 0,
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
-.appendix-item{
+.appendix-item {
   background: #fff;
-  .title{
+
+  .title {
     height: 18px;
     line-height: 18px;
     padding-left: 9px;
@@ -157,12 +169,15 @@ export default {
     color: #333333;
     font-weight: 700;
   }
+
   .title1 {
     display: flex;
     height: 30px;
     line-height: 30px;
+
     .title-left {
       flex: 1;
+
       .titleInfo {
         margin-left: 3px;
         padding-left: 8px;
@@ -172,10 +187,13 @@ export default {
         color: #333;
       }
     }
+
     .title-middle {
       flex: 8;
+
       .middleBox {
         margin-left: 30px;
+
         .BoxItem {
           float: left;
           display: block;
@@ -186,14 +204,17 @@ export default {
           cursor: pointer;
           color: #333;
         }
+
         .On {
           color: #4e71f2;
           border-color: #4e71f2;
         }
       }
     }
+
     .title-right {
       flex: 1;
+
       .more {
         float: right;
         font-size: 14px;
@@ -202,39 +223,46 @@ export default {
       }
     }
 
-      .titleInfo {
-        margin-left: 3px;
-        padding-left: 8px;
-        border-left: 4px solid #4e71f2;
-        font-size: 24px;
-        font-weight: 700;
-        color: #333;
-      }
+    .titleInfo {
+      margin-left: 3px;
+      padding-left: 8px;
+      border-left: 4px solid #4e71f2;
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+    }
 
   }
-  .middleHeader{
+
+  .middleHeader {
     display: flex;
     padding: 0 10px;
     justify-content: space-between;
   }
-  .middleContent{
+
+  .middleContent {
     margin-top: 10px;
-    p{
+
+    p {
       font-size: 14px;
       color: #333;
       padding-left: 20px;
       line-height: 33px;
     }
   }
-  .item-list{
+
+  .item-list {
     padding: 25px 15px;
-    .list-connect{
+
+    .list-connect {
       display: flex;
-      .list-left{
+
+      .list-left {
         width: 214px;
         height: 496px;
 
-        .title1,.title2{
+        .title1,
+        .title2 {
           height: 18px;
           line-height: 18px;
           padding-left: 9px;
@@ -243,9 +271,12 @@ export default {
           color: #333333;
           font-weight: 700;
         }
-        .itemBox{
+
+        .itemBox {
           margin: 5px auto;
-          dt,dd{
+
+          dt,
+          dd {
             margin-top: 10px;
             float: left;
             width: 64px;
@@ -255,36 +286,44 @@ export default {
             font-size: 14px;
             border-radius: 45px;
           }
-          dt{
+
+          dt {
             color: #fff;
             background-color: #FF9D00;
           }
-          dd{
+
+          dd {
             margin-left: 10px;
             color: #333;
             border: solid 1px #EDEDED;
           }
         }
       }
-      .list-right{
+
+      .list-right {
         margin-left: 20px;
         flex: 1;
-        .middleBox{
+
+        .middleBox {
           display: flex;
           margin-top: 10px;
-          .middle-left{
+
+          .middle-left {
             flex: 1;
-            .more{
+
+            .more {
               margin-right: 30px;
               font-size: 14px;
               color: #999999;
               height: 18px;
               line-height: 18px;
-              }
+            }
           }
-          .middle-right{
+
+          .middle-right {
             flex: 1;
-            .more{
+
+            .more {
               margin-right: 30px;
               font-size: 14px;
               color: #999999;
@@ -293,48 +332,56 @@ export default {
             }
           }
         }
-        .middleBottom{
+
+        .middleBottom {
           margin-top: 10px;
-          .videoList{
+
+          .videoList {
             margin-top: 15px;
-            .videoItem{
+
+            .videoItem {
               float: left;
-              margin: 0px 9px;
-              width: 215pxpx;
+              margin: 0 9px;
+              width: 215px;
               height: 210px;
               border-radius: 8px;
               overflow: hidden;
               cursor: pointer;
-            .videoItem-videoImg{
-              width: 100%;
-              height: 100px;
-              background: red;
-            }
-            .course-connect{
-              padding: 15px;
-              width: 100%;
-              border-radius: 0 0 6px 6px;
-              .connect-info{
+
+              .videoItem-videoImg {
                 width: 100%;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-              }
-              .course-bottom{
-                display: flex;
-    justify-content: space-between;
-    padding-top: 9px;
-    span{
-      font-size: 12px;
-    font-family: Microsoft YaHei;
-    font-weight: 400;
-    color: #808080;
-    margin-top: 2px;
-
-    }
+                height: 100px;
+                background: red;
               }
 
-            }
+              .course-connect {
+                padding: 15px;
+                width: 100%;
+                border-radius: 0 0 6px 6px;
+
+                .connect-info {
+                  width: 100%;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  overflow: hidden;
+                }
+
+                .course-bottom {
+                  display: flex;
+                  justify-content: space-between;
+                  padding-top: 9px;
+
+                  span {
+                    font-size: 12px;
+                    font-family: Microsoft YaHei;
+                    font-weight: 400;
+                    color: #808080;
+                    margin-top: 2px;
+
+                  }
+                }
+
+              }
             }
           }
         }

@@ -7,7 +7,7 @@
       <div class="title-middle">
         <ul class="middleBox">
           <li v-for="(item, index) in liList" :key="index" v-on:click="addClass(index)"
-            v-bind:class="{ On: index == current }" class="BoxItem">
+            v-bind:class="{ On: index === current }" class="BoxItem">
             {{ item.name }}
           </li>
         </ul>
@@ -49,8 +49,8 @@ export default {
         { name: '英语' },
         { name: '政治' },
         { name: '数据结构' },
+        { name: '计算机组成原理'},
         { name: '计算机网络' },
-        { name: '计算机组成原理' },
       ],
       DataList: [
         {
@@ -334,7 +334,7 @@ export default {
 
       .course-item {
         float: left;
-        margin: 0px 9px;
+        margin: 0 9px;
         width: 280px;
         height: 240px;
         border-radius: 8px;
@@ -382,7 +382,7 @@ export default {
       }
 
       .course-item:hover {
-        margin-top: 0px;
+        margin-top: 0;
         box-shadow: 0 0 10px 2px #918f8f;
         transition: all 0.8s;
       }

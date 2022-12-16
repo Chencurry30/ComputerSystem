@@ -33,6 +33,7 @@ const remark = {
     },
 
     GETVIDEOREMARK(state, data) {
+      console.log(data.length);
       state.remarkList = data
     }
 

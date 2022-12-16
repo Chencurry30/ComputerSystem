@@ -77,6 +77,13 @@ export default {
   data() {
     return {};
   },
+  methods:{
+    // gotoPage(){
+    //   let location = {
+    //     name:'videoSelect'
+    //   }
+    // }
+  }
 };
 </script>
 <style lang="less" scoped>

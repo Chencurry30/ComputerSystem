@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-import { forgetPassword } from "../../service/ServersApi"
+import { forgetPassword } from "../../service/systemService"
 import SendCodeBtn from '../../components/sendCode/sendCodeBtn'
 import { CryAlgorithm } from '../../utils'  //公钥加密函数
 import { mapGetters } from 'vuex'  //获取公钥的相关配置

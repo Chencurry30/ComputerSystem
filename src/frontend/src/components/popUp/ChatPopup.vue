@@ -1,3 +1,4 @@
+<!--好友聊天弹窗-->
 <template>
   <div class="tab-content" v-show="showDialog">
     <div class="contentBox">
@@ -26,7 +27,7 @@
       </div>
       <div class="chatSendBtn">
         <el-button type="success" @click="sendInfo()">发送</el-button>
-        <el-button type="primary" @click="closePopup()">关闭</el-button>
+        <el-button type="primary" @click="giveFatherAction()">关闭</el-button>
       </div>
     </div>
   </div>
@@ -79,6 +80,10 @@ export default {
       this.socket = null
       this.showDialog = false;
     },
+    //向父组件中发出关闭弹窗的相关请求
+    giveFatherAction(){
+      this.$parent.closePopupBox()
+    }, 
     //建立联系
     userFriendContact(userId, friendId) {
       getmessage(userId, friendId).then((res) => {

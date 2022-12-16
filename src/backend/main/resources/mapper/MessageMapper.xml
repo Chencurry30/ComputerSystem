@@ -6,7 +6,7 @@
 <mapper namespace="com.sicnu.boot.mapper.MessageMapper">
 <!--    查询老师-->
     <select id="getMessageById" resultType="Message">
-        select content,message_time,image from message,user where teacher_id=#{teacherId} and message.user_id=user.user_id;
+        select message_id,user.user_id,user.nickname,content,message_time,user.image from message,user where teacher_id=#{teacherId} and message.user_id=user.user_id;
     </select>
 
     <insert id="insertMessage" parameterType="Message">
