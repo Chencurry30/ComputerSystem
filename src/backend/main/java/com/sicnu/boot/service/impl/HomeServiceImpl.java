@@ -4,6 +4,8 @@ import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.pojo.Question;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.service.HomeService;
+import com.sicnu.boot.utils.RedisUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,14 @@ public class HomeServiceImpl implements HomeService {
 
     @Resource
     private AsyncService asyncService;
+
+    @Resource
+    private RedisUtils redisUtils;
+
+    public static final String HOT_SPOT = "video_spot:";
+
+    @Resource
+    private TimedTaskService timedTaskService;
 
     @SneakyThrows
     @Override
@@ -53,5 +63,22 @@ public class HomeServiceImpl implements HomeService {
             map.put("videoList",videoList);
         }
         return ServerResponse.createBySuccess("获取成功",map);
+    }
+
+    @Override
+    public ServerResponse<List<Video>> getVideoListByType(Integer typeId) {
+        List<Video> cacheList = redisUtils.getCacheList(HOT_SPOT + typeId);
+        if (Objects.isNull(cacheList) || cacheList.isEmpty()){
+            //手动刷新热点数据
+            timedTaskService.flushHotSpot();
+            //重新获取
+            cacheList = redisUtils.getCacheList(HOT_SPOT + typeId);
+        }
+        //没有数据
+        if (cacheList.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode()
+                    , "没有数据");
+        }
+        return ServerResponse.createBySuccess("获取成功",cacheList);
     }
 }

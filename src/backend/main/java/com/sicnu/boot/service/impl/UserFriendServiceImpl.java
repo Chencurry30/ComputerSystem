@@ -16,7 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * description:
@@ -32,12 +35,24 @@ public class UserFriendServiceImpl implements UserFriendService {
 
     @Resource
     private RedisUtils redisUtils;
+    /**
+     * description: redis获取好友列表前缀
+     */
+    private final String REDIS_FRIEND_PREFIX = "friendList:";
 
     @Override
     public ServerResponse<List<UserDetail>> getFriends() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Integer userId = ((LoginUser) authentication.getPrincipal()).getUser().getUserId();
-        List<UserDetail> friends = userFriendMapper.getFriendsByUserId(userId);
+        //从redis中获取好友列表
+        List<UserDetail> friends = redisUtils.getCacheList(REDIS_FRIEND_PREFIX + userId);
+        if (Objects.isNull(friends) || friends.isEmpty()){
+            //如果没有获取到，说明redis中没有，需要从数据库中获取
+            friends = userFriendMapper.getFriendsByUserId(userId);
+            redisUtils.setCacheList(REDIS_FRIEND_PREFIX + userId,friends);
+            //设置有效时间
+            redisUtils.expire(REDIS_FRIEND_PREFIX + userId,24, TimeUnit.HOURS);
+        }
         List<Integer> cacheList = redisUtils.getCacheList("redSpot:" + userId);
         for (UserDetail friend : friends) {
             if (cacheList.contains(friend.getUserId())){
@@ -46,6 +61,8 @@ public class UserFriendServiceImpl implements UserFriendService {
                 friend.setIsRedSpot(0);
             }
         }
+        //排序
+        friends.sort(Comparator.comparingInt(UserDetail::getIsRedSpot));
         return ServerResponse.createBySuccess("获取成功",friends);
     }
 
@@ -94,13 +111,43 @@ public class UserFriendServiceImpl implements UserFriendService {
         int returnCount = userFriendMapper.examineFriend(friendExamine);
         if (friendExamine.getStatus() == 1 && returnCount > 0){
             //通过好友申请
+            int checkFriend = userFriendMapper.checkFriend(friendExamine.getUserId(), friendExamine.getFriendId());
+            if (checkFriend > 0){
+                return ServerResponse.createByErrorMessage("该用户与你已经是好友了");
+            }
             userFriendMapper.insertFriend(friendExamine.getUserId(),friendExamine.getFriendId());
             userFriendMapper.insertFriend(friendExamine.getFriendId(),friendExamine.getUserId());
+            //添加好友成功之后，对redis进行更新
+            updateRedisUserFriend(friendExamine.getUserId(),friendExamine.getFriendId());
+            updateRedisUserFriend(friendExamine.getFriendId(), friendExamine.getUserId());
             return ServerResponse.createBySuccessMessage("同意申请成功");
         }else if (returnCount == 0){
             return ServerResponse.createByErrorMessage("无效的操作");
         }
         return ServerResponse.createBySuccessMessage("拒绝申请成功");
+    }
+
+    /**
+     * description: 更新好友列表的redis缓存
+     *
+     * @param userId:
+     * @param friendId:
+     * @author 胡建华
+     * Date:  2022/12/15 10:20
+     */
+    private void updateRedisUserFriend(Integer userId, Integer friendId) {
+        List<UserDetail> cacheList = redisUtils.getCacheList(REDIS_FRIEND_PREFIX + userId);
+        if (Objects.isNull(cacheList) || cacheList.isEmpty()){
+            //redis中没有数据，直接从数据库中获取更新
+            cacheList = userFriendMapper.getFriendsByUserId(userId);
+            redisUtils.setCacheList(REDIS_FRIEND_PREFIX + userId,cacheList);
+            //设置有效时间
+            redisUtils.expire(REDIS_FRIEND_PREFIX + userId,24, TimeUnit.HOURS);
+        }else {
+            //更新
+            UserDetail friend = userFriendMapper.getFriendByKey(friendId);
+            redisUtils.pushCacheList(REDIS_FRIEND_PREFIX + userId,friend);
+        }
     }
 
     @Override

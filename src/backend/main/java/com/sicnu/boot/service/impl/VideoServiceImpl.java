@@ -99,6 +99,8 @@ public class VideoServiceImpl implements VideoService {
         Integer userId = loginUser.getUser().getUserId();
         int checkCollectVideo = videoMapper.checkCollectVideo(userId, videoId);
         video.setIsCollected(checkCollectVideo > 0);
+        //视频浏览数加1
+        videoMapper.updateAddViewNum(videoId);
         return ServerResponse.createBySuccess("获取成功",video);
     }
 
@@ -111,8 +113,11 @@ public class VideoServiceImpl implements VideoService {
         int checkCollectVideo = videoMapper.checkCollectVideo(userId, videoId);
         if (checkCollectVideo > 0){
             videoMapper.deleteCollectVideo(userId,videoId);
+            //视频收藏数改变
+            videoMapper.updateCollectNum(videoId,1);
             return ServerResponse.createBySuccessMessage("取消收藏成功");
         }
+        videoMapper.updateCollectNum(videoId,0);
         videoMapper.collectVideo(userId,videoId);
         return ServerResponse.createBySuccessMessage("收藏成功");
     }

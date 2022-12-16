@@ -2,6 +2,7 @@ package com.sicnu.boot.service.impl;
 
 import com.sicnu.boot.mapper.CommentMapper;
 import com.sicnu.boot.mapper.UserMapper;
+import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Comment;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.CommentService;
@@ -29,6 +30,9 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentMapper commentMapper;
+
+    @Resource
+    private VideoMapper videoMapper;
 
     @Resource
     private UserMapper userMapper;
@@ -104,7 +108,15 @@ public class CommentServiceImpl implements CommentService {
         comment.setAuthorId(loginUser.getUser().getUserId());
         //设置评论时间
         comment.setCreateDate(LocalDateTime.now());
-        commentMapper.insertComment(comment);
+        int insertComment = commentMapper.insertComment(comment);
+        if (insertComment > 0){
+            //为评论数加1
+            int type = commentMapper.checkType(comment.getResourceId());
+            if (type == 0){
+                //为视频评论数加1
+                videoMapper.updateAddCommentNum(comment.getResourceId());
+            }
+        }
         return ServerResponse.createBySuccessMessage("插入成功");
     }
 

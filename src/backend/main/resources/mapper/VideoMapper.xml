@@ -25,6 +25,24 @@
                                  apply_id = #{applyId},review_comment = #{reviewComment}
         where examine_id = #{examineId}
     </update>
+    <update id="updateCollectNum">
+        update video
+        <set>
+            <if test="status == 0">
+                collectNum = collectNum + 1
+            </if>
+            <if test="status == 1">
+                collectNum = collectNum - 1
+            </if>
+        </set>
+        where video_id = #{videoId}
+    </update>
+    <update id="updateAddViewNum">
+        update video set view_num = view_num + 1 where video_id = #{videoId}
+    </update>
+    <update id="updateAddCommentNum">
+        update video set comment_num = comment_num + 1 where resource_id = #{resourceId}
+    </update>
     <delete id="deleteCollectVideo">
         delete from video_collection where user_id = #{userId} and video_id = #{videoId}
     </delete>
@@ -35,10 +53,10 @@
         delete from resource where resource_id = #{resourceId}
     </delete>
     <select id="getVideoListBySelective" resultType="Video" parameterType="com.sicnu.boot.vo.VideoSelective">
-        select video_id,name,time,image,view_num,duration,comment_num,author_id from video
+        select video_id,name,time,image,view_num,duration,comment_num,author_id,collection_num from video
         <where>
             <if test="videoName != null and videoName != ''">
-                and name like "%" #{videoName} "%"
+                name like "%" #{videoName} "%"
             </if>
             <if test="typeId != null and typeId != 0">
                 and type_id = #{typeId}
@@ -81,9 +99,13 @@
         select * from video_examine where examine_id = #{examineId}
     </select>
     <select id="getVideoByName" resultType="com.sicnu.boot.pojo.Video">
-        select * from video
+        select video_id,name from video
         <where>
             <trim>name like "%" #{name} "%"</trim>
         </where>
+    </select>
+    <select id="getVideoListByVideoType" resultType="com.sicnu.boot.pojo.Video">
+        select video_id,name,time,image,view_num,duration,comment_num,author_id,collection_num
+          from video where type_id = #{typeId}
     </select>
 </mapper>

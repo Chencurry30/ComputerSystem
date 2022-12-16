@@ -37,10 +37,11 @@ public interface CommentMapper {
      * description: 插入一条评论
      *
      * @param comment:
+     * @return int
      * @author 胡建华
      * Date:  2022/11/5 10:48
      */
-    void insertComment(Comment comment);
+    int insertComment(Comment comment);
 
     /**
      * description: 查询一个资源的父id是否存在
@@ -60,4 +61,14 @@ public interface CommentMapper {
      * Date:  2022/11/5 15:07
      */
     void updateCommentLikeNumber(Integer commentId);
+
+    /**
+     * description: 判断资源类型
+     *
+     * @param resourceId:
+     * @return int
+     * @author 胡建华
+     * Date:  2022/12/16 10:47
+     */
+    int checkType(Integer resourceId);
 }

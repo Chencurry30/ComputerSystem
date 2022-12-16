@@ -55,6 +55,10 @@ public enum ResponseCode {
      */
     USER_NOT_FOUND(415,"NOT_HAVE_USER"),
     /**
+     * description: 没有数据
+     */
+    HAS_NO_DATA(417,"HAS_NO_DATA"),
+    /**
      * description: 服务器异常
      */
     INTERNAL_SERVER_ERROR(500,"INTERNAL_SERVER_ERROR");

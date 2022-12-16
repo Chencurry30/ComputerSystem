@@ -9,7 +9,7 @@
         select *from college where college_id=#{collegeId}
     </select>
     <select id="getCollegeByName" resultType="College">
-        select *from college
+        select college_id,name from college
             <where>
                 <trim>name like "%"#{name}"%"</trim>
             </where>

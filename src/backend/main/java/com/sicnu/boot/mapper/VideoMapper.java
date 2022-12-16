@@ -180,4 +180,42 @@ public interface VideoMapper {
      * Date:  2022/12/13 20:06
      */
     List<Video> getVideoByName(String name);
+
+    /**
+     * description: 收藏数操作，
+     *
+     * @param videoId:
+     * @param status:操作状态，0为加，1为减
+     * @author 胡建华
+     * Date:  2022/12/15 9:35
+     */
+    void updateCollectNum(Integer videoId,Integer status);
+
+    /**
+     * description: 视频浏览数加1
+     *
+     * @param videoId:
+     * @author 胡建华
+     * Date:  2022/12/15 9:41
+     */
+    void updateAddViewNum(Integer videoId);
+
+    /**
+     * description: 通过typeId获取视频
+     *
+     * @param typeId:
+     * @return List<Video>
+     * @author 胡建华
+     * Date:  2022/12/15 19:37
+     */
+    List<Video> getVideoListByVideoType(Integer typeId);
+
+    /**
+     * description: 为评论数加1
+     *
+     * @param resourceId:
+     * @author 胡建华
+     * Date:  2022/12/16 12:07
+     */
+    void updateAddCommentNum(Integer resourceId);
 }
