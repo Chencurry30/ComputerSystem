@@ -92,7 +92,7 @@
             <div class="list-info">
               <router-link :to="{ name: 'userChat' }" style="text-decoration: none">好友聊天</router-link>
             </div>
-            <span class="Port" :class="{hiddenRedPord:redSpot}"></span>
+            <span class="Port" :class="{ hiddenRedPord: !redSpot }"></span>
           </li>
           <li class="list-item">
             <div class="list-icon">
@@ -116,14 +116,18 @@ export default {
     return {
       interval: null,
       redSpot: true,
+      //控制是否加载相关内容 
+      setTimeFlag: true,
     }
   },
   mounted() {
-    this.getRedSpot()
-    console.log('页面加载');
-    // this.interval = setInterval(() => {
-    //   this.getRedSpot()
-    // }, 500)
+    // this.getRedSpot()
+    // console.log('页面加载');
+    if (this.setTimeFlag === true) {
+      this.interval = setInterval(() => {
+        this.getRedSpot()
+      }, 2500)
+    }
   },
   //vue2中的这个在vue3中已经被抛弃 
   //eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle 
@@ -141,6 +145,26 @@ export default {
       });
     }
   },
+  watch: {
+    $route: {
+      handler(route) {
+        console.log(route);
+        console.log(this.setTimeFlag);
+        //表示的是页面进入了好友页面
+        //,那么就停止这页面中的监听器,开启对应页面的监听器,监听实时返回 
+        if (route.name === 'userChat') {
+          //关闭持续请求 
+          this.setTimeFlag = false
+          this.redSpot = false
+          clearInterval(this.interval)
+        } else {
+          //持续开启 
+          this.setTimeFlag = true
+        }
+      },
+      immediate: true
+    }
+  }
 }
 </script>
 
@@ -222,7 +246,8 @@ export default {
             border-radius: 50%;
           }
         }
-        .hiddenRedPord{
+
+        .hiddenRedPord {
           display: none;
         }
       }

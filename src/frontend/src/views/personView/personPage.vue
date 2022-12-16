@@ -4,7 +4,6 @@
       <personAside></personAside>
       <div class="contain-right">
         <div class="showBox">
-
           <div class="allBox">
             <personHeader></personHeader>
             <div class="UserBox secondBox">
@@ -92,7 +91,6 @@
               </pagerView>
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ service.interceptors.request.use((config) => {
   if (token !== null) {
     config.headers['token'] = token;
   }
-  if (config.url !== 'friends/redSpot') {
+  if (config.url !== 'friends/redSpot' && config.url !== 'friends') {
     nProgress.start();
   }
   return config

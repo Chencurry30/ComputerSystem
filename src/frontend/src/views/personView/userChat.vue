@@ -1,4 +1,4 @@
-//我的动态
+<!--好友聊天-->
 <template>
   <div class="MainBox w">
     <div class="containBox">
@@ -16,7 +16,7 @@
                   <span class="headerP3">SETTINGS</span>
                 </div>
                 <div class="friendBoxMain" @mouseleave="mouseLeaveFriend">
-                  <div class="friendItem centerLocation" :class="{ maskFriednBox: userCurrent === item.userId }"
+                  <div class="friendItem centerLocation redPort" :class="{ maskFriednBox: userCurrent === item.userId }"
                     v-for="item in userFridenList" :key="item.userId" @mouseenter="mouseEnterFriend(item)"
                     @click="showPopupBox(item.userId, item.image, item.nickname)">
                     <div class="ItemLeft">
@@ -28,6 +28,7 @@
                       </div>
                       <div class="userName">{{ item.nickname }}</div>
                     </div>
+                    <span class="Port" :class="{ hiddenRedPord: item.isRedSpot === 0 }"></span>
                   </div>
                 </div>
                 <ChatPopup ref="ChatPopup"></ChatPopup>
@@ -35,7 +36,7 @@
               <!--搜索列表-->
               <div class="searchFriendBox">
                 <div class="friendBoxHeader">
-                  <span class="headerP1">我的好友</span>
+                  <span class="headerP1">我的研友</span>
                   <span class="headerP2">My Friend</span>
                   <span class="headerP3">SETTINGS</span>
                 </div>
@@ -94,14 +95,28 @@ export default {
       userCurrent: 0,
       searchFridenList: [],
       firendNickName: '',
+      //开启监听的定时器 
+      interval: ''
     }
   },
-  components: { personAside, personHeader, ChatPopup ,addUserFriend},
+  components: { personAside, personHeader, ChatPopup, addUserFriend },
   name: "teacherReply",
+  //根据 
   mounted() {
     //获取用户的相关信息,避免刷新到时头像丢失
     this.$store.dispatch('userInfo/getUserInfo')
+    //获取这个用户的好友聊天 
     this.getUserFriend()
+    //定时刷新好友列表 
+    this.interval = setInterval(() => {
+      this.getUserFriend()
+    }, 2500)
+  },
+  //vue2中的这个在vue3中已经被抛弃 
+  //eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle 
+  beforeDestroy() {
+    clearInterval(this.interval)
+    console.log('页面被销毁');
   },
   methods: {
     //获取好友列表 
@@ -113,7 +128,20 @@ export default {
     },
     //点击时弹出对应的好友聊天框(将好友的图片,ID,昵称都传递到弹窗中使用) 
     showPopupBox(friendUserId, friendImg, friendNickName) {
+      //清空定时器 
+      clearInterval(this.interval)
+      this.interval = null
       this.$refs.ChatPopup.showPopup(friendUserId, friendImg, friendNickName)
+    },
+    //关闭弹窗写在父组件中,方便后续操作
+    closePopupBox() {
+      console.log('我执行了关闭弹窗的函数');
+      this.getUserFriend()  //再次请求，避免页面未及时刷新
+      this.$refs.ChatPopup.closePopup()
+      //再次开启定时器 
+      this.interval = setInterval(() => {
+        this.getUserFriend()
+      }, 2500)
     },
     //搜索好友
     searchFriend() {
@@ -140,13 +168,11 @@ export default {
         this.$refs.addUserFriend.showPopup(friendId)
       }
     },
-
-
-
-
+    //鼠标移入时的特效 
     mouseEnterFriend(item) {
       this.userCurrent = item.userId
     },
+    //鼠标移出时的特效 
     mouseLeaveFriend() {
       this.userCurrent = 0;
     },
@@ -156,9 +182,24 @@ export default {
     publicUrl() {
       return createPublicUrl()
     }
+  },
+
+  watch: {
+    $route: {
+      handler(route) {
+        console.log(route);
+        //表示的是页面进入了好友页面
+        //,那么就停止这页面中的监听器,开启对应页面的监听器,监听实时返回 
+        if (route.name === 'userChat') {
+          //关闭持续请求 
+          clearInterval(this.interval)
+        } else {
+          //持续开启 
+        }
+      },
+      immediate: true
+    }
   }
-
-
 };
 </script>
 
@@ -173,7 +214,6 @@ export default {
     }
   }
 }
-
 
 .userAction {
   margin-top: 10px;
@@ -237,7 +277,28 @@ export default {
           font-size: 18px;
           font-weight: 500;
         }
+
+        .hiddenRedPord {
+          display: none !important;
+        }
       }
+
+      .redPort {
+        position: relative;
+
+        .Port {
+          display: block;
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 12px;
+          height: 12px;
+          background: red;
+          border-radius: 50%;
+          z-index: 999;
+        }
+      }
+
 
       .maskFriednBox {
         background-color: #e5e7ea;
@@ -290,6 +351,7 @@ export default {
         top: 8px;
         right: 11px;
         z-index: 999;
+        cursor: pointer;
       }
 
       .searchBox {
