@@ -74,8 +74,8 @@ pagehelper:
 
 #配置Oss
 oss-config:
-  accessId: LTAI5tHLnt7NtvSi4yj2YNGW
-  accessKey: 5gkuKtSHzonUTmYDEjbAscjLy7eDg7
+  accessId: ENC(e8xueW/snHDM33OuVqZF/xD5znUZ7FnAksxEgpJa4COVzd1pCVr+KA==)
+  accessKey: ENC(kpzJ+37z3D0mIlYnv8cnxb5VIwBxtxAizzoWZlM8xMqdNHXgF5Z/HA==)
   endpoint: oss-cn-chengdu.aliyuncs.com
   bucket: system-1234
   host: https://${oss-config.bucket}.${oss-config.endpoint}
@@ -83,8 +83,8 @@ oss-config:
 # 腾讯云短信服务配置
 sms-config:
   # 腾讯云账户密钥对 secretId 和 secretKey
-  secretId: AKIDa2HGzThfMn093g3FBrJXXMxjIcgW8UbU
-  secretKey: oOjpgIdiX9XhcKo33oKbdQxEFzThfMny
+  secretId: ENC(R0Yg5kH8GM6VrjMgBrA+maVvdFriQMiMmMA75/6grHVUaO1ZbtaS5v44t7X/ToOG)
+  secretKey: ENC(avsJ1piOO18oSJd230MSQe9mpEJ5oLMDV7NwXMEZI1R8HG1D7KXRxts2LdQtefZy)
   # 短信应用appId和appKey
   appId: 1400736359
   appKey: ed61c0223c636591f657b06cf19cdd5e

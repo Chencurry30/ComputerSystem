@@ -12,7 +12,7 @@ import java.util.Map;
  * @author :  胡建华
  * Data:    2022/10/18 21:31
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RSATest {
     @Test
     void test() throws Exception {

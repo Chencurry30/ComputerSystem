@@ -12,7 +12,7 @@ import java.util.Map;
  * @author :     胡建华
  * Data: 2022-09-11 9:45
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserServiceTest {
     @Autowired
     private UserService userService;

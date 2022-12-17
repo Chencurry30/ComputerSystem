@@ -17,7 +17,7 @@ import java.util.List;
  * description:
  * @date 2022/11/17 9:49
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class MessageMapperTest {
     @Resource

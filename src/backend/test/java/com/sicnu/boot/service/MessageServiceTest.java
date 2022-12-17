@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @version 1.0
  * @date 2022/11/17
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class MessageServiceTest {
     @Resource

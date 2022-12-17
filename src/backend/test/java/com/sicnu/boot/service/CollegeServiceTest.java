@@ -18,7 +18,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/10/14 13:57
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class CollegeServiceTest {
     @Resource

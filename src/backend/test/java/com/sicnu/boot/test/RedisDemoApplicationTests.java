@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * @author :     胡建华
  * Data: 2022-09-15 10:05
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RedisDemoApplicationTests {
 
     @Resource

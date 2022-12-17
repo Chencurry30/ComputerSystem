@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @date 2022/10/25 21:50
  */
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class VideoServiceTest {
     @Resource

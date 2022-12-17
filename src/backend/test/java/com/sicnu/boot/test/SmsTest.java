@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author :     胡建华
  * Data: 2022-09-15 15:30
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class SmsTest {
 
@@ -38,7 +38,7 @@ public class SmsTest {
         config.setPassword("sicnu");
         standardPBEStringEncryptor.setConfig(config);
         //密码（未加密）
-        String plainText = "jdbc:mysql://localhost:3306/computer_system?serverTimezone=UTC&useAffectedRows=true";
+        String plainText = "oOjpgIdiX9XhcKo33oKbdQxEFzThfMny";
         String encryptedText = standardPBEStringEncryptor.encrypt(plainText);
         System.out.println(encryptedText);
     }
@@ -53,7 +53,7 @@ public class SmsTest {
         config.setPassword("sicnu");
         standardPBEStringEncryptor.setConfig(config);
         //加密后的密码
-        String encryptedText = "nQyKcsEIR23N4o1h3MQuYQ==";
+        String encryptedText = "R0Yg5kH8GM6VrjMgBrA+maVvdFriQMiMmMA75/6grHVUaO1ZbtaS5v44t7X/ToOG";
         String plainText = standardPBEStringEncryptor.decrypt(encryptedText);
         System.out.println(plainText);
     }
