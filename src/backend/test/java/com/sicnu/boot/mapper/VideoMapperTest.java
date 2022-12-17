@@ -14,7 +14,7 @@ import java.util.List;
  * @author :  胡建华
  * Data:    2022/10/15 20:07
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class VideoMapperTest {
     @Resource
     private VideoMapper videoMapper;

@@ -14,7 +14,7 @@ import java.util.List;
  * @author :  胡建华
  * Data:    2022/10/27 9:33
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MenuServiceTest {
     @Resource
     private MenuService menuService;

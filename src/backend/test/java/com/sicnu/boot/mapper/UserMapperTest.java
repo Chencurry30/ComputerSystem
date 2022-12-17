@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author :     胡建华
  * Data: 2022-09-09 20:51
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserMapperTest {
 
     @Autowired

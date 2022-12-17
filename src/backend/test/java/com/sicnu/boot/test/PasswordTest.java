@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @author :     胡建华
  * Data: 2022-09-11 9:19
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PasswordTest {
 
     @Autowired

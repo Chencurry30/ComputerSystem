@@ -12,7 +12,7 @@ import java.util.List;
  * @author :  胡建华
  * Data:    2022/10/27 10:55
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RoleMapperTest {
     @Resource
     private RoleMapper roleMapper;

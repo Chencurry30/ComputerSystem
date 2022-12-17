@@ -17,7 +17,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/11/26 16:08
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class DynamicMapperTest {
     @Resource

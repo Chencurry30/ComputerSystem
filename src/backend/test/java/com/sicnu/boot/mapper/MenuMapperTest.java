@@ -13,7 +13,7 @@ import java.util.List;
  * @author :  胡建华
  * Data:    2022/10/12 20:49
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MenuMapperTest {
     @Resource
     private MenuMapper powerMapper;

@@ -11,7 +11,7 @@ import java.util.*;
  * @author :  胡建华
  * Data:    2022/11/09 19:55
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class QuestionMapperTest {
 
     @Test
