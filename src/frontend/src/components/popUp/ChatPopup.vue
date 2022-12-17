@@ -8,8 +8,9 @@
           <img src="../../assets/Img/Icon/close.png" alt="" />
         </div>
       </div>
-      <div class="chatMain" ref="chatMain">
-        <div v-for="(item, index) in msgList" :key="index" class="chatItem"
+      <div class="chatMain" ref="chatRoom">
+        <div ref="content">
+          <div v-for="(item, index) in msgList" :key="index" class="chatItem"
           :class="{ reverseChatItem: item.from === userId }">
           <div class="userImg">
             <!--通过两个计算属性来合并显示的url参数-->
@@ -18,6 +19,7 @@
           <div class="usercommunication" :class="{ reverseCommunication: item.from === userId }">
             {{ item.message }}
           </div>
+        </div>
         </div>
       </div>
       <div class="chatBottom">
@@ -70,8 +72,11 @@ export default {
       this.friendNickName = friendNickName
       //建立练习 
       this.userFriendContact(userId, friendUserId);
+
       this.showDialog = true;
 
+      //设置滑轮滚动 
+      this.scrollToBottom()
     },
     //关闭弹窗 
     closePopup() {
@@ -81,9 +86,9 @@ export default {
       this.showDialog = false;
     },
     //向父组件中发出关闭弹窗的相关请求
-    giveFatherAction(){
+    giveFatherAction() {
       this.$parent.closePopupBox()
-    }, 
+    },
     //建立联系
     userFriendContact(userId, friendId) {
       getmessage(userId, friendId).then((res) => {
@@ -105,9 +110,18 @@ export default {
         this.chatUserCommunication = ''
         this.socket.send(JSON.stringify(entity))
         this.msgList.push(entity)
+        //发送完相关信息后就自动获取底部 
+        this.scrollToBottom()
       }
     },
+    //监听滚动到底部
+    scrollToBottom() {
+      setTimeout(() => {
+        let el = this.$refs["chatRoom"];
+        el.scrollTop = el.scrollHeight;
+      }, 10);
 
+    }
   },
   computed: {
     //获取公共的url头 
@@ -225,6 +239,7 @@ export default {
       margin-top: 10px;
       height: 80px;
       border-top: 1px solid #d1d5db;
+
       .chatInformationBox ::v-deep {
         .el-textarea__inner {
           border: 0;
