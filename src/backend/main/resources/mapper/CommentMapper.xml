@@ -20,4 +20,7 @@
     <select id="checkParent" resultType="java.lang.Integer">
         select count(*) from comment where comment_id = #{parentId}
     </select>
+    <select id="checkType" resultType="java.lang.Integer">
+        select type from resource where resource_id = #{resourceId}
+    </select>
 </mapper>

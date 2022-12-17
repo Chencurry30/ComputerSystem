@@ -122,8 +122,8 @@ public class UserManageServiceImpl implements UserManageService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_REPEAT.getCode(),
                     "用户名重复，请重新添加");
         }
-        //插入用户,默认密码为123456
-        String password = "123456";
+        //插入用户,默认密码为123456A
+        String password = "123456A";
         userDetail.setPassword(passwordEncoder.encode(password));
         userManageMapper.insertUser(userDetail);
         //插入用户权限，默认student

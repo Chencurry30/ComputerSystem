@@ -16,7 +16,7 @@ import java.util.List;
  * description:
  * @date 2022/10/13 14:49
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class CollegeMapperTest {
     @Resource

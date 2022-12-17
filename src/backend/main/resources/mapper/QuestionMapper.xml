@@ -53,7 +53,7 @@
         select * from question where question_id in (select question_id from question_collection where user_id = #{userId})
     </select>
     <select id="getQuestionByName" resultType="com.sicnu.boot.pojo.Question">
-        select * from question
+        select question_id,question_title from question
         <where>
             <trim>question_title like "%" #{name} "%"</trim>
         </where>
