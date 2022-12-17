@@ -1,0 +1,13 @@
+.nodataFound {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+.noFoundBox{
+  margin-top: 10px;
+}
+.noFoundInfomation{
+  margin-top: 15px;
+}
