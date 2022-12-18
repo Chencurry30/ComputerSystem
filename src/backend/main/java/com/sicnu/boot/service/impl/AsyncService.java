@@ -54,12 +54,6 @@ public class AsyncService {
     @Async("myExecutor")
     public CompletableFuture<List<Question>> searchQuestion(String name){
         List<Question> list = questionMapper.getQuestionByName(name);
-        for (Question question : list) {
-            if (question.getQuestionType() <= 2){
-                List<QuestionChoice> choiceList = questionMapper.getQuestionChoiceByQuestionId(question.getQuestionId());
-                question.setQuestionChoiceList(choiceList);
-            }
-        }
         return CompletableFuture.completedFuture(list);
     }
 
