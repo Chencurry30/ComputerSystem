@@ -21,7 +21,7 @@ const videoData = {
       getVideoData(context,{first,second,thild,pageNum}){
         getVideoList({first,second,thild,pageNum}).then((res)=>{
           if(res.data.code === 200){
-            let data = res.data.data
+            let data = res.data.data.list
             context.commit('GETVIDEOLIST',data)
           }
         })
@@ -42,7 +42,6 @@ const videoData = {
         state.videoNavType = data
       },
       GETVIDEOLIST(state,data){
-        console.log(data);
         state.videoDataList = data
       },
       GETINFO(state,data){
@@ -56,7 +55,7 @@ const videoData = {
       },
       //返回对应的视屏数据列表 
       getVideoDataList(state){
-        return state.videoDataList.list
+        return state.videoDataList
       },
       //返回与分页相关的数据 
       getVideoPage(state){

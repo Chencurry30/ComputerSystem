@@ -58,6 +58,9 @@ export default {
       friendNickName: ''
     };
   },
+  mounted(){
+    this.scrollToBottom() 
+  },
   methods: {
     showPopup(friendUserId, friendImg, friendNickName) {
       let userId = sessionStorage.getItem("userId");
@@ -116,10 +119,11 @@ export default {
     },
     //监听滚动到底部
     scrollToBottom() {
+      console.log(123123);
       setTimeout(() => {
         let el = this.$refs["chatRoom"];
         el.scrollTop = el.scrollHeight;
-      }, 10);
+      }, 30);
 
     }
   },

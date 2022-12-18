@@ -115,7 +115,8 @@ export default {
   data() {
     return {
       interval: null,
-      redSpot: true,
+      //是否显示提醒用户有人发送相关信息 
+      redSpot: false,
       //控制是否加载相关内容 
       setTimeFlag: true,
     }

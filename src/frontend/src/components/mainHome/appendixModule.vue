@@ -12,13 +12,9 @@
           </li>
         </ul>
       </div>
-      <div class="title-right">
-        <div class="more">点击更多</div>
-      </div>
     </div>
     <div class="item-list">
       <div class="list-connect">
-
 
         <div class="list-left">
           <div class="title1">推荐院校</div>
@@ -49,44 +45,21 @@
             </dl>
           </div>
         </div>
-
-        <div class="list-right">
-          <div class="title">资源下载</div>
+        <div class="list-right" v-for="fatherItem in DataDownLoad" :key="fatherItem.id"
+          :class="{ showBox: current === fatherItem.id }">
+          <div class="title">{{ fatherItem.name }}</div>
           <div class="middleBox">
-            <div class="middle-left">
-              <div class="middleHeader">
-                <div class="title1">数学真题</div>
-                <div class="more">More</div>
-              </div>
-              <div class="middleContent">
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-              </div>
-            </div>
-            <div class="middle-right">
-              <div class="middleHeader">
-                <div class="title1">数学真题</div>
-                <div class="more">More</div>
-              </div>
-              <div class="middleContent">
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
-                <p>考研数学三真题及答案汇总</p>
+            <div class="middleContent">
+              <div class="uploadLink" v-for="childrenItem in fatherItem.children" :key="childrenItem.downId">
+                <a :href="childrenItem.link">{{ childrenItem.name }}</a>
               </div>
             </div>
           </div>
-
           <div class="middleBottom" v-for="(fatherItem) in DataList" :key="fatherItem.id"
             :class="{ showBox: current === fatherItem.id }">
             <div class="videoList">
-              <div class="videoItem" v-for="(childrenItem) in fatherItem.children" :key="childrenItem.videoId" @click="gotoVideoPage(childrenItem.videoId)">
+              <div class="videoItem" v-for="(childrenItem) in fatherItem.children" :key="childrenItem.videoId"
+                @click="gotoVideoPage(childrenItem.videoId)">
                 <div class="videoItem-videoImg">
                   <img :src="[publicUrl + childrenItem.videoImage]" alt="视屏图片">
                 </div>
@@ -320,6 +293,170 @@ export default {
           ]
         }
       ],
+      DataDownLoad: [
+        {
+          id: 0,
+          name: '数学真题',
+          children: [
+            {
+              downId: 10001,
+              name: '2020-2019考研数学一题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/math/2010-2019-1.rar'
+            },
+            {
+              downId: 10002,
+              name: '2020-2019考研数学二题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/math/2010-2019-2.rar'
+            },
+            {
+              downId: 10003,
+              name: '2020考研数学一题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/math/2020-1.rar'
+            },
+            {
+              downId: 10004,
+              name: '2020考研数学二题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/math/2020-2.rar'
+            },
+            {
+              downId: 10005,
+              name: '2021考研数学一题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/math/2021-1.rar'
+            },
+            {
+              downId: 10006,
+              name: '2021考研数学二题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/math/2021-2.rar'
+            }
+          ]
+        },
+        {
+          id: 1,
+          name: '英语',
+          children:[
+          {
+              downId: 10007,
+              name: '2017考研数学一题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/English/2017-1.rar'
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: '政治',
+          children:[
+          {
+              downId: 10008,
+              name: '2018考研政治题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/political/2018.pdf'
+            },
+            {
+              downId: 10009,
+              name: '2020考研政治题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/political/2020.pdf'
+            },
+            {
+              downId: 10010,
+              name: '2021考研政治题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/political/2021.pdf'
+            }
+          ]
+        },
+        {
+          id: 3,
+          name: '数据结构',
+          children:[
+          {
+              downId: 10011,
+              name: '2016研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2016-408.rar'
+            },
+            {
+              downId: 10012,
+              name: '2017考研政治题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2017-408.rar'
+            },
+            {
+              downId: 10013,
+              name: '2018考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2018-408.rar'
+            },
+            {
+              downId: 10014,
+              name: '2019考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2019-408.rar'
+            },
+            {
+              downId: 10015,
+              name: '2020考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2020-408.rar'
+            }
+          ]
+        },
+        {
+          id: 4,
+          name: '计算机组成原理',
+          children:[
+          {
+              downId: 10016,
+              name: '2016研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2016-408.rar'
+            },
+            {
+              downId: 10017,
+              name: '2017考研政治题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2017-408.rar'
+            },
+            {
+              downId: 10018,
+              name: '2018考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2018-408.rar'
+            },
+            {
+              downId: 10019,
+              name: '2019考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2019-408.rar'
+            },
+            {
+              downId: 10020,
+              name: '2020考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2020-408.rar'
+            }
+          ]
+        },
+        {
+          id: 5,
+          name: '计算机网络',
+          children:[
+          {
+              downId: 10021,
+              name: '2016研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2016-408.rar'
+            },
+            {
+              downId: 10022,
+              name: '2017研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2017-408.rar'
+            },
+            {
+              downId: 10023,
+              name: '2018考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2018-408.rar'
+            },
+            {
+              downId: 10024,
+              name: '2019考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2019-408.rar'
+            },
+            {
+              downId: 10025,
+              name: '2020考研408题目含答案',
+              link: 'https://system-1234.oss-cn-chengdu.aliyuncs.com/resourcesDown/others/2020-408.rar'
+            }
+          ]
+        }
+      ],
+
     }
   },
   methods: {
@@ -421,23 +558,6 @@ export default {
 
   }
 
-  .middleHeader {
-    display: flex;
-    padding: 0 10px;
-    justify-content: space-between;
-  }
-
-  .middleContent {
-    margin-top: 10px;
-
-    p {
-      font-size: 14px;
-      color: #333;
-      padding-left: 20px;
-      line-height: 33px;
-    }
-  }
-
   .item-list {
     padding: 25px 15px;
 
@@ -488,36 +608,12 @@ export default {
       }
 
       .list-right {
+        display: none;
         margin-left: 20px;
         flex: 1;
 
         .middleBox {
-          display: flex;
           margin-top: 10px;
-
-          .middle-left {
-            flex: 1;
-
-            .more {
-              margin-right: 30px;
-              font-size: 14px;
-              color: #999999;
-              height: 18px;
-              line-height: 18px;
-            }
-          }
-
-          .middle-right {
-            flex: 1;
-
-            .more {
-              margin-right: 30px;
-              font-size: 14px;
-              color: #999999;
-              height: 18px;
-              line-height: 18px;
-            }
-          }
         }
 
         .middleBottom {
@@ -577,11 +673,26 @@ export default {
             }
           }
         }
-
+        
         .showBox {
           display: block;
         }
       }
+
+      .showBox {
+        display: block;
+      }
+    }
+  }
+
+  .middleContent {
+    margin-top: 5px;
+
+    .uploadLink {
+      font-size: 16px;
+      color: #333;
+      padding-left: 20px;
+      line-height: 33px;
     }
   }
 }

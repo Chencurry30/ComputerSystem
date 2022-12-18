@@ -1,3 +1,4 @@
+<!--热门视屏-->
 <template>
   <div class="video-item w">
     <div class="title">
@@ -21,7 +22,7 @@
     <div class="item-list">
       <ul class="listBox clearfix">
         <li class="course-item" v-for="(childItem,index) in videoHotList" :key="index"
-          @click="gotoVideoPage(childItem.videoId)">
+          @click="gotoVideoPage(childItem.videoId)" v-show="(index < 4)">
           <div class="course-img">
             <img :src="[publicUrl + childItem.image]" alt="视屏图片">
           </div>

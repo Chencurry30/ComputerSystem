@@ -16,8 +16,8 @@
         </div>
       </div>
     </div>
-    <div class="MainContent">
-      <div class="video-list">
+    <div class="MainContent" >
+      <div class="video-list" v-if="judgeDataList">
         <div class="list-item" v-for="(videoItem) in getDataList" :key="videoItem.videoId"
           @click="getoVideoPage(videoItem.videoId)" @mouseenter="moveVideo(videoItem.videoId)">
           <div class="video-card">
@@ -69,9 +69,13 @@
         </div>
       </div>
     </div>
-    <div class="MainFooter">
+    <div class="MainFooter" v-if="judgeDataList">
       <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
       <PagerView :pageInfo="getVideoPage" @giveFatherPageNo="getSonPageNo"></PagerView>
+    </div>
+    <div v-else class="noDataImg">
+      <img src="../../assets/Img/defaultListImg.png" alt="">
+      <span>未找到相关数据</span>
     </div>
   </div>
 </template>
@@ -157,7 +161,10 @@ export default {
       getDataList: 'getVideoDataList',
       getVideoPage: 'getVideoPage',
     }),
-
+    judgeDataList(){
+      console.log(this.getDataList.length === 0);
+      return this.getDataList.length !== 0
+    },
     publicUrl() {
       return createPublicUrl()
     }
@@ -201,6 +208,7 @@ export default {
           .item {
             padding: 3px 10px;
             border-radius: 10px;
+            cursor: pointer;
           }
 
           .activeOn1,
@@ -302,6 +310,16 @@ export default {
         margin-left: 10px;
       }
     }
+  }
+}
+
+.noDataImg{
+  text-align: center;
+  margin: 0 auto;
+  width: 320px;
+  img{
+    width: 100%;
+    height: 100%;
   }
 }
 </style>
