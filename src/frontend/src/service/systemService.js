@@ -44,3 +44,9 @@ export const userLogout = () =>{
   const url = '/users/logout'
   return service.post(url)
 }
+
+//首页获取热门视屏
+export const getHotVideo = (videoSpeciesId) =>{
+  const url = `/home/video/${videoSpeciesId}`
+  return service.get(url)
+} 

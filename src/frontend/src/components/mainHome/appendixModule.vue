@@ -6,7 +6,8 @@
       </div>
       <div class="title-middle">
         <ul class="middleBox">
-          <li class="BoxItem On" v-for="(item, index) in selectList" :key="index">
+          <li class="BoxItem" :class="{ On: current === index }" v-for="(item, index) in selectList" :key="index"
+            @click="selectItem(index)">
             {{ item.name }}
           </li>
         </ul>
@@ -81,50 +82,23 @@
               </div>
             </div>
           </div>
-          <div class="middleBottom">
-            <div class="title1">相关视屏</div>
 
+          <div class="middleBottom" v-for="(fatherItem) in DataList" :key="fatherItem.id"
+            :class="{ showBox: current === fatherItem.id }">
             <div class="videoList">
-              <div class="videoItem">
-                <div class="videoItem-videoImg"></div>
+              <div class="videoItem" v-for="(childrenItem) in fatherItem.children" :key="childrenItem.videoId" @click="gotoVideoPage(childrenItem.videoId)">
+                <div class="videoItem-videoImg">
+                  <img :src="[publicUrl + childrenItem.videoImage]" alt="视屏图片">
+                </div>
                 <div class="course-connect">
-                  <div class="connect-info">教你三分钟速学线性代数</div>
+                  <div class="connect-info">{{ childrenItem.videoName }}</div>
                   <div class="course-bottom">
                     <span>坚持到底</span>
-                    <span>2022-10-9</span>
+                    <span>{{ childrenItem.videoTime }}</span>
                   </div>
                 </div>
               </div>
-              <div class="videoItem">
-                <div class="videoItem-videoImg"></div>
-                <div class="course-connect">
-                  <div class="connect-info">教你三分钟速学线性代数</div>
-                  <div class="course-bottom">
-                    <span>坚持到底</span>
-                    <span>2022-10-9</span>
-                  </div>
-                </div>
-              </div>
-              <div class="videoItem">
-                <div class="videoItem-videoImg"></div>
-                <div class="course-connect">
-                  <div class="connect-info">教你三分钟速学线性代数</div>
-                  <div class="course-bottom">
-                    <span>坚持到底</span>
-                    <span>2022-10-9</span>
-                  </div>
-                </div>
-              </div>
-              <div class="videoItem">
-                <div class="videoItem-videoImg"></div>
-                <div class="course-connect">
-                  <div class="connect-info">教你三分钟速学线性代数</div>
-                  <div class="course-bottom">
-                    <span>坚持到底</span>
-                    <span>2022-10-9</span>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
@@ -135,6 +109,7 @@
 </template>
 
 <script>
+import { createPublicUrl } from '../../utils/index'
 import Swiper from './swiper.vue';
 export default {
   name: "appendixModule",
@@ -151,6 +126,218 @@ export default {
       ],
       //表示当前的下标 
       current: 0,
+      DataList: [
+        {
+          id: 0,
+          name: '数学',
+          children: [
+            {
+              videoId: 14,
+              videoImage: 'video/videoImg/8794027591208.jpg',
+              videoName: '考研数学历年真题全解析 2021年 数学二',
+              videoTime: '2022-10-15 16:12:31'
+            },
+            {
+              videoId: 2,
+              videoImage: 'video/videoImg/8794737791208.jpg',
+              videoName: '考研数学历年真题全解析 2022年 数学三',
+              videoTime: '2022-10-15 16:12:31'
+            },
+            {
+
+              videoId: 8,
+              videoImage: 'video/videoImg/8794027591208.jpg',
+              videoName: '考研数学历年真题全解析 2022年 数学二',
+              videoTime: '2022-10-15 16:12:31'
+            },
+            {
+
+              videoId: 20,
+              videoImage: 'video/videoImg/4389035031208.jpg',
+              videoName: '考研数学历年真题全解析 2021年 数学三',
+              videoTime: '2022-10-15 16:12:31'
+            }
+          ]
+        },
+        {
+          id: 1,
+          name: '英语',
+          children: [
+            {
+              videoId: 1,
+              videoImage: 'video/videoImg/7820996031208.jpg',
+              videoName: '17分钟看完颉斌斌的阅读思维和技巧,搭配思维导图,真的很绝!|考研英语',
+              videoTime: '2022-10-15 16:10:52'
+            },
+            {
+              videoId: 7,
+              videoImage: 'video/videoImg/2461442091192.jpg',
+              videoName: '22考研英语阅读逐年刷题精讲(考研党必备:包含考研阅读英语一和英语二)',
+              videoTime: '2022-10-15 16:10:52'
+            },
+            {
+
+              videoId: 13,
+              videoImage: 'video/videoImg/5405241871208.jpg',
+              videoName: '『英一80分』b站最全考研英语全年全板块规划|备考阶段划分及名师推荐|书籍购买指南|备考注意事项',
+              videoTime: '2022-10-15 16:10:52'
+            },
+            {
+
+              videoId: 19,
+              videoImage: 'video/videoImg/8769878421208.jpg',
+              videoName: '23大作文万能模板!直接背!英一保16分,英二保12分!【23考研英语,含新大纲】',
+              videoTime: '2022-10-15 16:10:55'
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: '政治',
+          children: [
+            {
+              videoId: 3,
+              videoImage: 'video/videoImg/8603807931208.jpg',
+              videoName: '考研政治83分秘诀:轻松可复制,直接照着学!',
+              videoTime: '2022-10-13 17:30:00'
+            },
+            {
+              videoId: 9,
+              videoImage: 'video/videoImg/8532397971208.jpg',
+              videoName: '考研政治要背诵的,只有这些,不要瞎背!!【23考研政治】',
+              videoTime: '2022-10-15 16:20:06'
+            },
+            {
+
+              videoId: 15,
+              videoImage: 'video/videoImg/8476651631208.png',
+              videoName: '55min学完马原!精简版,无废话![唯物史观]',
+              videoTime: '2022-10-15 16:20:06'
+            },
+            {
+
+              videoId: 21,
+              videoImage: 'video/videoImg/8476602081208.png',
+              videoName: '55min学完马原!精简版!无废话![认识论]',
+              videoTime: '2022-10-15 16:20:06'
+            }
+          ]
+        },
+        {
+          id: 3,
+          name: '数据结构',
+          children: [
+            {
+              videoId: 5,
+              videoImage: 'video/videoImg/7982299611192.jpg',
+              videoName: '小强计算机考研-数据结构考研[严蔚敏]',
+              videoTime: '2022-10-15 16:23:21'
+            },
+            {
+              videoId: 11,
+              videoImage: 'video/videoImg/7982278131192.jpg',
+              videoName: '小强计算机考研-数据结构考研[严蔚敏]',
+              videoTime: '2022-10-15 16:23:21'
+            },
+            {
+
+              videoId: 17,
+              videoImage: 'video/videoImg/7982237631192.jpg',
+              videoName: '小强计算机考研-数据结构考研[严蔚敏]',
+              videoTime: '2022-10-15 16:23:21'
+            },
+            {
+
+              videoId: 23,
+              videoImage: 'video/videoImg/7982182751192.jpg',
+              videoName: '小强计算机考研-数据结构考研[严蔚敏]',
+              videoTime: '2022-10-15 16:23:21'
+            }
+          ]
+        },
+        {
+          id: 4,
+          name: '计算机组成原理',
+          children: [
+            {
+              videoId: 6,
+              videoImage: 'video/videoImg/7506180041208.jpg',
+              videoName: '408考研138分学长|计组高分经验',
+              videoTime: '2022-10-15 16:24:21'
+            },
+            {
+              videoId: 12,
+              videoImage: 'video/videoImg/8308910401208.jpg',
+              videoName: ' 计组过完一轮跟没学一样?一张图帮你完成408考研组成原理章节知识点梳理以及重点解题技巧',
+              videoTime: '2022-10-15 16:24:21'
+            },
+            {
+
+              videoId: 18,
+              videoImage: 'video/videoImg/8587408771208.jpg',
+              videoName: '【408考研138分】计组:一次搞定大端小端and对齐',
+              videoTime: '2022-10-15 16:24:21'
+            },
+            {
+
+              videoId: 24,
+              videoImage: 'video/videoImg/8325129101208.jpg',
+              videoName: '如何养成408考研的计组指令系统的大题解题思路?看完打通任督二脉',
+              videoTime: '2022-10-15 16:24:21'
+            }
+          ]
+        },
+        {
+          id: 5,
+          name: '计算机网络',
+          children: [
+            {
+              videoId: 4,
+              videoImage: 'video/videoImg/8931305331208.jpg',
+              videoName: '60分钟理清计算机网络,期末、考研必备,节约一半复习时间(上)',
+              videoTime: '2022-10-15 16:22:27'
+            },
+            {
+              videoId: 10,
+              videoImage: 'video/videoImg/8931431301208.jpg',
+              videoName: '60分钟理清计算机网络,期末、考研必备,节约一半复习时间(下)',
+              videoTime: '2022-10-15 16:22:27'
+            },
+            {
+
+              videoId: 16,
+              videoImage: 'video/videoImg/4543790921208.jpg',
+              videoName: '【408考研】历年计网大题串讲',
+              videoTime: '2022-10-15 16:22:27'
+            },
+            {
+
+              videoId: 22,
+              videoImage: 'video/videoImg/7691976861208.jpg',
+              videoName: '408(计组+操作系统+数据结构+计网)王道计算机考研专栏万字笔记-祝您考研顺利',
+              videoTime: '2022-10-15 16:22:27'
+            }
+          ]
+        }
+      ],
+    }
+  },
+  methods: {
+    selectItem(index) {
+      this.current = index
+    },
+    //根据点击的视屏跳转到对应的页面 
+    gotoVideoPage(videoId) {
+      let location = {
+        name: 'videoPage'
+      }
+      location.query = { videoId: videoId }
+      this.$router.push(location)
+    }
+  },
+  computed: {
+    publicUrl() {
+      return createPublicUrl()
     }
   }
 }
@@ -198,7 +385,7 @@ export default {
           float: left;
           display: block;
           padding: 0 15px;
-          border-bottom: 4px solid #f7f7f7;
+          border-bottom: 4px solid #ffffff;
           line-height: 27px;
           font-size: 16px;
           cursor: pointer;
@@ -335,6 +522,7 @@ export default {
 
         .middleBottom {
           margin-top: 10px;
+          display: none;
 
           .videoList {
             margin-top: 15px;
@@ -343,19 +531,23 @@ export default {
               float: left;
               margin: 0 9px;
               width: 215px;
-              height: 210px;
+              height: 190px;
               border-radius: 8px;
               overflow: hidden;
               cursor: pointer;
 
               .videoItem-videoImg {
                 width: 100%;
-                height: 100px;
-                background: red;
+                height: 120px;
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                }
               }
 
               .course-connect {
-                padding: 15px;
+                padding: 5px;
                 width: 100%;
                 border-radius: 0 0 6px 6px;
 
@@ -384,6 +576,10 @@ export default {
               }
             }
           }
+        }
+
+        .showBox {
+          display: block;
         }
       }
     }
