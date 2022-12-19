@@ -20,7 +20,7 @@ const schoolData = {
       getschoolData(context,{first,second,thild,pageNum}){
         getschoolList({first,second,thild,pageNum}).then((res)=>{
           if(res.data.code === 200){
-            let data = res.data.data
+            let data = res.data.data.list
             context.commit('GETSCHOOLDATA',data)
           }
         })
@@ -42,7 +42,7 @@ const schoolData = {
       },
       //返回院校的列表信息 
       getSchoolDataList(state){
-        return state.schoolDataList.list
+        return state.schoolDataList
       },
       //返回与分页相关的数据 
       getSchoolPage(state){

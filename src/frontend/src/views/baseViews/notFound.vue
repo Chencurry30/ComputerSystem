@@ -6,7 +6,8 @@
   </div>
   <div class="notFoundBox">
     <div class="notFoundTitle">抱歉,页面无法访问</div>
-    <div class="notFoundInfo">可能原因：网址有错误 > 请检查地址是否完整或存在多余字符；网址已失效 > 可能页面已删除 或者 活动已下线等</div>
+    <div class="notFoundInfo">可能原因：网址有错误 > 请检查地址是否完整或存在多余字符；
+      网址已失效 > 可能页面已删除 或者 活动已下线等  数据丢失 > 页面数据可能丢失，请稍后再试</div>
     <div class="backHomeBtn" @click="backHome">返回首页</div>
   </div>
 </div>

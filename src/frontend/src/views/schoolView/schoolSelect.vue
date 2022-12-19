@@ -10,8 +10,8 @@
                 activeOn1: selectId.first === childItem.regionId,
                 activeOn2: selectId.second === childItem.typeId,
                 activeOn3: selectId.thild === childItem.attributeId
-              }" :data-regionId="childItem.regionId"
-                :data-typeId="childItem.typeId" :data-attributeId="childItem.attributeId" @click="selectVideo">
+              }" :data-regionId="childItem.regionId" :data-typeId="childItem.typeId"
+                :data-attributeId="childItem.attributeId" @click="selectVideo">
                 {{ childItem.name }}</li>
             </ul>
           </div>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="MainContent">
-      <div class="school-list">
+      <div class="school-list" v-if="judgeDataList">
         <thead>
           <tr>
             <th style="width:230px">院校名称</th>
@@ -45,9 +45,14 @@
         </tbody>
       </div>
     </div>
-    <div class="MainFooter"> -->
+    <div class="MainFooter" v-if="judgeDataList"> -->
       <!--其中的第一组为父组件向子组件传递的参数  第二组是子组件向父组件传递的选择的页码-->
       <PagerView :pageInfo="getSchoolPage" @giveFatherPageNo="getSonPageNo"></PagerView>
+    </div>
+
+    <div v-else class="noDataImg">
+      <img src="../../assets/Img/defaultListImg.png" alt="">
+      <span>未找到相关数据</span>
     </div>
   </div>
 
@@ -127,7 +132,11 @@ export default {
       getNavType: 'getSchoolNavType',
       getSchoolDataList: 'getSchoolDataList',
       getSchoolPage: 'getSchoolPage',
-    })
+    }),
+    judgeDataList(){
+      console.log(this.getSchoolDataList.length);
+      return this.getSchoolDataList.length !== 0
+    },
   }
 }
 </script>
@@ -168,6 +177,7 @@ export default {
           .item {
             padding: 3px 10px;
             border-radius: 10px;
+            cursor: pointer;
           }
 
           .activeOn1,
@@ -182,6 +192,7 @@ export default {
     }
   }
 }
+
 .MainContent {
   margin: 0 auto;
   padding-top: 20px;
@@ -196,9 +207,11 @@ export default {
     border-spacing: 0;
     word-break: break-all;
     word-wrap: break-word;
-    tr{
+
+    tr {
       height: 50px;
     }
+
     th {
       padding: 12px 10px;
       border-bottom: 1px solid #e9e9e9;
@@ -227,6 +240,15 @@ export default {
       background: #ebf4fb;
       color: #54acf3;
     }
+  }
+}
+.noDataImg{
+  text-align: center;
+  margin: 0 auto;
+  width: 320px;
+  img{
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

@@ -23,7 +23,7 @@ const questionData = {
       getQuestionDataList({ typeId, difficultId, classifyId, sourceId, yearId, pageNum }).then((res) => {
         console.log(res);
         if (res.data.code === 200) {
-          let data = res.data.data
+          let data = res.data.data.list
           context.commit('GETQUESTIONDATA', data)
         }
       })

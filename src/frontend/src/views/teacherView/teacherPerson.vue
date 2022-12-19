@@ -103,7 +103,7 @@ export default {
         background: "",
         directionName: "",
         information: "",
-        Id: "",
+        // Id: "",
       },
       sendTeacherData: {
         nickName: sessionStorage.getItem('nickname'),
@@ -138,8 +138,9 @@ export default {
   mounted() {
     this.teacherId = this.$route.query.teacherId;
     getTeacherInfo(this.teacherId).then((res) => {
-      this.teacherMsg = res.data.data;
-      console.log(this.teacherMsg);
+      if(res.data.data !== undefined){
+        this.teacherMsg = res.data.data;
+      }
     })
     //获取对老师的相关评价 
     this.teacherRemark()
