@@ -4,6 +4,7 @@ package com.sicnu.boot.service.impl;
 import com.sicnu.boot.mapper.MessageMapper;
 import com.sicnu.boot.pojo.Message;
 import com.sicnu.boot.service.MessageService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.LoginUser;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +41,14 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public ServerResponse<List<Message>> getAllMessage() {
         List<Message> allMessage = messageMapper.getAllMessage();
+        if (allMessage.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("查询成功",allMessage);
     }
 
+    @Override
     public ServerResponse<List<Message>> getMessageById(Integer id) {
         List<Message> messages=messageMapper.getMessageById(id);
         return ServerResponse.createBySuccess("查询成功",messages);

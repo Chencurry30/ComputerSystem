@@ -62,6 +62,10 @@ public class HomeServiceImpl implements HomeService {
             videoList = searchVideo.get();
             map.put("videoList",videoList);
         }
+        if (map.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",map);
     }
 

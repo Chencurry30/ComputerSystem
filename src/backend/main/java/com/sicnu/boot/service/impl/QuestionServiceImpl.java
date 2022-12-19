@@ -7,6 +7,7 @@ import com.sicnu.boot.pojo.Question;
 import com.sicnu.boot.pojo.QuestionChoice;
 import com.sicnu.boot.service.QuestionService;
 import com.sicnu.boot.utils.QuestionUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.QuestionClassify;
@@ -93,6 +94,10 @@ public class QuestionServiceImpl implements QuestionService {
             int checkCollectVideo = questionMapper.checkCollectQuestion(userId, question.getQuestionId());
             question.setIsCollected(checkCollectVideo > 0);
         }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         PageInfo<Question> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
@@ -148,6 +153,10 @@ public class QuestionServiceImpl implements QuestionService {
             List<Question> generatingPaper = questionMapper.getGeneratingPaper(questionSelective.getClassifyId(),
                     4, questionSelective.getAnswerNum());
             list.addAll(generatingPaper);
+        }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
         }
         return ServerResponse.createBySuccess("获取成功",list);
     }

@@ -3,6 +3,7 @@ package com.sicnu.boot.service.impl;
 import com.sicnu.boot.mapper.TeacherExamineMapper;
 import com.sicnu.boot.pojo.TeacherExamine;
 import com.sicnu.boot.service.TeacherExamineService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.LoginUser;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,10 @@ public class TeacherExamineServiceImpl implements TeacherExamineService {
     @Override
     public ServerResponse<List<TeacherExamine>> getAllExamine() {
         List<TeacherExamine> allExamine = examineMapper.getAllExamine();
+        if (allExamine.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("查询成功",allExamine);
     }
 

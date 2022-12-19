@@ -6,6 +6,7 @@ import com.sicnu.boot.mapper.UserFriendMapper;
 import com.sicnu.boot.pojo.FriendExamine;
 import com.sicnu.boot.service.UserFriendService;
 import com.sicnu.boot.utils.RedisUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.UserDetail;
@@ -53,6 +54,10 @@ public class UserFriendServiceImpl implements UserFriendService {
             //设置有效时间
             redisUtils.expire(REDIS_FRIEND_PREFIX + userId,24, TimeUnit.HOURS);
         }
+        if (friends.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         List<Integer> cacheList = redisUtils.getCacheList("redSpot:" + userId);
         for (UserDetail friend : friends) {
             if (cacheList.contains(friend.getUserId())){
@@ -79,6 +84,10 @@ public class UserFriendServiceImpl implements UserFriendService {
                 userDetail.setIsFriend(userFriendMapper.checkFriend(userId,
                         userDetail.getUserId()));
             }
+        }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
         }
         return ServerResponse.createBySuccess("获取成功",list);
     }
@@ -166,6 +175,10 @@ public class UserFriendServiceImpl implements UserFriendService {
             friendExamine.setFriend(friendByKey);
             UserDetail friendByKey1 = userFriendMapper.getFriendByKey(friendExamine.getUserId());
             friendExamine.setUser(friendByKey1);
+        }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
         }
         PageInfo<FriendExamine> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);

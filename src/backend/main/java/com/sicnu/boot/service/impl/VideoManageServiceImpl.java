@@ -7,6 +7,7 @@ import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.service.VideoManageService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.ExamineVideo;
 import com.sicnu.boot.vo.LoginUser;
@@ -53,6 +54,10 @@ public class VideoManageServiceImpl implements VideoManageService {
             video.setNickname(nickname);
         }
         PageInfo<Video> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("成功",pageInfo);
     }
 
@@ -75,6 +80,10 @@ public class VideoManageServiceImpl implements VideoManageService {
                     userMapper.getNicknameByUserId(videoExamine.getApplyId()));
         }).collect(Collectors.toList());
         PageInfo<VideoExamine> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 

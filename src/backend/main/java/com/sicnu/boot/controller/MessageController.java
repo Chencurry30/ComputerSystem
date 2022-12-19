@@ -45,7 +45,7 @@ public class MessageController {
 
 
     @GetMapping("/teacherId/{id}")
-    public ServerResponse<List<Message>> getMassegeById(@PathVariable("id") Integer id){
+    public ServerResponse<List<Message>> getMessageById(@PathVariable("id") Integer id){
         return messageService.getMessageById(id);
     }
 

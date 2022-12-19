@@ -7,6 +7,7 @@ import com.sicnu.boot.mapper.DynamicMapper;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.pojo.Dynamic;
 import com.sicnu.boot.service.DynamicService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.CommentUserVo;
 import com.sicnu.boot.vo.DynamicVo;
@@ -82,6 +83,10 @@ public class DynamicServiceImpl implements DynamicService {
         for(DynamicVo dynamicVo : allDynamic){
             CommentUserVo author = userMapper.getCommentUserById(dynamicVo.getUserId());
             dynamicVo.setAuthor(author);
+        }
+        if (allDynamic.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
         }
         PageInfo<DynamicVo> pageInfo = new PageInfo<>(allDynamic);
         return ServerResponse.createBySuccess("查询成功",pageInfo);

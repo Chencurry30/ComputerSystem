@@ -91,6 +91,10 @@ public class UserManageServiceImpl implements UserManageService {
             }
         }
         PageInfo<UserDetail> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 

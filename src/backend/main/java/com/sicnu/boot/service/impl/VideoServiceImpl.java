@@ -8,6 +8,7 @@ import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.service.VideoService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.VideoUtils;
 import com.sicnu.boot.vo.LoginUser;
@@ -50,6 +51,10 @@ public class VideoServiceImpl implements VideoService {
             video.setNickname(nickname);
         });
         PageInfo<Video> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("成功",pageInfo);
     }
 
@@ -135,6 +140,10 @@ public class VideoServiceImpl implements VideoService {
             video.setNickname(nickname);
         }
         PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+        if (videoList.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 

@@ -6,6 +6,7 @@ import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Comment;
 import com.sicnu.boot.pojo.User;
 import com.sicnu.boot.service.CommentService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.TreeUtils;
 import com.sicnu.boot.vo.*;
@@ -44,6 +45,10 @@ public class CommentServiceImpl implements CommentService {
     public ServerResponse<List<CommentVos>> getCommentsById(Integer resourceId) {
         //查询文章所有的评论
         List<Comment> comments = commentMapper.getCommentsById(resourceId);
+        if (comments.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         //补充评论用户信息
         List<CommentVo> commentVos = comments.stream().map(comment -> {
             CommentVo commentVo = new CommentVo(comment);

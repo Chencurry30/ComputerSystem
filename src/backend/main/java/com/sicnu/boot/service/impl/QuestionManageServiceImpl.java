@@ -7,6 +7,7 @@ import com.sicnu.boot.pojo.Question;
 import com.sicnu.boot.pojo.QuestionChoice;
 import com.sicnu.boot.service.QuestionManageService;
 import com.sicnu.boot.utils.QuestionUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.QuestionSelective;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,10 @@ public class QuestionManageServiceImpl implements QuestionManageService {
             }
         }
         PageInfo<Question> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 }

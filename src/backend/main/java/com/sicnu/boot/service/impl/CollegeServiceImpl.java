@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.mapper.CollegeMapper;
 import com.sicnu.boot.pojo.College;
 import com.sicnu.boot.service.CollegeService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.CollegeAttribute;
 import com.sicnu.boot.vo.CollegeRegion;
@@ -97,6 +98,10 @@ public class CollegeServiceImpl implements CollegeService {
         PageHelper.startPage(collegeSelective.getPageNum(),12);
         List<College> list = collegeMapper.getCollegeListBySelective(collegeSelective);
         PageInfo<College> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("成功",pageInfo);
     }
 }
