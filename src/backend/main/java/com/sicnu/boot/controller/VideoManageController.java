@@ -7,6 +7,7 @@ import com.sicnu.boot.service.VideoManageService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.ExamineVideo;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class VideoManageController {
      * Date:  2022/11/30 18:35
      */
     @GetMapping("/pages/{typeId}-{pageNum}")
+    @PreAuthorize("hasAuthority('system:video:view')")
     ServerResponse<PageInfo<Video>> getVideoList(@Min(value = 0,message = "typeId的最小值为0") @PathVariable Integer typeId,
                   @Min(value = 1,message = "pageNum的最小值为1") @PathVariable Integer pageNum){
         return videoManageService.getVideoList(pageNum,typeId);
@@ -50,6 +52,7 @@ public class VideoManageController {
      * Date:  2022/11/30 18:35
      */
     @DeleteMapping("/{videoId}")
+    @PreAuthorize("hasAuthority('system:video:delete')")
     ServerResponse<String> deleteVideoById(@Min(value = 1,message = "videoId的最小值为1") @PathVariable Integer videoId){
         return videoManageService.deleteVideoById(videoId);
     }
@@ -64,6 +67,7 @@ public class VideoManageController {
      * Date:  2022/11/30 18:34
      */
     @GetMapping("/examine/{examineStatus}-{pageNum}")
+    @PreAuthorize("hasAuthority('system:video:viewExamine')")
     ServerResponse<PageInfo<VideoExamine>> getVideoExamineList(@Min(value = 1,message = "pageNum的最小值为1") @PathVariable Integer pageNum,
                                                                @Range(min = -1,max = 2,message = "examineStatus的范围为-1到2") @PathVariable Integer examineStatus){
         return videoManageService.getVideoExamineList(pageNum,examineStatus);
@@ -78,6 +82,7 @@ public class VideoManageController {
      * Date:  2022/11/30 18:34
      */
     @PutMapping("/examine")
+    @PreAuthorize("hasAuthority('system:video:examine')")
     ServerResponse<String> examineVideo(@Validated @RequestBody ExamineVideo examineVideo){
         return videoManageService.examineVideo(examineVideo);
     }

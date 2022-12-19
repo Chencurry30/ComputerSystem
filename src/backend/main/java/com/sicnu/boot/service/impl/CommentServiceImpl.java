@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.CommentMapper;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.mapper.VideoMapper;
@@ -84,6 +85,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "评论模块",operType = "新增",operDesc = "用户发表评论")
     public ServerResponse<String> insertComment(Comment comment) {
         //检查是否拥有该资源
         int checkResource = commentMapper.checkResource(comment.getResourceId());

@@ -55,7 +55,7 @@ public class UserManageServiceImpl implements UserManageService {
     private RedisUtils redisUtils;
 
     @Override
-    @SysLogAnnotation(operModel = "用户管理",operType = "登录",operDesc = "用户后台登录系统")
+    @SysLogAnnotation(operModel = "用户管理",operType = "登录",operDesc = "管理员登录后台系统")
     public ServerResponse<Map<String, Object>> login(User user) {
         //验证用户是否具有管理员权限
         int checkAdmin = userManageMapper.checkAdmin(user.getUsername());
@@ -68,7 +68,7 @@ public class UserManageServiceImpl implements UserManageService {
     }
 
     @Override
-    @SysLogAnnotation(operModel = "用户管理",operType = "注销",operDesc = "用户后台退出登录")
+    @SysLogAnnotation(operModel = "用户管理",operType = "注销",operDesc = "管理员退出登录后台")
     public ServerResponse<String> logout() {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
