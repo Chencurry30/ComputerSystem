@@ -1,5 +1,6 @@
 package com.sicnu.boot.service.impl;
 
+import com.sicnu.boot.mapper.HomeMapper;
 import com.sicnu.boot.mapper.LogMapper;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.mapper.VideoMapper;
@@ -14,9 +15,7 @@ import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +41,16 @@ public class TimedTaskService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private HomeMapper homeMapper;
+
+    private static final String VIDEO_COUNT_NAME = "video_count";
+    private static final String QUESTION_COUNT_NAME = "question_count";
+    private static final String USER_COUNT_NAME = "user_count";
+    private static final String COLLEGE_COUNT_NAME = "college_count";
+    private static final String TEACHER_COUNT_NAME = "teacher_count";
+    public static final String HOME_MAP = "home_map";
+
     /**
      * description: 每晚11点执行删除数据库30天以前的日志的定时器
      *
@@ -65,7 +74,7 @@ public class TimedTaskService {
      * @author 胡建华
      * Date:  2022/12/15 19:17
      */
-    @Scheduled(cron = "0 0 0/1 * * ?")
+    @Scheduled(cron = "0 30 0/1 * * ?")
     public void flushHotSpot(){
         List<VideoType> videoType = videoMapper.getVideoType();
         for (VideoType type : videoType) {
@@ -80,6 +89,28 @@ public class TimedTaskService {
             //存到redis中
             redisUtils.setCacheList(HomeServiceImpl.HOT_SPOT + type.getTypeId(),list);
         }
+    }
+
+    /**
+     * description: 刷新后台首页数据,每小时执行一次
+     *
+     * @author 胡建华
+     * Date:  2022/12/20 9:37
+     */
+    @Scheduled(cron = "0 15 0/1 * * ?")
+    public void flushCounts(){
+        int questionCount = homeMapper.getQuestionCount();
+        int schoolCount = homeMapper.getSchoolCount();
+        int teacherCount = homeMapper.getTeacherCount();
+        int userCount = homeMapper.getUserCount();
+        int videoCount = homeMapper.getVideoCount();
+        Map<String,Integer> map = new HashMap<>(8);
+        map.put(QUESTION_COUNT_NAME,questionCount);
+        map.put(COLLEGE_COUNT_NAME,schoolCount);
+        map.put(TEACHER_COUNT_NAME,teacherCount);
+        map.put(USER_COUNT_NAME,userCount);
+        map.put(VIDEO_COUNT_NAME,videoCount);
+        redisUtils.setCacheMap(HOME_MAP,map);
     }
 
     /**
