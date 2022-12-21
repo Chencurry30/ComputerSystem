@@ -18,5 +18,5 @@ public interface HomeManageService {
      * @author 胡建华
      * Date:  2022/12/20 9:53
      */
-    ServerResponse<Map<String, Integer>> getHomeCounts();
+    ServerResponse<Map<String,Map<String,Integer>>> getHomeCounts();
 }

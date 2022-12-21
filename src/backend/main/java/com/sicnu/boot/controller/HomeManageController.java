@@ -22,7 +22,7 @@ public class HomeManageController {
     private HomeManageService homeManageService;
 
     @GetMapping("/counts")
-    ServerResponse<Map<String, Integer>> getHomeCounts(){
+    ServerResponse<Map<String,Map<String,Integer>>> getHomeCounts(){
         return homeManageService.getHomeCounts();
     }
 

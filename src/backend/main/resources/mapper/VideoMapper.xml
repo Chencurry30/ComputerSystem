@@ -108,4 +108,7 @@
         select video_id,name,time,image,view_num,duration,comment_num,author_id,collection_num
           from video where type_id = #{typeId}
     </select>
+    <select id="getVideoCountByVideoType" resultType="java.lang.Integer">
+        select count(*) from video where type_id = #{typeId}
+    </select>
 </mapper>

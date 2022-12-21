@@ -25,9 +25,9 @@ public class HomeManageServiceImpl implements HomeManageService {
     private RedisUtils redisUtils;
 
     @Override
-    public ServerResponse<Map<String, Integer>> getHomeCounts() {
+    public ServerResponse<Map<String,Map<String,Integer>>> getHomeCounts() {
         //从redis中获取数据
-        Map<String, Integer> cacheMap = redisUtils.getCacheMap(TimedTaskService.HOME_MAP);
+        Map<String,Map<String,Integer>> cacheMap = redisUtils.getCacheMap(TimedTaskService.HOME_MAP);
         if (cacheMap.isEmpty()){
             //刷新
             timedTaskService.flushCounts();
