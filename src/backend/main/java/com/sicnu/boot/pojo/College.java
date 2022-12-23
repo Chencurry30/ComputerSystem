@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class College {
+    private Integer id;
     private Integer collegeId;
     private String name;
     private String address;

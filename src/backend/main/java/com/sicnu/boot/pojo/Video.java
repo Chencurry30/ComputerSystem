@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Video {
+  private Integer id;
   private Integer videoId;
   private String name;
   @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd HH:mm:ss")

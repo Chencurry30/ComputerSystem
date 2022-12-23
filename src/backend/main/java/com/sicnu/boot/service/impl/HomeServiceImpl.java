@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * description:
@@ -50,16 +51,20 @@ public class HomeServiceImpl implements HomeService {
         List<Question> questionList;
         List<Video> videoList;
         Map<String,Object> map = new HashMap<>(5);
+        AtomicReference<Integer> nums = new AtomicReference<>(1);
         if (!Objects.isNull(searchCollege)){
             collegeList = searchCollege.get();
+            collegeList.forEach(item -> item.setId(nums.getAndSet(nums.get() + 1)));
             map.put("collegeList",collegeList);
         }
         if (!Objects.isNull(searchQuestion)){
             questionList = searchQuestion.get();
+            questionList.forEach(item -> item.setId(nums.getAndSet(nums.get() + 1)));
             map.put("questionList",questionList);
         }
         if (!Objects.isNull(searchVideo)){
             videoList = searchVideo.get();
+            videoList.forEach(item -> item.setId(nums.getAndSet(nums.get() + 1)));
             map.put("videoList",videoList);
         }
         if (map.isEmpty()){

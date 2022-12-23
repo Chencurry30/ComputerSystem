@@ -7,8 +7,6 @@ import com.sicnu.boot.group.Update;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
@@ -30,6 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Question {
+    private Integer id;
     @NotNull(message = "题目id不能为空",groups = {Update.class})
     @Min(value = 1,message = "题目id最小为1")
     private Integer questionId;
