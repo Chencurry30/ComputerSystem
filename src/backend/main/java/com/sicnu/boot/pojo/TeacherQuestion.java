@@ -27,4 +27,5 @@ public class TeacherQuestion {
     private Integer userId;
     private Integer appear;
     private String answer;
+    private String image;
 }
