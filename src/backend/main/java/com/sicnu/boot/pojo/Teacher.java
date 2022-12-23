@@ -28,7 +28,7 @@ public class Teacher {
     @NotNull(message = "老师的教授方向不能为空")
     private String directionName;
     private String image;
-    private Integer teacherTime;
+    private Integer teachTime;
     private String information;
     private Integer attentPeople;
     private String qualification;
