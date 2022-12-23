@@ -6,6 +6,7 @@ import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.LogMapper;
 import com.sicnu.boot.pojo.Log;
 import com.sicnu.boot.service.LogService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,10 @@ public class LogServiceImpl implements LogService {
         PageHelper.startPage(pageNum,8);
         List<Log> list = logMapper.getLogList();
         PageInfo<Log> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("返回成功",pageInfo);
     }
 

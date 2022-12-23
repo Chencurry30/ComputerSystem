@@ -58,4 +58,7 @@
             <trim>question_title like "%" #{name} "%"</trim>
         </where>
     </select>
+    <select id="getQuestionCountsByClassify" resultType="java.lang.Integer">
+        select count(*) from question where classify_id = #{classifyId}
+    </select>
 </mapper>

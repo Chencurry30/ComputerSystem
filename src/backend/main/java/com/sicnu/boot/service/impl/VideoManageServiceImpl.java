@@ -2,15 +2,18 @@ package com.sicnu.boot.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.service.VideoManageService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.ExamineVideo;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.VideoSelective;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
  * Data:    2022/11/30 16:13
  */
 @Service
+@Slf4j
 public class VideoManageServiceImpl implements VideoManageService {
 
     @Resource
@@ -53,10 +57,15 @@ public class VideoManageServiceImpl implements VideoManageService {
             video.setNickname(nickname);
         }
         PageInfo<Video> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("成功",pageInfo);
     }
 
     @Override
+    @SysLogAnnotation(operModel = "视频管理",operType = "删除",operDesc = "删除指定视频")
     public ServerResponse<String> deleteVideoById(Integer videoId) {
         Video video = videoMapper.getVideoByVideoId(videoId);
         videoMapper.deleteResource(video.getResourceId());
@@ -75,11 +84,16 @@ public class VideoManageServiceImpl implements VideoManageService {
                     userMapper.getNicknameByUserId(videoExamine.getApplyId()));
         }).collect(Collectors.toList());
         PageInfo<VideoExamine> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @SysLogAnnotation(operModel = "视频模块",operType = "审核",operDesc = "审核指定视频")
     public ServerResponse<String> examineVideo(ExamineVideo examineVideo) {
         //设置审核时间
         examineVideo.setPassDate(LocalDateTime.now());
@@ -96,8 +110,10 @@ public class VideoManageServiceImpl implements VideoManageService {
             videoMapper.insertResource(videoExamine);
             //插入视频
             videoMapper.insertVideo(videoExamine);
-            return ServerResponse.createBySuccessMessage("审核成功，插入视频");
+            log.info("审核通过");
+            return ServerResponse.createBySuccessMessage("审核通过");
         }else {
+            log.info("审核不通过，原因是：{}",examineVideo.getReviewComment());
             return ServerResponse.createBySuccessMessage("审核未通过");
         }
     }

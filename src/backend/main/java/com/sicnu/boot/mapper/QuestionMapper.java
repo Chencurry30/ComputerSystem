@@ -117,4 +117,14 @@ public interface QuestionMapper {
      * Date:  2022/12/13 20:11
      */
     List<Question> getQuestionByName(String name);
+
+    /**
+     * description: 获取每种分类数量
+     *
+     * @param classifyId:
+     * @return Integer
+     * @author 胡建华
+     * Date:  2022/12/21 9:26
+     */
+    Integer getQuestionCountsByClassify(Integer classifyId);
 }

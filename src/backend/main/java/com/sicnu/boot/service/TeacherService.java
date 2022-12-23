@@ -35,6 +35,7 @@ public interface TeacherService {
     /**
      * 页码数
      * @param pageNum：页码数
+     * @param directionId:
      * @return null
      */
     ServerResponse<PageInfo<Teacher>> getTeacherPage(Integer directionId,Integer pageNum);

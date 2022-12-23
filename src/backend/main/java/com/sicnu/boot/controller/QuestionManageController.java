@@ -8,6 +8,7 @@ import com.sicnu.boot.service.QuestionManageService;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.QuestionSelective;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class QuestionManageController {
      * Date:  2022/11/25 20:40
      */
     @PostMapping
+    @PreAuthorize("hasAuthority('system:question:insert')")
     ServerResponse<String> insertQuestion(@Validated(Insert.class) @RequestBody Question question){
         return questionManageService.insertQuestion(question);
     }
@@ -50,6 +52,7 @@ public class QuestionManageController {
      * Date:  2022/11/25 21:00
      */
     @PutMapping
+    @PreAuthorize("hasAuthority('system:question:update')")
     ServerResponse<String> updateQuestion(@Validated(Update.class) @RequestBody Question question){
         return questionManageService.updateQuestion(question);
     }
@@ -63,6 +66,7 @@ public class QuestionManageController {
      * Date:  2022/11/26 9:45
      */
     @DeleteMapping("/{questionId}")
+    @PreAuthorize("hasAuthority('system:question:delete')")
     ServerResponse<String> deleteQuestionById(@Min(value = 1,message = "题目id最小为1")
                                   @PathVariable Integer questionId){
         return questionManageService.deleteQuestionById(questionId);
@@ -77,6 +81,7 @@ public class QuestionManageController {
      * Date:  2022/11/26 9:46
      */
     @GetMapping("/{questionId}")
+    @PreAuthorize("hasAuthority('system:question:view')")
     ServerResponse<Question> getQuestionInfoById(@Min(value = 1,message = "题目id最小为1")
                                        @PathVariable Integer questionId){
         return questionManageService.getQuestionInfoById(questionId);
@@ -94,6 +99,7 @@ public class QuestionManageController {
      * Date:  2022/11/26 9:46
      */
     @GetMapping("/pages/{classifyId}-{sourceId}-{pageNum}")
+    @PreAuthorize("hasAuthority('system:question:view')")
     ServerResponse<PageInfo<Question>> getQuestionList(
             @Length(max = 20,message = "视频名字的最大值为20") String questionName,
             @Min(value = 0,message = "classifyId的最小值为0") @PathVariable Integer classifyId,

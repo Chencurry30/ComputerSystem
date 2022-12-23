@@ -218,4 +218,14 @@ public interface VideoMapper {
      * Date:  2022/12/16 12:07
      */
     void updateAddCommentNum(Integer resourceId);
+
+    /**
+     * description: 通过种类id获取数量
+     *
+     * @param typeId:
+     * @return Integer
+     * @author 胡建华
+     * Date:  2022/12/21 9:19
+     */
+    Integer getVideoCountByVideoType(Integer typeId);
 }

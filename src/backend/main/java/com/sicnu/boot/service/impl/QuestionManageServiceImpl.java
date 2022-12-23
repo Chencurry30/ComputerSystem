@@ -2,11 +2,13 @@ package com.sicnu.boot.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.QuestionManageMapper;
 import com.sicnu.boot.pojo.Question;
 import com.sicnu.boot.pojo.QuestionChoice;
 import com.sicnu.boot.service.QuestionManageService;
 import com.sicnu.boot.utils.QuestionUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.QuestionSelective;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     private QuestionUtils questionUtils;
 
     @Override
+    @SysLogAnnotation(operModel = "题库管理",operType = "新增",operDesc = "新增题目")
     public ServerResponse<String> insertQuestion(Question question) {
         String classify = questionManageMapper.getQuestionClassify(question.getClassifyId());
         if (Objects.isNull(classify)){
@@ -49,6 +52,7 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "题库管理",operType = "更新",operDesc = "更新题目")
     public ServerResponse<String> updateQuestion(Question question) {
         questionManageMapper.updateQuestion(question);
         Integer choiceValue = 2;
@@ -61,6 +65,7 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "题库管理",operType = "删除",operDesc = "删除指定题目")
     public ServerResponse<String> deleteQuestionById(Integer questionId) {
         Integer count = questionManageMapper.checkQuestionType(questionId);
         Integer choiceValue = 2;
@@ -97,6 +102,10 @@ public class QuestionManageServiceImpl implements QuestionManageService {
             }
         }
         PageInfo<Question> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 }

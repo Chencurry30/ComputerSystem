@@ -6,15 +6,14 @@ import com.sicnu.boot.mapper.RoleMapper;
 import com.sicnu.boot.pojo.Menu;
 import com.sicnu.boot.pojo.Role;
 import com.sicnu.boot.service.RoleService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
-import com.sicnu.boot.utils.TreeUtils;
 import com.sicnu.boot.vo.RoleVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 /**
  * description:
@@ -31,18 +30,23 @@ public class RoleServiceImpl implements RoleService {
     @Resource
     private MenuMapper menuMapper;
 
-    @Resource
-    private TreeUtils treeUtils;
-
     @Override
     public ServerResponse<List<Menu>> getMenuListByRoleId(Integer roleId) {
         List<Menu> list = roleMapper.getMenuListByRoleId(roleId);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("返回成功",list);
     }
 
     @Override
     public ServerResponse<List<Role>> getRoleList() {
         List<Role> list = roleMapper.getRoleList();
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("返回成功",list);
     }
 

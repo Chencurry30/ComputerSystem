@@ -2,11 +2,13 @@ package com.sicnu.boot.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.QuestionMapper;
 import com.sicnu.boot.pojo.Question;
 import com.sicnu.boot.pojo.QuestionChoice;
 import com.sicnu.boot.service.QuestionService;
 import com.sicnu.boot.utils.QuestionUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.QuestionClassify;
@@ -93,11 +95,16 @@ public class QuestionServiceImpl implements QuestionService {
             int checkCollectVideo = questionMapper.checkCollectQuestion(userId, question.getQuestionId());
             question.setIsCollected(checkCollectVideo > 0);
         }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         PageInfo<Question> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 
     @Override
+    @SysLogAnnotation(operModel = "题库模块",operType = "查看",operDesc = "用户查看指定题目")
     public ServerResponse<Question> getQuestionById(Integer questionId) {
         Question question = questionMapper.getQuestionById(questionId);
         if (Objects.isNull(question)){
@@ -119,6 +126,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "题库模块",operType = "组卷",operDesc = "用户参与组卷功能")
     public ServerResponse<List<Question>> getGeneratingPaper(QuestionSelective questionSelective) {
         List<Question> list = new ArrayList<>();
         if (questionSelective.getSingleChoiceNum() > 0){
@@ -149,10 +157,15 @@ public class QuestionServiceImpl implements QuestionService {
                     4, questionSelective.getAnswerNum());
             list.addAll(generatingPaper);
         }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",list);
     }
 
     @Override
+    @SysLogAnnotation(operModel = "题库模块",operType = "收藏",operDesc = "用户收藏或取消收藏指定题目")
     public ServerResponse<String> collectQuestion(Integer questionId) {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

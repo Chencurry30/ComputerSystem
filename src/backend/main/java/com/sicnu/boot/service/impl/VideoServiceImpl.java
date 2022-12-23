@@ -3,16 +3,19 @@ package com.sicnu.boot.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.UserMapper;
 import com.sicnu.boot.mapper.VideoMapper;
 import com.sicnu.boot.pojo.Video;
 import com.sicnu.boot.pojo.VideoExamine;
 import com.sicnu.boot.service.VideoService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.utils.VideoUtils;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.VideoSelective;
 import com.sicnu.boot.vo.VideoType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +31,7 @@ import java.util.*;
  * Data:    2022/10/15 20:15
  */
 @Service
+@Slf4j
 public class VideoServiceImpl implements VideoService {
     @Resource
     private VideoMapper videoMapper;
@@ -50,6 +54,10 @@ public class VideoServiceImpl implements VideoService {
             video.setNickname(nickname);
         });
         PageInfo<Video> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("成功",pageInfo);
     }
 
@@ -81,9 +89,11 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "视频模块",operType = "获取",operDesc = "用户获取视频")
     public ServerResponse<Video> getVideoByVideoId(Integer videoId) {
         Video video = videoMapper.getVideoByVideoId(videoId);
         if (Objects.isNull(video)){
+            log.error("非法输入url获取视频");
             return ServerResponse.createByErrorMessage("未查询到此视频");
         }
         String nickname = userMapper.getNicknameByUserId(video.getAuthorId());
@@ -105,6 +115,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    @SysLogAnnotation(operModel = "视频模块",operType = "收藏",operDesc = "用户收藏或取消视频")
     public ServerResponse<String> collectVideo(Integer videoId) {
         //获取SecurityContextHolder中的用户id
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -135,13 +146,19 @@ public class VideoServiceImpl implements VideoService {
             video.setNickname(nickname);
         }
         PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+        if (videoList.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
 
     @Override
+    @SysLogAnnotation(operModel = "视频模块",operType = "上传",operDesc = "用户上传视频")
     public ServerResponse<String> uploadVideo(VideoExamine videoExamine) {
         String videoTypeName = videoMapper.getVideoTypeName(videoExamine.getTypeId());
         if (StringUtils.isBlank(videoTypeName)){
+            log.error("用户上传视频失败，失败原因，不存在该视频类型");
             return ServerResponse.createByErrorMessage("不存在该视频类型");
         }
         videoExamine.setTypeName(videoTypeName);

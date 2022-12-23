@@ -1,6 +1,6 @@
 package com.sicnu.boot.controller;
 
-import com.github.pagehelper.Page;
+
 import com.github.pagehelper.PageInfo;
 import com.sicnu.boot.pojo.Dynamic;
 import com.sicnu.boot.service.DynamicService;
@@ -8,10 +8,8 @@ import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.DynamicVo;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.validation.constraints.Min;
-import java.util.List;
 
 /**
  * description:

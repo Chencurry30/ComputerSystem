@@ -7,6 +7,7 @@ import com.sicnu.boot.mapper.TeacherMapper;
 
 import com.sicnu.boot.pojo.Teacher;
 import com.sicnu.boot.service.TeacherService;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 
 import org.springframework.stereotype.Service;
@@ -35,6 +36,10 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public ServerResponse<List<Teacher>> getAllTeacher() {
         List<Teacher> allTeacher = teacherMapper.getAllTeacher();
+        if (allTeacher.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("查询成功",allTeacher);
     }
 
@@ -43,6 +48,10 @@ public class TeacherServiceImpl implements TeacherService {
         PageHelper.startPage(pageNum,6);
         List<Teacher> list = teacherMapper.getTeacherPage(directionId);
         PageInfo<Teacher> pageInfo = new PageInfo<>(list);
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("查询成功",pageInfo);
     }
 

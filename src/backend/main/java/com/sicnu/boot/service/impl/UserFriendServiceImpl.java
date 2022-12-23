@@ -2,13 +2,16 @@ package com.sicnu.boot.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sicnu.boot.aop.SysLogAnnotation;
 import com.sicnu.boot.mapper.UserFriendMapper;
 import com.sicnu.boot.pojo.FriendExamine;
 import com.sicnu.boot.service.UserFriendService;
 import com.sicnu.boot.utils.RedisUtils;
+import com.sicnu.boot.utils.ResponseCode;
 import com.sicnu.boot.utils.ServerResponse;
 import com.sicnu.boot.vo.LoginUser;
 import com.sicnu.boot.vo.UserDetail;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ import java.util.concurrent.TimeUnit;
  * Data:    2022/12/03 16:22
  */
 @Service
+@Slf4j
 public class UserFriendServiceImpl implements UserFriendService {
 
     @Resource
@@ -52,6 +56,10 @@ public class UserFriendServiceImpl implements UserFriendService {
             redisUtils.setCacheList(REDIS_FRIEND_PREFIX + userId,friends);
             //设置有效时间
             redisUtils.expire(REDIS_FRIEND_PREFIX + userId,24, TimeUnit.HOURS);
+        }
+        if (friends.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
         }
         List<Integer> cacheList = redisUtils.getCacheList("redSpot:" + userId);
         for (UserDetail friend : friends) {
@@ -80,15 +88,21 @@ public class UserFriendServiceImpl implements UserFriendService {
                         userDetail.getUserId()));
             }
         }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
+        }
         return ServerResponse.createBySuccess("获取成功",list);
     }
 
     @Override
+    @SysLogAnnotation(operModel = "社交管理",operType = "添加",operDesc = "用户添加好友")
     public ServerResponse<String> addFriend(FriendExamine friendExamine) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         friendExamine.setUserId(((LoginUser)authentication.getPrincipal()).getUser().getUserId());
         int checkAddFriend = userFriendMapper.checkAddFriend(friendExamine.getUserId(), friendExamine.getFriendId());
         if (checkAddFriend > 0){
+            log.error("无法添加好友，原因是：该用户已经申请添加了好友");
             return ServerResponse.createByErrorMessage("该用户已经申请添加了好友");
         }
         if (friendExamine.getFriendId().equals(friendExamine.getUserId())){
@@ -105,6 +119,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @SysLogAnnotation(operModel = "社交管理",operType = "审核",operDesc = "用户对好友申请进行管理")
     public ServerResponse<String> examineFriend(FriendExamine friendExamine) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         friendExamine.setUserId(((LoginUser)authentication.getPrincipal()).getUser().getUserId());
@@ -120,6 +135,7 @@ public class UserFriendServiceImpl implements UserFriendService {
             //添加好友成功之后，对redis进行更新
             updateRedisUserFriend(friendExamine.getUserId(),friendExamine.getFriendId());
             updateRedisUserFriend(friendExamine.getFriendId(), friendExamine.getUserId());
+            log.info("同意申请成功");
             return ServerResponse.createBySuccessMessage("同意申请成功");
         }else if (returnCount == 0){
             return ServerResponse.createByErrorMessage("无效的操作");
@@ -166,6 +182,10 @@ public class UserFriendServiceImpl implements UserFriendService {
             friendExamine.setFriend(friendByKey);
             UserDetail friendByKey1 = userFriendMapper.getFriendByKey(friendExamine.getUserId());
             friendExamine.setUser(friendByKey1);
+        }
+        if (list.isEmpty()){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
+                    "数据为空");
         }
         PageInfo<FriendExamine> pageInfo = new PageInfo<>(list);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
