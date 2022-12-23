@@ -9,8 +9,9 @@
           <div class="middleBox">
             <div class="middle-header">
               <div class="middle-left">{{ teacherMsg.name }}</div>
-              <div class="middle-right">与他留言</div>
-              <questionPopup ref="questionPopup"></questionPopup>
+              <div class="middle-right" @click="leaveMessageBtn">与他留言</div>
+              <!--留言弹窗-->
+              <leaveMessage ref="leaveMessage"></leaveMessage>
             </div>
             <div class="middle-main">
               <p>学位:{{ teacherMsg.background }}</p>
@@ -86,12 +87,11 @@
 </template>
 
 <script>
-import QuestionPopup from "../../components/popUp/questionPopup";
 import teacherReply from "../../components/remark/teacherReply";
+import leaveMessage from '../../components/popUp/leaveMessage'
 import { createPublicUrl } from '../../utils/index'
 import { getTeacherInfo, evaluationTeacher, getTeacherRemark } from "../../service/teacherService";
 export default {
-  components: { QuestionPopup, teacherReply },
   name: "teacherPerson",
   data() {
     return {
@@ -135,10 +135,11 @@ export default {
       ],
     }
   },
+  components: { teacherReply, leaveMessage },
   mounted() {
     this.teacherId = this.$route.query.teacherId;
     getTeacherInfo(this.teacherId).then((res) => {
-      if(res.data.data !== undefined){
+      if (res.data.data !== undefined) {
         this.teacherMsg = res.data.data;
       }
     })
@@ -173,6 +174,10 @@ export default {
       let location = { name: 'videoPage' }
       location.query = { videoId: videoId }
       this.$router.push(location)
+    },
+    //老师的相关的留言
+    leaveMessageBtn() {
+      this.$refs.leaveMessage.showPopup()
     }
   },
   computed: {

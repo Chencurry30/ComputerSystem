@@ -19,7 +19,21 @@
             </div>
             <div class="searchBox">
               <div class="searchMain">
-                <input type="text" placeholder="请输入搜索内容" class="inputType">
+                <input type="text" placeholder="请输入搜索内容" class="inputType" v-model="searchData">
+              </div>
+            </div>
+            <div class="searchChild" :class="{ showSearchChild: showSearchData }">
+              <div class="childItem" :class="{ childItemBg: current === item.id }" v-for="(item) in collegeList"
+                :key="item.id" @click="gotoActionPage(item)" @mouseenter="activeChild(item)">
+                {{ item.name }}
+              </div>
+              <div class="childItem" :class="{ childItemBg: current === item.id }" v-for="(item) in questionList"
+                :key="item.id" @click="gotoActionPage(item)" @mouseenter="activeChild(item)">
+                {{ item.questionTitle }}
+              </div>
+              <div class="childItem" :class="{ childItemBg: current === item.id }" v-for="(item) in videoList"
+                :key="item.id" @click="gotoActionPage(item)" @mouseenter="activeChild(item)">
+                {{ item.name }}
               </div>
             </div>
           </div>
@@ -52,12 +66,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import { createPublicUrl } from '../../utils/index'
-import { userLogout } from '../../service/systemService'
+import { userLogout, getSearchData } from '../../service/systemService'
+import _ from 'lodash'
 export default {
   name: "webHeader",
   //App中传入的一个相关的方法,用于帮助进行页面刷新
   inject: ['reload'],
-
   data() {
     return {
       liList: [
@@ -72,7 +86,18 @@ export default {
       //用户头像
       userImg: sessionStorage.getItem('userImg'),
       //用户昵称
-      userNickName: sessionStorage.getItem('nickname')
+      userNickName: sessionStorage.getItem('nickname'),
+      //搜索的文字 
+      searchData: '',
+      showSearchData: false,
+      //院校
+      collegeList: [],
+      //题目
+      questionList: [],
+      //视屏
+      videoList: [],
+      //激活的下标 
+      current: -1,
     }
   },
   methods: {
@@ -119,6 +144,44 @@ export default {
     //隐藏下选框
     hiddenSelect() {
       this.show = false
+    },
+    //请求搜索内容
+    getSearchDataList: _.throttle(function () {
+      getSearchData(this.searchData).then((res) => {
+        if (res.data.code === 200) {
+          this.collegeList = res.data.data.collegeList
+          this.questionList = res.data.data.questionList
+          this.videoList = res.data.data.videoList
+        }
+        console.log(res);
+      })
+    }, 1500),
+    //鼠标移入时激活
+    activeChild(item) {
+      this.current = item.id
+    },
+    //点击搜索项跳转
+    gotoActionPage(item) {
+      let location = {}
+      if (item.collegeId !== undefined) {
+        location.name = 'schoolPage'
+        location.query = { collegeId: item.collegeId }
+      } else if (item.videoId !== undefined) {
+        location.name = 'videoPage'
+        location.query = { videoId: item.videoId }
+      } else {
+        location.name = 'questionPage'
+        location.query = { questionId: item.questionId }
+      }
+      //搜索框清空 
+      this.searchData = ''
+      //院校 
+      this.collegeList = [],
+      //题目
+      this.questionList = [],
+      //视屏
+      this.videoList = []
+      this.$router.push(location)
     }
 
   },
@@ -157,10 +220,26 @@ export default {
         setTimeout(() => {
           this.reload()
         }, 100)
-      }
+      },
     },
     deep: true,
     immediate: true,
+    searchData(newval) {
+      if (newval !== '') {
+        //有搜索数据才显示弹窗 
+        this.showSearchData = true
+        this.getSearchDataList()
+      } else {
+        this.showSearchData = false
+        //院校 
+        this.collegeList = [],
+          //题目
+          this.questionList = [],
+          //视屏
+          this.videoList = []
+      }
+    }
+
   }
 };
 </script>
@@ -234,6 +313,7 @@ export default {
           }
 
           .searchBox {
+            position: relative;
             width: 100%;
             font-feature-settings: "tnum";
             box-sizing: border-box;
@@ -262,6 +342,52 @@ export default {
             white-space: nowrap;
             width: 167px;
           }
+
+          .searchChild {
+            display: none;
+            position: absolute;
+            top: 48px;
+            left: 0;
+            width: 280px;
+            height: 320px;
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, .06);
+            border-radius: 0 0 4px 4px;
+            background: #fff;
+            overflow: hidden;
+
+            .childItem {
+              margin: 5px 0;
+              padding: 0 10px;
+              width: 100%;
+              height: 24px;
+              line-height: 24px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              cursor: pointer;
+            }
+
+            .childItemBg {
+              background: #f0f0f5;
+            }
+
+
+          }
+
+          .showSearchChild {
+            display: block;
+          }
+
+
+
+
+
+
+
+
+
+
+
         }
 
 

@@ -49,4 +49,10 @@ export const userLogout = () =>{
 export const getHotVideo = (videoSpeciesId) =>{
   const url = `/home/video/${videoSpeciesId}`
   return service.get(url)
+}
+
+//获取搜索的数据
+export const getSearchData = (searchData) =>{
+  const url = `/home/search?name=${searchData}`
+  return service.get(url)
 } 

@@ -3,128 +3,27 @@
     <div class="Main">
       <div class="Main-left">
         <ul class="selectList">
-          <li class="item">
-            <div class="item-icon"></div>
-            <div class="item-info">考研数学</div>
-          </li>
-          <li class="item">
-            <div class="item-icon"></div>
-            <div class="item-info">考研政治</div>
-          </li>
-          <li class="item">
-            <div class="item-icon"></div>
-            <div class="item-info">考研英语</div>
-          </li>
-          <li class="item">
-            <div class="item-icon"></div>
-            <div class="item-info">组成原理</div>
+          <li class="item" v-for="(item) in typeSelect" :key="item.id" @click="selsectTeacherType(item.id)">
+            <div class="item-icon">
+              <img src="../../assets/Img/teacherImg/teacherIcon.png" alt="">
+            </div>
+            <div class="item-info">{{ item.name }}</div>
           </li>
         </ul>
       </div>
       <div class="Main-right">
         <div class="showBox">
           <ul class="teacherList">
-            <li class="teacher-Item" @click="gotoPersonView">
+            <li class="teacher-Item" v-for="teacherItem in getTeacherList" :key="teacherItem.teacherId" 
+            @click="gotoPersonView(teacherItem)">
               <div class="Item-left">
                 <img src="../../assets/Img/teacherImg/1.png" />
               </div>
               <div class="Item-right">
                 <div class="p1">
-                  <div class="teacherloge">考研数学</div>
+                  <div class="teacherloge">{{ teacherItem.directionName }}</div>
                 </div>
-                <div class="p2">张小五</div>
-                <div class="p3">五年指导的相关经验</div>
-                <div class="p4">
-                  赵小五，中国考研数学辅导老师，
-                  2003年被评为优秀的骨干教师，2005年获得讲课比赛一等奖，
-                  辅导学习人数超十万人
-                </div>
-                <div class="hot">
-                  <div class="hot-left">
-                    <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                  </div>
-                  <div class="hot-right">进入主页</div>
-                </div>
-              </div>
-            </li>
-            <li class="teacher-Item">
-              <div class="Item-left">
-                <img src="../../assets/Img/teacherImg/1.png" />
-              </div>
-              <div class="Item-right">
-                <div class="p1">
-                  <div class="teacherloge">考研数学</div>
-                </div>
-                <div class="p2">张小五</div>
-                <div class="p3">五年指导的相关经验</div>
-                <div class="p4">
-                  赵小五，中国考研数学辅导老师，
-                  2003年被评为优秀的骨干教师，2005年获得讲课比赛一等奖，
-                  辅导学习人数超十万人
-                </div>
-                <div class="hot">
-                  <div class="hot-left">
-                    <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                  </div>
-                  <div class="hot-right">进入主页</div>
-                </div>
-              </div>
-            </li>
-            <li class="teacher-Item">
-              <div class="Item-left">
-                <img src="../../assets/Img/teacherImg/1.png" />
-              </div>
-              <div class="Item-right">
-                <div class="p1">
-                  <div class="teacherloge">考研数学</div>
-                </div>
-                <div class="p2">张小五</div>
-                <div class="p3">五年指导的相关经验</div>
-                <div class="p4">
-                  赵小五，中国考研数学辅导老师，
-                  2003年被评为优秀的骨干教师，2005年获得讲课比赛一等奖，
-                  辅导学习人数超十万人
-                </div>
-                <div class="hot">
-                  <div class="hot-left">
-                    <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                  </div>
-                  <div class="hot-right">进入主页</div>
-                </div>
-              </div>
-            </li>
-            <li class="teacher-Item">
-              <div class="Item-left">
-                <img src="../../assets/Img/teacherImg/1.png" />
-              </div>
-              <div class="Item-right">
-                <div class="p1">
-                  <div class="teacherloge">考研数学</div>
-                </div>
-                <div class="p2">张小五</div>
-                <div class="p3">五年指导的相关经验</div>
-                <div class="p4">
-                  赵小五，中国考研数学辅导老师，
-                  2003年被评为优秀的骨干教师，2005年获得讲课比赛一等奖，
-                  辅导学习人数超十万人
-                </div>
-                <div class="hot">
-                  <div class="hot-left">
-                    <img src="../../assets/Img/Icon/gestures.png" alt="" />
-                  </div>
-                  <div class="hot-right">进入主页</div>
-                </div>
-              </div>
-            </li>
-            <li class="teacher-Item">
-              <div class="Item-left">
-                <img src="../../assets/Img/teacherImg/1.png" />
-              </div>
-              <div class="Item-right">
-                <div class="p1">
-                  <div class="teacherloge">考研数学</div>
-                </div>
-                <div class="p2">张小五</div>
+                <div class="p2">{{( String (teacherItem.name).substring(0,1))}}老师</div>
                 <div class="p3">五年指导的相关经验</div>
                 <div class="p4">
                   赵小五，中国考研数学辅导老师，
@@ -141,7 +40,7 @@
             </li>
           </ul>
         </div>
-        <PagerView></PagerView>
+        <PagerView :pageInfo="getTeacherPage" @giveFatherPageNo="getSonPageNo"></PagerView>
       </div>
     </div>
   </div>
@@ -149,19 +48,83 @@
 
 <script>
 import PagerView from "@/components/remark/PagerView";
+import { mapGetters } from "vuex";
 export default {
   name: "teacherSelect",
+  data(){
+    return{
+      typeSelect:[
+        {
+          id:1,
+          name:'考研数学'
+        },
+        {
+          id:2,
+          name:'考研英语'
+        },
+        {
+          id:3,
+          name:'考研政治'
+        },
+        {
+          id:4,
+          name:'数据结构'
+        },
+        {
+          id:5,
+          name:'计算机网络'
+        },
+        {
+          id:6,
+          name:'组成原理'
+        }
+
+
+
+      ],
+      //分页器展示的老师列表的集合 
+      teacherList:[],
+      //老师的种类
+      teacherType:1,
+    }
+  },
+
   components: {
     PagerView,
   },
+  mounted(){
+    //加载初始化数据 
+    this.teacherListData({teacherType:1,pageNum:1})
+  },
   methods:{
-    gotoPersonView(){
+    gotoPersonView(teacherItem){
       let location = {name:'teacherPerson'}
-      // location.params = {teacherId:6};
-      location.query = {teacherId:2}
+      location.query = {teacherId:teacherItem.teacherId}
       this.$router.push(location);
-    }
+    },
+    //获取老师列表的相关请求 
+    teacherListData({teacherType,pageNum}){
+      this.$store.dispatch('teacherData/getTeachersData',{teacherType,pageNum})
+    },
+    //获取分页器传递的数据,并进行获取分页数据 
+    getSonPageNo(pageNum) {
+      this.$store.dispatch('teacherData/getTeachersData', { teacherType:this.teacherType,pageNum:pageNum })
+    },
+    //选择不同种类的老师
+    selsectTeacherType(typeId){
+      this.teacherType = typeId
+      //再将选择的忠烈以及分页器的首页传递后仓库进行请求 
+      this.teacherListData({teacherType:this.teacherType,pageNum:1})
+    } 
+
+  },
+  computed:{
+    ...mapGetters('teacherData',{
+      getTeacherList:'getTeacherList',   //获取每一页老师所展示的数据
+      getTeacherPage:'getTeacherPage'    //获取老师对应的分页相关的信息
+    })
   }
+
 };
 </script>
 
@@ -183,7 +146,10 @@ export default {
         .item-icon {
           width: 28px;
           height: 28px;
-          background: red;
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
         .item-info {
           height: 28px;
