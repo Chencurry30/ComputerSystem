@@ -21,9 +21,9 @@ import javax.validation.constraints.NotNull;
 public class TeacherQuestion {
     private Integer questionId;
     private Integer teacherId;
-    private String question;
     @NotNull(message = "提问不能为空")
     @NotBlank(message = "提问不能为空字符串")
+    private String question;
     private Integer userId;
     private Integer appear;
     private String answer;
