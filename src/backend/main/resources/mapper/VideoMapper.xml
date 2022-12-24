@@ -29,10 +29,10 @@
         update video
         <set>
             <if test="status == 0">
-                collectNum = collectNum + 1
+                collection_num = collection_num + 1
             </if>
             <if test="status == 1">
-                collectNum = collectNum - 1
+                collection_num = collection_num - 1
             </if>
         </set>
         where video_id = #{videoId}

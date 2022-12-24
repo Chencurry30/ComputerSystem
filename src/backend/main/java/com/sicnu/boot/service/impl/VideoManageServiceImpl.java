@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -68,8 +69,10 @@ public class VideoManageServiceImpl implements VideoManageService {
     @SysLogAnnotation(operModel = "视频管理",operType = "删除",operDesc = "删除指定视频")
     public ServerResponse<String> deleteVideoById(Integer videoId) {
         Video video = videoMapper.getVideoByVideoId(videoId);
-        videoMapper.deleteResource(video.getResourceId());
-        videoMapper.deleteVideoById(videoId);
+        if (!Objects.isNull(video)){
+            videoMapper.deleteResource(video.getResourceId());
+            videoMapper.deleteVideoById(videoId);
+        }
         return ServerResponse.createBySuccessMessage("删除成功");
     }
 
