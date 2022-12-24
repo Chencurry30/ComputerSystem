@@ -6,7 +6,7 @@
 <mapper namespace="com.sicnu.boot.mapper.TeacherQuestionMapper">
 <!--根据老师id查询对老师的问题-->
     <select id="getTeacherQuestionById" resultType="TeacherQuestion">
-        select question,answer from teacher_question where teacher_id=#{teacherId};
+        select question,answer,image from teacher_question,user where teacher_question.teacher_id =#{teacherId} and user.user_id=teacher_question.user_id;
     </select>
 <!--根据老师id查询未回复的提问-->
     <select id="getTeacherAnswerById" resultType="TeacherQuestion">

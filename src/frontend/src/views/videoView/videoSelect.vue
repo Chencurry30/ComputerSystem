@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="MainContent" >
-      <div class="video-list" v-if="judgeDataList">
+      <div class="video-list">
         <div class="list-item" v-for="(videoItem) in getDataList" :key="videoItem.videoId"
           @click="getoVideoPage(videoItem.videoId)" @mouseenter="moveVideo(videoItem.videoId)">
           <div class="video-card">
@@ -162,7 +162,6 @@ export default {
       getVideoPage: 'getVideoPage',
     }),
     judgeDataList(){
-      console.log(this.getDataList.length === 0);
       return this.getDataList.length !== 0
     },
     publicUrl() {
@@ -203,7 +202,7 @@ export default {
         .itemList {
           display: flex;
           flex: 1;
-          margin-bottom: 0px;
+          margin-bottom: 0;
 
           .item {
             padding: 3px 10px;
@@ -253,8 +252,8 @@ export default {
           position: absolute;
           width: 100%;
           height: 100%;
-          top: 0px;
-          left: 0px;
+          top: 0;
+          left: 0;
           border-radius: 10px;
 
           .MaskInfo {

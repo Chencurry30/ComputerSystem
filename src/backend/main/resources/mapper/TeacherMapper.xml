@@ -6,11 +6,11 @@
 <mapper namespace="com.sicnu.boot.mapper.TeacherMapper">
 <!--    查询老师-->
     <select id="getTeacherById" resultType="Teacher">
-        select *from Teacher where teacher_id=#{teacherId}
+        select *from teacher where teacher_id=#{teacherId}
     </select>
 
     <select id="getTeacherPage" resultType="Teacher">
-        select * from Teacher where direction_id=#{directionId}
+        select * from teacher where direction_id=#{directionId}
     </select>
 
     <select id="getAllTeacher" resultType="Teacher">

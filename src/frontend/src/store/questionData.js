@@ -23,7 +23,7 @@ const questionData = {
       getQuestionDataList({ typeId, difficultId, classifyId, sourceId, yearId, pageNum }).then((res) => {
         console.log(res);
         if (res.data.code === 200) {
-          let data = res.data.data.list
+          let data = res.data.data
           context.commit('GETQUESTIONDATA', data)
         }
       })
@@ -45,7 +45,7 @@ const questionData = {
     },
     //返回题库的数据列表 
     getQuestionList(state){
-      return state.questionDataList
+      return state.questionDataList.list || {}
     },
     getQuestionPage(state){
       let data = {

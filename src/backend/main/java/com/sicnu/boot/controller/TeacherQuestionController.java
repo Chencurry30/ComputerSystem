@@ -8,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Max;
 import java.util.List;
 
 /**
@@ -33,7 +32,7 @@ public class TeacherQuestionController {
     }
 
     @PostMapping
-    ServerResponse<String> insertTeacherQuestion(@Max(value = 50,message = "最大字数为50")@Validated @RequestBody TeacherQuestion teacher){
+    ServerResponse<String> insertTeacherQuestion(@Validated @RequestBody TeacherQuestion teacher){
         return teacherQuestionService.insertTeacherQuestion(teacher);
     }
 

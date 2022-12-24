@@ -21,7 +21,8 @@ const videoData = {
       getVideoData(context,{first,second,thild,pageNum}){
         getVideoList({first,second,thild,pageNum}).then((res)=>{
           if(res.data.code === 200){
-            let data = res.data.data.list
+            let data = res.data.data
+            console.log('0000',res.data.data);
             context.commit('GETVIDEOLIST',data)
           }
         })
@@ -53,18 +54,19 @@ const videoData = {
       getVideoNavType(state){
         return state.videoNavType
       },
-      //返回对应的视屏数据列表 
+      //返回对应的视屏数据列表(包含list) 
       getVideoDataList(state){
-        return state.videoDataList
+        return state.videoDataList.list || {}
       },
       //返回与分页相关的数据 
       getVideoPage(state){
         let data = {
-          pageNo:state.videoDataList.pageNum || 1,
-          pagesize:state.videoDataList.pageSize || 0,
-          total:state.videoDataList.total || 0,
-          pageTotal:state.videoDataList.pages || 0
+          pageNo:state.videoDataList.pageNum ,
+          pagesize:state.videoDataList.pageSize,
+          total:state.videoDataList.total,
+          pageTotal:state.videoDataList.pages
         }
+        console.log(123000,data);
         return data
       },
       //返回视屏的基本信息 

@@ -83,7 +83,6 @@ export default {
     getHotList(videoSpeciesId){
       getHotVideo(videoSpeciesId).then((res)=>{
         this.videoHotList = res.data.data
-        console.log(res);
       })
     },
     addClass(videoSpeciesId) {
