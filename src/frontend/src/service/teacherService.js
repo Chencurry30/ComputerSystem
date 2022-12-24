@@ -1,8 +1,11 @@
 import service from './services'
 
+
+
+
 //获取老师列表 
-export const getTeachers = () => {
-  const url = `/teachers`
+export const getTeachersList = ({teacherType,pageNum}) => {
+  const url = `/teachers/pages/${teacherType}-${pageNum}`
   return service.get(url)
 }
 

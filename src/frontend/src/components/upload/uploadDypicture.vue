@@ -11,7 +11,7 @@
         :data="objectData"
         :show-file-list="true">
       <el-button size="small" type="primary">上传照片</el-button>
-      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+      <div class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
       <img :src='imageUrl' v-if="objectData.key">
     </el-upload>
   </div>

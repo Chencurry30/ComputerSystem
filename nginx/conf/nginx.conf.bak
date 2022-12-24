@@ -1,0 +1,58 @@
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    #配置相关站点 解决跨域
+    include mime.types;
+    #默认文件类型
+    default_type application/octet-stream;
+
+    sendfile        on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    server {
+        listen       8080;
+        server_name  front;
+
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root  html/front/;
+            index  index.html index.htm;
+            try_files $uri $uri/ @router;
+           #需要指向下面的@router否则会出现vue的路由在nginx中刷新出现404
+        }
+        #对应上面的@router，主要原因是路由的路径资源并不是一个真实的路径，所以无法找到具体的文件
+        #因此需要rewrite到index.html中，然后交给路由在处理请求资源
+        location @router {
+            rewrite ^.*$ /index.html last;
+        }
+    }
+
+    server {
+        listen       8081;
+        server_name  admin;
+
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root  html/admin/;
+            index  index.html index.htm;
+            try_files $uri $uri/ @router;
+           #需要指向下面的@router否则会出现vue的路由在nginx中刷新出现404
+        }
+        #对应上面的@router，主要原因是路由的路径资源并不是一个真实的路径，所以无法找到具体的文件
+        #因此需要rewrite到index.html中，然后交给路由在处理请求资源
+        location @router {
+            rewrite ^.*$ /index.html last;
+        }
+    }
+
+}

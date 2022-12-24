@@ -3,10 +3,11 @@ import Vue from 'vue'
 //引入进度条、样式
 import nProgress from 'nprogress';
 import "nprogress/nprogress.css"
-// nProgress.inc(0.2)  //减去这句
+
+console.log(IPConfig);
 nProgress.configure({ easing: 'ease', speed: 800, showSpinner: false })
 import router from '../router';
-const baseurl = 'http://127.0.0.1:8989/api'
+const baseurl = `http://${IPConfig.IP}:8989/api`
 const service = axios.create({
   baseURL: baseurl,
   timeout: 5000,

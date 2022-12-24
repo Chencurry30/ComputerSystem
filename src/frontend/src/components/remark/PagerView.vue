@@ -38,6 +38,7 @@ export default {
   },
   methods: {
     prePage: _.throttle(function () {
+      console.log(123);
       if (this.pageData.pageNo === 1) {
         this.pageData.pageNo = 1;
         this.$message.success('这已经是第一页了')
@@ -82,9 +83,6 @@ export default {
       this.$emit("giveFatherPageNo", page);
     },
 
-
-
-
   },
   //computed里面尽量不要做修改data数据的相关操作 
   computed: {
@@ -103,9 +101,10 @@ export default {
   },
 
   watch: {
-    //利用属性的监听 
+    //利用属性的监听,及时刷新数据 
     pageInfo(newData) {
       this.pageData = newData
+
     }
   }
 

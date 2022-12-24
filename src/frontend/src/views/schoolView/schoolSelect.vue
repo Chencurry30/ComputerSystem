@@ -134,7 +134,6 @@ export default {
       getSchoolPage: 'getSchoolPage',
     }),
     judgeDataList(){
-      console.log(this.getSchoolDataList.length);
       return this.getSchoolDataList.length !== 0
     },
   }
