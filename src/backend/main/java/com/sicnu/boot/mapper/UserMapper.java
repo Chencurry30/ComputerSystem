@@ -153,4 +153,14 @@ public interface UserMapper {
      * Date:  2022/10/29 22:24
      */
     List<Menu> getUserMenu(Integer userId);
+
+    /**
+     * description: 判断一个用户是否为老师
+     *
+     * @param userId:
+     * @return Integer
+     * @author 胡建华
+     * Date:  2022/12/25 15:55
+     */
+    Integer checkIsTeacher(Integer userId);
 }

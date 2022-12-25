@@ -99,6 +99,11 @@ public class UserServiceImpl implements UserService {
             }
         });
         map.put("menuList",menuTree);
+        //判断用户是否为老师
+        Integer teacherId = userMapper.checkIsTeacher(loginUser.getUser().getUserId());
+        if (!Objects.isNull(teacherId)){
+            map.put("teacherId",teacherId);
+        }
         //返回用户权限操作按钮
         menus.removeIf(next -> next.getMenuType() == 1);
         map.put("rights",menus);
