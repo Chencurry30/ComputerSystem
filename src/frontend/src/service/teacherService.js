@@ -1,8 +1,6 @@
 import service from './services'
 
 
-
-
 //获取老师列表 
 export const getTeachersList = ({teacherType,pageNum}) => {
   const url = `/teachers/pages/${teacherType}-${pageNum}`
@@ -29,3 +27,9 @@ export const getTeacherRemark = (teacherId) =>{
   const url = `/messages/teacherId/${teacherId}`
   return service.get(url)
 }
+
+//申请成为老师
+export const applyTeacher = (teacherData) =>{
+  const url = '/examine'
+  return service.post(url,teacherData)
+} 
