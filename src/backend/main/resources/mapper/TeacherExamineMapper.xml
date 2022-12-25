@@ -20,7 +20,8 @@
     </update>
 
     <insert id="passExamine" parameterType="TeacherExamine">
-        insert into teacher values (null,#{name},#{background},#{directionId},#{directionName},null,#{teachTime},#{information},null,#{qualification},#{userId})
+        insert into teacher values
+                                (null,#{name},#{background},#{directionId},#{directionName},null,#{teachTime},#{information},null,#{qualification},#{userId})
     </insert>
 
     <select id="getExamine" resultType="TeacherExamine">

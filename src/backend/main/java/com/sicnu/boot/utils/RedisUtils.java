@@ -129,7 +129,8 @@ public final class RedisUtils {
     public <T> long setCacheList(final String key, final List<T> dataList)
     {
         //清空list中的元素
-        redisTemplate.opsForList().trim(key,0,-1);
+        redisTemplate.opsForList().trim(key,0,0);
+        redisTemplate.opsForList().leftPop(key);
         Long count = redisTemplate.opsForList().rightPushAll(key, dataList);
         return count == null ? 0 : count;
     }
