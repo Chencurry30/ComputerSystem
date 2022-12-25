@@ -28,4 +28,5 @@ public interface TeacherExamineMapper {
     void passExamine(TeacherExamine examine);
 
     TeacherExamine getExamine(Integer examineId);
+    TeacherExamine getUserId(Integer userId);
 }

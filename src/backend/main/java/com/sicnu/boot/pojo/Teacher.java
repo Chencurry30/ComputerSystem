@@ -33,4 +33,5 @@ public class Teacher {
     private Integer attentPeople;
     private String qualification;
     private Integer userId;
+    private String nickName;
 }

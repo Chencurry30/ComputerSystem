@@ -6,7 +6,9 @@
 <mapper namespace="com.sicnu.boot.mapper.TeacherMapper">
 <!--    查询老师-->
     <select id="getTeacherById" resultType="Teacher">
-        select *from teacher where teacher_id=#{teacherId}
+        select teacher_id,name,nickname,background,direction_id,direction_name,teacher.image,teach_time,information,attent_people,qualification,user.user_id
+        from teacher,user
+        where teacher_id=#{teacherId} and teacher.user_id=user.user_id
     </select>
 
     <select id="getTeacherPage" resultType="Teacher">
