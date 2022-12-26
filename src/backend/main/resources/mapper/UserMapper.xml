@@ -41,6 +41,9 @@
             left join user_role u on rm.role_id = u.role_id
             where user_id = #{userId}
     </select>
+    <select id="checkIsTeacher" resultType="java.lang.Integer">
+        select teacher_id from teacher where user_id = #{userId}
+    </select>
 
     <insert id="register">
         insert into user(username,password,phone) values(#{username},#{password},#{phone})
