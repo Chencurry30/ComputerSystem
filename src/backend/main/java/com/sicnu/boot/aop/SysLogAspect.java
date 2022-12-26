@@ -2,7 +2,6 @@ package com.sicnu.boot.aop;
 
 
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sicnu.boot.mapper.LogMapper;
 import com.sicnu.boot.pojo.Log;
@@ -40,7 +39,7 @@ import java.util.Map;
 @Slf4j
 public class SysLogAspect {
     @Resource
-    private LogMapper logDao;
+    private EventPubListener eventPubListener;
 
     /**
      * 设置操作日志切入点   在注解的位置切入代码
@@ -71,7 +70,8 @@ public class SysLogAspect {
             sysLog.setResult(dataResult.getMessage());
             log.info("成功描述,成功方法:{},方法描述:{},成功结果:{}",
                     sysLog.getMethod(),sysLog.getDescription(),sysLog.getResult());
-            logDao.insertLog(sysLog);
+            //发布信息
+            eventPubListener.pushListener(sysLog);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("日誌記錄異常，請檢查返回值是否是ServerResponse類型");
@@ -93,7 +93,8 @@ public class SysLogAspect {
             sysLog.setResult(exception.getMessage());
             log.error("发生错误，错误方法:{},方法描述:{},错误原因:{}"
                     ,sysLog.getMethod(),sysLog.getDescription(),sysLog.getResult());
-            logDao.insertLog(sysLog);
+            //发布信息
+            eventPubListener.pushListener(sysLog);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("日誌記錄異常，請檢查返回值是否是ServerResponse類型");
