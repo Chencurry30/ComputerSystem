@@ -25,6 +25,7 @@ public interface TeacherExamineMapper {
 
     void updateDisAgrExamine(Integer examineId,String reviewComment);
 
+    void deleteExamine(Integer useId);
     void passExamine(TeacherExamine examine);
 
     TeacherExamine getExamine(Integer examineId);
