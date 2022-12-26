@@ -44,15 +44,15 @@
               <img src="../../assets/Img/Icon/reply.png" alt="" />
             </div>
             <div class="list-info">
-              <router-link :to="{ name: 'myComment' }" style="text-decoration: none">我的提问</router-link>
+              <router-link :to="{ name: 'myComment' }" style="text-decoration: none">我的申请</router-link>
             </div>
           </li>
           <li class="list-item">
             <div class="list-icon">
-              <img src="../../assets/Img/Icon/notice.png" alt="" />
+              <img src="../../assets/Img/Icon/record.png" alt="" />
             </div>
             <div class="list-info">
-              <router-link :to="{ name: 'teacherReply' }" style="text-decoration: none">老师回复</router-link>
+              <router-link :to="{ name: 'collectionVideo' }" style="text-decoration: none">上传视屏</router-link>
             </div>
           </li>
         </ul>
@@ -68,14 +68,6 @@
       </div>
       <div class="ItemBox">
         <ul class="ItemBox-list">
-          <li class="list-item">
-            <div class="list-icon">
-              <img src="../../assets/Img/Icon/record.png" alt="" />
-            </div>
-            <div class="list-info">
-              <router-link :to="{ name: 'collectionVideo' }" style="text-decoration: none">上传视屏</router-link>
-            </div>
-          </li>
           <li class="list-item">
             <div class="list-icon">
               <img src="../../assets/Img/Icon/notice.png" alt="" />
@@ -134,7 +126,6 @@ export default {
   //eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle 
   beforeDestroy() {
     clearInterval(this.interval)
-    console.log('页面被销毁');
   },
   methods: {
     getRedSpot() {
@@ -142,15 +133,12 @@ export default {
         if (res.data.code === 200) {
           this.redSpot = res.data.data
         }
-        console.log(1, res);
       });
     }
   },
   watch: {
     $route: {
       handler(route) {
-        console.log(route);
-        console.log(this.setTimeFlag);
         //表示的是页面进入了好友页面
         //,那么就停止这页面中的监听器,开启对应页面的监听器,监听实时返回 
         if (route.name === 'userChat') {

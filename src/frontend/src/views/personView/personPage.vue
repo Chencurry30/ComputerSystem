@@ -187,7 +187,7 @@ export default {
       flex: 3;
 
       .UserBox {
-        margin: 18px 0;
+        margin-bottom:18px;
         border-radius: 10px;
         font-size: 14px;
         color: #666;

@@ -1,20 +1,21 @@
-//我的提问(针对老师)
-
+//申请成为老师
 <template>
   <div class="MainBox w MainPageHeader">
     <div class="containBox">
       <personAside></personAside>
       <div class="contain-right">
         <div class="showBox">
-
           <div class="allBox">
             <personHeader></personHeader>
             <div class="allBox">
               <div class="UserBox second">
-                这里是针对老师提问的相关记录
-                <div class="messageHeraer">
-                  <!--这里是评论信息中的一个组件，这里利用父组件向子组件传入参数即可-->
-<!--                  <replyItem v-for="(item) in DataList" :key="item.id" :replyInfo="item"></replyItem>-->
+                <div class="boxbody">
+                  <div class="title-h">
+                    <span>申请成为老师</span>
+                  </div>
+                  <div class="muted-color">申请成为老师，公开昵称，成为更多研友的朋友</div>
+                  <div class="btn" @click="ApplyForTeacher()">申请老师</div>
+                  <ApplyForTeacher ref="ApplyForTeacher"></ApplyForTeacher>
                 </div>
               </div>
             </div>
@@ -33,30 +34,14 @@
 import { mapGetters } from 'vuex'
 import personAside from '../../components/personCenter/personAside'
 import personHeader from '../../components/personCenter/personHeader'
+import ApplyForTeacher from '../../components/popUp/ApplyForTeacher'
 export default {
   data() {
     return {
-      DataList: [
-        {
-          id: 1232,
-          image: '1231231231232.123',
-          nickname: '高山',
-          time: '2022-6-30',
-          content: '你的评论对我很有帮助，感谢你的发言',
-          resourcename: '回复我的'
-        },
-        {
-          id: 1236,
-          image: '1231231231232.123',
-          nickname: '高山星空',
-          time: '2022-6-9',
-          content: '你的评论对我很有帮助，感谢',
-          resourcename: '回复我的'
-        }
-      ]
+      DataList: []
     }
   },
-  components: {personAside,personHeader},
+  components: { personAside, personHeader,ApplyForTeacher },
   name: "myComment",
   mounted() {
     this.$store.dispatch('userInfo/getUserInfo')
@@ -68,9 +53,14 @@ export default {
       }
       this.$router.push(location)
     },
-    changeEditor() {
-      this.$refs.InfoPopup.showPopup(this.getUserInfo);
-    },
+    ApplyForTeacher(){
+      if(sessionStorage.getItem('teacherId') !== '0'){
+        this.$message.error('当前已经是老师,禁止申请')
+      }else{
+        this.$refs.ApplyForTeacher.showPopup()
+      }
+    }
+
   },
   computed: {
     ...mapGetters('userInfo',
@@ -86,12 +76,9 @@ export default {
 
 <style lang='less' scoped>
 .MainBox {
-
-
   .containBox {
     margin-top: 70px;
     display: flex;
-
 
     .contain-right {
       flex: 3;
@@ -104,9 +91,49 @@ export default {
     color: #666;
     border: 2px solid #eee;
   }
-
   .second {
     margin-top: 15px;
+  }
+  .boxbody {
+    padding: 15px;
+
+    .title-h {
+      padding-bottom: 8px;
+      position: relative;
+
+      span {
+        font-weight: 700;
+      }
+
+      ::after {
+        position: absolute;
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        top: 20px;
+        left: 0;
+        bottom: 3px;
+        transition: 0.4s;
+        background: black;
+      }
+    }
+
+    .muted-color {
+      margin-bottom: 20px;
+      color: #999;
+    }
+
+    .btn {
+      text-align: center;
+      padding: 10px 15px;
+      width: 300px;
+      margin-right: 15px;
+      margin-bottom: 10px;
+      color: #5c7cff;
+      background: rgba(77, 130, 249, 0.1);
+      border-radius: 6px;
+    }
   }
 }
 </style>

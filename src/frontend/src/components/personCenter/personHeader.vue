@@ -12,7 +12,9 @@
         <uploadPicture :userImage="getUserImg.image"></uploadPicture>
       </div>
       <div class="userInfo">
-        <div class="nickname">昵称:&nbsp;&nbsp;&nbsp;{{ getUserImg.nickname }}</div>
+        <div class="nickname">昵称:&nbsp;&nbsp;&nbsp;{{ getUserImg.nickname }}
+          <el-tag class="occupation">{{ judgeTeacher }}</el-tag>
+        </div>
         <div class="personintroduce">个人留言:&nbsp;&nbsp;&nbsp;{{ getUserImg.message }}</div>
       </div>
     </div>
@@ -23,11 +25,11 @@
 import { mapGetters } from 'vuex'
 import uploadPicture from '../upload/uploadPicture'
 export default {
-  name:'personHeader',
-  components:{
+  name: 'personHeader',
+  components: {
     uploadPicture
   },
-  methods:{
+  methods: {
     backHome() {
       let location = {
         name: 'Home'
@@ -40,6 +42,13 @@ export default {
       {
         getUserImg: 'getUserImg'
       }),
+    judgeTeacher() {
+      if (sessionStorage.getItem('teacherId') !== '0') {
+        return '老师'
+      } else {
+        return '用户'
+      }
+    }
   }
 }
 </script>
@@ -100,10 +109,16 @@ export default {
         font-weight: 700;
         font-size: 16px;
         color: #4e5358;
+        height: 32px;
+        line-height: 32px;
       }
 
       .personintroduce {
         margin-top: 4px;
+      }
+
+      .occupation {
+        margin-left: 10px;
       }
     }
 

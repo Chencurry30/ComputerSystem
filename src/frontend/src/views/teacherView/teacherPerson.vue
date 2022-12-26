@@ -9,9 +9,7 @@
           <div class="middleBox">
             <div class="middle-header">
               <div class="middle-left">{{ teacherMsg.name }}</div>
-              <div class="middle-right" @click="leaveMessageBtn">与他留言</div>
-              <!--留言弹窗-->
-              <leaveMessage ref="leaveMessage"></leaveMessage>
+              <div class="middle-right">{{teacherMsg.nickName  }}</div>
             </div>
             <div class="middle-main">
               <p>学位:{{ teacherMsg.background }}</p>
@@ -88,7 +86,6 @@
 
 <script>
 import teacherReply from "../../components/remark/teacherReply";
-import leaveMessage from '../../components/popUp/leaveMessage'
 import { createPublicUrl } from '../../utils/index'
 import { getTeacherInfo, evaluationTeacher, getTeacherRemark } from "../../service/teacherService";
 export default {
@@ -96,14 +93,16 @@ export default {
   data() {
     return {
       teacherId: "",
+      //获取评论的相关列表 
       DataList: [],
+      //老师的相关信息 
       teacherMsg: {
         attentPeople: '',
         name: "",
         background: "",
         directionName: "",
         information: "",
-        // Id: "",
+        nickName:''
       },
       sendTeacherData: {
         nickName: sessionStorage.getItem('nickname'),
@@ -135,11 +134,12 @@ export default {
       ],
     }
   },
-  components: { teacherReply, leaveMessage },
+  components: { teacherReply },
   mounted() {
     this.teacherId = this.$route.query.teacherId;
     getTeacherInfo(this.teacherId).then((res) => {
-      if (res.data.data !== undefined) {
+      console.log(res);
+      if (res.data.code === 200) {
         this.teacherMsg = res.data.data;
       }
     })
@@ -165,8 +165,9 @@ export default {
     //获取老师的评论 
     teacherRemark() {
       getTeacherRemark(this.teacherId).then((res) => {
-        console.log(res);
-        this.DataList = res.data.data
+        if(res.data.code === 200){
+          this.DataList = res.data.data
+        }
       })
     },
     //前往具体的视屏页面
@@ -175,10 +176,6 @@ export default {
       location.query = { videoId: videoId }
       this.$router.push(location)
     },
-    //老师的相关的留言
-    leaveMessageBtn() {
-      this.$refs.leaveMessage.showPopup()
-    }
   },
   computed: {
     //获取前置的公共的url 
@@ -247,6 +244,7 @@ export default {
             border-radius: 18px;
             font-size: 18px;
             color: #ffffff;
+            cursor: pointer;
           }
         }
 
