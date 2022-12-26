@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * description:
@@ -80,12 +79,12 @@ public class VideoManageServiceImpl implements VideoManageService {
     public ServerResponse<PageInfo<VideoExamine>> getVideoExamineList(Integer pageNum, Integer examineStatus) {
         PageHelper.startPage(pageNum,8);
         List<VideoExamine> list = videoMapper.getVideoExamineList(examineStatus);
-        list = list.stream().peek(videoExamine -> {
+        list.forEach(videoExamine -> {
             videoExamine.setAuthorNickname(
                     userMapper.getNicknameByUserId(videoExamine.getAuthorId()));
             videoExamine.setApplyNickname(
                     userMapper.getNicknameByUserId(videoExamine.getApplyId()));
-        }).collect(Collectors.toList());
+        });
         PageInfo<VideoExamine> pageInfo = new PageInfo<>(list);
         if (list.isEmpty()){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.HAS_NO_DATA.getCode(),
