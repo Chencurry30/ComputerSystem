@@ -36,6 +36,7 @@ public class TeacherExamineServiceImpl implements TeacherExamineService {
         Integer userId = loginUser.getUser().getUserId();
         examine.setUserId(userId);
         examine.setApplyDate(LocalDateTime.now());
+        examineMapper.deleteExamine(userId);
         examineMapper.insertExamine(examine);
         return ServerResponse.createBySuccessMessage("添加成功");
     }
