@@ -53,7 +53,14 @@ export default {
         console.log(res);
       })
 
+    },
+    backSelectPage() {
+      let location = {
+        name: 'questionSelect'
+      }
+      this.$router.push(location)
     }
+
 
 
 
@@ -67,12 +74,10 @@ export default {
 </script>
 
 <style scoped lang="less">
-
 .downloadQuestion {
   color: #008afb;
   cursor: pointer;
 }
-
 </style> 
 
 

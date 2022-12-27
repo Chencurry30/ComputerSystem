@@ -82,7 +82,7 @@
               <img src="../../assets/Img/Icon/notice.png" alt="" />
             </div>
             <div class="list-info">
-              <router-link :to="{ name: 'userChat' }" style="text-decoration: none">好友聊天</router-link>
+              <router-link :to="{ name: 'userChat' }" style="text-decoration: none">研友聊天</router-link>
             </div>
             <span class="Port" :class="{ hiddenRedPord: !redSpot }"></span>
           </li>
@@ -91,7 +91,7 @@
               <img src="../../assets/Img/Icon/notice.png" alt="" />
             </div>
             <div class="list-info">
-              <router-link :to="{ name: 'userAddFriend' }" style="text-decoration: none">添加好友</router-link>
+              <router-link :to="{ name: 'userAddFriend' }" style="text-decoration: none">添加研友</router-link>
             </div>
           </li>
         </ul>
@@ -114,8 +114,6 @@ export default {
     }
   },
   mounted() {
-    // this.getRedSpot()
-    // console.log('页面加载');
     if (this.setTimeFlag === true) {
       this.interval = setInterval(() => {
         this.getRedSpot()

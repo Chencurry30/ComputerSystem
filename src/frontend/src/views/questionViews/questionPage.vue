@@ -7,12 +7,6 @@
       <span class="routerBack" @click="backSelectPage()">返回选择页</span>
     </div>
 
-
-
-
-
-
-
     <div class="titleConnect">
       <!--问题的题目-->
       <div class="questionTitle">
@@ -70,12 +64,6 @@
           <img :src="[publicUrl + QuestionData.solutionImage]" alt="该题目解析的图片">
         </div>
       </div>
-
-
-
-
-
-
       <div class="questionBottom">
         <span class="source">题目来源:{{ QuestionData.source }}</span>
         <span class="time">题目时间:{{ QuestionData.year }}</span>
@@ -89,7 +77,6 @@
           收藏
         </span>
       </div>
-
     </div>
   </div>
 </template>
@@ -104,7 +91,7 @@ export default {
       QuestionData: {}
     }
   },
-  mounted() {
+  created() {
     //获取一个题目的具体信息
     this.getQuestionInfo()
   },
@@ -112,13 +99,9 @@ export default {
     getQuestionInfo() {
       let questionId = this.$route.query.questionId
       getQuestion(questionId).then((res) => {
-        console.log(res);
         this.QuestionData = res.data.data
       })
     },
-
-
-
     backSelectPage() {
       let location = {
         name: 'questionSelect'
@@ -151,6 +134,9 @@ export default {
   width: 1200px;
   margin: 0 auto;
   margin-top: 70px;
+  .questionBread{
+    display: block;
+  }
   .titleConnect {
     display: block;
     padding: 0;

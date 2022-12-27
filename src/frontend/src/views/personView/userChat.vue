@@ -11,7 +11,7 @@
               <!--我的好友列表-->
               <div class="friendBox">
                 <div class="friendBoxHeader">
-                  <span class="headerP1">我的好友</span>
+                  <span class="headerP1">我的研友</span>
                   <span class="headerP2">My Friend</span>
                   <span class="headerP3">SETTINGS</span>
                 </div>

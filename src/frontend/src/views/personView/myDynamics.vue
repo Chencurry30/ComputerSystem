@@ -26,7 +26,7 @@
 
 
                       <div class="dynamicsItemHeader">
-                        <div class="dynamiscItemUserImage">
+                        <div class="dynamiscItemUserImage" @click="gotoPerson(item)">
                           <img v-if="item.author.image === '无'" src="../../assets/Img/defaultUserImg.png" alt="">
                           <img v-else :src="[getpicture + item.author.image]" alt="">
                         </div>
@@ -103,7 +103,6 @@ export default {
   },
   methods: {
     selectEmoji(emoji) {
-      console.log(typeof emoji.data)
       this.contents.content = this.contents.content + emoji.data
     },
     backHome() {
@@ -116,7 +115,6 @@ export default {
     AddDynamics() {
       // console.log(this.contents)
       setDynamics(this.contents).then((res) => {
-        console.log(this.contents)
         if (res.data.code === 406) {
           this.$message.error("内容不能为空")
         } else if (res.data.code === 200) {
@@ -130,11 +128,8 @@ export default {
     //获取所有动态
     GetDynamics() {
       getallDynamics(this.page).then((res) => {
-        console.log(res)
         this.totals = res.data.data.total
-        console.log(this.totals)
         this.Dynamics = res.data.data.list
-        console.log(this.Dynamics)
       })
     },
     //当前页数改变
@@ -150,6 +145,11 @@ export default {
     nextPage(page) {
       this.page = page + 1
     },
+    gotoPerson(item){
+      let location = {name:'otherPerson'}
+      location.query = {userId:item.userId}
+      this.$router.push(location)
+    }
   },
   computed: {
     afterChangeData() {

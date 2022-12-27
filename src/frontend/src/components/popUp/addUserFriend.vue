@@ -2,8 +2,8 @@
 <template>
   <div class="tab-content" v-show="showDialog">
     <div class="contentBox">
-      <div class="header">
-        <div class="headerPopup">添加好友</div>
+      <div class="DialogHeader">
+        <div class="Dialogtitle">添加好友</div>
         <div class="closeImg" @click="closePopup">
           <img src="../../assets/Img/Icon/close.png" alt="" />
         </div>
@@ -40,6 +40,7 @@ export default {
     },
     closePopup() {
       this.showDialog = false;
+      this.validationData = ''
     },
     //发送相关的好友请求 
     sendAddUserFriendData() {
@@ -50,8 +51,8 @@ export default {
         sendData.friendId = this.friendId
         sendData.reason = this.validationData
         addUserFriendAction(sendData).then((res) => {
-          console.log(res);
           if(res.data.code === 200){
+            this.$message.success('申请成功')
             this.showDialog = false;
           }else if(res.data.code === 400){
             this.$message.error(res.data.message)

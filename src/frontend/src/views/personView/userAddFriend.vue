@@ -10,7 +10,7 @@
             <!--我的好友列表-->
             <div class="agreenfriendBox">
               <div class="agreenfriendHeader">
-                <span class="headerP1">我的好友</span>
+                <span class="headerP1">我的研友</span>
                 <span class="headerP2">My Friend</span>
                 <span class="headerP3">SETTINGS</span>
               </div>
@@ -44,12 +44,12 @@
                     <div class="agreenImage" v-if="(userStates === 0)">
                       <img src="../../assets/Img/defaultUserImg.png" alt=""
                         v-if="item === {} || item.friend.image === '无'">
-                      <img :src="[publicUrl + item.friend.image]" alt="">
+                      <img :src="[publicUrl + item.friend.image]" alt=""  v-else>
                     </div>
 
                     <div class="agreenImage" v-else>
                       <img src="../../assets/Img/defaultUserImg.png" alt="" v-if="item.user.image === '无'">
-                      <img :src="[publicUrl + item.user.image]" alt="">
+                      <img :src="[publicUrl + item.user.image]" alt="" v-else>
                     </div>
                     
                     

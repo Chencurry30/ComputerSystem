@@ -1,3 +1,4 @@
+<!--注册页面-->
 <template>
   <div class="SystemUserBox">
     <div class="registerBox">
@@ -242,7 +243,7 @@ export default {
     }
   }
 
-  :deep.el-form-item__error {
+  :deep .el-form-item__error {
     color: #F56C6C;
     font-size: 14px;
     padding: 3px 0;

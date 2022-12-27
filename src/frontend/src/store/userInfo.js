@@ -9,7 +9,6 @@ const userInfo = {
       //获取个人相关信息
       getUserInfo(context){
         getUserInfo().then((res)=>{
-          console.log(res);
           if(res.data.code === 200){
             let info = res.data.data;
             context.commit('GETUSERINFO',info);
@@ -18,7 +17,6 @@ const userInfo = {
       },
       changeUserInfo(context,data){
         changeUserInfo(data).then((res)=>{
-          console.log(res);
           if(res.data.code === 200){
             let info = res.data.data;
             context.commit('GETUSERINFO',info);

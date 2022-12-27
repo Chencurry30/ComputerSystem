@@ -10,7 +10,6 @@ const teacherData = {
       getTeachersList({teacherType,pageNum}).then((res)=>{
         if(res.data.code === 200){
           let data = res.data.data
-          console.log(res);
           context.commit('GETTEACHERDATA',data)
         }
       })
