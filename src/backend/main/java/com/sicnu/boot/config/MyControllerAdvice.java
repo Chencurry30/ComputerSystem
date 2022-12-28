@@ -6,6 +6,7 @@ import com.sicnu.boot.utils.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -124,12 +125,15 @@ public class MyControllerAdvice {
      * @author 胡建华
      * Date:  2022/12/6 16:01
      */
-    @ExceptionHandler(value = BadCredentialsException.class)
+    @ExceptionHandler(value = {BadCredentialsException.class, InternalAuthenticationServiceException.class})
     @ResponseBody
-    public ServerResponse<String> loginExceptionHandler(BadCredentialsException e){
-        log.error("登录失败！原因是:" + e.getMessage());
-        return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode(),
-                "用户名或密码错误，登录失败");
+    public ServerResponse<String> loginExceptionHandler(Exception e){
+        if (e instanceof BadCredentialsException || e instanceof InternalAuthenticationServiceException){
+            log.error("登录失败！原因是:" + e.getMessage());
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode(),
+                    "用户名或密码错误，登录失败");
+        }
+        return null;
     }
 
     /**

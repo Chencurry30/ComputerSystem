@@ -67,7 +67,6 @@ public class UserManageController {
      * Date:  2022/10/30 9:48
      */
     @GetMapping("/pages/{pageNum}")
-    @PreAuthorize("hasAuthority('system:role:view')")
     ServerResponse<PageInfo<UserDetail>> getUserList(@Length(max = 10,message = "昵称最长为10") String nickname,
                    @Min (value = 1,message = "分页数最小为1")@PathVariable Integer pageNum){
         return userManageService.getUserList(nickname,pageNum);
@@ -82,7 +81,6 @@ public class UserManageController {
      * Date:  2022/10/30 9:48
      */
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('system:role:view')")
     ServerResponse<UserDetail> getUserByUserId(@Min(value = 1,message = "userId最小为1")
                                                @PathVariable Integer userId){
         return userManageService.getUserByUserId(userId);
