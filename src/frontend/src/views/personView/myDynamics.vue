@@ -128,8 +128,13 @@ export default {
     //获取所有动态
     GetDynamics() {
       getallDynamics(this.page).then((res) => {
-        this.totals = res.data.data.total
-        this.Dynamics = res.data.data.list
+        if (res.data.code === 200) {
+          this.totals = res.data.data.total
+          this.Dynamics = res.data.data.list
+        } else if (res.data.code === 417) {
+          this.Dynamics = []
+          this.totals = 0
+        }
       })
     },
     //当前页数改变
@@ -145,9 +150,9 @@ export default {
     nextPage(page) {
       this.page = page + 1
     },
-    gotoPerson(item){
-      let location = {name:'otherPerson'}
-      location.query = {userId:item.userId}
+    gotoPerson(item) {
+      let location = { name: 'otherPerson' }
+      location.query = { userId: item.userId }
       this.$router.push(location)
     }
   },

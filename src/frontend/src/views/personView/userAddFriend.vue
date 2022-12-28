@@ -155,8 +155,11 @@ export default {
     getUserFriendList({ userStates, actionStates, pageNum }) {
       console.log(userStates, actionStates, pageNum);
       getUserFriendAction({ actionStates, userStates, pageNum }).then((res) => {
-        console.log(res);
-        this.getFriendList = res.data.data.list
+        if(res.data.code === 200){
+          this.getFriendList = res.data.data.list
+        }else if(res.data.code === 417){
+          this.getFriendList = []
+        }
       })
     },
 

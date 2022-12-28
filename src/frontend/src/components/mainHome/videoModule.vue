@@ -20,8 +20,8 @@
       </div>
     </div>
     <div class="item-list">
-      <ul class="listBox clearfix">
-        <li class="course-item" v-for="(childItem,index) in videoHotList" :key="index"
+      <ul class="listBox clearfix" v-if="judgeNotFound">
+        <li class="course-item" v-for="(childItem, index) in videoHotList" :key="index"
           @click="gotoVideoPage(childItem.videoId)" v-show="(index < 4)">
           <div class="course-img">
             <img :src="[publicUrl + childItem.image]" alt="视屏图片">
@@ -29,18 +29,22 @@
           <div class="course-connect">
             <div class="connect-info">{{ childItem.name }}</div>
             <div class="course-bottom">
-              <span>{{childItem.nickname}}</span>
+              <span>{{ childItem.nickname }}</span>
               <span>{{ childItem.time }}</span>
             </div>
           </div>
         </li>
       </ul>
+      <div v-else class="notFound">
+        <img src="../../assets/Img/defaultListImg.png" alt="">
+        <span>没有相关数据</span>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { createPublicUrl } from '../../utils/index'
-import { getHotVideo} from '../../service/systemService'
+import { getHotVideo } from '../../service/systemService'
 export default {
   name: 'videoModule',
   data() {
@@ -71,8 +75,9 @@ export default {
           name: '计算机组成原理'
         },
       ],
-      videoHotList:[],
+      videoHotList: [],
       current: 1,
+      showflag: true
     };
   },
   mounted() {
@@ -80,9 +85,13 @@ export default {
     this.getHotList(1)
   },
   methods: {
-    getHotList(videoSpeciesId){
-      getHotVideo(videoSpeciesId).then((res)=>{
-        this.videoHotList = res.data.data
+    getHotList(videoSpeciesId) {
+      getHotVideo(videoSpeciesId).then((res) => {
+        if (res.data.code === 200) {
+          this.videoHotList = res.data.data
+        } else if (res.data.code === 417) {
+          this.showflag = false
+        }
       })
     },
     addClass(videoSpeciesId) {
@@ -102,6 +111,9 @@ export default {
     //计算出公共的路径 
     publicUrl() {
       return createPublicUrl()
+    },
+    judgeNotFound() {
+      return this.showflag
     }
   }
 };
@@ -223,6 +235,14 @@ export default {
         box-shadow: 0 0 10px 2px #918f8f;
         transition: all 0.8s;
       }
+    }
+
+    .notFound {
+      margin: 0 auto;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
     }
 
     .hiddenListBox {

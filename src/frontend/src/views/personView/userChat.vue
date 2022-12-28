@@ -116,14 +116,15 @@ export default {
   //eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle 
   beforeDestroy() {
     clearInterval(this.interval)
-    console.log('页面被销毁');
   },
   methods: {
     //获取好友列表 
     getUserFriend() {
       getFriend().then((res) => {
-        this.userFridenList = res.data.data
         console.log(res);
+        if(res.data.code === 200){
+          this.userFridenList = res.data.data
+        }
       })
     },
     //点击时弹出对应的好友聊天框(将好友的图片,ID,昵称都传递到弹窗中使用) 
@@ -135,7 +136,6 @@ export default {
     },
     //关闭弹窗写在父组件中,方便后续操作
     closePopupBox() {
-      console.log('我执行了关闭弹窗的函数');
       this.getUserFriend()  //再次请求，避免页面未及时刷新
       this.$refs.ChatPopup.closePopup()
       //再次开启定时器 

@@ -11,11 +11,11 @@
           </li>
         </ul>
       </div>
-      <div class="Main-right">
+      <div class="Main-right" v-if="judgeDataList">
         <div class="showBox">
           <ul class="teacherList">
-            <li class="teacher-Item" v-for="teacherItem in getTeacherList" :key="teacherItem.teacherId" 
-            @click="gotoPersonView(teacherItem)">
+            <li class="teacher-Item" v-for="teacherItem in getTeacherList" :key="teacherItem.teacherId"
+              @click="gotoPersonView(teacherItem)">
               <div class="Item-left">
                 <img src="../../assets/Img/teacherImg/1.png" />
               </div>
@@ -23,7 +23,7 @@
                 <div class="p1">
                   <div class="teacherloge">{{ teacherItem.directionName }}</div>
                 </div>
-                <div class="p2">{{( String (teacherItem.name).substring(0,1))}}老师</div>
+                <div class="p2">{{ (String(teacherItem.name).substring(0, 1)) }}老师</div>
                 <div class="p3">五年指导的相关经验</div>
                 <div class="p4">
                   赵小五，中国考研数学辅导老师，
@@ -42,6 +42,12 @@
         </div>
         <PagerView :pageInfo="getTeacherPage" @giveFatherPageNo="getSonPageNo"></PagerView>
       </div>
+      <div v-else class="noDataImg">
+        <div class="notDataBox">
+          <img src="../../assets/Img/defaultListImg.png" alt="">
+          <span>未找到相关数据</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,78 +57,81 @@ import PagerView from "@/components/remark/PagerView";
 import { mapGetters } from "vuex";
 export default {
   name: "teacherSelect",
-  data(){
-    return{
-      typeSelect:[
+  data() {
+    return {
+      typeSelect: [
         {
-          id:1,
-          name:'考研数学'
+          id: 1,
+          name: '考研数学'
         },
         {
-          id:2,
-          name:'考研英语'
+          id: 2,
+          name: '考研英语'
         },
         {
-          id:3,
-          name:'考研政治'
+          id: 3,
+          name: '考研政治'
         },
         {
-          id:4,
-          name:'数据结构'
+          id: 4,
+          name: '数据结构'
         },
         {
-          id:5,
-          name:'计算机网络'
+          id: 5,
+          name: '计算机网络'
         },
         {
-          id:6,
-          name:'组成原理'
+          id: 6,
+          name: '组成原理'
         }
 
 
 
       ],
       //分页器展示的老师列表的集合 
-      teacherList:[],
+      teacherList: [],
       //老师的种类
-      teacherType:1,
+      teacherType: 1,
     }
   },
 
   components: {
     PagerView,
   },
-  mounted(){
+  mounted() {
     //加载初始化数据 
-    this.teacherListData({teacherType:1,pageNum:1})
+    this.teacherListData({ teacherType: 1, pageNum: 1 })
   },
-  methods:{
-    gotoPersonView(teacherItem){
-      let location = {name:'teacherPerson'}
-      location.query = {teacherId:teacherItem.teacherId}
+  methods: {
+    gotoPersonView(teacherItem) {
+      let location = { name: 'teacherPerson' }
+      location.query = { teacherId: teacherItem.teacherId }
       this.$router.push(location);
     },
     //获取老师列表的相关请求 
-    teacherListData({teacherType,pageNum}){
-      this.$store.dispatch('teacherData/getTeachersData',{teacherType,pageNum})
+    teacherListData({ teacherType, pageNum }) {
+      this.$store.dispatch('teacherData/getTeachersData', { teacherType, pageNum })
     },
     //获取分页器传递的数据,并进行获取分页数据 
     getSonPageNo(pageNum) {
-      this.$store.dispatch('teacherData/getTeachersData', { teacherType:this.teacherType,pageNum:pageNum })
+      this.$store.dispatch('teacherData/getTeachersData', { teacherType: this.teacherType, pageNum: pageNum })
     },
     //选择不同种类的老师
-    selsectTeacherType(typeId){
+    selsectTeacherType(typeId) {
       this.teacherType = typeId
       //再将选择的忠烈以及分页器的首页传递后仓库进行请求 
-      this.teacherListData({teacherType:this.teacherType,pageNum:1})
-    } 
+      this.teacherListData({ teacherType: this.teacherType, pageNum: 1 })
+    }
 
   },
-  computed:{
-    ...mapGetters('teacherData',{
-      getTeacherList:'getTeacherList',   //获取每一页老师所展示的数据
-      getTeacherPage:'getTeacherPage'    //获取老师对应的分页相关的信息
-    })
+  computed: {
+    ...mapGetters('teacherData', {
+      getTeacherList: 'getTeacherList',   //获取每一页老师所展示的数据
+      getTeacherPage: 'getTeacherPage'    //获取老师对应的分页相关的信息
+    }),
+    judgeDataList() {
+      return this.getTeacherList.length !== 0
+    },
   }
 
 };
@@ -132,10 +141,13 @@ export default {
 .MainBox {
   margin-top: 70px;
   background: #f8f8f8;
+
   .Main {
     display: flex;
+
     .Main-left {
       flex: 2;
+
       .item {
         display: flex;
         width: 100%;
@@ -143,14 +155,17 @@ export default {
         align-items: center;
         cursor: pointer;
         padding-left: 60px;
+
         .item-icon {
           width: 28px;
           height: 28px;
-          img{
+
+          img {
             width: 100%;
             height: 100%;
           }
         }
+
         .item-info {
           height: 28px;
           line-height: 28px;
@@ -160,15 +175,19 @@ export default {
         }
       }
     }
+
     .Main-right {
       flex: 8;
+
       .showBox {
         padding: 10px 20px;
+
         .teacherList {
           display: flex;
           justify-content: space-between;
           align-items: center;
           flex-wrap: wrap;
+
           .teacher-Item {
             position: relative;
             display: flex;
@@ -179,19 +198,24 @@ export default {
             height: 267px;
             cursor: pointer;
             background-color: #ffffff;
+
             .Item-left {
               flex: 15%;
               height: 236px;
               background-image: linear-gradient(0deg, #f5f6fa 0%, #e8ebf2 100%);
+
               img {
                 width: 100%;
               }
             }
+
             .Item-right {
               flex: 2;
+
               .p1 {
                 width: 100%;
                 height: 20px;
+
                 .teacherloge {
                   position: absolute;
                   top: 18px;
@@ -207,12 +231,14 @@ export default {
                   color: #ffffff;
                 }
               }
+
               .p2 {
                 text-align: right;
                 font-size: 24px;
                 color: #333333;
                 margin: 16px 20px 10px;
               }
+
               .p3 {
                 text-align: right;
                 margin-right: 20px;
@@ -220,6 +246,7 @@ export default {
                 font-size: 16px;
                 color: #ff9d00;
               }
+
               .p4 {
                 text-align: left;
                 margin-bottom: 5px;
@@ -233,10 +260,12 @@ export default {
                 -webkit-line-clamp: 4;
                 overflow: hidden;
               }
+
               .hot {
                 float: right;
                 margin-right: 20px;
                 display: flex;
+
                 .hot-right {
                   margin-top: 5px;
                   font-size: 12px;
@@ -248,6 +277,19 @@ export default {
         }
       }
     }
+  }
+}
+
+.noDataImg {
+  flex: 9;
+  .notDataBox{
+    margin: 0 auto;
+    text-align: center;
+    width: 320px;
+    img {
+    width: 100%;
+    height: 100%;
+  }
   }
 }
 </style>
