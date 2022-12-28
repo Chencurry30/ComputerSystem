@@ -87,8 +87,10 @@ public class TimedTaskService {
                             + 2 * (o2.getCommentNum() - o1.getCommentNum())).limit(4).peek(video ->
                             video.setNickname(userMapper.getNicknameByUserId(video.getAuthorId()))).
                     collect(Collectors.toList());
-            //存到redis中
-            redisUtils.setCacheList(HomeServiceImpl.HOT_SPOT + type.getTypeId(),list);
+            if (!list.isEmpty()){
+                //存到redis中
+                redisUtils.setCacheList(HomeServiceImpl.HOT_SPOT + type.getTypeId(),list);
+            }
         }
     }
 

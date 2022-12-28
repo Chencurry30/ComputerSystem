@@ -53,7 +53,9 @@ public class UserFriendServiceImpl implements UserFriendService {
         if (Objects.isNull(friends) || friends.isEmpty()){
             //如果没有获取到，说明redis中没有，需要从数据库中获取
             friends = userFriendMapper.getFriendsByUserId(userId);
-            redisUtils.setCacheList(REDIS_FRIEND_PREFIX + userId,friends);
+            if (!friends.isEmpty()){
+                redisUtils.setCacheList(REDIS_FRIEND_PREFIX + userId,friends);
+            }
             //设置有效时间
             redisUtils.expire(REDIS_FRIEND_PREFIX + userId,24, TimeUnit.HOURS);
         }
@@ -156,9 +158,11 @@ public class UserFriendServiceImpl implements UserFriendService {
         if (Objects.isNull(cacheList) || cacheList.isEmpty()){
             //redis中没有数据，直接从数据库中获取更新
             cacheList = userFriendMapper.getFriendsByUserId(userId);
-            redisUtils.setCacheList(REDIS_FRIEND_PREFIX + userId,cacheList);
-            //设置有效时间
-            redisUtils.expire(REDIS_FRIEND_PREFIX + userId,24, TimeUnit.HOURS);
+            if (!cacheList.isEmpty()){
+                redisUtils.setCacheList(REDIS_FRIEND_PREFIX + userId,cacheList);
+                //设置有效时间
+                redisUtils.expire(REDIS_FRIEND_PREFIX + userId,24, TimeUnit.HOURS);
+            }
         }else {
             //更新
             UserDetail friend = userFriendMapper.getFriendByKey(friendId);
