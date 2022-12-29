@@ -12,9 +12,9 @@
                 <div>
                   <div class="form-group">
                     <label class="contents">发表我的动态</label>
-                    <textarea class="form-control" v-model="contents.content" placeholder="说说你的心情......"></textarea>
+                    <textarea class="form-control" v-model="contents.content" placeholder="说点什么吧......"></textarea>
                     <el-button type="text" size="large" @click="showDialog = !showDialog">😃</el-button>
-                    <VEmojiPicker v-show="showDialog" @select="selectEmoji"></VEmojiPicker>
+                    <VEmojiPicker id="emoji" v-show="showDialog" @select="selectEmoji"></VEmojiPicker>
                     <uploadDypicture></uploadDypicture>
                   </div>
                   <div class="form-group">
@@ -97,6 +97,16 @@ export default {
   components: { personAside, personHeader, uploadDypicture, VEmojiPicker },
   name: "teacherReply",
   mounted() {
+    document.addEventListener('mouseup',(e) =>{
+      //获取弹窗对象
+      const userCon = document.getElementById('emoji')
+      if (!userCon && userCon.contains(e.target)){
+        //如果不包含则打开弹窗
+        this.showDialog = true
+      }else {
+        this.showDialog = false
+      }
+    })
     //获取用户的相关信息,避免刷新到时头像丢失
     this.$store.dispatch('userInfo/getUserInfo')
     this.GetDynamics()

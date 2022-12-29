@@ -50,8 +50,8 @@
           <div class="title">{{ fatherItem.name }}</div>
           <div class="middleBox">
             <div class="middleContent">
-              <div class="uploadLink" v-for="childrenItem in fatherItem.children" :key="childrenItem.downId">
-                <a :href="childrenItem.link">{{ childrenItem.name }}</a>
+              <div class="uploadLink" v-for="childrenItem in fatherItem.children" :key="childrenItem.downId" >
+                <a :href="childrenItem.link" onclick="return confirm('是否确定下载该题目？')">{{ childrenItem.name }}</a>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default {
         { name: '计算机网络' },
         { name: '计算机组成原理' },
       ],
-      //表示当前的下标 
+      //表示当前的下标
       current: 0,
       DataList: [
         {
@@ -463,7 +463,7 @@ export default {
     selectItem(index) {
       this.current = index
     },
-    //根据点击的视屏跳转到对应的页面 
+    //根据点击的视屏跳转到对应的页面
     gotoVideoPage(videoId) {
       let location = {
         name: 'videoPage'
@@ -673,7 +673,7 @@ export default {
             }
           }
         }
-        
+
         .showBox {
           display: block;
         }
