@@ -81,7 +81,7 @@ export default {
     };
   },
   mounted() {
-    //默认加载页面时发送请求1 
+    //默认加载页面时发送请求1
     this.getHotList(1)
   },
   methods: {
@@ -96,7 +96,7 @@ export default {
     },
     addClass(videoSpeciesId) {
       this.current = videoSpeciesId
-      //根据选择的种类来进行对应的请求 
+      //根据选择的种类来进行对应的请求
       this.getHotList(videoSpeciesId)
     },
     gotoVideoPage(videoId) {
@@ -108,7 +108,7 @@ export default {
     }
   },
   computed: {
-    //计算出公共的路径 
+    //计算出公共的路径
     publicUrl() {
       return createPublicUrl()
     },
