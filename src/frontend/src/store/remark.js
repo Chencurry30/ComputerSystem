@@ -7,12 +7,10 @@ const remark = {
     remarkList: [],
   },
   actions: {
-
     //获取点击回复时存储其他用户的信息
     getotherinfo(context, otherinfo) {
       context.commit('GETOTHERINFO', otherinfo);
     },
-
 
     //获取视屏评论的信息
     getVideoRemark(context, videoId) {

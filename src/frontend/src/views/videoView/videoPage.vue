@@ -190,7 +190,7 @@ export default {
   methods: {
 
     //获取视屏页面的具体信息
-    getPageData() {
+  async getPageData() {
       let videoId = this.$route.query.videoId
       this.$store.dispatch('videoData/getInfo', videoId)
     },

@@ -1,5 +1,6 @@
 //用户的相关存储信息
 import {getVideoNavType,getVideoList,getVideoInfo} from '../service/videoService'
+import vue from 'vue'
 const videoData = {
     namespaced:true,   //开启匿名空间
     state:{
@@ -20,7 +21,6 @@ const videoData = {
       //根据选择列表获取视屏列表
       getVideoData(context,{first,second,thild,pageNum}){
         getVideoList({first,second,thild,pageNum}).then((res)=>{
-
           if(res.data.code === 200){
             let data = res.data.data
             context.commit('GETVIDEOLIST',data)
@@ -30,12 +30,15 @@ const videoData = {
           }
         })
       },
+
       //获取对应视屏的相关信息 
-      getInfo(context,videoId){
+      async getInfo(context,videoId){
         getVideoInfo(videoId).then((res)=>{
           if(res.data.code === 200){
             let data = res.data.data
             context.commit('GETINFO',data)
+          }else if(res.data.code === 400){
+            vue.prototype.$message.error('暂无数据,请稍后访问！！！')
           }
         })
       }

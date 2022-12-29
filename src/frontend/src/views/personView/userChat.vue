@@ -121,7 +121,6 @@ export default {
     //获取好友列表 
     getUserFriend() {
       getFriend().then((res) => {
-        console.log(res);
         if(res.data.code === 200){
           this.userFridenList = res.data.data
         }
@@ -154,7 +153,6 @@ export default {
           if (res.data.code === 406) {
             this.$message.error(res.data.message)
           } else {
-            console.log(res);
             this.searchFridenList = res.data.data
           }
         })
@@ -187,14 +185,11 @@ export default {
   watch: {
     $route: {
       handler(route) {
-        console.log(route);
         //表示的是页面进入了好友页面
         //,那么就停止这页面中的监听器,开启对应页面的监听器,监听实时返回 
         if (route.name === 'userChat') {
           //关闭持续请求 
           clearInterval(this.interval)
-        } else {
-          //持续开启 
         }
       },
       immediate: true

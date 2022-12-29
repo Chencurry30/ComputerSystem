@@ -30,13 +30,13 @@
             <div class="left-Item">
               <div class="Item-title">辅导资历</div>
               <div class="Item-Info">
-                从事高等数学教育多年，{{ teacherMsg.information }}。
+                从事高等数学教育多年。
               </div>
             </div>
             <div class="left-Item">
               <div class="Item-title">辅导记录</div>
               <div class="Item-Info">
-                帮助无数考研的人在数学方面解决他们的疑难为题,至今辅导人数超{{ teacherMsg.qualification }}人。
+                帮助无数考研的人解决他们的疑难问题。
               </div>
             </div>
           </div>
@@ -97,12 +97,12 @@ export default {
       DataList: [],
       //老师的相关信息 
       teacherMsg: {
-        attentPeople: '',
-        name: "",
-        background: "",
-        directionName: "",
-        information: "",
-        nickName:''
+        attentPeople: '暂无数据',
+        name: "暂无数据",
+        background: "暂无数据",
+        directionName: "暂无数据",
+        information: "暂无数据",
+        nickName:'暂无数据'
       },
       sendTeacherData: {
         nickName: sessionStorage.getItem('nickname'),
@@ -138,9 +138,10 @@ export default {
   mounted() {
     this.teacherId = this.$route.query.teacherId;
     getTeacherInfo(this.teacherId).then((res) => {
-      console.log(res);
       if (res.data.code === 200) {
-        this.teacherMsg = res.data.data;
+        if(res.data.data !== undefined){
+          this.teacherMsg = res.data.data;
+        }
       }
     })
     //获取对老师的相关评价 
