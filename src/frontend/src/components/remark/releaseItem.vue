@@ -77,7 +77,7 @@ export default {
     },
     //判断用户是否有头像(有则展示用户头像,无则不展示)     
     judgeUserImg() {
-      return sessionStorage.getItem('userImg') === ""
+      return sessionStorage.getItem('userImg') === "无"
     },
     //获取公共的url 
     publicUrl() {

@@ -26,9 +26,7 @@
                 <div class="p2">{{ (String(teacherItem.name).substring(0, 1)) }}老师</div>
                 <div class="p3">五年指导的相关经验</div>
                 <div class="p4">
-                  赵小五，中国考研数学辅导老师，
-                  2003年被评为优秀的骨干教师，2005年获得讲课比赛一等奖，
-                  辅导学习人数超十万人
+                  中国考研学生，成为老师的目的就是希望相互学习，共同进步
                 </div>
                 <div class="hot">
                   <div class="hot-left">

@@ -139,8 +139,8 @@ export default {
                   const token = res.data.data.token
                   const userImg = res.data.data.user.image
                   const userId = res.data.data.user.userId
-                  const nickname = res.data.data.user.nickname
-                  const userPhone = res.data.data.user.phone
+                  const nickname = res.data.data.user.nickname || '无'
+                  const userPhone = res.data.data.user.phone || '无'
                   const teacherId = res.data.data.teacherId || 0
                   sessionStorage.setItem('userImg', userImg)
                   sessionStorage.setItem('userId', userId)   //保存正在登录用户的userId

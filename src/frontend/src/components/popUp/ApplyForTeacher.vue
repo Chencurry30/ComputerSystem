@@ -37,14 +37,7 @@
               </el-input>
             </el-form-item>
           </el-form>
-
-
-
-
-
-
-
-          <div class="sendInfo btn" @click="sendLeaveMessage">发送留言</div>
+          <div class="sendInfo btn" @click="sendLeaveMessage">发送申请</div>
         </div>
       </div>
     </div>
@@ -57,10 +50,11 @@ export default {
   data() {
     return {
       showDialog: false,
+      direction:['数学','英语','政治','数据结构','计网','计组'],
       applyData: {
         name: "",
         background: "",
-        directionId: 1,
+        directionId: 0,
         directionName: "",
         //拒绝理由
         reviewComment: "",
@@ -76,6 +70,14 @@ export default {
     closePopup() {
       this.showDialog = false;
     },
+    getDirection(value){
+      for(let i = 0;i<this.direction.length;i++){
+        if(this.direction[i] === value){
+          return i+1
+        }
+      }
+
+    },
     sendLeaveMessage(){
       if(this.applyData.name === ''){
         this.$message.error('请填入你的称呼,方便审核通过')
@@ -86,12 +88,12 @@ export default {
       }else if(this.applyData.applyReason === ''){
         this.$message.error('请填入你的申请理由,方便审核通过')
       }else{
+        this.applyData.directionId = this.getDirection(this.applyData.directionName)
         applyTeacher(this.applyData).then((res)=>{
           if(res.data.code === 200){
             this.$message.success('申请成功，等待审核中')
             this.showDialog = false;
           }
-          console.log(res);
         })
       }
     }

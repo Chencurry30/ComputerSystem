@@ -96,20 +96,31 @@ export default {
         data.phone = this.showPopupInfo.phone
         data.smsCode = this.showPopupInfo.smsCode
         data.uuId = this.getkeyInfo.uuId
-        modifyPassword(data).then((res) => {
-          if(res.data.code === 200){
-            this.$message.success('修改密码成功')
-            this.showDialog = true;
-          }else if(res.data.code === 406){
-            this.$message.error('原密码错误')
-          }else if(res.data.code === 407){
-            this.$message.error('手机验证码错误')
-          }
-          console.log(res);
-        })
+        if (this.showPopupInfo.phone === '') {
+          this.$message.error('手机号不能为空')
+        } else if (this.showPopupInfo.oldPassword === '') {
+          this.$message.error('旧密码不能为空')
+        } else if (this.showPopupInfo.password === '') {
+          this.$message.error('新密码不能为空')
+        } else if (this.showPopupInfo.smsCode === '') {
+          this.$message.error('验证码不能为空')
+        } else {
+          modifyPassword(data).then((res) => {
+            if (res.data.code === 200) {
+              this.$message.success('修改密码成功')
+              this.showDialog = true;
+            } else if (res.data.code === 406) {
+              this.$message.error('原密码错误')
+            } else if (res.data.code === 407) {
+              this.$message.error('手机验证码错误')
+            }
+            console.log(res);
+          })
+        }
       }, 1500)
-    }
+    },
   },
+
   computed: {
     ...mapGetters('encryption', {
       getkeyInfo: 'getkeyInfo'

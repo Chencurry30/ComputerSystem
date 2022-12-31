@@ -70,6 +70,7 @@ export default {
     modifyPhoneAction() {
       if (this.showPopupInfo.phone === '') {
         this.$message.error('请输入绑定的手机号')
+        this.showPopupInfo = {}
       } else {
         bindUserPhone(this.showPopupInfo).then((res) => {
           if(res.data.code === 200){

@@ -14,7 +14,7 @@
             <div class="middle-main">
               <p>学位:{{ teacherMsg.background }}</p>
               <p>教师科目:{{ teacherMsg.directionName }}</p>
-              <p>关注人数:{{ teacherMsg.attentPeople }}</p>
+              <p>关注人数:{{ teacherMsg.attentPeople || '未知' }}</p>
             </div>
           </div>
         </div>
@@ -138,6 +138,7 @@ export default {
   mounted() {
     this.teacherId = this.$route.query.teacherId;
     getTeacherInfo(this.teacherId).then((res) => {
+      console.log(res);
       if (res.data.code === 200) {
         if(res.data.data !== undefined){
           this.teacherMsg = res.data.data;
