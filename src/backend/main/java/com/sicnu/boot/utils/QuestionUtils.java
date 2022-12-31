@@ -68,12 +68,12 @@ public class QuestionUtils {
         try {
             list = new ArrayList<>();
             list.add(getYearMap(0,"全部",null));
-            list.add(getYearMap(1,"2022",sdf.parse("2022-01-01")));
-            list.add(getYearMap(2,"2021",sdf.parse("2021-01-01")));
-            list.add(getYearMap(3,"2020",sdf.parse("2020-01-01")));
-            list.add(getYearMap(4,"2019",sdf.parse("2019-01-01")));
-            list.add(getYearMap(5,"2018",sdf.parse("2018-01-01")));
-            list.add(getYearMap(6,"2017",sdf.parse("2017-01-01")));
+            list.add(getYearMap(1,"2022",sdf.parse("2022-01-02")));
+            list.add(getYearMap(2,"2021",sdf.parse("2021-01-02")));
+            list.add(getYearMap(3,"2020",sdf.parse("2020-01-02")));
+            list.add(getYearMap(4,"2019",sdf.parse("2019-01-02")));
+            list.add(getYearMap(5,"2018",sdf.parse("2018-01-02")));
+            list.add(getYearMap(6,"2017",sdf.parse("2017-01-02")));
         } catch (ParseException e) {
             e.printStackTrace();
         }
