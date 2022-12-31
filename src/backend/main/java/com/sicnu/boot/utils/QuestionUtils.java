@@ -133,7 +133,7 @@ public class QuestionUtils {
     }
 
     public BigDecimal getDifficultMinById(Integer difficultId){
-        for (Map<String, Object> map : getTypeLists()) {
+        for (Map<String, Object> map : getDifficultLists()) {
             if (map.get("difficultId") == difficultId){
                 return (BigDecimal) map.get("difficultMinValue");
             }
@@ -142,7 +142,7 @@ public class QuestionUtils {
     }
 
     public BigDecimal getDifficultMaxById(Integer difficultId){
-        for (Map<String, Object> map : getTypeLists()) {
+        for (Map<String, Object> map : getDifficultLists()) {
             if (map.get("difficultId") == difficultId){
                 return (BigDecimal) map.get("difficultMaxValue");
             }
@@ -151,7 +151,7 @@ public class QuestionUtils {
     }
 
     public String getSourceById(Integer sourceId){
-        for (Map<String, Object> map : getTypeLists()) {
+        for (Map<String, Object> map : getSourceLists()) {
             if (map.get("sourceId") == sourceId){
                 return (String) map.get("sourceValue");
             }
@@ -160,7 +160,7 @@ public class QuestionUtils {
     }
 
     public Date getYearById(Integer yearId){
-        for (Map<String, Object> map : getTypeLists()) {
+        for (Map<String, Object> map : getYearLists()) {
             if (map.get("yearId") == yearId){
                 return (Date) map.get("yeaValue");
             }
