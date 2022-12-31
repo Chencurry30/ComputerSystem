@@ -44,13 +44,8 @@ public class TeacherExamineServiceImpl implements TeacherExamineService {
     @Override
     public ServerResponse<String> updateAgrExamine(Integer examineId) {
         examineMapper.updateAgrExamine(examineId);
-        //获取用户Id
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Integer userId = loginUser.getUser().getUserId();
         TeacherExamine teacherExamine = examineMapper.getExamine(examineId);
         teacherExamine.setPassDate(LocalDateTime.now());
-        teacherExamine.setUserId(userId);
         examineMapper.passExamine(teacherExamine);
         return ServerResponse.createBySuccessMessage("更新成功");
     }
