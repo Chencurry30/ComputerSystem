@@ -27,3 +27,6 @@
 2022/12/17 10:59:48 [notice] 1760#7592: signal process started
 2022/12/17 11:00:21 [notice] 19224#18144: signal process started
 2022/12/18 18:09:58 [notice] 14936#14608: signal process started
+2022/12/28 20:32:09 [emerg] 14820#2160: invalid URL prefix in C:\Users\Administrator\Desktop\code\computer-system\nginx/conf/nginx.conf:38
+2022/12/28 20:34:03 [emerg] 15644#9568: invalid URL prefix in C:\Users\Administrator\Desktop\code\computer-system\nginx/conf/nginx.conf:38
+2022/12/28 20:34:25 [emerg] 12708#16632: bind() to 0.0.0.0:8080 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)

@@ -149,6 +149,7 @@ export default {
       location.name = 'videoPage'
       location.query = { videoId: videoId }
       this.$router.push(location)
+
     },
     //鼠标移入时修改下标切换遮罩层
     moveVideo(videoId) {

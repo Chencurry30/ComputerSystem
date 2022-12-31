@@ -42,7 +42,7 @@ const schoolData = {
       },
       //返回院校的列表信息 
       getSchoolDataList(state){
-        return state.schoolDataList.list || {}
+        return state.schoolDataList.list || []
       },
       //返回与分页相关的数据 
       getSchoolPage(state){

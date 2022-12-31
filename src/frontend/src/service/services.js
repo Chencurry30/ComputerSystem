@@ -4,10 +4,9 @@ import Vue from 'vue'
 import nProgress from 'nprogress';
 import "nprogress/nprogress.css"
 
-console.log(IPConfig);
 nProgress.configure({ easing: 'ease', speed: 800, showSpinner: false })
 import router from '../router';
-const baseurl = `http://${IPConfig.IP}:8989/api`
+const baseurl = `http://localhost:8989/api`
 const service = axios.create({
   baseURL: baseurl,
   timeout: 5000,

@@ -23,7 +23,7 @@ const teacherData = {
   getters: {
     //返回老师的数据列表 
     getTeacherList(state) {
-      return state.teacherDataList.list
+      return state.teacherDataList.list || []
     },
 
     getTeacherPage(state){

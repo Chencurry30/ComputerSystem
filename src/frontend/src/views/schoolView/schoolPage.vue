@@ -83,7 +83,18 @@ export default {
   name: 'schoolPage',
   data() {
     return {
-      schoolInfo: {},
+      schoolInfo: {
+        name:'暂无数据',
+        attribute:'暂无数据',
+        phone:'暂无数据',
+        region:'暂无数据',
+        type:'暂无数据',
+        subjection:'暂无数据',
+        mail:'暂无数据',
+        web:'暂无数据',
+        address:'暂无数据',
+        introduction:'暂无数据'
+      },
       first: false,
       //专业大类的选择列表
       collegeList: [],
@@ -107,8 +118,11 @@ export default {
     getSchool() {
       let collegeId = this.$route.query.collegeId
       getschoolInfo(collegeId).then((res) => {
-        this.schoolInfo = res.data.data
-        console.log(res);
+        if(res.data.code === 200){
+          if(res.data.data !== undefined){
+            this.schoolInfo = res.data.data
+          }
+        }
       })
     },
 
@@ -118,7 +132,6 @@ export default {
         if(res.data.code === 200){
           this.collegeList = res.data.data
         }
-        console.log(res);
       })
     },
 
@@ -129,7 +142,6 @@ export default {
     selectItem(id) {
       this.countIndex = id
       getSchoolMajor({collegeId:this.$route.query.collegeId,classfyId:id}).then((res)=>{
-        console.log(res);
         if(res.data.code === 200){
           this.majorList = res.data.data
         }
@@ -306,7 +318,6 @@ export default {
         height: 50px;
         overflow: hidden;
         transition: all 1s;
-        overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 5;

@@ -50,7 +50,8 @@
         <div class="userimg">
           <img v-if="hidddenDefaultImg" :src='publicUrl' alt="" @mouseenter="showSelect()"
             @mouseleave="hiddenSelect()" />
-          <img v-else src="../../assets/Img/defaultUserImg.png" alt="默认头像" />
+          <img v-else src="../../assets/Img/defaultUserImg.png" alt="默认头像" @mouseenter="showSelect()"
+            @mouseleave="hiddenSelect()" />
 
           <div class="user-select" :class="{ showBox: show }" @mouseenter="showSelect()">
             <div class="select-item">{{ userNickName }}</div>
@@ -177,10 +178,10 @@ export default {
       this.searchData = ''
       //院校 
       this.collegeList = [],
-      //题目
-      this.questionList = [],
-      //视屏
-      this.videoList = []
+        //题目
+        this.questionList = [],
+        //视屏
+        this.videoList = []
       this.$router.push(location)
     }
 

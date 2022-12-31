@@ -119,7 +119,6 @@ export default {
     },
     //监听滚动到底部
     scrollToBottom() {
-      console.log(123123);
       setTimeout(() => {
         let el = this.$refs["chatRoom"];
         el.scrollTop = el.scrollHeight;

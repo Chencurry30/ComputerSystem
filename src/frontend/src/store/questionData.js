@@ -46,7 +46,7 @@ const questionData = {
     },
     //返回题库的数据列表 
     getQuestionList(state){
-      return state.questionDataList.list || {}
+      return state.questionDataList.list || []
     },
     getQuestionPage(state){
       let data = {

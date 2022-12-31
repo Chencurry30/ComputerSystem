@@ -1,5 +1,6 @@
 //用户的相关存储信息
 import {getVideoNavType,getVideoList,getVideoInfo} from '../service/videoService'
+import vue from 'vue'
 const videoData = {
     namespaced:true,   //开启匿名空间
     state:{
@@ -23,15 +24,21 @@ const videoData = {
           if(res.data.code === 200){
             let data = res.data.data
             context.commit('GETVIDEOLIST',data)
+          }else if(res.data.code === 417){
+            let data = {}
+            context.commit('GETVIDEOLIST',data)
           }
         })
       },
+
       //获取对应视屏的相关信息 
-      getInfo(context,videoId){
+      async getInfo(context,videoId){
         getVideoInfo(videoId).then((res)=>{
           if(res.data.code === 200){
             let data = res.data.data
             context.commit('GETINFO',data)
+          }else if(res.data.code === 400){
+            vue.prototype.$message.error('暂无数据,请稍后访问！！！')
           }
         })
       }
@@ -54,7 +61,7 @@ const videoData = {
       },
       //返回对应的视屏数据列表(包含list) 
       getVideoDataList(state){
-        return state.videoDataList.list || {}
+        return state.videoDataList.list || []
       },
       //返回与分页相关的数据 
       getVideoPage(state){
@@ -64,7 +71,6 @@ const videoData = {
           total:state.videoDataList.total,
           pageTotal:state.videoDataList.pages
         }
-        console.log(123000,data);
         return data
       },
       //返回视屏的基本信息 
