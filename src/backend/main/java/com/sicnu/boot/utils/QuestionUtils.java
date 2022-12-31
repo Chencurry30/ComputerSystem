@@ -162,7 +162,7 @@ public class QuestionUtils {
     public Date getYearById(Integer yearId){
         for (Map<String, Object> map : getYearLists()) {
             if (map.get("yearId") == yearId){
-                return (Date) map.get("yeaValue");
+                return (Date) map.get("yearValue");
             }
         }
         return null;
