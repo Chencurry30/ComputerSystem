@@ -123,6 +123,9 @@ export default {
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('userImg')
         sessionStorage.removeItem('userId')
+        sessionStorage.removeItem('teacherId')
+        sessionStorage.removeItem('nickname')
+        sessionStorage.removeItem('userPhone')
         let location = {
           name: 'loginView'
         }

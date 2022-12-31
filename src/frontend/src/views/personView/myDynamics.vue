@@ -14,7 +14,7 @@
                     <label class="contents">发表我的动态</label>
                     <textarea class="form-control" v-model="contents.content" placeholder="说点什么吧......"></textarea>
                     <el-button type="text" size="large" @click="showDialog = !showDialog">😃</el-button>
-                    <VEmojiPicker id="emoji" v-show="showDialog" @select="selectEmoji"></VEmojiPicker>
+                    <VEmojiPicker v-show="showDialog" @select="selectEmoji"></VEmojiPicker>
                     <uploadDypicture></uploadDypicture>
                   </div>
                   <div class="form-group">
@@ -94,19 +94,9 @@ export default {
       }],
     }
   },
-  components: { personAside, personHeader, uploadDypicture, VEmojiPicker },
-  name: "teacherReply",
+  components: { personAside, personHeader, uploadDypicture,VEmojiPicker },
+  name: "myDynamics",
   mounted() {
-    document.addEventListener('mouseup',(e) =>{
-      //获取弹窗对象
-      const userCon = document.getElementById('emoji')
-      if (!userCon && userCon.contains(e.target)){
-        //如果不包含则打开弹窗
-        this.showDialog = true
-      }else {
-        this.showDialog = false
-      }
-    })
     //获取用户的相关信息,避免刷新到时头像丢失
     this.$store.dispatch('userInfo/getUserInfo')
     this.GetDynamics()
@@ -182,6 +172,10 @@ export default {
     getpicture() {
       return createPublicUrl()
     }
+  },
+  // eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle
+  beforeDestroy() {
+
   }
 };
 </script>

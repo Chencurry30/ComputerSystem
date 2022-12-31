@@ -114,7 +114,10 @@ export default {
   methods:{
     uploadVideoAction(){
       uploadVideoData(this.videoData).then((res)=>{
-        console.log(res);
+        if(res.data.code === 200){
+          this.$message.success('上传成功')
+          this.videoData = {}
+        }
       })
     }
   }

@@ -87,8 +87,8 @@
         <div class="reply-List" v-for="(fatherItem) in getRemarkList" :key="fatherItem.id">
           <replyItem :replyInfo="fatherItem.comment" :showId="fatherItem.id"></replyItem>
           <div class="children-List hidden" :class="{
-            hiddenBox: fatherItem.children === null, showBox: showMoreID === fatherItem.id
-          }">
+  hiddenBox: fatherItem.children === null, showBox: showMoreID === fatherItem.id
+}">
             <replyItem v-for="(child) in fatherItem.children" :replyInfo="child" :showId="fatherItem.id"
               :key="child.commentId"></replyItem>
           </div>
@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import { collectVideo } from '../../service/videoService'
+import { collectVideo, getVideoInfo } from '../../service/videoService'
 import ReleaseItem from "../../components/remark/releaseItem.vue";
 import ReplyItem from "../../components/remark/replyItem.vue";
 import videoPlay from "../../components/videoPlay/videoPlay"
@@ -190,9 +190,16 @@ export default {
   methods: {
 
     //获取视屏页面的具体信息
-  async getPageData() {
+    getPageData() {
       let videoId = this.$route.query.videoId
-      this.$store.dispatch('videoData/getInfo', videoId)
+      getVideoInfo(videoId).then((res) => {
+        if (res.data.code === 400) {
+          this.$router.push({ name: 'notFound' })
+          this.$message.error('暂无数据,请稍后访问！！！')
+        } else {
+          this.$store.dispatch('videoData/getInfo', videoId)
+        }
+      })
     },
     //获取对应的评论信息
     getPageRemark() {
@@ -219,12 +226,12 @@ export default {
     }, 10000),
 
     //点击视屏前往视屏页面
-    gotoPage(videoId){
-      let location = {name :'videoPage'}
-      location.query = {videoId:videoId}
+    gotoPage(videoId) {
+      let location = { name: 'videoPage' }
+      location.query = { videoId: videoId }
       this.$router.push(location)   //由于是本页面的跳转,因此还需要重新执行一次获取数据的函数
       this.getPageData()
-    } 
+    }
 
 
   },
@@ -459,6 +466,7 @@ export default {
         display: flex;
         margin-bottom: 10px;
         cursor: pointer;
+
         .listItemImg {
           width: 200px;
           height: 100px;
@@ -474,6 +482,7 @@ export default {
           margin-left: 10px;
           max-width: 180px;
           font-size: 14px;
+
           .item-info-title {
             height: 26px;
             line-height: 26px;

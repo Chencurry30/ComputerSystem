@@ -54,7 +54,6 @@ export default {
               stsToken: data.stsToken,
               bucket: data.bucket
             }
-            console.log(ossConfig);
           } else {
             alert('sts token get failed')
           }
@@ -84,7 +83,6 @@ export default {
       let key
       try {
         let file = this.fileList[0].raw
-        console.log(123, file)
         if (file.type === 'image/png' || file.type === 'image/jpg') {
           this.videoType = 0
           key = '/test/userUploadVideoImg/' + file.name
@@ -100,7 +98,7 @@ export default {
 
         console.log(result)
         //清空文件列表
-        this.$message.error('上传成功')
+        this.$message.success('上传成功')
         this.fileList = []
         this.progress = 0
         if (file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg') {
