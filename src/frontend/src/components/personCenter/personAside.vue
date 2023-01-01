@@ -128,6 +128,7 @@ export default {
   methods: {
     getRedSpot() {
       notAccepted().then((res) => {
+        console.log(res);
         if (res.data.code === 200) {
           this.redSpot = res.data.data
         }

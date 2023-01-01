@@ -11,6 +11,7 @@ const questionData = {
     //获取题库的选择列表 
     getQuestionNavSelect(context) {
       getQuestionNav().then((res) => {
+        console.log(res);
         if (res.data.code === 200) {
           let data = res.data.data
           context.commit('GETQUESTIONNAVSELECT', data)
@@ -20,6 +21,7 @@ const questionData = {
     //获取题库的数据列表
     getQuestionData(context, { typeId, difficultId, classifyId, sourceId, yearId, pageNum }) {
       getQuestionDataList({ typeId, difficultId, classifyId, sourceId, yearId, pageNum }).then((res) => {
+        console.log(res);
         if (res.data.code === 200) {
           let data = res.data.data
           context.commit('GETQUESTIONDATA', data)
