@@ -6,6 +6,7 @@ import com.sicnu.boot.utils.RedisUtils;
 import com.sicnu.boot.vo.QuestionClassify;
 import com.sicnu.boot.vo.VideoType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,7 @@ public class TimedTaskService {
      * Date:  2022/12/13 10:48
      */
     @Scheduled(cron = "0 0 23 * * ?")
+    @Async("myExecutor1")
     public void scheduled() {
         Date newDate= new Date();
         LocalDateTime deleteDate=getDate(newDate,30);
@@ -76,6 +78,7 @@ public class TimedTaskService {
      * Date:  2022/12/15 19:17
      */
     @Scheduled(cron = "0 30 0/1 * * ?")
+    @Async("myExecutor1")
     public void flushHotSpot(){
         List<VideoType> videoType = videoMapper.getVideoType();
         for (VideoType type : videoType) {
@@ -101,6 +104,7 @@ public class TimedTaskService {
      * Date:  2022/12/20 9:37
      */
     @Scheduled(cron = "0 15 0/1 * * ?")
+    @Async("myExecutor1")
     public void flushCounts(){
         Map<String,Map<String,Integer>> homeMap = new HashMap<>(8);
         //获取总分类
