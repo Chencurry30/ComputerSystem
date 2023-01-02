@@ -3,7 +3,7 @@
     default-active="1-4-1"
     class="el-menu-vertical-demo"
     unique-opened
-    background-color="#545364"
+    background-color="#304156"
     text-color="#fff"
     router
     :default-active="this.$router.path"
@@ -69,10 +69,6 @@ export default {
 
 <style lang="less" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  // min-height: 810px;
-  // max-height: 810px;
-  // overflow-x: hidden;
-  // overflow-y: hidden;
   overflow: hidden;
   width: 170px;
 }
@@ -82,7 +78,6 @@ export default {
   h3 {
     color: #fff;
     text-align: center;
-    line-height: 48px;
     font-size: large;
     height: 60px;
     line-height: 60px;

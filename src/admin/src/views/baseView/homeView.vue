@@ -1,12 +1,6 @@
+<!--系统首页-->
 <template>
-  <div>
-    <el-carousel :interval="4000" type="card" height="200px">
-      <el-carousel-item v-for="(item, value) in imglist" :key="value">
-        <h3 class="medium">
-          <img :src="item.imgurl">
-        </h3>
-      </el-carousel-item>
-    </el-carousel>
+  <div class="homeView">
     <div class="viewTitle">
       系统简介:
     </div>
@@ -34,18 +28,12 @@ export default {
   name: 'homeView',
   data() {
     return {
-      imglist: [
-        { imgurl: require('../../assets/lb1.jpg') },
-        { imgurl: require('../../assets/lb2.jpg') },
-        { imgurl: require('../../assets/lb3.jpg') },
-        { imgurl: require('../../assets/lb4.jpg') },
-      ],
       loading: false,
       currentDate: '2022-06-23',
-      questionTypeCount:[]
+      questionTypeCount: []
     }
   },
-  components:{
+  components: {
     questionCard,
     videoCard
   },
@@ -53,6 +41,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .el-main {
   padding-top: 0;
 }
@@ -71,22 +60,25 @@ export default {
   height: 100%;
 }
 
-.viewTitle{
+.viewTitle {
   margin: 10px 0 10px 20px;
   font-size: 18px;
   height: 32px;
   line-height: 32px;
   font-weight: 700;
 }
-.viewData{
+
+.viewData {
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  .viewItem{
+
+  .viewItem {
     width: 50%;
     justify-content: space-between;
   }
 }
+
 .font {
   font-size: 17px;
   text-indent: 2em;
