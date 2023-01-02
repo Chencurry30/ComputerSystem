@@ -110,8 +110,28 @@ public class UserFriendController {
         return userFriendService.getExamineList(status,type,pageNum);
     }
 
+    /**
+     * description: 删除指定好友申请
+     *
+     * @param friendId:
+     * @return ServerResponse<String>
+     * @author 胡建华
+     * Date:  2023/1/2 20:56
+     */
     @DeleteMapping("/{friendId}")
     public ServerResponse<String> cancelExamine(@Min(value = 1,message = "friendId最小为1") @PathVariable Integer friendId){
         return userFriendService.cancelExamine(friendId);
+    }
+
+    /**
+     * description: 删除指定好友
+     *
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2023/1/2 20:59
+     */
+    @DeleteMapping("/delete/{friendId}")
+    public ServerResponse<String> deleteFriend(@Min(value = 1,message = "friendId最小为1") @PathVariable Integer friendId){
+        return userFriendService.deleteFriend(friendId);
     }
 }
