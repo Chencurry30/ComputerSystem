@@ -121,8 +121,10 @@ export default {
     //获取好友列表 
     getUserFriend() {
       getFriend().then((res) => {
+        console.log(res);
         if(res.data.code === 200){
           this.userFridenList = res.data.data
+          
         }
       })
     },
