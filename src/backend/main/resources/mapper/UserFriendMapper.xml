@@ -17,6 +17,9 @@
     <delete id="cancelExamine">
         delete from friend_examine where user_id = #{userId} and friend_id = #{friendId}
     </delete>
+    <delete id="deleteFriend">
+        delete from user_friend where user_id = #{userId} and friend_id = #{friendId}
+    </delete>
 
     <select id="getFriendsByUserId" resultType="com.sicnu.boot.vo.UserDetail">
         select user_id,nickname,image from user where user_id in

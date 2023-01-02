@@ -126,4 +126,14 @@ public interface UserFriendMapper {
      * Date:  2022/12/8 15:09
      */
     void cancelExamine(Integer userId, Integer friendId);
+
+    /**
+     * description: 删除指定好友
+     *
+     * @param userId:
+     * @param friendId:
+     * @author 胡建华
+     * Date:  2023/1/2 21:02
+     */
+    void deleteFriend(Integer userId, Integer friendId);
 }

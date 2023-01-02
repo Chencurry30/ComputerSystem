@@ -210,4 +210,15 @@ public class UserFriendServiceImpl implements UserFriendService {
         userFriendMapper.cancelExamine(userId,friendId);
         return ServerResponse.createBySuccessMessage("取消申请成功");
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @SysLogAnnotation(operModel = "社交管理",operType = "删除",operDesc = "用户删除好友")
+    public ServerResponse<String> deleteFriend(Integer friendId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Integer userId = ((LoginUser) authentication.getPrincipal()).getUser().getUserId();
+        userFriendMapper.deleteFriend(userId,friendId);
+        userFriendMapper.deleteFriend(friendId,userId);
+        return ServerResponse.createBySuccessMessage("删除成功");
+    }
 }

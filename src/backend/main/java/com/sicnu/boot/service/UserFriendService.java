@@ -83,4 +83,14 @@ public interface UserFriendService {
      * Date:  2022/12/8 15:07
      */
     ServerResponse<String> cancelExamine(Integer friendId);
+
+    /**
+     * description: 删除指定好友
+     *
+     * @param friendId:
+     * @return ServerResponse
+     * @author 胡建华
+     * Date:  2023/1/2 21:00
+     */
+    ServerResponse<String> deleteFriend(Integer friendId);
 }
