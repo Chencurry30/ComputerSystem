@@ -3,8 +3,8 @@
   <div class="Breadcrumb">
     <el-breadcrumb class="BreadcrumbMain" separator="×">
       <el-breadcrumb-item :to="routerItem.path" class="bread-view-tags" v-for="(routerItem) in breadList"
-        :key="routerItem.path">
-        <em>{{ routerItem.name }}</em>
+        :key="routerItem.path" :class="{ active: ActiveRoute === routerItem.path }">
+        <em class="routeName">{{ routerItem.name }}</em>
         <i class="el-icon-close"></i>
       </el-breadcrumb-item>
     </el-breadcrumb>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import SessionStorageAction from '../../utils/SessionStorageAction'
 export default {
   name: 'BreadCrumb',
   data() {
@@ -26,27 +27,39 @@ export default {
     }
   },
   methods: {
+    //获取面包屑的方法 
     getBreadList(route) {
-      let routeItem = { name: route.name, path: route.path }
-      this.breadList.push(routeItem)
-      this.breadList = this.breadList.filter((item,index,selfArr) =>{
-        let list =  selfArr.map(item => {
-          return item.path
+      if (this.breadList.length === 2) {
+        this.breadList = JSON.parse(SessionStorageAction.getSessionStorage('bread'))
+      } else {
+        let routeItem = { name: route.name, path: route.path }
+        this.breadList.push(routeItem)
+        this.breadList = this.breadList.filter((item, index, selfArr) => {
+          let list = selfArr.map(item => {
+            return item.path
+          })
+          return list.indexOf(item.path) === index
         })
-        return list.indexOf(item.path) === index
-      })
+        //保存浏览的面包屑,避免刷新的时候丢失 
+        SessionStorageAction.saveSessionStorage('bread', JSON.stringify(this.breadList))
+        console.log(this.breadList);
+      }
     }
-
-
   },
-
   watch: {
-    $route(route) {
-      console.log(route);
-      //获取面包屑的List 
-      this.getBreadList(route)
+    $route: {
+      handler(newvalue) {
+        //获取面包屑的List 
+        this.getBreadList(newvalue)
+      },
+      immediate: true
     }
   },
+  computed: {
+    ActiveRoute() {
+      return this.$route.path
+    }
+  }
 }
 </script>
 
@@ -54,7 +67,6 @@ export default {
 .bread-view-tags {
   display: inline-block;
   position: relative;
-  cursor: pointer;
   height: 26px;
   line-height: 26px;
   border: 1px solid #d8dce5;
@@ -74,22 +86,37 @@ export default {
     margin-left: 10px;
   }
 
-  .em {
+  .routeName {
+    margin-left: 10px;
+    cursor: pointer;
     font-style: normal;
   }
-
 }
 
-// .bread-view-tags ::after{
-//     contain: '';
-//     width: 10px;
-//     height: 10px;
-//     background: red;
-//   }
+//当前路由的相关提醒 
+.active {
+  position: relative;
+  background-color: #42b983;
+  border-color: #42b983;
 
+  .routeName {
+    color: #fff;
+  }
+}
 
-
-
+.active ::before {
+  display: block;
+  position: absolute;
+  content: '';
+  top: 50%;
+  left: 10px;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #fff;
+  z-index: 999;
+}
 
 
 

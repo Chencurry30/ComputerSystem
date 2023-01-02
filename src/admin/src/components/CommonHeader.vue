@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import SessionStorageAction from '@/utils/SessionStorageAction';
 import { logoutAdmin } from '../services/systemService'
 export default {
   name: "CommonHeader",
@@ -46,6 +47,7 @@ export default {
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("menulist");
           sessionStorage.removeItem("menuRight");
+          SessionStorageAction.clearSessionStorage('bread')
           this.$router.push("/loginView");
         }
       })
