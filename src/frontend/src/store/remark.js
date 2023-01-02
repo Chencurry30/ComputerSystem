@@ -8,7 +8,7 @@ const remark = {
   },
   actions: {
     //获取点击回复时存储其他用户的信息
-    getotherinfo(context, otherinfo) {
+    getotherinfo(context, otherinfo ) {
       context.commit('GETOTHERINFO', otherinfo);
     },
 
