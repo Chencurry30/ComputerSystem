@@ -1,25 +1,35 @@
 <!--权限管理-->
 <template>
-  <div class="AllBox">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix selectBox">
+  <div class="appMain">
+    <div class="filter-container">
+      <div class="fillter-container-BtnList">
         <el-button type="primary" icon="el-icon-delete" @click="addRole" v-has="`system:role:add`">添加角色</el-button>
-        <el-button type="primary" icon="el-icon-delete" @click="saveTreeBtn">保存角色</el-button>
+        <el-button color="#E6A23C" icon="el-icon-edit" class="EditPrimiss">编辑权限</el-button>
+        <el-button type="primary" icon="el-icon-delete" @click="saveTreeBtn" v-if="false">保存角色</el-button>
       </div>
-      <div v-for="(item) in rolesData" :key="item.roleId" class="text item">
-        <div class="itemInfo">
-          {{ item.name }}
-        </div>
-        <div class="itemBtn">
-          <el-button type="primary" size="mini" icon="el-icon-edit" circle @click="editRole(item)"
-            v-has="`system:role:getMenu`"></el-button>
-          <el-button type="primary" size="mini" icon="el-icon-delete" circle v-if="item.roleId > 4"
-            @click="deleteRole(item.roleId)" v-has="`system:role:delete`"></el-button>
+    </div>
+
+    <div class="filter-primissList">
+      <div class="primissList">
+        <div v-for="(item) in rolesData" :key="item.roleId" class="roleFont roleItem">
+          <div class="itemInfo">
+            {{ item.name }}
+          </div>
+          <div class="itemBtn">
+            <el-button type="primary" size="mini" icon="el-icon-edit" circle @click="editRole(item)"
+              v-has="`system:role:getMenu`"></el-button>
+            <el-button type="primary" size="mini" icon="el-icon-delete" circle v-if="item.roleId > 4"
+              @click="deleteRole(item.roleId)" v-has="`system:role:delete`"></el-button>
+          </div>
         </div>
       </div>
-    </el-card>
+      <div class="primissTr">
+        <permissionsTree ref="PermissionsTree"></permissionsTree>
+      </div>
+
+
+    </div>
     <addRolepopUp ref="addRolepopUp"></addRolepopUp>
-    <permissionsTree ref="PermissionsTree"></permissionsTree>
   </div>
 </template>
 
@@ -72,7 +82,7 @@ export default {
         if (res.data.code === 200) {
           this.$message.success("删除角色成功！")
           this.getRoles()
-        } else if(res.data.code === 400) {
+        } else if (res.data.code === 400) {
           this.$message.error("无法删除该角色，该角色已经被分配给用户，请取消分配再删除!!")
         }
       })
@@ -86,31 +96,84 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.AllBox {
-  margin: 40px 10px;
-  display: flex;
+.appMain {
+  padding: 20px 5px 50px 15px;
+  display: block;
+}
 
-  .text {
-    font-size: 20px;
-  }
+.filter-container {
+  margin-left: 10px;
+  width: 290px;
 
-  /deep/.item {
+  .fillter-container-BtnList {
     display: flex;
-    padding: 5px 0;
-    align-items: center;
     justify-content: space-between;
-    height: 50px;
-    line-height: 30px;
-  }
 
-  .itemInfo {
-    margin-left: 10px;
-  }
-
-  .itemBtn {
-    margin-right: 15px;
+    .EditPrimiss {
+      color: #fff;
+      background: #d07607b0;
+    }
   }
 }
+
+.filter-primissList {
+  display: flex;
+
+  .primissList {
+    width: 300px;
+    border-right: 1px solid #9093994a;
+  }
+
+  .primissTree {}
+
+
+  .roleItem {
+    display: flex;
+    margin: 5px 10px;
+    padding: 15px 0;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .roleFont {
+    font-size: 20px;
+    background-color: #f4f4f5;
+    border-color: #e9e9eb;
+    color: #909399;
+    border-radius: 10px;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.itemInfo {
+  margin-left: 10px;
+}
+
+.itemBtn {
+  margin-right: 15px;
+}
+
 
 .selectBox {
   display: flex;
@@ -133,13 +196,5 @@ export default {
   /deep/.el-card__body {
     padding: 10px 30px;
   }
-}
-
-.sendInfo {
-  width: 60px;
-  height: 50px;
-  margin: 15px 0;
-  background: red;
-  text-align: center;
 }
 </style>

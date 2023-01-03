@@ -4,7 +4,7 @@ import loginView from '../views/baseView/loginView.vue';
 //首页
 import homeView from '../views/baseView/homeView'
 //包含首页的盒子 
-import indexBox from '../views/Index';
+import viewBox from '../views/viewBox';
 //个人中心
 import person from '../views/Setting/person.vue'
  const staticRoute = [
@@ -27,7 +27,7 @@ import person from '../views/Setting/person.vue'
     {
         path: '/indexBox',
         name: 'indexBox',
-        component: indexBox,
+        component: viewBox,
         //路由元信息
         meta:{
           isLogin:true

@@ -1,0 +1,20 @@
+.userSvg .svg-icon {
+  color: #40c9c6;
+}
+
+.teacherSvg .svg-icon {
+  color: #36a3f7;
+}
+
+.userSvg :hover{
+  color: #fff;
+  background: #40c9c6;
+  border-radius: 10px;
+  transition: all 1s ;
+}
+.teacherSvg :hover{
+  color: #fff;
+  background: #36a3f7;
+  border-radius: 10px;
+  transition: all 1s ;
+}

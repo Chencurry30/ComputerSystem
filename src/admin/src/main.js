@@ -18,6 +18,10 @@ import 'vue-video-player/src/custom-theme.css'
 Vue.use(VideoPlayer)
 //按钮权限
 import '@/utils/btnPernission'
+//引入Svg定义的Icon
+import './icons' 
+
+
 Vue.use(ElementUI);   // 这种方式引入了ElementUI中所有的组件
 Vue.use(VueRouter)    //引用插件
 new Vue({

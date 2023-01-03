@@ -1,0 +1,8 @@
+/*各个管理页面的CSS*/
+.appMain{
+  background: #fff;
+}
+/*每个页面的头部的相关搜索栏*/
+.filter-container{
+  margin-bottom: 10px;
+}

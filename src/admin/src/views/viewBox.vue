@@ -31,7 +31,7 @@ import CommonAside from '../components/CommonAside';
 import CommonHeader from '../components/CommonHeader';
 import BreadCrumb from '../components/Breadcrumb/BreadCrumb'      //面包屑
 export default {
-  name: 'index',
+  name: 'viewBox',
   components: {
     CommonAside,
     CommonHeader,
@@ -63,17 +63,20 @@ export default {
 .el-header {
   margin-top: 0;
   padding: 0;
-  height:auto !important;  //让高度靠自己填充
+  height: auto !important; //让高度靠自己填充
   border: none;
-  background-color: #fff;;
+  background-color: #fff;
+  ;
 }
 
 .el-main {
   padding-top: 0;
+  padding: 20px;
+  background-color: #f0f2f5;
+  position: relative;
 }
 
-.el-card__body,
-.el-main {
+.el-card__body {
   padding: 0;
 }
 </style>

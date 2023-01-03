@@ -1,6 +1,6 @@
 <!--题目相关的可视化数据-->
 <template>
-  <div class="MainCard" ref="Main"></div>
+  <div class="questionCard" ref="questionCard"></div>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
   mounted() {
     this.getCaedList()
     // 基于准备好的dom，初始化echarts实例
-    this.myChart = echarts.init(this.$refs.Main);
+    this.myChart = echarts.init(this.$refs.questionCard);
   },
   methods: {
     getHomeData() {
@@ -84,14 +84,25 @@ export default {
       ]
       };
       this.myChart.setOption(this.option);
+
+      this.changeEchar()
+    },
+    //修改echars中的宽度,使其成为100 
+    changeEchar(){
+      let canvas = this.$refs.questionCard.firstChild
+      canvas.style.width = 100 + '%'
+      canvas.querySelector('canvas').style.width = 100 + '%'
     }
+
+
   }
 }
 </script>
 
 <style lang="less" scoped>
-.MainCard {
+.questionCard {
   width: 100%;
-  height: 320px;
+  height: 100%;
+  background: #fff;
 }
 </style>

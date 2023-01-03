@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-duplicate-attributes -->
 <template>
   <el-menu
     default-active="1-4-1"

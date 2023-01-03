@@ -4,15 +4,15 @@
     <el-breadcrumb class="BreadcrumbMain" separator="×">
       <el-breadcrumb-item :to="routerItem.path" class="bread-view-tags" v-for="(routerItem) in breadList"
         :key="routerItem.path" :class="{ active: ActiveRoute === routerItem.path }">
-        <em class="routeName">{{ routerItem.name }}</em>
-        <i class="el-icon-close"></i>
+        <em class="routeName" :class="{firstRouteName:routerItem.path === '/homeView'}">{{ routerItem.name }}</em>
+        <!--这里加上不等于,让首页的面包屑不能被删除-->
+        <i class="el-icon-close" v-if="routerItem.path !== '/homeView'" @click.stop="delectRoute(routerItem)"></i>
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
 
 <script>
-import SessionStorageAction from '../../utils/SessionStorageAction'
 export default {
   name: 'BreadCrumb',
   data() {
@@ -24,27 +24,30 @@ export default {
         }
 
       ],
+      isFirstload: true,
     }
   },
   methods: {
     //获取面包屑的方法 
     getBreadList(route) {
-      if (this.breadList.length === 2) {
-        this.breadList = JSON.parse(SessionStorageAction.getSessionStorage('bread'))
-      } else {
-        let routeItem = { name: route.name, path: route.path }
-        this.breadList.push(routeItem)
-        this.breadList = this.breadList.filter((item, index, selfArr) => {
-          let list = selfArr.map(item => {
-            return item.path
-          })
-          return list.indexOf(item.path) === index
+      //因为监听路由开启的是立即监听，页面刷新的时候面包屑里面就绝对有两个元素 
+      let routeItem = { name: route.name, path: route.path }
+      this.breadList.push(routeItem)
+      this.breadList = this.breadList.filter((item, index, selfArr) => {
+        let list = selfArr.map(item => {
+          return item.path
         })
-        //保存浏览的面包屑,避免刷新的时候丢失 
-        SessionStorageAction.saveSessionStorage('bread', JSON.stringify(this.breadList))
-        console.log(this.breadList);
-      }
+        return list.indexOf(item.path) === index
+      })
+    },
+    //删除用户指定的当前的面包屑
+    delectRoute(routerItem){
+      //使用filter过滤函数,过滤掉面包屑中点击删除的路由记录 
+      this.breadList = this.breadList.filter(item=>{
+        return item.path !== routerItem.path
+      })
     }
+
   },
   watch: {
     $route: {
@@ -91,6 +94,9 @@ export default {
     cursor: pointer;
     font-style: normal;
   }
+  .firstRouteName{
+    margin-right: 10px;
+  }
 }
 
 //当前路由的相关提醒 
@@ -103,7 +109,6 @@ export default {
     color: #fff;
   }
 }
-
 .active ::before {
   display: block;
   position: absolute;
@@ -132,17 +137,5 @@ export default {
   position: relative;
   overflow: hidden;
   width: 100%;
-}
-
-.app-breadcrumb.el-breadcrumb {
-  display: inline-block;
-  font-size: 14px;
-  line-height: 50px;
-  margin-left: 8px;
-
-  .no-redirect {
-    color: #97a8be;
-    cursor: text;
-  }
 }
 </style>

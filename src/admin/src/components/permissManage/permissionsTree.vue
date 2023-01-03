@@ -1,6 +1,6 @@
 <template>
   <div class="TreeBox" v-show="isShowTree">
-    <div class="headerBox">
+    <div class="PrimissBox">
       <el-tag class="roleTitle">编辑的角色是</el-tag>
       <el-tag type="danger" class="roleTitle">{{ roleName }}</el-tag>
     </div>
@@ -21,7 +21,7 @@ export default {
     return {
       Tree: [],           //所有的权限构成的树形结构
       roleTree: [],      //角色携带的相关权限
-      isShowTree: false, //权限树是否展示
+      isShowTree: true, //权限树是否展示
       modifyRight: [],   //修改后的权限保存
       roleName: '',
     }
@@ -99,11 +99,12 @@ export default {
 
 <style lang="less" scoped>
 .TreeBox {
+  margin-left: 20px;
   width: 320px;
 
-  .headerBox {
+  .PrimissBox {
     width: 100%;
-
+    margin-bottom: 10px;
     .backBtn {
       margin: 10px 0 10px 10px;
     }

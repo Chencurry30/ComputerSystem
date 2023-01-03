@@ -1,15 +1,19 @@
 <!--用户管理-->
 <template>
-  <div class="home">
-    <div class="nav-select">
-      <div class="nav-left">
-        <el-button type="primary" icon="el-icon-plus" @click="addSubBtn" v-has="`system:user:add`">
-          新 增
-        </el-button>
+  <div class="appMain">
+    <div class="filter-container">
+      <div class="filter-container-searchInput">
+        <el-input  placeholder="头部尚未任何操作"></el-input>
+      </div>
+      <div class="filter-container-searchBtn">
+        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      </div>
+      <div class="filter-container-addBtn">
+        <el-button type="primary" icon="el-icon-plus" @click="addSubBtn" v-has="`system:user:add`">新 增</el-button>
       </div>
     </div>
     <!--主题-->
-    <div style="width: 100%" class="tableBox">
+    <div style="width: 100%" class="filter-table">
       <div class="tableTypeNav">
         <div class="userId">ID</div>
         <div class="username">用户名</div>
@@ -28,20 +32,20 @@
         <div class="sex">{{ fatherItem.sex }}</div>
         <div class="age">{{ fatherItem.age }}</div>
         <div class="roles">
-          <el-tag type="success" v-for="childItem in fatherItem.roles" :key="childItem.roleId">{{ childItem.name
-}}</el-tag>
+          <el-tag type="success" v-for="childItem in fatherItem.roles" :key="childItem.roleId">{{ childItem.name}}</el-tag>
         </div>
         <div class="action">
           <el-button type="success" size="mini" @click="giveUserRole(fatherItem)"
             v-has="`system:user:update`">赋角色</el-button>
+          <el-button type="primary" size="mini">查看</el-button>
           <el-button type="danger" size="mini" @click="deleteROW(fatherItem)"
             v-has="`system:user:delete`">删除</el-button>
         </div>
       </div>
     </div>
     <!--分页表单-->
-    <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
-      @current-change="handleCurrentChange" class="page">
+    <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize" class="filter-page"
+      @current-change="handleCurrentChange">
     </el-pagination>
 
     <!--提示框的组件-->
@@ -80,7 +84,7 @@ export default {
         if (res.data.code === 200) {
           this.tableData = res.data.data.list; //后端返回的值赋值给页面
           this.total = res.data.data.total; //后端返回的总数量 
-        }else if(res.data.code === 417){
+        } else if (res.data.code === 417) {
           this.tableData = []
           this.total = 0
         }
@@ -134,21 +138,17 @@ export default {
 </script>
 
 <style scoped lang="less">
-.nav-select {
-  margin: 10px 20px;
+.filter-container {
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
 
-  .nav-right {
-    display: flex;
-
-    .searchData {
-      margin-left: 10px;
-    }
+  .filter-container-searchInput,
+  .filter-container-searchBtn {
+    margin-right: 10px;
   }
 }
 
-.tableBox {
+.filter-table {
   min-width: 1420px;
 
   .tableTypeNav,
@@ -219,8 +219,8 @@ export default {
 
 }
 
-.page {
+.filter-page {
   text-align: center;
-  margin-top: 30px;
+  padding: 30px 0;
 }
 </style>

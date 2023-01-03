@@ -37,6 +37,7 @@
 
 <script>
 export default {
+  name:'personData',
   data() {
     return {
       value1: null,
