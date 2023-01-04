@@ -4,9 +4,9 @@
     <el-breadcrumb class="BreadcrumbMain" separator="×">
       <el-breadcrumb-item :to="routerItem.path" class="bread-view-tags" v-for="(routerItem) in breadList"
         :key="routerItem.path" :class="{ active: ActiveRoute === routerItem.path }">
-        <em class="routeName" :class="{firstRouteName:routerItem.path === '/homeView'}">{{ routerItem.name }}</em>
+        <em class="routeName" :class="{ firstRouteName: routerItem.path === '/homeView' }">{{ routerItem.name }}</em>
         <!--这里加上不等于,让首页的面包屑不能被删除-->
-        <i class="el-icon-close" v-if="routerItem.path !== '/homeView'" @click.stop="delectRoute(routerItem)"></i>
+        <i class="el-icon-close deleteRoute" v-if="routerItem.path !== '/homeView'" @click.stop="delectRoute(routerItem)"></i>
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
@@ -41,9 +41,9 @@ export default {
       })
     },
     //删除用户指定的当前的面包屑
-    delectRoute(routerItem){
+    delectRoute(routerItem) {
       //使用filter过滤函数,过滤掉面包屑中点击删除的路由记录 
-      this.breadList = this.breadList.filter(item=>{
+      this.breadList = this.breadList.filter(item => {
         return item.path !== routerItem.path
       })
     }
@@ -94,12 +94,12 @@ export default {
     cursor: pointer;
     font-style: normal;
   }
-  .firstRouteName{
+
+  .firstRouteName {
     margin-right: 10px;
   }
 }
-
-//当前路由的相关提醒 
+//当前路由激活状态的显示 
 .active {
   position: relative;
   background-color: #42b983;
@@ -122,20 +122,18 @@ export default {
   background: #fff;
   z-index: 999;
 }
-
-
-
-
-
-.Breadcrumb {
-  padding: 2px 10px;
-}
-
 .BreadcrumbMain {
   height: 100%;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
   width: 100%;
+
+  .Breadcrumb {
+    padding: 2px 10px;
+  }
+}
+.deleteRoute{
+  cursor: pointer;
 }
 </style>

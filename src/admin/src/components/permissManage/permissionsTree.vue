@@ -1,61 +1,99 @@
 <template>
-  <div class="TreeBox" v-show="isShowTree">
-    <div class="PrimissBox">
+  <div class="permissionTree" v-show="isShowTree">
+    <!--roleId不等于-1显示编辑角色  等于-1显示编辑权限树-->
+    <div class="permission-Header" v-if="roleId !== -1">
       <el-tag class="roleTitle">编辑的角色是</el-tag>
-      <el-tag type="danger" class="roleTitle">{{ roleName }}</el-tag>
+      <el-tag class="roleTitle" type="danger">{{ roleName }}</el-tag>
+      <el-button class="saveRoleBtn" type="primary" icon="el-icon-success" size="small"
+        @click="saveRole">保存修改</el-button>
     </div>
+    <div class="permission-Header" v-else>
+      <el-button class="editPermissionBtn" type="primary" icon="el-icon-plus" size="small">添加一级菜单</el-button>
+    </div>
+    <el-tree class="permission-Main" :data="Tree" :render-after-expand="false" show-checkbox node-key="menuId"
+      :default-checked-keys="roleTree" ref="tree">
 
-
-    <el-tree class="TreeMain" :data="Tree" show-checkbox node-key="menuId" :default-checked-keys="roleTree" ref="tree">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span>{{ node.label }}</span>
+        <span class="editPermissionBtnList">
+          <el-button type="primary" size="mini" @click.stop="() => addPermissionNode(data)">
+            添加
+          </el-button>
+          <el-button type="warning" size="mini" @click="() => remove(node, data)">
+            编辑
+          </el-button>
+          <el-button type="danger" size="mini" @click.stop="() => deletePermissionNode(data)">
+            删除
+          </el-button>
+        </span>
+      </span>
     </el-tree>
-
+    <AddPermissPopup ref="AddPermissPopup"></AddPermissPopup>
+    <deletePermissPopup ref="deletePermissPopup"></deletePermissPopup>
   </div>
 </template>
 
 <script>
-import { getCheckTreeList } from '@/utils/getTreeList'
+import { getCheckTreeList } from "@/utils/getTreeList"
 import { lookRole, getTree, saveTree } from '@/services/systemManage'
+import AddPermissPopup from '../permissTreePopup/addPermissPopup.vue'
+import deletePermissPopup from '../permissTreePopup/deletePermissPopup.vue' 
 export default {
   name: 'permissionsTree',
   data() {
     return {
       Tree: [],           //所有的权限构成的树形结构
       roleTree: [],      //角色携带的相关权限
-      isShowTree: true, //权限树是否展示
+      isShowTree: false, //权限树是否展示
       modifyRight: [],   //修改后的权限保存
       roleName: '',
+      //角色的Id,由父组件调用方法传递进来,为-1表示编辑权限,其他为编辑角色权限
+      roleId: -1,
     }
   },
+  components: {
+    AddPermissPopup,
+    deletePermissPopup
+  },
   mounted() {
-    this.getTree()
+    this.getPermissionsTree()
   },
   methods: {
     //获取一个角色已有的权限 
     showTreeList(roleId, roleList, roleName) {
-      this.$refs.tree.setCheckedKeys([])
-      this.roleName = roleName
-      this.roleTree = []
-      lookRole(roleId).then((res) => {
-        console.log(res);
-        if (res.data.code === 200) {
-          let data = res.data.data
-          data.forEach(item => {
-            if (item.level === 4) {
-              roleList.push(item.menuId)
-            }
-          });
-          console.log('check', this.roleTree);
-          this.roleTree = roleList
-          this.isShowTree = true
-        }else if(res.data.code === 417){
-          this.roleTree = []
-          console.log(typeof this.roleTree);
-          this.isShowTree = true
-        }
-      })
+      this.$refs.tree.setCheckedKeys([])  //清空上一个角色遗留的权限
+      //-1表示是编辑权限树 
+      if (roleId === -1) {
+        this.roleId = roleId
+        console.log(this.roleId);
+        this.isShowTree = true
+        return;
+      } else {
+        this.roleName = roleName
+        this.roleTree = []
+        this.roleId = roleId
+        lookRole(roleId).then((res) => {
+          if (res.data.code === 200) {
+            let data = res.data.data
+            data.forEach(item => {
+              if (item.level === 4) {
+                roleList.push(item.menuId)
+              }
+            });
+            console.log('check', this.roleTree);
+            this.roleTree = roleList
+            this.isShowTree = true
+          } else if (res.data.code === 417) {
+            this.roleTree = []
+            console.log(typeof this.roleTree);
+            this.isShowTree = true
+          }
+        })
+      }
+
     },
-    //获取所有权限构成的树形结构 
-    getTree() {
+    //获取所有的权限
+    getPermissionsTree() {
       getTree().then((res) => {
         if (res.data.code === 200) {
           this.Tree = res.data.data
@@ -73,62 +111,91 @@ export default {
       this.modifyRight = data
     },
     //保存角色修改的权限 
-    saveRoleTreeBtn(roleId) {
-      if (this.isShowTree === false) {
-        this.$message.error("请查看角色权限后再保存")
-      } else {
-        this.getCheckedNodes()
-        this.getHalfCheckedNodes()
-        let data = {}
-        data.roleId = roleId
-        data.menuList = this.modifyRight
-        saveTree(data).then((res) => {
-          if (res.data.code === 200) {
-            this.$message.success("修改角色权限成功！")
-            this.isShowTree = false
-          } else {
-            this.$message.error("修改角色权限失败,请重新操作！")
-          }
-          this.modifyRight = []
-        })
-      }
+    saveRole() {
+      console.log(123);
+      this.getCheckedNodes()
+      this.getHalfCheckedNodes()
+      let data = {}
+      data.roleId = this.roleId
+      data.menuList = this.modifyRight
+      saveTree(data).then((res) => {
+        if (res.data.code === 200) {
+          this.$message.success("修改角色权限成功！")
+          this.isShowTree = false
+        } else {
+          this.$message.error("修改角色权限失败,请重新操作！")
+        }
+        this.modifyRight = []
+      })
+
     },
+
+
+    //用来删除按钮
+    deletePermissionNode(primiseItem){
+      this.$refs.deletePermissPopup.showDialog('删除权限',primiseItem)
+    },
+    //添加权限菜单菜单
+    addPermissionNode(primiseItem) {
+      if (primiseItem.level === 1) {
+        this.$refs.AddPermissPopup.showDialog('添加一级菜单', primiseItem)
+      } else if (primiseItem.level === 2) {
+        this.$refs.AddPermissPopup.showDialog('添加二级菜单', primiseItem)
+      } else if (primiseItem.level === 3) {
+        this.$refs.AddPermissPopup.showDialog('添加按钮菜单', primiseItem)
+      }
+      else if (primiseItem.level === 4) {       //level为4表示的是按钮权限, 
+        this.$message.error('按钮权限不能在添加权限！！')
+      } else {
+        console.log(primiseItem);
+        const newChild = { id: 0, label: 'testtest', children: [] };
+        // if (!data.children) {
+        //   this.$set(data, 'children', []);
+        // }
+        primiseItem.children.push(newChild);
+      }
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.TreeBox {
+.permissionTree {
   margin-left: 20px;
-  width: 320px;
 
-  .PrimissBox {
+  .permission-Header {
     width: 100%;
     margin-bottom: 10px;
-    .backBtn {
-      margin: 10px 0 10px 10px;
-    }
 
     .roleTitle {
+      margin-left: 10px;
+    }
+
+    .saveRoleBtn,
+    .editPermissionBtn {
       margin-left: 10px;
     }
   }
 }
 
-.TreeMain {
-  ::v-deep .el-tree-node__content {
-    height: 32px;
+.permission-Main {
+  .editPermissionBtnList {
+    margin-left: 20px;
   }
-  ::v-deep .el-checkbox__inner{
+
+  ::v-deep .el-tree-node__content {
+    display: flex;
+    align-items: center;
+    height: 36px;
+  }
+
+  ::v-deep .el-checkbox__inner {
     width: 20px;
     height: 20px;
   }
-  ::v-deep .el-tree-node__label{
+
+  ::v-deep .el-tree-node__label {
     font-size: 16px;
   }
 }
-
-
-
-
 </style>

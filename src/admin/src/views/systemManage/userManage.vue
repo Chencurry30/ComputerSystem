@@ -3,7 +3,7 @@
   <div class="appMain">
     <div class="filter-container">
       <div class="filter-container-searchInput">
-        <el-input  placeholder="头部尚未任何操作"></el-input>
+        <el-input placeholder="头部尚未任何操作"></el-input>
       </div>
       <div class="filter-container-searchBtn">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
@@ -11,28 +11,34 @@
       <div class="filter-container-addBtn">
         <el-button type="primary" icon="el-icon-plus" @click="addSubBtn" v-has="`system:user:add`">新 增</el-button>
       </div>
+      <div class="filter-container-exportExcle">
+        <el-button type="primary" icon="el-icon-plus" @click="exportExcel">导出为excle</el-button>
+      </div>
     </div>
     <!--主题-->
-    <div style="width: 100%" class="filter-table">
-      <div class="tableTypeNav">
-        <div class="userId">ID</div>
-        <div class="username">用户名</div>
-        <div class="nickname">昵称</div>
-        <div class="email">邮箱</div>
-        <div class="sex">性别</div>
-        <div class="age">年龄</div>
-        <div class="roles">角色</div>
-        <div class="action">操作</div>
-      </div>
-      <div class="tableDataItem" v-for="(fatherItem) in tableData" :key="fatherItem.userId">
-        <div class="userId">{{ fatherItem.userId }}</div>
-        <div class="username">{{ fatherItem.username }}</div>
-        <div class="nickname">{{ fatherItem.nickname }}</div>
-        <div class="email">{{ fatherItem.email }}</div>
-        <div class="sex">{{ fatherItem.sex }}</div>
-        <div class="age">{{ fatherItem.age }}</div>
+    <!-- contenteditable="true"-->
+    <table style="width: 100%" class="filter-table"  id="result" ref="excleTable">
+      <tr class="tableTypeNav">
+        <th class="userId">ID</th>
+        <th class="username">用户名</th>
+        <th class="nickname">昵称</th>
+        <th class="email">邮箱</th>
+        <th class="sex">性别</th>
+        <th class="age">年龄</th>
+        <th class="roles">角色</th>
+        <th class="action">操作</th>
+      </tr>
+      <tr class="tableDataItem" v-for="(fatherItem) in tableData" :key="fatherItem.userId">
+        <td class="userId">{{ fatherItem.userId }}</td>
+        <td class="username">{{ fatherItem.username }}</td>
+        <td class="nickname">{{ fatherItem.nickname }}</td>
+        <td class="email">{{ fatherItem.email }}</td>
+        <td class="sex">{{ fatherItem.sex }}</td>
+        <td class="age">{{ fatherItem.age }}</td>
         <div class="roles">
-          <el-tag type="success" v-for="childItem in fatherItem.roles" :key="childItem.roleId">{{ childItem.name}}</el-tag>
+          <el-tag type="success" v-for="childItem in fatherItem.roles" :key="childItem.roleId">{{
+            childItem.name
+          }}</el-tag>
         </div>
         <div class="action">
           <el-button type="success" size="mini" @click="giveUserRole(fatherItem)"
@@ -41,8 +47,8 @@
           <el-button type="danger" size="mini" @click="deleteROW(fatherItem)"
             v-has="`system:user:delete`">删除</el-button>
         </div>
-      </div>
-    </div>
+      </tr>
+    </table>
     <!--分页表单-->
     <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize" class="filter-page"
       @current-change="handleCurrentChange">
@@ -55,6 +61,7 @@
 </template>
 
 <script>
+import exportExcle from '../../utils/exportExcle'
 import GiveRole from "../../components/permissManage/GiveRole.vue";
 import addUserpopUp from "../../components/permissManage/addUserpopUp.vue";
 import { getuserListApi, userDelete } from "../../services/systemManage";
@@ -78,6 +85,14 @@ export default {
     this.getFollowdiaryList();
   },
   methods: {
+
+    //导出函数用户数据
+    exportExcel() {
+      var csv = exportExcle.tableTocsv(this.$refs.excleTable)
+      var sheet = exportExcle.csvTosheet(csv)
+      var blob = exportExcle.sheetToblob(sheet);
+      exportExcle.openDownloadDialog(blob, '导出.xlsx')
+    },
     //获取所有列表的信息
     getFollowdiaryList() {
       getuserListApi(this.page).then((res) => {
@@ -126,13 +141,10 @@ export default {
           });
         });
     },
-
     //新增
     addSubBtn() {
       this.$refs.addUserpopUp.showDialogVisible();
     },
-
-
   },
 };
 </script>
@@ -143,7 +155,9 @@ export default {
   display: flex;
 
   .filter-container-searchInput,
-  .filter-container-searchBtn {
+  .filter-container-searchBtn,
+  .filter-container-addBtn,
+  .filter-container-exportExcle {
     margin-right: 10px;
   }
 }
@@ -212,7 +226,7 @@ export default {
   }
 
   .tableDataItem {
-    margin: 10px 0px;
+    margin: 10px 0;
     height: 50px;
     line-height: 50px;
   }

@@ -3,12 +3,10 @@
   <div class="appMain">
     <div class="filter-container">
       <div class="fillter-container-BtnList">
-        <el-button type="primary" icon="el-icon-delete" @click="addRole" v-has="`system:role:add`">添加角色</el-button>
-        <el-button color="#E6A23C" icon="el-icon-edit" class="EditPrimiss">编辑权限</el-button>
-        <el-button type="primary" icon="el-icon-delete" @click="saveTreeBtn" v-if="false">保存角色</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="addRole" v-has="`system:role:add`">添加角色</el-button>
+        <el-button type="warning" icon="el-icon-edit" @click="editPermission">编辑权限</el-button>
       </div>
     </div>
-
     <div class="filter-primissList">
       <div class="primissList">
         <div v-for="(item) in rolesData" :key="item.roleId" class="roleFont roleItem">
@@ -26,7 +24,6 @@
       <div class="primissTr">
         <permissionsTree ref="PermissionsTree"></permissionsTree>
       </div>
-
 
     </div>
     <addRolepopUp ref="addRolepopUp"></addRolepopUp>
@@ -87,10 +84,13 @@ export default {
         }
       })
     },
-    //保存修改后的角色权限 
-    saveTreeBtn() {
-      this.$refs.PermissionsTree.saveRoleTreeBtn(this.roleId)
-    },
+
+    //编辑权限树
+    editPermission() {
+      //调用方法传入-1,标明知识查看权限树 
+      this.$refs.PermissionsTree.showTreeList(-1, [], '')
+    }
+
   }
 };
 </script>
@@ -108,11 +108,6 @@ export default {
   .fillter-container-BtnList {
     display: flex;
     justify-content: space-between;
-
-    .EditPrimiss {
-      color: #fff;
-      background: #d07607b0;
-    }
   }
 }
 
@@ -124,9 +119,6 @@ export default {
     border-right: 1px solid #9093994a;
   }
 
-  .primissTree {}
-
-
   .roleItem {
     display: flex;
     margin: 5px 10px;
@@ -136,10 +128,10 @@ export default {
   }
 
   .roleFont {
-    font-size: 20px;
-    background-color: #f4f4f5;
+    font-size: 16px;
+    background-color: #409eff38;
     border-color: #e9e9eb;
-    color: #909399;
+    color: black;
     border-radius: 10px;
   }
 
