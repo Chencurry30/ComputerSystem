@@ -9,7 +9,7 @@
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
       <div class="filter-container-addBtn">
-        <el-button type="primary" icon="el-icon-plus" @click="addSubBtn" v-has="`system:user:add`">新 增</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="addUserBtn" v-has="`system:user:add`">新 增</el-button>
       </div>
       <div class="filter-container-exportExcle">
         <el-button type="primary" icon="el-icon-plus" @click="exportExcel">导出为excle</el-button>
@@ -17,7 +17,7 @@
     </div>
     <!--主题-->
     <!-- contenteditable="true"-->
-    <table style="width: 100%" class="filter-table"  id="result" ref="excleTable">
+    <table style="width: 100%" class="filter-table" id="result" ref="excleTable">
       <tr class="tableTypeNav">
         <th class="userId">ID</th>
         <th class="username">用户名</th>
@@ -54,16 +54,15 @@
       @current-change="handleCurrentChange">
     </el-pagination>
 
-    <!--提示框的组件-->
-    <GiveRole ref="GiveRole"></GiveRole>
-    <addUserpopUp ref="addUserpopUp"></addUserpopUp>
+    <giveUserRole ref="giveUserRole"></giveUserRole>
+    <addUserPopup ref="addUserPopup"></addUserPopup>
   </div>
 </template>
 
 <script>
 import exportExcle from '../../utils/exportExcle'
-import GiveRole from "../../components/permissManage/GiveRole.vue";
-import addUserpopUp from "../../components/permissManage/addUserpopUp.vue";
+import giveUserRole from "../../components/userPopup/giveUserRole";
+import addUserPopup from "../../components/userPopup/addUserPopup";
 import { getuserListApi, userDelete } from "../../services/systemManage";
 export default {
   name: "MemberArchive",
@@ -80,7 +79,9 @@ export default {
       pageSize: 6,
     };
   },
-  components: { GiveRole, addUserpopUp },
+  components: { giveUserRole, addUserPopup },
+
+
   mounted() {
     this.getFollowdiaryList();
   },
@@ -112,7 +113,7 @@ export default {
     },
     //赋予角色
     giveUserRole(fatherItem) {
-      this.$refs.GiveRole.showGiveRoles(fatherItem);
+      this.$refs.giveUserRole.showGiveRoles(fatherItem);
     },
     //删除列表
     deleteROW(fatherItem) {
@@ -141,14 +142,13 @@ export default {
           });
         });
     },
-    //新增
-    addSubBtn() {
-      this.$refs.addUserpopUp.showDialogVisible();
+    //新增用户弹窗
+    addUserBtn() {
+      this.$refs.addUserPopup.showDialog();
     },
   },
 };
 </script>
-
 <style scoped lang="less">
 .filter-container {
   padding: 10px;
@@ -167,74 +167,65 @@ export default {
 
   .tableTypeNav,
   .tableDataItem {
-    font-size: 18px;
     display: flex;
     align-items: center;
     text-align: center;
 
-    .userId {
-      padding: 12px 0;
-      width: 160px;
-      height: 100%;
-    }
-
-    .username {
-      padding: 12px 0;
-      width: 160px;
-      height: 100%;
-    }
-
+    .userId,
+    .username,
     .nickname {
-      padding: 12px 0;
       width: 160px;
-      height: 100%;
     }
 
     .email {
-      padding: 12px 0;
       width: 220px;
-      height: 100%;
     }
 
-    .sex {
-      padding: 12px 0;
-      width: 100px;
-      height: 100%;
-    }
-
+    .sex,
     .age {
-      padding: 12px 0;
       width: 100px;
-      height: 100%;
+
     }
 
     .roles {
-      padding: 12px 0;
+      font-weight: 400;
       width: 280px;
-      height: 100%;
-
+      color: #606266;
       .el-tag {
         margin: 0 5px;
       }
     }
 
+    .userId,
+    .sex,
+    .age,
+    .email,
+    .nickname,
+    .username{
+      height: 100%;
+      font-weight: 400;
+      display: inline-block;
+      box-sizing: border-box;
+      color: #606266;
+      overflow: hidden;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
     .action {
+      font-weight: 400;
       padding: 12px 0;
       width: 200px;
       height: 100%;
+      color: #606266;
     }
   }
 
   .tableDataItem {
-    margin: 10px 0;
     height: 50px;
     line-height: 50px;
   }
 
 }
 
-.filter-page {
-  text-align: center;
-  padding: 30px 0;
-}
 </style>

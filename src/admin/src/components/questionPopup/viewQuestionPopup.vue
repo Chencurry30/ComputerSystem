@@ -72,10 +72,10 @@
 
 
 <script>
-import { createPublicUrl } from '../../../utils/getPublicUrl'
+import { createPublicUrl } from '../../utils/getPublicUrl'
 //引入导入题目的upload 
 export default {
-  name: 'showQuestionMorePopup',
+  name: 'viewQuestionPopup',
   data() {
     return {
       QuestionData: {},

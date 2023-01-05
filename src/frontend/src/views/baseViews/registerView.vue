@@ -1,10 +1,10 @@
 <!--注册页面-->
 <template>
-  <div class="SystemUserBox">
-    <div class="registerBox">
-      <div class="registerFormTitle">用户注册</div>
-      <el-form class="registerForm" label-width="0px" ref="dataForm" :model="dataForm" :rules="checkForm">
-        <div class="formData">
+  <div class="SystemBgBox">
+    <div class="SystemMain">
+      <div class="SystemFormTitle">用户注册</div>
+      <el-form class="SystemForm" label-width="0px" ref="dataForm" :model="dataForm" :rules="checkForm">
+        <div class="SystemFormData">
           <el-form-item prop="username">
             <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入账号" v-model.trim="dataForm.username">
             </el-input>
@@ -27,16 +27,16 @@
 
           </el-form-item>
         </div>
-        <el-form-item class="reterieveBtn">
+        <div class="SystemFormMiddle">
           <el-button type="primary" @click="goToRegister" :disabled="!canRegister">注&nbsp;&nbsp;&nbsp;&nbsp;册
           </el-button>
-        </el-form-item>
+        </div>
 
-        <div class="userBack">
-          <div class="userBack-left font-text">
+        <div class="SystemFormBottom">
+          <div class="SystemFormBottom-left">
             <router-link :to="{ name: 'Home' }">返回首页</router-link>
           </div>
-          <div class="userBack-right font-text">
+          <div class="SystemFormBottom-right">
             <router-link :to="{ name: 'loginView' }">用户登录</router-link>
           </div>
         </div>
@@ -138,37 +138,12 @@ export default {
 
 
 <style scoped lang="less">
-.SystemUserBox {
-  margin-top: 60px;
-  position: relative;
+.SystemBgBox {
   height: 500px;
-  width: 100%;
   background: url(../../assets/Img/LoginImg/login_img.png) no-repeat 20% 50px #ddd;
-
-  .registerBox {
-    width: 450px;
-    height: 400px;
-    border-radius: 3px;
-    position: absolute;
-    right: 14%;
-    top: 10%;
-    background: #fff;
-
-    .registerFormTitle {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
-
-    .registerForm {
-      z-index: 999;
-      position: absolute;
-      top: 15%;
-      width: 100%;
-      padding: 0 20px;
-
+  .SystemMain {
+    height: 420px;
+    .SystemFormData {
       .clickImg {
         display: flex;
         position: absolute;
@@ -188,68 +163,41 @@ export default {
           background: url(../../assets/Img/Icon/show1.png) no-repeat center center;
         }
       }
+    }
+    .SystemFormBottom {
+      .SystemFormBottom-left {
 
-
-      .verification {
-
-        //验证码登录的输入框
-        .el-input {
-          width: 240px;
+        a {
+          color: #666;
         }
       }
 
-      //选择链接
-      .userBack {
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-
-        .userBack-left {
-
-          margin-left: 35px;
-
-          a {
-            color: #666;
-          }
-        }
-
-        .userBack-right {
-
-          margin-right: 35px;
-
-          a {
-            color: #666;
-          }
+      .SystemFormBottom-right {
+        a {
+          color: #666;
         }
       }
-
-      //修改了button的形式
-      .el-button {
-        padding: 12px 110px;
-      }
-
-      //修改输入框大小
+    }
+    .verification {
       .el-input {
-        left: 7%;
-        width: 360px;
+        width: 240px;
       }
-
-      .reterieveBtn {
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
-      }
-
+    }
+    .el-button {
+      padding: 12px 110px;
+    }
+    .el-input {
+      left: 7%;
+      width: 360px;
     }
   }
-
-  :deep .el-form-item__error {
-    color: #F56C6C;
-    font-size: 14px;
-    padding: 3px 0;
-    position: absolute;
-    top: 100%;
-    left: 35px;
-  }
+}
+:deep .el-form-item__error {
+  color: #F56C6C;
+  font-size: 14px;
+  padding: 3px 0;
+  position: absolute;
+  top: 100%;
+  left: 35px;
 }
 </style>

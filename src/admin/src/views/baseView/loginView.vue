@@ -13,7 +13,7 @@
           </el-form-item>
 
           <el-form-item prop="password">
-            <el-input type="password" prefix-icon="el-icon-thumb" placeholder="请输入密码"
+            <el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码"
               v-model.trim="dataForm.password"></el-input>
           </el-form-item>
         </div>
@@ -32,6 +32,7 @@ import Cookies from "js-cookie";
 import { CryAlgorithm } from "../../utils/uuid";
 import { userLogin } from "../../services/systemService";
 import { mapGetters } from "vuex"; //获取公钥的相关配置
+import {getNormPermissionRouteList} from '../../utils/Permisson/PermissonRoute'
 export default {
   name: "loginView",
   data() {
@@ -84,7 +85,7 @@ export default {
           } else if (res.data.code === 403) {
             this.$message.error("该用户无权限访问！");
           } else {
-            let menulist = JSON.stringify(res.data.data.menuList[0].children);
+            let menulist = JSON.stringify(getNormPermissionRouteList(res.data.data.menuList));
             let menuRight = JSON.stringify(res.data.data.rights);
             sessionStorage.setItem("menulist", menulist);
             sessionStorage.setItem("menuRight", menuRight);

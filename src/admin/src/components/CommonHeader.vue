@@ -30,7 +30,7 @@ export default {
   name: "CommonHeader",
   data() {
     return {
-      userImg: require("../assets/header.png"),
+      userImg: require("../assets/userImg.gif"),
     };
   },
 
@@ -91,7 +91,7 @@ export default {
       .user {
         width: 100%;
         height: 100%;
-        border-radius: 50%;
+        border-radius: 8px;
       }
     }
   }

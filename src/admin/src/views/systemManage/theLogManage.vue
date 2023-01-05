@@ -1,6 +1,12 @@
 <!--日志管理-->
 <template>
-  <div class="home">
+  <div class="appMain">
+    <div class="filter-container">
+      <el-button class="filter-container-delete" type="primary" icon="el-icon-delete" @click="deleteBtn(selections)"
+        v-has="`system:log:delete`">
+        批量删除
+      </el-button>
+    </div>
     <!--主题-->`
     <el-table :data="tableData" style="width: 100%" @selection-change="deleteLog">
       <el-table-column type="selection" width="55"></el-table-column>
@@ -13,7 +19,8 @@
       <el-table-column prop="description" label="事件注释"></el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="deleteROW(scope.row)" v-has="`system:log:delete`"></el-button>
+          <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="deleteROW(scope.row)"
+            v-has="`system:log:delete`"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -21,21 +28,14 @@
     <!-- 批量删除日志 -->
 
     <!--分页表单-->
-    <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
-      @current-change="handleCurrentChange" class="page">
+    <el-pagination class="filter-page" background layout="prev, pager, next" :total="total" :page-size="pageSize"
+      @current-change="handleCurrentChange">
     </el-pagination>
-    <el-button type="primary" icon="el-icon-delete" @click="deleteBtn(selections)" v-has="`system:log:delete`">
-      批量删除
-    </el-button>
     <!--提示框的组件-->
-    <GiveRole ref="GiveRole"></GiveRole>
-    <addUserpopUp ref="addUserpopUp"></addUserpopUp>
   </div>
 </template>
 
 <script>
-import GiveRole from "../../components/permissManage/GiveRole";
-import addUserpopUp from "../../components/permissManage/addUserpopUp.vue";
 import { getLoglist, logDelete, logsDelete } from "../../services/systemManage";
 export default {
   name: "MemberArchive",
@@ -62,7 +62,6 @@ export default {
       selections: [],
     };
   },
-  components: { GiveRole, addUserpopUp },
   mounted() {
     this.getFollowdiaryList();
   },
@@ -142,24 +141,13 @@ export default {
 };
 </script>
 
-<style scoped>
-.nav-select {
-  margin: 10px 20px;
+<style scoped lang="less">
+.filter-container {
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
-}
 
-.nav-right {
-  display: flex;
-}
-
-.searchData {
-  margin-left: 10px;
-}
-
-.page {
-  margin-top: 10px;
-
-  text-align: center;
+  .filter-container-delete {
+    margin-right: 10px;
+  }
 }
 </style>

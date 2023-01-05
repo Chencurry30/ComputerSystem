@@ -1,13 +1,13 @@
 <!--题目管理-->
 <template>
-  <div class="home">
-    <div class="nav-select">
-      <div class="nav-left">
+  <div class="appMain">
+    <div class="filter-container">
+      <div class="filter-container-left">
         <el-button type="primary" icon="el-icon-plus" @click="addSubBtn" v-has="`system:question:insert`">
           新 增
         </el-button>
       </div>
-      <div class="nav-right">
+      <div class="filter-container-right">
         <div class="nav-left-second">
           <el-select v-model="classfyId" placeholder="请选择筛选科目">
             <el-option label="全部" value="0">全部</el-option>
@@ -53,23 +53,23 @@
     </el-table>
 
     <!--分页表单-->
-    <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
-      @current-change="handleCurrentChange" class="page">
+    <el-pagination class="filter-page" background layout="prev, pager, next" :total="total" :page-size="pageSize"
+      @current-change="handleCurrentChange">
     </el-pagination>
 
     <!--提示框的组件-->
-    <QuestionPopup ref="QuestionPopup"></QuestionPopup>
+    <addQuestionPopup ref="addQuestionPopup"></addQuestionPopup>
     <!--显示题目详情的组件-->
-    <showQuestionMorePopup ref="showQuestionMorePopup"></showQuestionMorePopup>
+    <editQuestionPopup ref="editQuestionPopup"></editQuestionPopup>
     <!--修改题目信息的组件-->
-    <toEditPopup ref="toEditPopup"></toEditPopup>
+    <viewQuestionPopup ref="viewQuestionPopup"></viewQuestionPopup>
   </div>
 </template>
 
 <script>
-import QuestionPopup from '../../components/popUp/qustion/questionPopup.vue';
-import toEditPopup from '../../components/popUp/qustion/toEditPopup.vue';
-import ShowQuestionMorePopup from '../../components/popUp/qustion/showQuestionMorePopup';
+import addQuestionPopup from '../../components/questionPopup/addQuestionPopup';
+import editQuestionPopup from '../../components/questionPopup/editQuestionPopup';
+import viewQuestionPopup from '../../components/questionPopup/viewQuestionPopup';
 import { getQuestionList, deleteQuestionItem } from '../../services/questionManage'
 export default {
   name: "questionManage",
@@ -88,7 +88,7 @@ export default {
       coursId: "",
     };
   },
-  components: { QuestionPopup, ShowQuestionMorePopup, toEditPopup },
+  components: { addQuestionPopup, viewQuestionPopup, editQuestionPopup },
   mounted() {
     this.getQuestionData({ classfyId: 0, coursId: 0, pageNum: 1 });
   },
@@ -102,7 +102,7 @@ export default {
           this.tableData = res.data.data.list;
           this.total = res.data.data.total; //后端返回的总数量
           this.pageSize = res.data.data.pageSize
-        } else if(res.data.code === 417){
+        } else if (res.data.code === 417) {
           this.tableData = []
           this.total = 0
           this.pageSize = 8
@@ -127,11 +127,6 @@ export default {
       }
       this.getQuestionData({ classfyId, coursId, pageNum: this.page });
     },
-
-    //查看具体的题目
-    lookQuestionRow(row) {
-      this.$refs.showQuestionMorePopup.showQuestionMore(row)
-    },
     //删除对应的题目 
     deleteQuestionRow(row) {
       console.log(row);
@@ -152,25 +147,28 @@ export default {
     },
     //添加题目的弹窗 
     addSubBtn() {
-      this.$refs.QuestionPopup.showDialogVisible();
+      this.$refs.addQuestionPopup.showDialogVisible();
     },
     //编辑题目 
     editRow(rowItem) {
-      this.$refs.toEditPopup.showDialogVisible(rowItem);
+      this.$refs.editQuestionPopup.showDialogVisible(rowItem);
       //刷新页面 
       // this.getQuestionData({classfyId:0,coursId:0,pageNum:1});
+    },
+    //查看具体的题目
+    lookQuestionRow(row) {
+      this.$refs.viewQuestionPopup.showQuestionMore(row)
     }
   },
 };
 </script>
 
 <style scoped lang="less">
-.nav-select {
-  margin: 10px 20px;
+.filter-container {
   display: flex;
   justify-content: space-between;
 
-  .nav-right {
+  .filter-container-right {
     display: flex;
 
     .nav-left-second {
@@ -181,11 +179,6 @@ export default {
       margin-left: 10px;
     }
   }
-}
-
-.page {
-  text-align: center;
-  margin-top: 30px;
 }
 </style>
 

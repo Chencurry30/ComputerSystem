@@ -4,7 +4,8 @@ import Vue from 'vue';
 import router from '../router';
 import nProgress from 'nprogress';
 import "nprogress/nprogress.css"
-const baseurl = 'http://127.0.0.1:8989/api'
+
+const baseurl = process.env.VUE_APP_BASE_TARGET
 const Service = axios.create({
     baseURL: baseurl,
     timeout: 10000,

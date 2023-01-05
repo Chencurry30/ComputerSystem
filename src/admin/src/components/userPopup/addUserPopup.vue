@@ -48,15 +48,15 @@ export default {
       checkForm: {
         //用户名校验
         username: [
-          { validator: rules.FormValidate.Form().validateUserName, trigger: 'blur' }
+          { require: true, validator: rules.FormValidate.Form().validateUserName, trigger: 'blur' }
         ],
         //邮箱校验
         email: [
-          { validator: rules.FormValidate.Form().validateEmail, trigger: 'blur' }
+          { require: true, validator: rules.FormValidate.Form().validateEmail, trigger: 'blur' }
         ],
         //年龄校验
         age: [
-          { validator: rules.FormValidate.Form().validataAge, trigger: 'blur' }
+          { require: true, validator: rules.FormValidate.Form().validataAge, trigger: 'blur' }
         ],
       },
     };
@@ -65,8 +65,8 @@ export default {
     closeDialogVisible() {
       this.dialogVisible = false
     },
-    showDialogVisible() {
-      this.dialogVisible = !this.dialogVisible
+    showDialog() {
+      this.dialogVisible = true
     },
     submit() {
       let data = {}

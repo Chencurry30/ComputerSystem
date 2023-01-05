@@ -1,21 +1,18 @@
 <!--审核视屏-->
 <template>
-  <div class="home">
-    <!-- 顶部选择框-->
-    <div class="homeHeader">
-      <div class="HeaderLeft">
+  <div class="appMain">
+    
+    <div class="filter-container">
+      <div class="filter-container-left">
         <el-button type="primary" @click="getAuditVideoList(-1)">获取审核列表</el-button>
       </div>
-      <div class="HeaderRight">
+      <div class="filter-container-right">
         <el-button type="primary" @click="getAuditVideoList(0)">未审核</el-button>
         <el-button type="primary" @click="getAuditVideoList(1)">审核通过</el-button>
         <el-button type="primary" @click="getAuditVideoList(2)">审核不通过</el-button>
       </div>
-
-
     </div>
 
-    <!--中间部分-->
     <el-table :data="tableData" style="width: 100%">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="examineId" label="审核ID" width="100"></el-table-column>
@@ -36,9 +33,8 @@
       </el-table-column>
     </el-table>
 
-    <!--分页表单-->
-    <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
-      @current-change="handleCurrentChange" class="pageBody">
+    <el-pagination class="filter-page" background layout="prev, pager, next" :total="total" :page-size="pageSize"
+      @current-change="handleCurrentChange">
     </el-pagination>
 
     <!--审核视屏的弹窗-->
@@ -84,7 +80,7 @@ export default {
           this.tableData = res.data.data.list
           this.total = res.data.data.total; //后端返回的总数量
           this.pageSize = res.data.data.pageSize //后端返回的每一页的总数
-        }else if(res.data.code === 417){
+        } else if (res.data.code === 417) {
           this.page = 1
           this.tableData = []
           this.total = 0; //后端返回的总数量
@@ -113,24 +109,23 @@ export default {
 </script>
 
 <style scoped lang="less">
-.homeHeader {
-  margin: 15px 10px 5px 10px;
+.filter-container {
   display: flex;
   justify-content: space-between;
 
-  .HeaderLeft {
+  .filter-container-left {
     margin-left: 10px;
   }
 
-  .HeaderRight {
+  .filter-container-right {
     margin-right: 10px;
   }
 }
 
-.pageBody {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
+
+.filter-page {
+  margin-top: 10px;
+
+  text-align: center;
 }
 </style>

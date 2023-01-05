@@ -1,4 +1,4 @@
-<!--用来添加权限的弹窗-->
+<!--用来添加顶级菜单-->
 <template>
   <div class="dialogMain">
     <el-dialog class="dialogHeader" :title="dialogTitle" :visible.sync="dialogVisible" width="60%" center>
@@ -9,7 +9,7 @@
             <el-input v-model.trim="submitMenuData.path" placeholder="请输入添加菜单路径如:/system"></el-input>
           </el-form-item>
           <el-form-item label="菜单名称" prop="name">
-            <el-input v-model.trim="submitMenuData.name" placeholder="请输入添加菜单名称如:系统管理"></el-input>
+            <el-input v-model.trim="submitMenuData.name" placeholder="请输入添加菜单名称如:前台管理"></el-input>
           </el-form-item>
           <el-form-item label="组件名称" prop="component">
             <el-input v-model.trim="submitMenuData.component" placeholder="请输入添加菜单简称如:system"></el-input>
@@ -27,8 +27,9 @@
 
 <script>
 import permissionRule from '../../utils/permissionRule'
-import { addMenu } from '../../services/permissionManage'
+import { addTopMenu } from '../../services/permissionManage'
 export default {
+  name:'addTopPermissPopup',
   data() {
     return {
       dialogTitle: '',
@@ -40,7 +41,6 @@ export default {
         component: ''
       },
       //父路由的相关信息
-      fatherMenu: {},
       checkForm: {
         path: [
           { required: true, validator: permissionRule.FormValidate.Form().judgeDataIsEnglist, trigger: 'blur' }
@@ -56,9 +56,7 @@ export default {
   },
   methods: {
     //打开弹窗 
-    showDialog(title, fatherMenu) {
-      console.log(fatherMenu);
-      this.fatherMenu = fatherMenu
+    showDialog(title) {
       this.dialogTitle = title
       this.dialogVisible = true
     },
@@ -69,12 +67,9 @@ export default {
     submitMenu() {
       this.$refs.submitMenuData.validate((valid) => {
         if (valid) {
-          console.log(this.fatherMenu);
-          console.log(this.submitMenuData);
-          this.changeDataStyle()
-          addMenu(this.submitMenuData).then((res) => {
+          addTopMenu(this.submitMenuData).then((res) => {
             if (res.data.code === 200) {
-              this.$message.success('添加成功,请重新登录后查看效果')
+              this.$message.success('添加成功，请重新登录后查看效果')
               this.closeDialog()
               //用来刷新页面 
               this.$parent.getPermissionsTree()
@@ -87,13 +82,6 @@ export default {
         }
       });
     },
-
-    //修改对应数据的格式,满足提交后端的需要(其中尚未做按钮权限的添加) 
-    changeDataStyle() {
-      this.submitMenuData.parentId = this.fatherMenu.menuId
-      this.submitMenuData.menuType = 1
-      this.submitMenuData.level = this.fatherMenu.level + 1
-    }
   }
 };
 </script>

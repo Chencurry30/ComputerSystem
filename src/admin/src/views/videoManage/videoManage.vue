@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/no-useless-template-attributes -->
 <template>
-  <div class="home">
+  <div class="appMain">
     <!-- 顶部选择框-->
-    <div class="homeHeader"></div>
+    <div class="filter-container"></div>
     <!--中间部分-->
     <el-table :data="tableData" style="width: 100%">
       <el-table-column type="selection" width="55"></el-table-column>
@@ -12,7 +12,7 @@
       <el-table-column prop="time" label="上传时间"></el-table-column>
 
       <el-table-column label="操作" width="150">
-        <template slot-scope="scope" class="BtnList">
+        <template slot-scope="scope" class="filter-tableBtnList">
           <el-button type="primary" size="mini" @click="toViewRow(scope.row)" v-has="`system:video:view`">查看</el-button>
           <el-button type="danger" size="mini" @click="deleteTable(scope.row)"
             v-has="`system:video:delete`">删除</el-button>
@@ -21,8 +21,8 @@
     </el-table>
 
     <!--分页表单-->
-    <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
-      @current-change="handleCurrentChange" class="pageBody">
+    <el-pagination class="filter-page" background layout="prev, pager, next" :total="total" :page-size="pageSize"
+      @current-change="handleCurrentChange">
     </el-pagination>
 
     <!--弹窗的组件-->
@@ -61,7 +61,7 @@ export default {
           this.tableData = res.data.data.list
           this.total = res.data.data.total; //后端返回的总数量
           this.pageSize = res.data.data.pageSize //后端返回的每一页的总数
-        }else if(res.data.code === 417){
+        } else if (res.data.code === 417) {
           this.tableData = []
           this.total = 0
           this.pageSize = 8
@@ -88,35 +88,8 @@ export default {
     toViewRow(row) {
       this.$refs.toViewpopUp.showDialog(row)
     },
-
   }
-
 }
 </script>
-
 <style scoped>
-.homeHeader {
-  margin: 15px 10px 5px 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.HeaderRight {
-  margin-right: 10px;
-}
-
-.HeaderLeft {
-  margin-left: 10px;
-}
-
-.pageBody {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
-.BtnList {
-  display: flex;
-}
 </style>

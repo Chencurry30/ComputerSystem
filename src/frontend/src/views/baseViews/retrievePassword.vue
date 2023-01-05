@@ -1,12 +1,12 @@
 //找回密码的页面 
 <template>
-  <div class="SystemUserBox">
-    <div class="retrieveBox">
-      <div class="retrieveFormTitle">找回密码</div>
-      <el-form class="retrieveForm" label-width="0px" ref="dataForm" :model="dataForm" :rules="checkForm">
+  <div class="SystemBgBox">
+    <div class="SystemMain">
+      <div class="SystemFormTitle">找回密码</div>
+      <el-form class="SystemForm" label-width="0px" ref="dataForm" :model="dataForm" :rules="checkForm">
 
 
-        <div class="formData">
+        <div class="SystemFormData">
           <el-form-item prop="username">
             <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入账号" v-model.trim="dataForm.username">
             </el-input>
@@ -30,16 +30,16 @@
           </el-form-item>
         </div>
 
-        <el-form-item class="reterieveBtn">
+        <div class="SystemFormMiddle">
           <el-button type="primary" @click="goToRegister" :disabled="!canRegister">修改密码
           </el-button>
-        </el-form-item>
+        </div>
 
-        <div class="userBack">
-          <div class="stytem-left font-text">
+        <div class="SystemFormBottom">
+          <div class="SystemFormBottom-left">
             <router-link :to="{ name: 'Home' }">返回首页</router-link>
           </div>
-          <div class="stytem-right font-text">
+          <div class="ystemFormBottom-right">
             <router-link :to="{ name: 'loginView' }">用户登录</router-link>
           </div>
         </div>
@@ -142,38 +142,18 @@ export default {
 
 
 <style scoped lang="less">
-.SystemUserBox {
-  margin-top: 60px;
-  position: relative;
+.SystemBgBox {
   height: 500px;
-  width: 100%;
   background: url(../../assets/Img/LoginImg/login_img.png) no-repeat 20% 50px #ddd;
 
-  .retrieveBox {
-    width: 450px;
-    height: 400px;
-    position: absolute;
-    right: 14%;
-    top: 10%;
-    background: #ffffff;
-    border-radius: 10px;
+  .SystemMain {
+    height: 420px;
 
-    .retrieveFormTitle {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
 
-    .retrieveForm {
-      z-index: 999;
-      position: absolute;
-      top: 15%;
-      width: 100%;
-      padding: 0 20px;
+    .SystemForm {
 
-      .formData {
+
+      .SystemFormData {
 
         .clickImg {
           display: flex;
@@ -197,6 +177,24 @@ export default {
 
       }
 
+      .SystemFormBottom {
+        .SystemFormBottom-left {
+
+
+          a {
+            color: #666;
+          }
+        }
+
+        .SystemFormBottom-right {
+
+          a {
+            color: #666;
+          }
+        }
+      }
+
+
 
       .verification {
 
@@ -207,29 +205,7 @@ export default {
 
       }
 
-      .userBack {
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
 
-        .stytem-left {
-
-          margin-left: 35px;
-
-          a {
-            color: #666;
-          }
-        }
-
-        .stytem-right {
-
-          margin-right: 35px;
-
-          a {
-            color: #666;
-          }
-        }
-      }
 
       .el-button {
         padding: 12px 110px;
@@ -240,11 +216,6 @@ export default {
         width: 360px;
       }
 
-      .reterieveBtn {
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
-      }
     }
   }
 

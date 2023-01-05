@@ -99,15 +99,15 @@ export default {
 .appMain {
   padding: 20px 5px 50px 15px;
   display: block;
-}
 
-.filter-container {
-  margin-left: 10px;
-  width: 290px;
+  .filter-container {
+    margin-left: 10px;
+    width: 290px;
 
-  .fillter-container-BtnList {
-    display: flex;
-    justify-content: space-between;
+    .fillter-container-BtnList {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }
 
@@ -115,24 +115,27 @@ export default {
   display: flex;
 
   .primissList {
-    width: 300px;
+    width: 25rem;
     border-right: 1px solid #9093994a;
-  }
 
-  .roleItem {
-    display: flex;
-    margin: 5px 10px;
-    padding: 15px 0;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .roleItem {
+      display: flex;
+      margin: 5px 10px;
+      padding: 15px 0;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  .roleFont {
-    font-size: 16px;
-    background-color: #409eff38;
-    border-color: #e9e9eb;
-    color: black;
-    border-radius: 10px;
+    .roleFont {
+      font-size: 16px;
+      background-color: #409eff38;
+      border-color: #e9e9eb;
+      color: black;
+      border-radius: 10px;
+    }
+  }
+  .primissTr{
+    width: 100%;
   }
 
 }
@@ -141,25 +144,8 @@ export default {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .itemInfo {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .itemBtn {

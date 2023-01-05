@@ -1,33 +1,9 @@
 <!--组卷的弹窗-->
-  
 <template>
   <div class="questionDialog">
-    <el-dialog title="添加题目信息" :visible.sync="dialogVisible" width="80%" center>
-
+    <el-dialog title="编辑题目信息(题型和类别无法修改)" :visible.sync="dialogVisible" width="80%" center>
       <div class="submitQuestionBox">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <!--题目类别-->
-          <div class="item">
-            <el-form-item label="题目类别" prop="questionType">
-              <el-radio-group v-model="ruleForm.questionType">
-                <el-radio label="1">单选题</el-radio>
-                <el-radio label="2">多选题</el-radio>
-                <el-radio label="3">填空题</el-radio>
-                <el-radio label="4">解答题</el-radio>
-              </el-radio-group>
-            </el-form-item>
-
-            <!--题目学科-->
-            <el-form-item label="题目学科" prop="classifyId">
-              <el-radio-group v-model="ruleForm.classifyId">
-                <el-radio label="2">数学</el-radio>
-                <el-radio label="3">政治</el-radio>
-                <el-radio label="4">计网</el-radio>
-                <el-radio label="5">数据结构</el-radio>
-                <el-radio label="6">计组</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </div>
           <div class="item">
             <!--题干内容-->
             <el-form-item label="题干内容" prop="questionTitle">
@@ -111,11 +87,11 @@
             <!--题目年份-->
             <el-form-item label="题目年份" prop="year">
               <el-select v-model="ruleForm.year" placeholder="请选择题目年份">
-                <el-option label="2022" value="2023"></el-option>
-                <el-option label="2021" value="2022"></el-option>
-                <el-option label="2020" value="2021"></el-option>
-                <el-option label="2019" value="2020"></el-option>
-                <el-option label="2018" value="2019"></el-option>
+                <el-option label="2022" value="2022"></el-option>
+                <el-option label="2021" value="2021"></el-option>
+                <el-option label="2020" value="2020"></el-option>
+                <el-option label="2019" value="2019"></el-option>
+                <el-option label="2018" value="2018"></el-option>
               </el-select>
             </el-form-item>
           </div>
@@ -133,8 +109,8 @@
           </div>
 
           <el-form-item class="formBottom">
-            <el-button @click="closeDialogVisible">关闭弹窗</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button @click="resetForm('ruleForm')">关闭弹窗</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')">修改信息</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -146,57 +122,13 @@
 
 <script>
 //引入导入题目的upload 
-import ElUpload from '../../upload/elUpload';
-import { addQuestion } from '../../../services/questionManage'
+import ElUpload from '../upload/elUpload';
+import { editQuestionItem } from '../../services/questionManage'
 export default {
-  name: 'questionPopup',
+  name: 'editQuestionPopup',
   data() {
     return {
       ruleForm: {
-        questionTitle: '',    //题干
-        titleImage: '',       //题干图片
-        enclosureImage: '',   //题目中出现的图片
-        answer: '',            //题目答案
-        answerImage: '',      //题目答案对应的图片
-        questionType: '',    //题目的类型
-        solution: '',           //题目解答       
-        solutionImage: '',      //题目解答的图片
-        sites: '',             //题目考点 
-        classifyId: '',      //题目的学科
-        difficult: '',        //题目难度
-        source: '',           //题目来源 
-        year: '',               //题目年份
-        questionChoiceList: [
-          {
-            choiceName: 'A',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 1,
-            questionId: 1,
-
-          },
-          {
-            choiceName: 'B',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 2,
-            questionId: 2,
-          },
-          {
-            choiceName: 'C',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 3,
-            questionId: 3,
-          },
-          {
-            choiceName: 'D',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 4,
-            questionId: 4,
-          }
-        ]
       },
       rules: {
         //对应题目的内 
@@ -248,73 +180,30 @@ export default {
       console.log(this.ruleForm);
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          addQuestion(this.ruleForm).then((res) => {
+          editQuestionItem(this.ruleForm).then((res) => {
             console.log(res);
             if (res.data.code === 200) {
-              this.$message.success("添加成功")
+              this.$message.success("修改成功")
               this.dialogVisible = false
+              this.$parent.getQuestionData({classfyId:this.ruleForm.classifyId,coursId:0,pageNum:1})
             }
           })
         } else {
           this.$message({
-            message: "添加失败",
+            message: "修改失败",
             type: "error",
           })
           return false;
         }
       });
     },
-    closeDialogVisible() {
-      this.dialogVisible = false
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     },
-    showDialogVisible() {
+    showDialogVisible(rowItem) {
+      console.log(123123123123);
+      this.ruleForm = rowItem
       this.dialogVisible = true
-      this.ruleForm = {
-        questionTitle: '',    //题干
-        titleImage: '',       //题干图片
-        enclosureImage: '',   //题目中出现的图片
-        answer: '',            //题目答案
-        answerImage: '',      //题目答案对应的图片
-        questionType: '',    //题目的类型
-        solution: '',           //题目解答       
-        solutionImage: '',      //题目解答的图片
-        sites: '',             //题目考点 
-        classifyId: '',      //题目的学科
-        difficult: '',        //题目难度
-        source: '',           //题目来源 
-        year: '',               //题目年份
-        questionChoiceList: [
-          {
-            choiceName: 'A',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 1,
-            questionId: 1,
-
-          },
-          {
-            choiceName: 'B',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 2,
-            questionId: 2,
-          },
-          {
-            choiceName: 'C',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 3,
-            questionId: 3,
-          },
-          {
-            choiceName: 'D',
-            choiceTitle: '',
-            titleImage: '',
-            choiceId: 4,
-            questionId: 4,
-          }
-        ]
-      }
     }
   }
 }

@@ -28,7 +28,6 @@ export default {
     getHomeData() {
       return new Promise((resolve, reject) => {
         getHomeCount().then(res => {
-          console.log(res);
           this.questionTypeCount = []
           let value = []
           let list = res.data.data.questionTypeCount

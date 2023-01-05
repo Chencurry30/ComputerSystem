@@ -1,10 +1,19 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  lintOnSave: false,
-})
-const path = require('path')
+  runtimeCompiler: true,
 
+  //如果是开发环境,开启eslint识别 
+  lintOnSave: process.env.NODE_ENV === 'development',
+
+  dev: {
+    host: '192.168.13.20',
+    port: 8080,
+  }
+
+})
+
+const path = require('path')
 module.exports = {
   chainWebpack: config => {
     // svg图标加载

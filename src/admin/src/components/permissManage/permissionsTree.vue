@@ -1,35 +1,37 @@
 <template>
-  <div class="permissionTree" v-show="isShowTree">
+  <div class="permission_Tree" v-show="isShowTree">
     <!--roleId不等于-1显示编辑角色  等于-1显示编辑权限树-->
-    <div class="permission-Header" v-if="roleId !== -1">
+    <div class="permission_Header" v-if="roleId !== -1">
       <el-tag class="roleTitle">编辑的角色是</el-tag>
       <el-tag class="roleTitle" type="danger">{{ roleName }}</el-tag>
       <el-button class="saveRoleBtn" type="primary" icon="el-icon-success" size="small"
         @click="saveRole">保存修改</el-button>
     </div>
-    <div class="permission-Header" v-else>
-      <el-button class="editPermissionBtn" type="primary" icon="el-icon-plus" size="small">添加一级菜单</el-button>
+    <div class="permission_Header" v-else>
+      <el-button class="editPermissionBtn" type="primary" icon="el-icon-plus" size="small"
+        @click="addTopMenu">添加顶级菜单</el-button>
     </div>
-    <el-tree class="permission-Main" :data="Tree" :render-after-expand="false" show-checkbox node-key="menuId"
+    <el-tree class="permission_Content" :data="Tree" :render-after-expand="false" show-checkbox node-key="menuId"
       :default-checked-keys="roleTree" ref="tree">
-
-      <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
-        <span class="editPermissionBtnList">
+      <div class="custom-tree-node permission_Main" slot-scope="{ node, data }">
+        <div>{{ node.label }}</div>
+        <div class="editPermission_Btn">
           <el-button type="primary" size="mini" @click.stop="() => addPermissionNode(data)">
             添加
           </el-button>
-          <el-button type="warning" size="mini" @click="() => remove(node, data)">
+          <el-button type="warning" size="mini" @click="() => editPermissionNode(data)">
             编辑
           </el-button>
           <el-button type="danger" size="mini" @click.stop="() => deletePermissionNode(data)">
             删除
           </el-button>
-        </span>
-      </span>
+        </div>
+      </div>
     </el-tree>
     <AddPermissPopup ref="AddPermissPopup"></AddPermissPopup>
     <deletePermissPopup ref="deletePermissPopup"></deletePermissPopup>
+    <addTopPermissPopup ref="addTopPermissPopup"></addTopPermissPopup>
+    <editPermissPopup ref="editPermissPopup"></editPermissPopup>
   </div>
 </template>
 
@@ -37,7 +39,9 @@
 import { getCheckTreeList } from "@/utils/getTreeList"
 import { lookRole, getTree, saveTree } from '@/services/systemManage'
 import AddPermissPopup from '../permissTreePopup/addPermissPopup.vue'
-import deletePermissPopup from '../permissTreePopup/deletePermissPopup.vue' 
+import deletePermissPopup from '../permissTreePopup/deletePermissPopup.vue'
+import addTopPermissPopup from '../permissTreePopup/addTopPermissPopup.vue'
+import editPermissPopup from '../permissTreePopup/editPermissPopup.vue'
 export default {
   name: 'permissionsTree',
   data() {
@@ -53,7 +57,9 @@ export default {
   },
   components: {
     AddPermissPopup,
-    deletePermissPopup
+    deletePermissPopup,
+    addTopPermissPopup,
+    editPermissPopup
   },
   mounted() {
     this.getPermissionsTree()
@@ -129,11 +135,9 @@ export default {
       })
 
     },
-
-
-    //用来删除按钮
-    deletePermissionNode(primiseItem){
-      this.$refs.deletePermissPopup.showDialog('删除权限',primiseItem)
+    //用来删除按钮或菜单
+    deletePermissionNode(primiseItem) {
+      this.$refs.deletePermissPopup.showDialog('删除权限', primiseItem)
     },
     //添加权限菜单菜单
     addPermissionNode(primiseItem) {
@@ -143,27 +147,28 @@ export default {
         this.$refs.AddPermissPopup.showDialog('添加二级菜单', primiseItem)
       } else if (primiseItem.level === 3) {
         this.$refs.AddPermissPopup.showDialog('添加按钮菜单', primiseItem)
-      }
-      else if (primiseItem.level === 4) {       //level为4表示的是按钮权限, 
+      } else {       //level为4表示的是按钮权限, 
         this.$message.error('按钮权限不能在添加权限！！')
-      } else {
-        console.log(primiseItem);
-        const newChild = { id: 0, label: 'testtest', children: [] };
-        // if (!data.children) {
-        //   this.$set(data, 'children', []);
-        // }
-        primiseItem.children.push(newChild);
       }
+    },
+    //用于添加顶级菜单权限 
+    addTopMenu() {
+      this.$refs.addTopPermissPopup.showDialog('添加顶级菜单')
+    },
+    //用于编辑按钮或菜单
+    editPermissionNode(primiseItem) {
+      this.$refs.editPermissPopup.showDialog('编辑菜单信息', primiseItem.menuId)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.permissionTree {
+.permission_Tree {
+  width: 100%;
   margin-left: 20px;
 
-  .permission-Header {
+  .permission_Header {
     width: 100%;
     margin-bottom: 10px;
 
@@ -176,26 +181,35 @@ export default {
       margin-left: 10px;
     }
   }
-}
 
-.permission-Main {
-  .editPermissionBtnList {
-    margin-left: 20px;
-  }
+  .permission_Content {
+    width: 50%;
 
-  ::v-deep .el-tree-node__content {
-    display: flex;
-    align-items: center;
-    height: 36px;
-  }
+    .permission_Main {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  ::v-deep .el-checkbox__inner {
-    width: 20px;
-    height: 20px;
-  }
+    .editPermission_Btn {
+      margin-left: 20px;
+    }
 
-  ::v-deep .el-tree-node__label {
-    font-size: 16px;
+    ::v-deep .el-tree-node__content {
+      display: flex;
+      align-items: center;
+      height: 36px;
+    }
+
+    ::v-deep .el-checkbox__inner {
+      width: 20px;
+      height: 20px;
+    }
+
+    ::v-deep .el-tree-node__label {
+      font-size: 16px;
+    }
   }
 }
 </style>

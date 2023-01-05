@@ -1,0 +1,129 @@
+/*登录注册等页面盒子*/
+.SystemBgBox {
+  margin-top: 60px;
+  position: relative;
+  height: 440px;
+  width: 100%;
+}
+
+.SystemMain {
+  width: 450px;
+  height: 350px;
+  border-radius: 3px;
+  position: absolute;
+  right: 14%;
+  top: 10%;
+  background: #fff;
+}
+
+.SystemFormTitle {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.SystemForm {
+  z-index: 999;
+  position: absolute;
+  top: 18%;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.SystemFormTop {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.SystemFormTop-left {
+  margin-left: 25px;
+}
+
+.SystemFormTop-right {
+  margin-right: 25px;
+}
+
+.SystemFormTop-leftbtn {
+  display: flex;
+}
+
+/*未选中状态*/
+.dashDiv {
+  border-radius: 1.8667rem;
+  border: 0.03rem solid #cbcbcb;
+  background-color: #dad6d6;
+  width: 42px;
+  height: 16px;
+  margin-top: 0.26rem;
+  margin-right: 0.4rem;
+  box-sizing: border-box;
+}
+
+.dashDiv .dashSpan {
+  border-radius: 7px;
+  border: 0.03rem solid #cbcbcb;
+  background-color: #ffffff;
+  float: left;
+  margin-left: 0.04rem;
+  margin-top: 0.019rem;
+  width: 24px;
+  height: 14px;
+  box-sizing: border-box;
+}
+
+/*选中状态*/
+.dashDivSelectd {
+  background-color: #4cd964;
+  transition: 0.5s;
+  border-radius: 1.8667rem;
+  border: 0.03rem solid #ffffff;
+  width: 42px;
+  height: 16px;
+  margin-top: 0.26rem;
+  margin-right: 0.4rem;
+  box-sizing: border-box;
+}
+
+.dashDivSelectd .dashSpan {
+  border-radius: 7px;
+  border: 0.03rem solid #ffffff;
+  background-color: #ffffff;
+  float: right;
+  margin-right: 0.04rem;
+  margin-top: 0.019rem;
+  width: 24px;
+  height: 14px;
+  box-sizing: border-box;
+}
+
+
+.SystemFormMiddle {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.SystemFormBottom {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  line-height: 22px;
+}
+
+.SystemFormBottom-left {
+  margin-left: 25px;
+}
+
+.SystemFormBottom-right {
+  margin-right: 25px;
+}
+
+
+.promptTitle {
+  margin-top: 1px;
+  cursor: pointer;
+}

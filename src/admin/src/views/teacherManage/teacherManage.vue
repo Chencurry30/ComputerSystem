@@ -1,8 +1,8 @@
 <!--审核老师-->
 <template>
-  <div class="home">
-    <div class="header"></div>
-    <div style="width: 100%" class="tableBox">
+  <div class="appMain">
+    <div class="filter-container"></div>
+    <div style="width: 100%" class="filter-table">
       <div class="tableTypeNav">
         <div class="examineId">申请ID</div>
         <div class="name">申请人名称</div>
@@ -29,9 +29,9 @@
         </div>
         <div class="action">
           <el-button type="success" size="mini" @click="agreeRow(fatherItem)" v-has="`system:teacher:sh`"
-          v-if="fatherItem.examineStatus === 0 ">同意</el-button>
-          <el-button type="danger" size="mini" @click="disagreeRow(fatherItem)"
-          v-if="fatherItem.examineStatus === 0 "  v-has="`system:teacher:sh`">不同意</el-button>
+            v-if="fatherItem.examineStatus === 0">同意</el-button>
+          <el-button type="danger" size="mini" @click="disagreeRow(fatherItem)" v-if="fatherItem.examineStatus === 0"
+            v-has="`system:teacher:sh`">不同意</el-button>
         </div>
       </div>
     </div>
@@ -84,80 +84,78 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.header {
-  margin-bottom: 20px;
-}
-
-.tableBox {
+.filter-table {
   min-width: 1420px;
 
   .tableTypeNav,
   .tableDataItem {
-    font-size: 18px;
     display: flex;
     align-items: center;
     text-align: center;
 
-    .examineId {
-      padding: 12px 0;
-      width: 90px;
-      height: 100%;
-    }
-
-    .name {
-      padding: 12px 0;
-      width: 160px;
-      height: 100%;
-    }
-
+    .examineId,
+    .name,
     .directionName {
-      padding: 12px 0;
       width: 140px;
-      height: 100%;
     }
 
     .background {
-      padding: 12px 0;
-      width: 150px;
-      height: 100%;
+      width: 140px;
     }
 
     .applyDate {
-      padding: 12px 0;
-      width: 200px;
-      height: 100%;
+      width: 220px;
     }
 
-    .applyReason {
-      padding: 12px 0;
-      width: 210px;
-      height: 100%;
+    .applyReason,
+    .reviewComment,
+    .examineStatus {
+      width: 160px;
+
     }
 
-    .reviewComment {
-      padding: 12px 0;
-      width: 210px;
-      height: 100%;
 
+    .examineStatus {
+      font-weight: 400;
+      width: 120px;
+      color: #606266;
+
+      .el-tag {
+        margin: 0 5px;
+      }
+    }
+
+    .examineId,
+    .name,
+    .directionName,
+    .background,
+    .applyDate,
+    .applyReason,
+    .reviewComment,
+    .examineStatus {
+      height: 100%;
+      font-weight: 400;
+      display: inline-block;
+      box-sizing: border-box;
+      color: #606266;
+      overflow: hidden;
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     .action {
+      font-weight: 400;
       padding: 12px 0;
       width: 200px;
       height: 100%;
+      color: #606266;
     }
   }
 
   .tableDataItem {
-    margin: 10px 0px;
     height: 50px;
     line-height: 50px;
   }
 
-}
-
-.page {
-  text-align: center;
-  margin-top: 30px;
 }
 </style>
