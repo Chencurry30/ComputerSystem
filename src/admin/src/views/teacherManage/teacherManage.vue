@@ -14,7 +14,11 @@
         <div class="examineStatus">状态</div>
         <div class="action">操作</div>
       </div>
-      <div class="tableDataItem" v-for="(fatherItem) in teacherData" :key="fatherItem.examineId">
+      <div
+        class="tableDataItem"
+        v-for="fatherItem in teacherData"
+        :key="fatherItem.examineId"
+      >
         <div class="examineId">{{ fatherItem.examineId }}</div>
         <div class="name">{{ fatherItem.name }}</div>
         <div class="directionName">{{ fatherItem.directionName }}</div>
@@ -24,14 +28,28 @@
         <div class="reviewComment">{{ fatherItem.reviewComment }}</div>
         <div class="examineStatus">
           <el-tag v-if="fatherItem.examineStatus === 0">未审核</el-tag>
-          <el-tag type="success" v-else-if="fatherItem.examineStatus === 1">通&nbsp;&nbsp;&nbsp;过</el-tag>
+          <el-tag type="success" v-else-if="fatherItem.examineStatus === 1"
+            >通&nbsp;&nbsp;&nbsp;过</el-tag
+          >
           <el-tag type="danger" v-else>未通过</el-tag>
         </div>
         <div class="action">
-          <el-button type="success" size="mini" @click="agreeRow(fatherItem)" v-has="`system:teacher:sh`"
-            v-if="fatherItem.examineStatus === 0">同意</el-button>
-          <el-button type="danger" size="mini" @click="disagreeRow(fatherItem)" v-if="fatherItem.examineStatus === 0"
-            v-has="`system:teacher:sh`">不同意</el-button>
+          <el-button
+            type="success"
+            size="mini"
+            @click="agreeRow(fatherItem)"
+            v-has="`system:teacher:sh`"
+            v-if="fatherItem.examineStatus === 0"
+            >同意</el-button
+          >
+          <el-button
+            type="danger"
+            size="mini"
+            @click="disagreeRow(fatherItem)"
+            v-if="fatherItem.examineStatus === 0"
+            v-has="`system:teacher:sh`"
+            >不同意</el-button
+          >
         </div>
       </div>
     </div>
@@ -40,53 +58,51 @@
 </template>
 
 <script>
-import teacherReply from '../../components/popUp/teacher/teacherReply'
-import { getExamine, agreeTeacherApply } from '../../services/teacherManage'
+import teacherReply from "../../components/popUp/teacher/teacherReply";
+import { getExamine, agreeTeacherApply } from "../../services/teacherManage";
 export default {
-  name: 'teacherManage',
+  name: "teacherManage",
   data() {
     return {
       teacherData: [],
-    }
+    };
   },
   components: {
-    teacherReply
+    teacherReply,
   },
   mounted() {
     //获取所有的审核列表
-    this.getExamineData()
+    this.getExamineData();
   },
   methods: {
-    //获取所有的审核列表 
+    //获取所有的审核列表
     getExamineData() {
       getExamine().then((res) => {
         if (res.data.code === 200) {
-          this.teacherData = res.data.data
+          this.teacherData = res.data.data;
         }
-      })
+      });
     },
     //同意审核
     agreeRow(row) {
       agreeTeacherApply(row.examineId).then((res) => {
         if (res.data.code === 200) {
-          this.$message.success('审核成功！！！')
-          this.getExamineData()
+          this.$message.success("审核成功！！！");
+          this.getExamineData();
         }
-      })
+      });
     },
 
     //拒接审核
     disagreeRow(row) {
-      this.$refs.teacherReply.showDialog(row)
-    }
-  }
-}
+      this.$refs.teacherReply.showDialog(row);
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
 .filter-table {
-  min-width: 1420px;
-
   .tableTypeNav,
   .tableDataItem {
     display: flex;
@@ -111,9 +127,7 @@ export default {
     .reviewComment,
     .examineStatus {
       width: 160px;
-
     }
-
 
     .examineStatus {
       font-weight: 400;
@@ -156,6 +170,5 @@ export default {
     height: 50px;
     line-height: 50px;
   }
-
 }
 </style>

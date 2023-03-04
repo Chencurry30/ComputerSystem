@@ -3,41 +3,65 @@
   <div class="appMain">
     <div class="filter-container">
       <div class="fillter-container-BtnList">
-        <el-button type="primary" icon="el-icon-plus" @click="addRole" v-has="`system:role:add`">添加角色</el-button>
-        <el-button type="warning" icon="el-icon-edit" @click="editPermission">编辑权限</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="addRole"
+          v-has="`system:role:add`"
+          >添加角色</el-button
+        >
+        <el-button type="primary" icon="el-icon-edit" @click="editPermission"
+          >编辑权限</el-button
+        >
       </div>
     </div>
     <div class="filter-primissList">
       <div class="primissList">
-        <div v-for="(item) in rolesData" :key="item.roleId" class="roleFont roleItem">
+        <div
+          v-for="item in rolesData"
+          :key="item.roleId"
+          class="roleFont roleItem"
+        >
           <div class="itemInfo">
             {{ item.name }}
           </div>
           <div class="itemBtn">
-            <el-button type="primary" size="mini" icon="el-icon-edit" circle @click="editRole(item)"
-              v-has="`system:role:getMenu`"></el-button>
-            <el-button type="primary" size="mini" icon="el-icon-delete" circle v-if="item.roleId > 4"
-              @click="deleteRole(item.roleId)" v-has="`system:role:delete`"></el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-edit"
+              circle
+              @click="editRole(item)"
+              v-has="`system:role:getMenu`"
+            ></el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-delete"
+              circle
+              v-if="item.roleId > 4"
+              @click="deleteRole(item.roleId)"
+              v-has="`system:role:delete`"
+            ></el-button>
           </div>
         </div>
       </div>
       <div class="primissTr">
         <permissionsTree ref="PermissionsTree"></permissionsTree>
       </div>
-
     </div>
     <addRolepopUp ref="addRolepopUp"></addRolepopUp>
   </div>
 </template>
 
 <script>
-import { getRoleList, roleDelete } from '../../services/systemManage'
-import addRolepopUp from '@/components/permissManage/addRolepopUp.vue'
-import PermissionsTree from '@/components/permissManage/permissionsTree.vue';
+import { getRoleList, roleDelete } from "../../services/systemManage";
+import addRolepopUp from "@/components/permissManage/addRolepopUp.vue";
+import PermissionsTree from "@/components/permissManage/permissionsTree.vue";
 export default {
   data() {
     return {
-      //存储角色的列表 
+      //存储角色的列表
       rolesData: [],
       roleId: 0,
       showTree: false,
@@ -48,8 +72,8 @@ export default {
     PermissionsTree,
   },
   mounted() {
-    //获取角色列表 
-    this.getRoles()
+    //获取角色列表
+    this.getRoles();
   },
   methods: {
     //获取角色列表
@@ -58,40 +82,41 @@ export default {
         if (res.data.code === 200) {
           this.rolesData = res.data.data;
         } else if (res.data.code === 403) {
-          this.$message.error("权限不足！！！")
+          this.$message.error("权限不足！！！");
         }
-      })
+      });
     },
-    //添加角色 
+    //添加角色
     addRole() {
-      this.$refs.addRolepopUp.showDialogVisible()
+      this.$refs.addRolepopUp.showDialogVisible();
     },
-    //编辑角色 
+    //编辑角色
     editRole(item) {
       this.showTree = true;
-      this.roleId = item.roleId
-      this.$refs.PermissionsTree.showTreeList(item.roleId, [], item.name)
+      this.roleId = item.roleId;
+      this.$refs.PermissionsTree.showTreeList(item.roleId, [], item.name);
     },
-    //删除角色 
+    //删除角色
     deleteRole(roleId) {
       roleDelete(roleId).then((res) => {
         console.log(res);
         if (res.data.code === 200) {
-          this.$message.success("删除角色成功！")
-          this.getRoles()
+          this.$message.success("删除角色成功！");
+          this.getRoles();
         } else if (res.data.code === 400) {
-          this.$message.error("无法删除该角色，该角色已经被分配给用户，请取消分配再删除!!")
+          this.$message.error(
+            "无法删除该角色，该角色已经被分配给用户，请取消分配再删除!!"
+          );
         }
-      })
+      });
     },
 
     //编辑权限树
     editPermission() {
-      //调用方法传入-1,标明知识查看权限树 
-      this.$refs.PermissionsTree.showTreeList(-1, [], '')
-    }
-
-  }
+      //调用方法传入-1,标明知识查看权限树
+      this.$refs.PermissionsTree.showTreeList(-1, [], "");
+    },
+  },
 };
 </script>
 
@@ -134,15 +159,10 @@ export default {
       border-radius: 10px;
     }
   }
-  .primissTr{
+  .primissTr {
     width: 100%;
   }
-
 }
-
-
-
-
 
 .itemInfo {
   margin-left: 20px;
@@ -151,7 +171,6 @@ export default {
 .itemBtn {
   margin-right: 15px;
 }
-
 
 .selectBox {
   display: flex;
@@ -165,7 +184,7 @@ export default {
 }
 
 .clearfix:after {
-  clear: both
+  clear: both;
 }
 
 .box-card {
